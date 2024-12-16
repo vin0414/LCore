@@ -9,8 +9,8 @@ use Illuminate\Validation\ValidationException;
 class HomeController extends Controller
 {
     //
-    public function auth()
+    public function overview()
     {
-        return "Hello from Home controller";
+        return view('hr/overview');
     }
 }

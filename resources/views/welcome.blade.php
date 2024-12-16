@@ -75,6 +75,7 @@
                     id="username"
                     name="username"
                     placeholder="Username"
+                    value="{{ old('username') }}"
                   />
                   @if ($errors->has('username'))
                     <p class="text-danger">{{$errors->first('username')}}</p>

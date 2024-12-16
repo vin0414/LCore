@@ -24,15 +24,14 @@ class CustomAuthController extends Controller
             Auth::loginUsingId($user->accountID);
             return redirect()->intended('hr/overview');
         }
-        return redirect('/')->with('message','Invalid Email or Password');
+        return redirect('/')->with('message','Invalid Username or Password');
     }
 
     public function logout()
     {
         // Clear session and logout user
-        session()->forget('user_id');
         Auth::logout();
-
+        session()->invalidate();
         return redirect("/");
     }
 }

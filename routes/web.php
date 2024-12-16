@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +19,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('login',[CustomAuthController::class,'auth'])->name('login');
+Route::post('login',[CustomAuthController::class,'auth'])->name('login')->middleware('throttle:5,1');
 Route::get('logout', [CustomAuthController::class, 'logout'])->name('logout');
+//hr module
+Route::get('hr/overview',[HomeController::class,'overview']);
+
