@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CustomAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +18,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/auth',[HomeController::class,'auth']);
+Route::post('login',[CustomAuthController::class,'auth'])->name('login');
+Route::get('logout', [CustomAuthController::class, 'logout'])->name('logout');
