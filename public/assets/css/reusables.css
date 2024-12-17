@@ -1,0 +1,138 @@
+/* ----- Reusable CSS Only ----- */
+
+:root {
+    /* Colors */
+    --green-color: #7ed957;
+    --light-green-color: #eef6f0;
+    --icon-bg-color: #effcea;
+    --white-color: #fff;
+    --light-green-color: #eafde2;
+    --black-color: #3b3b3b;
+    --light-gray-color: #d3d3d3;
+    --line-color: #cfcfcf;
+    --bg-color: #fbfbfd;
+    --gray-text-color: #5a5a5a;
+    /* Spacing */
+    --gap-xsmall: 1rem;
+    --gap-small: 2rem;
+    --gap-medium: 3rem;
+    --gap-large: 4rem;
+    --gap-xlarge: 5rem;
+    --gap-xxlarge: 6rem;
+  }
+  /* ----- Global Declarations ----- */
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    line-height: 1;
+    scroll-behavior: smooth;
+  }
+  html {
+    font-size: 62.5%;
+  }
+  
+  body {
+    line-height: 1;
+    font-family: "poppins", sans-serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+  }
+  /* ----- Layout ----- */
+  /* Flex */
+  .flex {
+    display: flex;
+  }
+  
+  .flex__d__col {
+    flex-direction: column;
+  }
+  .flex__d__row {
+    flex-direction: row;
+  }
+  
+  .flex__just__start {
+    justify-content: start;
+  }
+  .flex__just__center {
+    justify-content: center;
+  }
+  .flex__just__end {
+    justify-content: end;
+  }
+  
+  .flex__align__start {
+    align-items: start;
+  }
+  .flex__align__center {
+    align-items: center;
+  }
+  .flex__align__end {
+    align-items: end;
+  }
+  
+  /* Grid */
+  .grid {
+    display: grid;
+  }
+  .grid__align__start {
+    align-items: start;
+  }
+  .grid__align__center {
+    align-items: center;
+  }
+  .grid__align__end {
+    align-items: center;
+  }
+  .grid__justify__start {
+    justify-items: start;
+  }
+  .grid__justify__center {
+    justify-items: center;
+  }
+  .grid__justify__end {
+    justify-items: center;
+  }
+  .grid__1__cols {
+    grid-template-columns: 1fr;
+  }
+  .grid__2__cols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid__3__cols {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .grid__4__cols {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .grid__5__cols {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  
+  /* ----- Position ----- */
+  .pos__abs {
+    position: absolute;
+  }
+  
+  .pos__rel {
+    position: relative;
+  }
+  
+  .display__none {
+    display: none;
+  }
+  /* Spacing */
+  /* ----- Margin ----- */
+  
+  .margin__bottom__3 {
+    margin-bottom: 3rem;
+  }
+  
+  /* ----- Gap ----- */
+  .gap__1 {
+    gap: 1rem;
+  }
+  /* Hide */
+  .hidden {
+    display: none;
+  }

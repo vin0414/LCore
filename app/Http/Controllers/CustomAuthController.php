@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use App\Models\accountModel;
 
@@ -16,22 +15,21 @@ class CustomAuthController extends Controller
             'username'=>'required',
             'password'=>'required'
         ]);
-        $user = accountModel::where('Username', $request->username)->first();
-        if ($user && Hash::check($request->password, $user->Password))
+        $account = accountModel::where('Username', $request->username)->first();
+        if ($account && Hash::check($request->password, $account->Password))
         {
-            session(['user_id' => $user->accountID]);
-            session(['fullname'=>$user->Fullname]);
-            Auth::loginUsingId($user->accountID);
+            session(['user_id' => $account->accountID]);
+            session(['fullname'=>$account->Fullname]);
+            Auth::guard('user')->login($account);
             return redirect()->intended('hr/overview');
         }
         return redirect('/')->with('message','Invalid Username or Password');
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         // Clear session and logout user
-        Auth::logout();
-        session()->invalidate();
+        Auth::guard('user')->logout();
         return redirect("/");
     }
 }
