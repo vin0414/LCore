@@ -32,6 +32,10 @@ Route::middleware('auth:user')->group(function () {
     Route::get('hr/loans',[HomeController::class,'loans'])->name('hr/loans');
     Route::get('hr/employee',[HomeController::class,'employee'])->name('hr/employee');
     Route::get('hr/memo',[HomeController::class,'memo'])->name('hr/memo');
+    //memo 
+    Route::get('hr/memo/new',[HomeController::class,'newMemo'])->name('hr/memo/new');
+    Route::get('hr/memo/edit/{memoID}',[HomeController::class,'editMemo'])->name('hr/memo/edit');
+    Route::get('hr/memo/archive',[HomeController::class,'archive'])->name('hr/memo/archive');
     //recovery and settings
     Route::get('hr/recovery',[HomeController::class,'recovery'])->name('hr/recovery');
     Route::get('hr/settings',[HomeController::class,'settings'])->name('hr/settings');
@@ -41,9 +45,9 @@ Route::middleware('auth:user')->group(function () {
     Route::get('hr/payroll/attendance',[HomeController::class,'payrollAttendance'])->name('hr/payroll/attendance');
     //employee modules
     Route::get('hr/employee/new',[HomeController::class,'newEmployee'])->name('hr/employee/new');
-    Route::get('hr/employee/edit',[HomeController::class,'editEmployee'])->name('hr/employee/edit');
+    Route::get('hr/employee/edit/{companyID}',[HomeController::class,'editEmployee'])->name('hr/employee/edit');
     Route::get('hr/employee/view/{companyID}',[HomeController::class,'viewEmployee'])->name('hr/employee/view');
-    Route::get('hr/employee/leave',[HomeController::class,'leaveEmployee'])->name('hr/employee/leave');
+    Route::get('hr/employee/credits',[HomeController::class,'creditsEmployee'])->name('hr/employee/credits');
     Route::get('hr/employee/movement',[HomeController::class,'employeeMovement'])->name('hr/employee/movement');
 });
 

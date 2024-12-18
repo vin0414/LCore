@@ -26,10 +26,12 @@ class CustomAuthController extends Controller
         return redirect('/')->with('message','Invalid Username or Password');
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
         // Clear session and logout user
         Auth::guard('user')->logout();
+        session()->invalidate();
+        session()->regenerateToken();
         return redirect("/");
     }
 }

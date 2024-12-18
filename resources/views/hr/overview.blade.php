@@ -129,7 +129,7 @@
                 >Settings
               </p>
               <hr />
-              <a href="{{route('logout')}}" class="link__account flex flex__align__center gap__1"
+              <a href="{{route('logout')}}" onclick="return confirm('Do you want to sign out?')" class="link__account flex flex__align__center gap__1"
                 ><ion-icon name="log-out-outline"></ion-icon>Logout</a
               >
             </div>
@@ -160,14 +160,14 @@
               <li class="dropdown__item"><a href="{{route('hr/employee')}}" class="no-underline">Master File</a></li>
               <li class="dropdown__item"><a href="{{route('hr/employee/new')}}" class="no-underline">New Employee</a></li>
               <li class="dropdown__item"><a href="{{route('hr/employee/movement')}}" class="no-underline">Employee Mobility</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/employee/leave')}}" class="no-underline">SL/VL Credits</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/employee/credits')}}" class="no-underline">SL/VL Credits</a></li>
             </ul>
           </li>
           <li class="nav__item">Memo<ion-icon name="chevron-down-outline"></ion-icon>
             <ul class="dropdown">
-              <li class="dropdown__item">Salary</li>
-              <li class="dropdown__item">Salary</li>
-              <li class="dropdown__item">Salary</li>
+              <li class="dropdown__item"><a href="{{route('hr/memo')}}" class="no-underline">All Memo</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/memo/new')}}" class="no-underline">New Memo</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/memo/archive')}}" class="no-underline">Archives</a></li>
             </ul>
           </li>
           <li class="nav__item">
@@ -192,7 +192,7 @@
         <p class="side_heading">Quick Links</p>
         <ul class="sidebar__items">
           <li>
-            <a href="#" class="nav__links"
+            <a href="{{route('hr/memo/new')}}" class="nav__links"
               ><ion-icon
                 class="sidebar__icon"
                 name="cloud-upload-outline"
@@ -201,7 +201,7 @@
             >
           </li>
           <li>
-            <a href="#" class="nav__links"
+            <a href="{{route('hr/memo')}}" class="nav__links"
               ><ion-icon
                 class="sidebar__icon"
                 name="file-tray-full-outline"
@@ -210,7 +210,7 @@
             >
           </li>
           <li>
-            <a href="#" class="nav__links"
+            <a href="{{route('hr/employee/new')}}" class="nav__links"
               ><ion-icon
                 class="sidebar__icon"
                 name="person-add-outline"
@@ -219,30 +219,26 @@
             >
           </li>
           <li>
-            <a href="#" class="nav__links"
+            <a href="{{route('hr/employee')}}" class="nav__links"
               ><ion-icon class="sidebar__icon" name="people-outline"></ion-icon
               >All Employees</a
             >
           </li>
         </ul>
-        <p class="side_heading">Settings</p>
+        <p class="side_heading">Maintenance</p>
         <ul class="sidebar__items">
           <li>
-            <a href="#" class="nav__links"
+            <a href="{{route('hr/settings')}}" class="nav__links"
               ><ion-icon
                 class="sidebar__icon"
                 name="settings-outline"
               ></ion-icon
-              >Upload Files</a
+              >System Settings</a
             >
           </li>
           <li>
-            <a href="#" class="nav__links"
-              ><ion-icon
-                class="sidebar__icon"
-                name="settings-outline"
-              ></ion-icon
-              >All Memos</a
+            <a href="{{route('hr/audit-trail')}}" class="nav__links"
+              ><ion-icon name="clipboard-outline"></ion-icon>Audit Trail</a
             >
           </li>
         </ul>

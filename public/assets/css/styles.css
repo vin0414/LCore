@@ -114,57 +114,6 @@
   .section__login {
     padding: 0 2rem;
   }
-
-  .text-danger
-  {
-    color: #dc3545;
-  }
-
-  /* General alert styling */
-  .alert {
-    padding: 20px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-  }
-
-  /* Success alert (green) */
-  .alert-success {
-    background-color: #28a745;
-    color: white;
-    border: 1px solid #28a745;
-  }
-
-  /* Danger alert (red) */
-  .alert-danger {
-    background-color: #dc3545;
-    color: white;
-    border: 1px solid #dc3545;
-  }
-
-  /* Warning alert (yellow/orange) */
-  .alert-warning {
-    background-color: #ffc107;
-    color: white;
-    border: 1px solid #ffc107;
-  }
-
-  /* Info alert (blue) */
-  .alert-info {
-    background-color: #17a2b8;
-    color: white;
-    border: 1px solid #17a2b8;
-  }
-
-  /* Optional: Add an icon or button for dismissing the alert */
-  .alert .close {
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-left: 15px;
-  }
   
   .btn__primary {
     padding: 2rem 3.5rem;
@@ -273,4 +222,55 @@
       width: 28.4rem;
       height: 34.3rem;
     }
+  }
+
+  .text-danger
+  {
+    color: #dc3545;
+  }
+
+  /* General alert styling */
+  .alert {
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+  }
+
+  /* Success alert (green) */
+  .alert-success {
+    background-color: #28a745;
+    color: white;
+    border: 1px solid #28a745;
+  }
+
+  /* Danger alert (red) */
+  .alert-danger {
+    background-color: #dc3545;
+    color: white;
+    border: 1px solid #dc3545;
+  }
+
+  /* Warning alert (yellow/orange) */
+  .alert-warning {
+    background-color: #ffc107;
+    color: white;
+    border: 1px solid #ffc107;
+  }
+
+  /* Info alert (blue) */
+  .alert-info {
+    background-color: #17a2b8;
+    color: white;
+    border: 1px solid #17a2b8;
+  }
+
+  /* Optional: Add an icon or button for dismissing the alert */
+  .alert .close {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 15px;
   }

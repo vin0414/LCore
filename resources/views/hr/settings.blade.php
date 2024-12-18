@@ -10,6 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="/assets/css/reusables.css" />
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
     <title>LCore Lending Investors Inc.</title>
@@ -129,7 +130,7 @@
                 >Settings
               </p>
               <hr />
-              <a href="{{route('logout')}}" class="link__account flex flex__align__center gap__1"
+              <a href="{{route('logout')}}" onclick="return confirm('Do you want to sign out?')" class="link__account flex flex__align__center gap__1"
                 ><ion-icon name="log-out-outline"></ion-icon>Logout</a
               >
             </div>
@@ -160,14 +161,14 @@
               <li class="dropdown__item"><a href="{{route('hr/employee')}}" class="no-underline">Master File</a></li>
               <li class="dropdown__item"><a href="{{route('hr/employee/new')}}" class="no-underline">New Employee</a></li>
               <li class="dropdown__item"><a href="{{route('hr/employee/movement')}}" class="no-underline">Employee Mobility</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/employee/leave')}}" class="no-underline">SL/VL Credits</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/employee/credits')}}" class="no-underline">SL/VL Credits</a></li>
             </ul>
           </li>
           <li class="nav__item">Memo<ion-icon name="chevron-down-outline"></ion-icon>
             <ul class="dropdown">
-              <li class="dropdown__item">Salary</li>
-              <li class="dropdown__item">Salary</li>
-              <li class="dropdown__item">Salary</li>
+              <li class="dropdown__item"><a href="{{route('hr/memo')}}" class="no-underline">All Memo</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/memo/new')}}" class="no-underline">New Memo</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/memo/archive')}}" class="no-underline">Archives</a></li>
             </ul>
           </li>
           <li class="nav__item">
@@ -225,24 +226,20 @@
             >
           </li>
         </ul>
-        <p class="side_heading">Settings</p>
+        <p class="side_heading">Maintenance</p>
         <ul class="sidebar__items">
           <li>
-            <a href="#" class="nav__links"
+            <a href="{{route('hr/settings')}}" class="nav__links"
               ><ion-icon
                 class="sidebar__icon"
                 name="settings-outline"
               ></ion-icon
-              >Upload Files</a
+              >System Settings</a
             >
           </li>
           <li>
-            <a href="#" class="nav__links"
-              ><ion-icon
-                class="sidebar__icon"
-                name="settings-outline"
-              ></ion-icon
-              >All Memos</a
+            <a href="{{route('hr/audit-trail')}}" class="nav__links"
+              ><ion-icon name="clipboard-outline"></ion-icon>Audit Trail</a
             >
           </li>
         </ul>
@@ -264,16 +261,14 @@
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="content-tab1">
-              <h2>Content for Tab 1</h2>
-              <p>This is some content for Tab 1.</p>
+              <form method="POST" class=""></form>
             </div>
             <div class="tab-pane" id="content-tab2">
               <h2>Content for Tab 2</h2>
               <p>This is some content for Tab 2.</p>
             </div>
             <div class="tab-pane" id="content-tab3">
-              <h2>Content for Tab 3</h2>
-              <p>This is some content for Tab 3.</p>
+
             </div>
             <div class="tab-pane" id="content-tab4">
               <h2>Content for Tab 4</h2>
@@ -291,6 +286,7 @@
       <p class="copyright">&copy;LCore <?php echo date('Y') ?>. All Rights Reserved.</p>
     </footer>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         $("#menuButton").on("click", function (e) {
