@@ -10,16 +10,15 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="/assets/css/reusables.css" />
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
-    <title>LCore Lending Investors Inc.</title>
+    <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
   </head>
   <body>
     <header class="header pos__rel">
       <div class="header__box flex flex__align__center">
         <div class="logo__box">
-          <img class="logo" src="/assets/images/logo.png" />
+          <img class="logo" src="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : '' }}" />
         </div>
         <div class="cta__box flex flex__align__center">
           <div class="settings__icons flex flex__align__center">
@@ -193,7 +192,7 @@
         <p class="side_heading">Quick Links</p>
         <ul class="sidebar__items">
           <li>
-            <a href="#" class="nav__links"
+            <a href="{{route('hr/memo/new')}}" class="nav__links"
               ><ion-icon
                 class="sidebar__icon"
                 name="cloud-upload-outline"
@@ -202,7 +201,7 @@
             >
           </li>
           <li>
-            <a href="#" class="nav__links"
+            <a href="{{route('hr/memo')}}" class="nav__links"
               ><ion-icon
                 class="sidebar__icon"
                 name="file-tray-full-outline"
@@ -211,7 +210,7 @@
             >
           </li>
           <li>
-            <a href="#" class="nav__links"
+            <a href="{{route('hr/employee/new')}}" class="nav__links"
               ><ion-icon
                 class="sidebar__icon"
                 name="person-add-outline"
@@ -220,7 +219,7 @@
             >
           </li>
           <li>
-            <a href="#" class="nav__links"
+            <a href="{{route('hr/employee')}}" class="nav__links"
               ><ion-icon class="sidebar__icon" name="people-outline"></ion-icon
               >All Employees</a
             >
@@ -248,7 +247,7 @@
         <div class="heading__box flex flex__align__center">
           <h1 class="heading__primary">{{$title}}</h1>
           <div class="breadcrumbs">
-            <p class="pages">Pages | <span>{{$title}}</span></p>
+            <p class="pages">Maintenance | <span>{{$title}}</span></p>
           </div>
         </div>
         <div class="tabs">
@@ -268,7 +267,7 @@
               <p>This is some content for Tab 2.</p>
             </div>
             <div class="tab-pane" id="content-tab3">
-
+                
             </div>
             <div class="tab-pane" id="content-tab4">
               <h2>Content for Tab 4</h2>
@@ -283,10 +282,9 @@
       </div>
     </main>
     <footer class="footer">
-      <p class="copyright">&copy;LCore <?php echo date('Y') ?>. All Rights Reserved.</p>
+      <p class="copyright">&copy;{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }} <?php echo date('Y') ?>. All Rights Reserved.</p>
     </footer>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         $("#menuButton").on("click", function (e) {
@@ -349,8 +347,6 @@
       openTab('tab1');
     });
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script
       type="module"
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"

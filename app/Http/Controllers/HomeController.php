@@ -5,13 +5,34 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
     //
+    public function home()
+    {
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
+        $data = ['about'=>$about];
+        return view('login',$data);
+    }
+
+    public function getChartData()
+    {
+        $employeeModel = new \App\Models\employeeModel();
+        $employeeCounts = $employeeModel::select(DB::raw('dateHired'), DB::raw('count(*) as total'))
+                            ->groupBy(DB::raw('dateHired'))
+                            ->orderBy('dateHired', 'asc') // Optional: Order by date
+                            ->get();
+        return response()->json($employeeCounts);
+    }
+
     public function overview()
     {
         $title = "Overview";
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
         $employeeModel = new \App\Models\employeeModel();
         $totalEmployee = $employeeModel->count();
         $recent = $employeeModel::orderBy('employeeID', 'desc')->take(10)->get();
@@ -20,85 +41,155 @@ class HomeController extends Controller
         $resignEmployee = $employeeModel->WHERE('employeeStatus','2')->count();
         $data = ['title'=>$title,'total'=>$totalEmployee,
                 'regular'=>$regularEmployee,'new'=>$newEmployee,
-                'resign'=>$resignEmployee,'recent'=>$recent];
+                'resign'=>$resignEmployee,'recent'=>$recent,
+                'about'=>$about];
         return view('hr/overview',$data);
     }
 
     public function deductions()
     {
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
         return view('hr/deductions/index');
     }
 
     public function loans()
     {
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
         return view('hr/loans/index');
     }
 
     //memo
     public function memo()
     {
-        return view('hr/memo/index');
+        $title = "Memorandum";;
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
+        $data = ['title'=>$title,'about'=>$about];
+        return view('hr/memo/index',$data);
     }
 
     public function editMemo($id)
     {
-        return view('hr/memo/edit-memo');
+        $title = "Edit Memorandum";
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
+        $data = ['title'=>$title,'about'=>$about];
+        return view('hr/memo/edit-memo',$data);
     }
 
     public function newMemo()
     {
-        return view('hr/memo/new-memo');
+        $title = "New Memorandum";
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
+        $data = ['title'=>$title,'about'=>$about];
+        return view('hr/memo/new-memo',$data);
     }
 
     public function archive()
     {
-        return view('hr/memo/archive');
+        $title = "Archives";
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
+        $data = ['title'=>$title,'about'=>$about];
+        return view('hr/memo/archive',$data);
     }
 
     //employee management
     public function employee()
     {
-        return view('hr/employee/index');
+        $title = "Master File";
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
+        $data = ['title'=>$title,'about'=>$about];
+        return view('hr/employee/index',$data);
     }
 
     public function newEmployee()
     {
-        return view('hr/employee/new-employee');
+        $title = "New Employee";
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
+        $data = ['title'=>$title,'about'=>$about];
+        return view('hr/employee/new-employee',$data);
     }
 
     public function editEmployee($id)
     {
         $title = "Edit Employee";
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
         $employeeModel = new \App\Models\employeeModel();
         $employee = $employeeModel->WHERE('companyID',$id)->first();
-        $data = ['title'=>$title,'employee'=>$employee];
+        $data = ['title'=>$title,'employee'=>$employee,'about'=>$about];
         return view('hr/employee/edit-employee',$data);
     }
 
     public function viewEmployee($id)
     {
         $title = "View Employee";
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
         $employeeModel = new \App\Models\employeeModel();
         $employee = $employeeModel->WHERE('companyID',$id)->first();
-        $data = ['title'=>$title,'employee'=>$employee];
+        $data = ['title'=>$title,'employee'=>$employee,'about'=>$about];
         return view('hr/employee/view-employee',$data);
     }
 
-    public function creditEmployee()
+    public function creditsEmployee()
     {
-        return view('hr/employee/credits');
+        $title = "Leave Credits";
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
+        $data = ['title'=>$title,'about'=>$about];
+        return view('hr/employee/credits',$data);
+    }
+
+    public function employeeMovement()
+    {
+        $title = "Employee Mobility";
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
+        $data = ['title'=>$title,'about'=>$about];
+        return view('hr/employee/movement',$data);
     }
 
     //recovery, settings and audit trail
     public function recovery()
     {
-        return view('hr/recovery');
+        $title = "Recovery";
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
+        $data = ['title'=>$title,'about'=>$about];
+        return view('hr/recovery',$data);
     }
 
     public function settings()
     {
         $title = "Settings";
-        $data = ['title'=>$title];
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
+        $data = ['title'=>$title,'about'=>$about];
         return view('hr/settings',$data);
+    }
+
+    public function auditTrail()
+    {
+        $title = "Audit Trail";
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
+        $data = ['title'=>$title,'about'=>$about];
+        return view('hr/audit',$data);
+    }
+
+    public function account()
+    {
+        $title = "My Account";
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
+        $data = ['title'=>$title,'about'=>$about];
+        return view('hr/account',$data);
     }
 }

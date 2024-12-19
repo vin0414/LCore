@@ -247,7 +247,7 @@
         <div class="heading__box flex flex__align__center">
           <h1 class="heading__primary">{{$title}}</h1>
           <div class="breadcrumbs">
-            <p class="pages">Employee | <span>{{$title}}</span></p>
+            <p class="pages">Maintenance | <span>{{$title}}</span></p>
           </div>
         </div>
       </div>

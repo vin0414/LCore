@@ -14,24 +14,23 @@ use App\Http\Controllers\HomeController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/',[HomeController::class,'home'])->name('/');
+Route::get('/login',[HomeController::class,'home'])->name('/login');
 
-Route::get('/login', function () {
-    return view('login');
-});
-Route::get('/', function () {
-    return view('login');
-});
 //login and logout
 Route::post('login',[CustomAuthController::class,'auth'])->name('login')->middleware('throttle:5,1');
 Route::get('logout', [CustomAuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth:user')->group(function () {
+    //charts
+    Route::get('chart-data', [HomeController::class, 'getChartData'])->name('chart-data');
     //navigations
     Route::get('hr/overview',[HomeController::class,'overview'])->name('hr/overview');
     Route::get('hr/deductions',[HomeController::class,'deductions'])->name('hr/deductions');
     Route::get('hr/loans',[HomeController::class,'loans'])->name('hr/loans');
     Route::get('hr/employee',[HomeController::class,'employee'])->name('hr/employee');
     Route::get('hr/memo',[HomeController::class,'memo'])->name('hr/memo');
+    Route::get('hr/account',[HomeController::class,'account'])->name('hr/account');
     //memo 
     Route::get('hr/memo/new',[HomeController::class,'newMemo'])->name('hr/memo/new');
     Route::get('hr/memo/edit/{memoID}',[HomeController::class,'editMemo'])->name('hr/memo/edit');

@@ -12,13 +12,13 @@
     />
     <link rel="stylesheet" href="/assets/css/reusables.css" />
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
-    <title>LCore Lending Investors Inc.</title>
+    <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
   </head>
   <body>
     <header class="header pos__rel">
       <div class="header__box flex flex__align__center">
         <div class="logo__box">
-          <img class="logo" src="/assets/images/logo.png" />
+          <img class="logo" src="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : '' }}" />
         </div>
         <div class="cta__box flex flex__align__center">
           <div class="settings__icons flex flex__align__center">
@@ -247,7 +247,7 @@
         <div class="heading__box flex flex__align__center">
           <h1 class="heading__primary">{{$title}}</h1>
           <div class="breadcrumbs">
-            <p class="pages">Pages | <span>{{$title}}</span></p>
+            <p class="pages">{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }} | <span>{{$title}}</span></p>
           </div>
         </div>
         <div class="cards grid grid__4__cols">
@@ -327,30 +327,22 @@
             </div>
           </div>
           <!-- 2 -->
-          <div class="card announcement__card">
+          <form class="card announcement__card">
             <div class="text__items margin__bottom__3">
               <p class="subheading">Announcement</p>
             </div>
             <div class="input__box">
-              <textarea class="text__area" readonly>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</textarea
-              >
+              <textarea class="text__area" placeholder="Write something here.."></textarea>
             </div>
             <div class="compose__box">
-              <a class="compose" href="#"
-                ><ion-icon
-                  class="compose__icon"
-                  name="reader-outline"
-                ></ion-icon
-                >Compose</a
-              >
+              <a class="compose" href="#"><ion-icon class="compose__icon" name="reader-outline"></ion-icon>Compose</a>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </main>
     <footer class="footer">
-      <p class="copyright">&copy;LCore <?php echo date('Y') ?>. All Rights Reserved.</p>
+      <p class="copyright">&copy;{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }} <?php echo date('Y') ?>. All Rights Reserved.</p>
     </footer>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
@@ -396,62 +388,48 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
         $("#headerNav").removeClass("open");
       }
       function generateChart() {
-        var series = {
-          monthDataSeries1: {
-            prices: [8107.85, 8128.0, 8122.9, 8165.5, 8340.7, 8423.7],
-            dates: [
-              "2024-01-01",
-              "2024-01-02",
-              "2024-01-03",
-              "2024-01-04",
-              "2024-01-05",
-              "2024-01-06",
-            ],
-          },
-        };
+        $.ajax({
+            url: "{{route('chart-data')}}", // Endpoint for employee data
+            method: "GET",
+            success: function(data) {
+                // Step 2: Prepare the data for ApexCharts
+                const dates = data.map(item => item.dateHired);
+                const counts = data.map(item => item.total);
 
-        var options = {
-          series: [
-            {
-              name: "STOCK ABC",
-              data: series.monthDataSeries1.prices,
-            },
-          ],
-          chart: {
-            type: "area",
-            height: 350,
-            zoom: {
-              enabled: false,
-            },
-          },
-          dataLabels: {
-            enabled: false,
-          },
-          stroke: {
-            curve: "straight",
-          },
-          title: {
-            text: "Employee Records",
-            align: "left",
-          },
-          subtitle: {
-            text: "Employee Movements",
-            align: "left",
-          },
-          labels: series.monthDataSeries1.dates,
-          xaxis: {
-            type: "datetime",
-          },
-          yaxis: {
-            opposite: true,
-          },
-          legend: {
-            horizontalAlign: "left",
-          },
-        };
+                // Step 3: Initialize ApexCharts
+                var options = {
+                    chart: {
+                        type: 'area',
+                        height: 350
+                    },
+                    series: [{
+                        name: 'Employee Count',
+                        data: counts
+                    }],
+                    xaxis: {
+                        categories: dates,
+                        title: {
+                            text: 'Date Hired'
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Total Employees',
+                        }
+                    },
+                    title: {
+                        text: 'Employee Count Over Date',
+                        align: 'center'
+                    }
+                };
 
-        var chart = new ApexCharts(document.querySelector("#chart"), options);
-        chart.render();
+                var chart = new ApexCharts(document.querySelector("#chart"), options);
+                chart.render();
+            },
+            error: function(xhr, status, error) {
+                console.error("There was an error with the AJAX request:", error);
+            }
+        });
       }
     </script>
 

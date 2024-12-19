@@ -11,7 +11,9 @@
     />
     <link rel="stylesheet" href="assets/css/styles.css" />
     <link rel="stylesheet" href="assets/css/index-responsive.css" />
-    <title>LCore Lending Investors Inc.</title>
+    <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
+    <!-- Site favicon -->
+		<link rel="icon" sizes="180x180" href="assets/images/logo.png"/>
     <style>
         ::-webkit-scrollbar-track {
             background: #f1f1f1; 
@@ -37,14 +39,14 @@
     <header class="header">
       <div class="header__box">
         <div class="logo__box">
-          <img class="logo" src="assets/images/logo.png" />
+          <img class="logo" src="assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : '' }}" />
         </div>
         <div class="settings__box">
           <ion-icon class="icon" name="settings-outline"></ion-icon>
         </div>
       </div>
     </header>
-
+ 
     <main>
       <section class="section__login">
         <div class="container">
@@ -113,7 +115,7 @@
       </section>
       <footer class="footer">
         <div class="container">
-          <p class="copyright">&copy; LCore <?php echo date('Y') ?>. All Rights Reserved.</p>
+          <p class="copyright">&copy; {{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }} <?php echo date('Y') ?>. All Rights Reserved.</p>
         </div>
       </footer>
     </main>
