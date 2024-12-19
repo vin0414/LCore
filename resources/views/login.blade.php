@@ -93,7 +93,7 @@
                       type="password"
                     /><ion-icon
                       class="pos__abs eye__icon"
-                      name="eye-outline"
+                      name="eye-outline" onclick="showPassword()"
                     ></ion-icon>
                   </div>
                   @if ($errors->has('password'))
@@ -121,13 +121,10 @@
         </div>
       </footer>
     </main>
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-    ></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+    function showPassword() { var x = document.getElementById("password");if (x.type === "password") {x.type = "text";} else {x.type = "password";}}
+  </script>
   </body>
 </html>

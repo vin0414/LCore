@@ -12,14 +12,15 @@ class CustomAuthController extends Controller
     public function auth(Request $request)
     {
         $request->validate([
-            'username'=>'required',
+            'username'=>'required|min_length[6]',
             'password'=>'required'
         ]);
-        $account = accountModel::where('Username', $request->username)->first();
+        $account = accountModel::where('Username', $request->username)->WHERE('Status',1)->first();
         if ($account && Hash::check($request->password, $account->Password))
         {
             session(['user_id' => $account->accountID]);
             session(['fullname'=>$account->Fullname]);
+            session(['role'=>$account->Role]);
             Auth::guard('user')->login($account);
             return redirect()->intended('hr/overview');
         }

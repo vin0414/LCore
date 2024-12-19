@@ -159,29 +159,50 @@ class HomeController extends Controller
     //recovery, settings and audit trail
     public function recovery()
     {
-        $title = "Recovery";
-        $aboutModel = new \App\Models\aboutModel();
-        $about = $aboutModel->first();
-        $data = ['title'=>$title,'about'=>$about];
-        return view('hr/recovery',$data);
+        if(session('role')=="ADMIN"||session('role')=="Admin")
+        {
+            $title = "Recovery";
+            $aboutModel = new \App\Models\aboutModel();
+            $about = $aboutModel->first();
+            $data = ['title'=>$title,'about'=>$about];
+            return view('hr/recovery',$data);
+        }
+        else
+        {
+            return redirect('hr/overview');
+        }
     }
 
     public function settings()
     {
-        $title = "Settings";
-        $aboutModel = new \App\Models\aboutModel();
-        $about = $aboutModel->first();
-        $data = ['title'=>$title,'about'=>$about];
-        return view('hr/settings',$data);
+        if(session('role')=="ADMIN"||session('role')=="Admin")
+        {
+            $title = "Settings";
+            $aboutModel = new \App\Models\aboutModel();
+            $about = $aboutModel->first();
+            $data = ['title'=>$title,'about'=>$about];
+            return view('hr/settings',$data);
+        }
+        else
+        {
+            return redirect('hr/overview');
+        }
     }
 
     public function auditTrail()
     {
-        $title = "Audit Trail";
-        $aboutModel = new \App\Models\aboutModel();
-        $about = $aboutModel->first();
-        $data = ['title'=>$title,'about'=>$about];
-        return view('hr/audit',$data);
+        if(session('role')=="ADMIN"||session('role')=="Admin")
+        {
+            $title = "Audit Trail";
+            $aboutModel = new \App\Models\aboutModel();
+            $about = $aboutModel->first();
+            $data = ['title'=>$title,'about'=>$about];
+            return view('hr/audit',$data);
+        }
+        else
+        {
+            return redirect('hr/overview');
+        }
     }
 
     public function account()

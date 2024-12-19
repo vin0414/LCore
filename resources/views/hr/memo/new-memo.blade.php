@@ -178,6 +178,7 @@
               <li class="dropdown__item">Salary</li>
             </ul>
           </li>
+          <?php if(session('role')=="ADMIN"||session('role')=="Admin"){ ?>
           <li class="nav__item">
             Maintenance<ion-icon name="chevron-down-outline"></ion-icon>
             <ul class="dropdown">
@@ -186,6 +187,7 @@
               <li class="dropdown__item"><a href="{{route('hr/audit-trail')}}" class="no-underline">Audit Trail</a></li>
             </ul>
           </li>
+          <?php } ?>
         </ul>
       </nav>
       <aside class="sidebar__nav">
@@ -225,6 +227,7 @@
             >
           </li>
         </ul>
+        <?php if(session('role')=="ADMIN"||session('role')=="Admin"){ ?>
         <p class="side_heading">Maintenance</p>
         <ul class="sidebar__items">
           <li>
@@ -241,6 +244,7 @@
               ><ion-icon name="clipboard-outline"></ion-icon>Audit Trail</a
             >
           </li>
+          <?php } ?>
         </ul>
       </aside>
       <div class="container">
