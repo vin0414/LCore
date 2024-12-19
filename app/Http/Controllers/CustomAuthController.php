@@ -12,7 +12,7 @@ class CustomAuthController extends Controller
     public function auth(Request $request)
     {
         $request->validate([
-            'username'=>'required|min_length[6]',
+            'username'=>'required|min:6|max:20',
             'password'=>'required'
         ]);
         $account = accountModel::where('Username', $request->username)->WHERE('Status',1)->first();
