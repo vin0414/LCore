@@ -20,6 +20,7 @@ class CustomAuthController extends Controller
         {
             session(['user_id' => $account->accountID]);
             session(['fullname'=>$account->Fullname]);
+            session(['designation'=>$account->Designation]);
             session(['role'=>$account->Role]);
             Auth::guard('user')->login($account);
             return redirect()->intended('hr/overview');

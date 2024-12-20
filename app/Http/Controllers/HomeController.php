@@ -101,9 +101,14 @@ class HomeController extends Controller
     public function employee()
     {
         $title = "Master File";
+        //application 
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
-        $data = ['title'=>$title,'about'=>$about];
+        //employees
+        $employeeModel = new \App\Models\employeeModel();
+        $employee = $employeeModel->all();
+
+        $data = ['title'=>$title,'about'=>$about,'employee'=>$employee];
         return view('hr/employee/index',$data);
     }
 
@@ -178,9 +183,14 @@ class HomeController extends Controller
         if(session('role')=="ADMIN"||session('role')=="Admin")
         {
             $title = "Settings";
+            //application
             $aboutModel = new \App\Models\aboutModel();
             $about = $aboutModel->first();
-            $data = ['title'=>$title,'about'=>$about];
+            //account
+            $accountModel = new \App\Models\accountModel();
+            $account = $accountModel->all();
+
+            $data = ['title'=>$title,'about'=>$about,'account'=>$account];
             return view('hr/settings',$data);
         }
         else

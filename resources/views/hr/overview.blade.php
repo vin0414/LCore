@@ -106,8 +106,7 @@
             <p id="userName" class="user__name name__screen__lg"><?php echo session('fullname') ?></p>
             <div class="account__dropdown">
               <p
-                class="user__name name__screen__sm flex flex__align__center gap__1"
-              >
+                class="user__name name__screen__sm flex flex__align__center gap__1">
                 <ion-icon name="person-outline"></ion-icon><?php echo session('fullname') ?>
               </p>
               <p
