@@ -255,7 +255,7 @@
           <div class="breadcrumbs">
             <p class="pages">Employee | <span>{{$title}}</span></p>
           </div>
-        </div>
+        </div> 
         <div class="employee__card">
           @if(\Session::has('message'))
             <div class="alert alert-danger">
@@ -448,7 +448,7 @@
                     </div>
                     <div class="input__box grid__column__mod">
                       <input
-                        class="information__input" name="education" value="{{ old('address') }}"
+                        class="information__input" name="education" value="{{ old('education') }}"
                         placeholder="Enter educational attainment"
                       />
                       <span class="input__title">Educational Attainment</span>
@@ -488,8 +488,8 @@
                   </div>
                   <div class="input__box">
                     <input
-                      type="number"
-                      class="information__input" maxlength="11" minlength="11" name="phone" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                      type="phone"
+                      class="information__input" maxlength="11" minlength="11" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                       placeholder="Enter contact no." name="company_phone"
                     />
                     <span class="input__title">Company Contact No.</span>

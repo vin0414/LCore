@@ -26,6 +26,7 @@ Route::get('chart-data', [HomeController::class, 'getChartData'])->name('chart-d
 Route::get('fetch-department',[EmployeeController::class,'fetchDepartment'])->name('fetch-department');
 //employee
 Route::post('save-employee',[EmployeeController::class,'saveEmployee'])->name('save-employee');
+Route::post('update-employee',[EmployeeController::class,'updateEmployee'])->name('update-employee');
 
 Route::middleware('auth:user')->group(function () {
     //navigations

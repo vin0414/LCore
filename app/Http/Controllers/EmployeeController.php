@@ -20,6 +20,7 @@ class EmployeeController extends Controller
     public function saveEmployee(Request $request)
     {
         $employeeModel = new \App\Models\employeeModel();
+        $recordModel = new \App\Models\recordModel();
         $employee = $employeeModel->count();
 
         $request->validate([
@@ -32,7 +33,7 @@ class EmployeeController extends Controller
             'date_of_birth'=>'required',
             'religion'=>'required',
             'contact_number'=>'required',
-            'email_address'=>'required',
+            'email_address'=>'required|email|unique:tblemployee,emailAddress',
             'address'=>'required',
             'education'=>'required',
             'date_hired'=>'required',
@@ -53,19 +54,36 @@ class EmployeeController extends Controller
         $companyID = "LC-".str_pad(($employee+1), 4, '0', STR_PAD_LEFT);
         $employeePIN = "1234";
         $status = 1;
+        $token = $request->session()->token();
         $imagePath = "";
         //save the image
-        if($request->hasFile('image'))
+        if ($request->hasFile('image') && $request->file('image')->isValid()) 
         {
-            $imagePath = $request->file('image')->store('assets/profile/', 'public');
+
+            $image = $request->file('image');
+            $filename = $image->getClientOriginalName();
+            // Define the path where the image should be saved
+            $path = $image->storeAs('public/profile', $image->getClientOriginalName());
+        
+            $data = ['companyID'=>$companyID,'employeePIN'=>$employeePIN,'surName'=>$request->surname,'firstName'=>$request->firstname,'middleName'=>$request->middlename,'suffix'=>$request->suffix,
+                    'gender'=>$request->gender,'civilStatus'=>$request->civil_status,'dob'=>$request->date_of_birth,'address'=>$request->address,'religion'=>$request->religion,'emailAddress'=>$request->email_address,
+                    'contactNumber'=>$request->contact_number,'education'=>$request->education,'dateHired'=>$request->date_hired,'designation'=>$request->designation,'employmentStatus'=>$request->employment_status,
+                    'regularizationDate'=>$request->regularization_date,'officeID'=>$request->office,'departmentID'=>$request->department,'jobLevel'=>$request->job_level,'companyPhone'=>$request->company_phone,
+                    'sssNo'=>$request->sss_no,'philhealthNo'=>$request->ph_no,'hdmfNo'=>$request->hdmf_no,'tin'=>$request->tin,
+                    'accountNumber'=>$request->account_number,'employeeStatus'=>$status,'Image'=>$filename,'employeeToken'=>$token];
+            $employeeModel->create($data);
+            //get the employeeID from repository
+            $employeeRecord = $employeeModel->WHERE('companyID',$companyID)->first();
+            //save the first record of the employee
+            $newData = ['employeeID'=>$employeeRecord['employeeID'],'dateHired'=>$request->date_hired,'Designation'=>$request->designation,'officeID'=>$request->office,'employmentStatus'=>$request->employment_status,];
+            $recordModel->create($newData);
+            return redirect('/hr/employee')->with('success','Great! Successfully added');
         }
-        $data = ['companyID'=>$companyID,'employeePIN'=>$employeePIN,'surName'=>$request->surname,'firstName'=>$request->firstname,'middleName'=>$request->middlename,'suffix'=>$request->suffix,
-                'gender'=>$request->gender,'civilStatus'=>$request->civil_status,'dob'=>$request->date_of_birth,'address'=>$request->address,'religion'=>$request->religion,'emailAddress'=>$request->email_address,
-                'contactNumber'=>$request->contact_number,'education'=>$request->education,'dateHired'=>$request->date_hired,'designation'=>$request->designation,'employmentStatus'=>$request->employment_status,
-                'regularizationDate'=>$request->regularization_date,'officeID'=>$request->office,'departmentID'=>$request->department,'jobLevel'=>$request->job_level,'companyPhone'=>$request->company_phone,
-                'sssNo'=>$request->sss_no,'philhealthNo'=>$request->ph_no,'hdmfNo'=>$request->hdmf_no,'tin'=>$request->tin,
-                'accountNumber'=>$request->account_number,'employeeStatus'=>$status,'Image'=>$imagePath,'employeeToken'=>$request->_token];
-        $employeeModel->create($data);
-        return redirect('/hr/employee')->with('success','Great! Successfully added');
+        
+    }
+
+    public function updateEmployee()
+    {
+        
     }
 }
