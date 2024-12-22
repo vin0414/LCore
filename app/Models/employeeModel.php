@@ -11,8 +11,8 @@ class employeeModel extends Model
     protected $table = "tblemployee";
     protected $primaryKey = "employeeID";
     protected $fillable = ['companyID','employeePIN','surName','firstName','middleName','suffix',
-                            'gender','civilStatus','dob','address','religion','emailAddress','contactNumber',
-                            'dateHired','designation','employmentStatus','officeID','departmentID',
-                            'sssNo','philhealthNo','hdmfNo','tin',
+                            'gender','civilStatus','dob','address','religion','emailAddress','contactNumber','education',
+                            'dateHired','designation','employmentStatus','regularizationDate','officeID','departmentID',
+                            'jobLevel','companyPhone','sssNo','philhealthNo','hdmfNo','tin',
                             'accountNumber','employeeStatus','Image','employeeToken'];
 }

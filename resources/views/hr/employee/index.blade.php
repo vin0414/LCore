@@ -250,6 +250,11 @@
         <?php } ?>
       </aside>
       <div class="container">
+        @if(\Session::has('success'))
+            <div class="alert alert-success">
+                {{\Session::get('success')}}
+            </div>
+          @endif
         <div class="heading__box flex flex__align__center">
           <h1 class="heading__primary">{{$title}}</h1>
           <div class="breadcrumbs">
@@ -275,7 +280,6 @@
                   <th>Email Address</th>
                   <th>Permanent Address</th>
                   <th>Birthday</th>
-                  <th>Age</th>
                   <th>Gender</th>
                   <th>Status</th>
                   <th>Action</th>
@@ -288,7 +292,6 @@
                     <td><?php echo $row['emailAddress'] ?></td>
                     <td><?php echo $row['address'] ?></td>
                     <td><?php echo $row['dob'] ?></td>
-                    <td><?php echo \Carbon\Carbon::createFromFormat('m-d-Y', $row['dob'])->age ?></td>
                     <td><?php echo $row['gender'] ?></td>
                     <td><?php echo $row['employmentStatus'] ?></td>
                     <td class="pos__rel">
@@ -299,14 +302,14 @@
                         ></ion-icon>
                       </button>
                       <div class="dropdown__select">
-                        <a href="" class="select__item"
+                        <a href="{{route('hr/employee/edit',['companyID'=>$row['companyID']])}}" class="select__item"
                           ><ion-icon
                             class="select__icon"
                             name="create-outline"
                           ></ion-icon
                           >Edit</a
                         >
-                        <a href="#" class="select__item"
+                        <a href="{{route('hr/employee/view',['companyID'=>$row['companyID']])}}" class="select__item"
                           ><ion-icon
                             class="select__icon"
                             name="folder-open-outline"
@@ -334,7 +337,7 @@
             "<'row'<'col-sm-6'f>>" + // Search box on top in the same row
             "<'row'<'col-sm-12'tr>>" + // Table
             "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'p>>", // Bottom (length + pagination)
-          scrollX: true,
+          scrollX: false,
           oLanguage: { sSearch: "" },
           initComplete: function () {
             $("#dataTable_filter input").attr(

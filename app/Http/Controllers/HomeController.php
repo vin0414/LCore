@@ -115,9 +115,13 @@ class HomeController extends Controller
     public function newEmployee()
     {
         $title = "New Employee";
+        //application
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
-        $data = ['title'=>$title,'about'=>$about];
+        //load the offices
+        $officeModel = new \App\Models\officeModel();
+        $office = $officeModel->all();
+        $data = ['title'=>$title,'about'=>$about,'office'=>$office];
         return view('hr/employee/new-employee',$data);
     }
 

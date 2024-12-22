@@ -10,8 +10,10 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
     <link rel="stylesheet" href="/assets/css/reusables.css" />
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
+    <link rel="stylesheet" href="/assets/css/employee.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
   </head>
   <body>
@@ -254,6 +256,397 @@
             <p class="pages">Employee | <span>{{$title}}</span></p>
           </div>
         </div>
+        <div class="employee__card">
+          @if(\Session::has('message'))
+            <div class="alert alert-danger">
+                {{\Session::get('message')}}
+            </div>
+          @endif
+          <form class="form__container" method="POST" action="{{route('save-employee')}}" enctype="multipart/form-data">
+            @csrf
+            <div class="first__row grid">
+              <div class="profile__picture">
+                <p class="profile__heading">Profile Picture</p>
+                <div class="picture__box pos__rel">
+                  <img
+                    class="profile__image"
+                    src="/assets/images/default_image.png"
+                    id="profileImage"
+                  />
+                  <ion-icon
+                    class="icon__change__image"
+                    name="image-outline"
+                    id="uploadButton"
+                  ></ion-icon>
+                  <ion-icon
+                    class="icon__delete__image"
+                    name="trash-outline"
+                    id="cancelButton"
+                  ></ion-icon>
+                  <!-- Hidden File Input -->
+                  <input
+                    type="file"
+                    id="fileInput"
+                    accept="image/*" name="image"
+                    style="display: none"
+                  />
+                </div>
+                <p class="text__description bg__color__td">
+                  <span class="note">Note:</span> Only .png, .jpg and .jpeg
+                  image files are accepted
+                </p>
+              </div>
+              <div class="general__information">
+                <div class="info__heading__box">
+                  <p class="profile__heading">General Information</p>
+                </div>
+                <div class="input__boxes">
+                  <!-- 1 -->
+                  <div class="input__row grid__4cols__modified">
+                    <div class="input__box">
+                      <input
+                        class="information__input"
+                        placeholder="Enter Surname"
+                        name="surname" value="{{ old('surname') }}"
+                      />
+                      <span class="input__title">Surname</span>
+                      @if ($errors->has('surname'))
+                        <p class="text-danger">{{$errors->first('surname')}}</p>
+                      @endif
+                    </div>
+                    <div class="input__box">
+                      <input
+                        class="information__input"
+                        placeholder="Enter firstname"
+                        name="firstname" value="{{ old('firstname') }}"
+                      />
+                      <span class="input__title">Firstname</span>
+                      @if ($errors->has('firstname'))
+                        <p class="text-danger">{{$errors->first('firstname')}}</p>
+                      @endif
+                    </div>
+                    <div class="input__box">
+                      <input
+                        class="information__input"
+                        placeholder="Enter middle name"
+                        name="middlename" value="{{ old('middlename') }}"
+                      />
+                      <span class="input__title">Middle Name</span>
+                      @if ($errors->has('middlename'))
+                        <p class="text-danger">{{$errors->first('middlename')}}</p>
+                      @endif
+                    </div>
+                    <div class="input__box">
+                      <input
+                        class="information__input"
+                        placeholder="Enter suffix"
+                        name="suffix"
+                      />
+                      <span class="input__title">Suffix</span>
+                    </div>
+                  </div>
+                  <!-- 2 -->
+                  <div class="input__row grid__5cols__modified">
+                    <div class="input__box">
+                      <ion-icon
+                        class="pos__abs input__chev__down"
+                        name="chevron-down-outline"
+                      ></ion-icon>
+                      <select class="information__input" name="gender">
+                        <option value="" disabled selected>
+                          Select gender
+                        </option>
+                        <option value="Male" {{ old('gender') == "Male" ? 'selected' : '' }}>Male</option>
+                        <option value="Female" {{ old('gender') == "Female" ? 'selected' : '' }}>Female</option>
+                      </select>
+                      <span class="input__title">Gender</span>
+                      @if ($errors->has('gender'))
+                        <p class="text-danger">{{$errors->first('gender')}}</p>
+                      @endif
+                    </div>
+                    <div class="input__box">
+                      <ion-icon
+                        class="pos__abs input__chev__down"
+                        name="chevron-down-outline"
+                      ></ion-icon>
+                      <select
+                        class="information__input" name="civil_status"
+                        placeholder="Enter civil status"
+                      >
+                        <option value="" disabled selected>
+                          Select
+                        </option>
+                        <option {{ old('civil_status') == "Single" ? 'selected' : '' }}>Single</option>
+                        <option {{ old('civil_status') == "Married" ? 'selected' : '' }}>Married</option>
+                        <option {{ old('civil_status') == "Widowed" ? 'selected' : '' }}>Widowed</option>
+                        <option {{ old('civil_status') == "Separated" ? 'selected' : '' }}>Separated</option>
+                        <option {{ old('civil_status') == "Divorced" ? 'selected' : '' }}>Divorced</option>
+                        <option {{ old('civil_status') == "Single with Children" ? 'selected' : '' }}>Single with Children</option>
+                      </select>
+
+                      <span class="input__title">Civil Status</span>
+                      @if ($errors->has('civil_status'))
+                        <p class="text-danger">{{$errors->first('civil_status')}}</p>
+                      @endif
+                    </div>
+                    <div class="input__box">
+                      <input
+                        type="date"
+                        class="information__input" name="date_of_birth"
+                        placeholder="Enter date of birth" value="{{ old('date_of_birth') }}"
+                      />
+                      <span class="input__title">Date of Birth</span>
+                      @if ($errors->has('date_of_birth'))
+                        <p class="text-danger">{{$errors->first('date_of_birth')}}</p>
+                      @endif
+                    </div>
+                    <div class="input__box">
+                      <input
+                        class="information__input" name="religion"
+                        placeholder="Enter religion" value="{{ old('religion') }}"
+                      />
+                      <span class="input__title">Religion</span>
+                      @if ($errors->has('religion'))
+                        <p class="text-danger">{{$errors->first('religion')}}</p>
+                      @endif
+                    </div>
+                    <div class="input__box">
+                      <input
+                        type="phone"
+                        class="information__input" name="contact_number"
+                        placeholder="Enter contact no." value="{{ old('contact_number') }}"
+                        maxlength="11" minlength="11" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                      />
+                      <span class="input__title">Contact Number</span>
+                      @if ($errors->has('contact_number'))
+                        <p class="text-danger">{{$errors->first('contact_number')}}</p>
+                      @endif
+                    </div>
+                  </div>
+                  <!-- 3 -->
+                  <div class="input__row grid__3cols__modified">
+                    <div class="input__box">
+                      <input
+                        type="email"
+                        class="information__input" name="email_address"
+                        placeholder="Enter email address" value="{{ old('email_address') }}"
+                      />
+                      <span class="input__title">Email Address</span>
+                      @if ($errors->has('email_address'))
+                        <p class="text-danger">{{$errors->first('email_address')}}</p>
+                      @endif
+                    </div>
+                    <div class="input__box">
+                      <input
+                        class="information__input" name="address"
+                        placeholder="Enter address" value="{{ old('address') }}"
+                      />
+                      <span class="input__title">Permanent Address</span>
+                      @if ($errors->has('address'))
+                        <p class="text-danger">{{$errors->first('address')}}</p>
+                      @endif
+                    </div>
+                    <div class="input__box grid__column__mod">
+                      <input
+                        class="information__input" name="education" value="{{ old('address') }}"
+                        placeholder="Enter educational attainment"
+                      />
+                      <span class="input__title">Educational Attainment</span>
+                      @if ($errors->has('education'))
+                        <p class="text-danger">{{$errors->first('education')}}</p>
+                      @endif
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="second__row">
+              <p class="profile__heading work__information">Work Information</p>
+              <div class="input__boxes">
+                <!-- 1 -->
+                <div class="input__row grid__5cols__modified">
+                  <div class="input__box">
+                    <input
+                      type="date"
+                      class="information__input"
+                      placeholder="Enter date" name="date_hired" value="{{ old('date_hired') }}"
+                    />
+                    <span class="input__title">Date Hired</span>
+                    @if ($errors->has('date_hired'))
+                        <p class="text-danger">{{$errors->first('date_hired')}}</p>
+                      @endif
+                  </div>
+                  <div class="input__box">
+                    <input
+                      class="information__input" name="designation"
+                      placeholder="Enter designation" value="{{ old('designation') }}"
+                    />
+                    <span class="input__title">Designation</span>
+                    @if ($errors->has('designation'))
+                        <p class="text-danger">{{$errors->first('designation')}}</p>
+                      @endif
+                  </div>
+                  <div class="input__box">
+                    <input
+                      type="number"
+                      class="information__input" maxlength="11" minlength="11" name="phone" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                      placeholder="Enter contact no." name="company_phone"
+                    />
+                    <span class="input__title">Company Contact No.</span>
+                  </div>
+                  <div class="input__box">
+                    <ion-icon
+                      class="pos__abs input__chev__down"
+                      name="chevron-down-outline"
+                    ></ion-icon>
+                    <select class="information__input" id="office-select" name="office" placeholder="Enter office">
+                      <option value="" disabled selected>Select office</option>
+                      <?php foreach($office as $row): ?>
+                        <option value="<?php echo $row['officeID'] ?>"  {{ old('office') == $row['officeID'] ? 'selected' : '' }}><?php echo $row['officeName'] ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                    <span class="input__title">Office</span>
+                    @if ($errors->has('office'))
+                        <p class="text-danger">{{$errors->first('office')}}</p>
+                      @endif
+                  </div>
+
+                  <div class="input__box">
+                    <ion-icon
+                      class="pos__abs input__chev__down"
+                      name="chevron-down-outline"
+                    ></ion-icon>
+                    <select
+                      class="information__input"
+                      id="department-select" name="department">
+                      <option value="">Select one</option>
+                    </select>
+                    <span id="officeTitle" class="input__title"
+                      >Department | Branch</span
+                    >
+                    @if ($errors->has('department'))
+                        <p class="text-danger">{{$errors->first('department')}}</p>
+                      @endif
+                  </div>
+                </div>
+                <!-- 2 -->
+                <div class="input__row grid__4cols__modified">
+                  <div class="input__box">
+                    <ion-icon
+                      class="pos__abs input__chev__down"
+                      name="chevron-down-outline"
+                    ></ion-icon>
+                    <select class="information__input" name="job_level">
+                      <option value="" disabled selected>
+                        Select job level
+                      </option>
+                      <option value="Rank and File" {{ old('job_level') == "Rank and File" ? 'selected' : '' }}>Rank and File</option>
+                      <option value="Specialist" {{ old('job_level') == "Specialist" ? 'selected' : '' }}>Specialist</option>
+                      <option value="Officer" {{ old('job_level') == "Officer" ? 'selected' : '' }}>Officer</option>
+                      <option value="Supervisor" {{ old('job_level') == "Supervisor" ? 'selected' : '' }}>Supervisor</option>
+                      <option value="Managerial" {{ old('job_level') == "Managerial" ? 'selected' : '' }}>Managerial</option>
+                      <option value="Executive" {{ old('job_level') == "Executive" ? 'selected' : '' }}>Executive</option>
+                    </select>
+                    <span class="input__title">Job Level</span>
+                    @if ($errors->has('job_level'))
+                        <p class="text-danger">{{$errors->first('job_level')}}</p>
+                      @endif
+                  </div>
+                  <div class="input__box">
+                    <ion-icon
+                      class="pos__abs input__chev__down"
+                      name="chevron-down-outline"
+                    ></ion-icon>
+                    <select class="information__input" name="employment_status">
+                      <option value="" disabled selected>Select status</option>
+                      <option {{ old('employment_status') == "Probationary" ? 'selected' : '' }}>Probationary</option>
+                      <option {{ old('employment_status') == "Regular" ? 'selected' : '' }}>Regular</option>
+                      <option {{ old('employment_status') == "Contractual" ? 'selected' : '' }}>Contractual</option>
+                    </select>
+                    <span class="input__title">Employment Status</span>
+                    @if ($errors->has('employment_status'))
+                        <p class="text-danger">{{$errors->first('employment_status')}}</p>
+                      @endif
+                  </div>
+                  <div class="input__box">
+                    <input
+                      type="date"
+                      class="information__input"
+                      placeholder="Enter date" name="regularization_date"
+                    />
+                    <span class="input__title">Regularization Date</span>
+                  </div>
+                  <div class="input__box">
+                    <input
+                      type="number"
+                      class="information__input" name="account_number"
+                      placeholder="Enter bank account no." value="{{ old('account_number') }}"
+                    />
+                    <span class="input__title">Bank Account Number</span>
+                    @if ($errors->has('account_number'))
+                        <p class="text-danger">{{$errors->first('account_number')}}</p>
+                      @endif
+                  </div>
+                </div>
+                <!-- 3 -->
+                <p class="profile__heading government__details">
+                  Government Records
+                </p>
+                <div class="input__row grid__4cols__modified">
+                  <div class="input__box">
+                    <input
+                      type="number"
+                      class="information__input" value="{{ old('sss_no') }}"
+                      placeholder="Enter SSS number" name="sss_no"
+                    />
+                    <span class="input__title">SSS Number</span>
+                    @if ($errors->has('sss_no'))
+                        <p class="text-danger">{{$errors->first('sss_no')}}</p>
+                      @endif
+                  </div>
+                  <div class="input__box">
+                    <input
+                      type="number"
+                      class="information__input" value="{{ old('ph_no') }}"
+                      placeholder="Enter philhealth no." name="ph_no"
+                    />
+                    <span class="input__title">Philhealth Number</span>
+                    @if ($errors->has('ph_no'))
+                        <p class="text-danger">{{$errors->first('ph_no')}}</p>
+                      @endif
+                  </div>
+                  <div class="input__box">
+                    <input
+                      type="number"
+                      class="information__input" value="{{ old('hdmf_no') }}"
+                      placeholder="Enter pag-ibig no." name="hdmf_no"
+                    />
+                    <span class="input__title">Pag-IBIG Number</span>
+                    @if ($errors->has('hdmf_no'))
+                        <p class="text-danger">{{$errors->first('hdmf_no')}}</p>
+                      @endif
+                  </div>
+                  <div class="input__box">
+                    <input
+                      type="number"
+                      class="information__input" name="tin"
+                      placeholder="Enter TIN" value="{{ old('tin') }}"
+                    />
+                    <span class="input__title">Tax Identification Number</span>
+                    @if ($errors->has('tin'))
+                        <p class="text-danger">{{$errors->first('tin')}}</p>
+                      @endif
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="btn__box">
+              <button class="btn__primary" type="submit">
+                <ion-icon class="icon__add" name="save-outline"></ion-icon> Save Records
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </main>
     <footer class="footer">
@@ -262,6 +655,51 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        $('#office-select').change(function(){
+            $('#department-select').find('option').not(':first').remove();
+            $.ajax({
+                url:"{{route('fetch-department')}}",method:"GET",
+                data:{value:$(this).val()},
+                success:function(response)
+                {
+                    $('#department-select').append(response);
+                }
+            });
+        });
+        // Uploading picture Starts here ~
+        // Trigger file input click when the image icon is clicked
+        $("#uploadButton").on("click", function () {
+          $("#fileInput").click();
+        });
+
+        // Image selection
+        $("#fileInput").on("change", function () {
+          const file = this.files[0];
+
+          if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+              $("#profileImage").attr("src", e.target.result);
+            };
+
+            reader.readAsDataURL(file);
+          } else {
+            alert("No file selected!");
+          }
+        });
+        // Clear image source when trash button is clicked
+        $("#cancelButton").on("click", function () {
+          $("#profileImage").attr("src", "/assets/images/default_image.png");
+          $("#fileInput").val("");
+        });
+        // Uploading picture ends here ~
+
+        // Data Tables script
+        $("#dataTable").DataTable();
+        // Data tables ends here ~
+
+        // Event Listeners
         $("#menuButton").on("click", function (e) {
           e.stopPropagation();
           showSideBar();
@@ -302,6 +740,8 @@
         $("#headerNav").removeClass("open");
       }
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script
       type="module"
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"

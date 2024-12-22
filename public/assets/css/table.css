@@ -228,8 +228,6 @@
     width: 100%;
   } */
   
-  .dataTables_scroll {
-  }
   .dataTables_scroll::-webkit-scrollbar {
     width: 0.5rem; /* Width of the scrollbar */
   }
@@ -318,5 +316,17 @@
     }
     .button__box {
       top: 0;
+    }
+  }
+
+  .dataTables_wrapper {
+    position: relative;
+    clear: both;
+    overflow-y: hidden;
+  }
+
+  @media (max-width: 57.125em) {
+    .dataTables_wrapper {
+      overflow-x: scroll;
     }
   }

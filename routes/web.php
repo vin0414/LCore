@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\HomeController;
@@ -16,14 +17,17 @@ use App\Http\Controllers\HomeController;
 */
 Route::get('/',[HomeController::class,'home'])->name('/');
 Route::get('/login',[HomeController::class,'home'])->name('/login');
-
 //login and logout
 Route::post('login',[CustomAuthController::class,'auth'])->name('login')->middleware('throttle:5,1');
 Route::get('logout', [CustomAuthController::class, 'logout'])->name('logout');
+//charts
+Route::get('chart-data', [HomeController::class, 'getChartData'])->name('chart-data');
+//settings
+Route::get('fetch-department',[EmployeeController::class,'fetchDepartment'])->name('fetch-department');
+//employee
+Route::post('save-employee',[EmployeeController::class,'saveEmployee'])->name('save-employee');
 
 Route::middleware('auth:user')->group(function () {
-    //charts
-    Route::get('chart-data', [HomeController::class, 'getChartData'])->name('chart-data');
     //navigations
     Route::get('hr/overview',[HomeController::class,'overview'])->name('hr/overview');
     Route::get('hr/deductions',[HomeController::class,'deductions'])->name('hr/deductions');
