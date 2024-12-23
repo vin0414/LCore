@@ -149,11 +149,21 @@ class HomeController extends Controller
     public function viewEmployee($id)
     {
         $title = "View Employee";
+        //application
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
+        //employee
         $employeeModel = new \App\Models\employeeModel();
         $employee = $employeeModel->WHERE('companyID',$id)->first();
-        $data = ['title'=>$title,'employee'=>$employee,'about'=>$about];
+        //office
+        //load the offices
+        $officeModel = new \App\Models\officeModel();
+        $office = $officeModel->all();
+        //department
+        $departmentModel = new \App\Models\departmentModel();
+        $department = $departmentModel->WHERE('officeID',$employee['officeID'])->get();
+
+        $data = ['title'=>$title,'employee'=>$employee,'about'=>$about,'office'=>$office,'department'=>$department];
         return view('hr/employee/view-employee',$data);
     }
 
