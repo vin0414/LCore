@@ -259,8 +259,72 @@
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="content-tab1">
-              <form method="POST" class=""></form>
-            </div>
+              <form method="POST" class="">
+                <div class="box__container">                
+                  <div class="settings__picture__box pos__rel">
+                    <img
+                      class="setting__profile__img"
+                      src="/assets/images/default_image.png"
+                      id="profileImage"
+                    />
+                    <div class="settings__icon__box">
+                      <a class="settings__subheading">
+                        <ion-icon
+                        class="icon__change__image"
+                        name="image-outline"
+                        id="uploadButton"
+                      ></ion-icon> Add new logo</a>
+                    </div>
+                    <!-- <div class="settings__icon__box">
+                      <a class="settings__subheading">
+                        <ion-icon
+                        class="icon__change__image"
+                        name="trash-outline"
+                        id="uploadButton"
+                      ></ion-icon> Delete logo</a>
+                    </div> -->
+                        <!-- Hidden File Input -->
+                    <input
+                      type="file"
+                      id="fileInput"
+                      accept="image/*" name="image"
+                      style="display: none"
+                    />
+                  </div>
+                  <p class="text__description bg__color__td">
+                    <span class="note">Note:</span> Only .png, .jpg and .jpeg
+                    image files are accepted
+                  </p>
+                </div>
+                <div class="input__boxes">
+                  <div class="input__box">
+                    <input
+                      class="information__input input__settings"
+                      placeholder="Enter title"
+                      name="title"
+                    />
+                    <span class="input__title">Title</span>
+                  </div>
+                  <div class="input__box">
+                    <input
+                      class="information__input input__settings"
+                      placeholder="Enter keywords"
+                      name="keywords"
+                    />
+                    <span class="input__title">Keywords</span>
+                  </div>
+                  <div class="input__box grid__pos">
+                    <textarea
+                      class="information__input text__area__settings"
+                      placeholder="Enter description"
+                      name="description"
+                   ></textarea>
+                    <span class="input__title">Description</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
             <div class="tab-pane" id="content-tab2">
               <div class="pos__rel">
                 <div class="button__box pos__abs">
