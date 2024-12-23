@@ -662,7 +662,7 @@ a.no-underline {
     position: relative;
     height: 100%;
 }
-.information__input {
+/* .information__input {
     padding: 3.5rem 2rem 1.5rem 2rem;
     border-radius: 1rem;
     border: 1px solid var(--line-color);
@@ -670,7 +670,7 @@ a.no-underline {
     font-family: "poppins", sans-serif;
     color: var(--black-color);
     height: 100%;
-}
+} */
 .input__title {
     position: absolute;
     font-size: 1.2rem;
@@ -680,11 +680,11 @@ a.no-underline {
 }
 
 .input__boxes {
-    margin-top: 2rem;
+    /* margin-top: 2rem;
     font-size: 1.6rem;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 2rem;
+    gap: 2rem; */
 }
 
 .grid__pos {
