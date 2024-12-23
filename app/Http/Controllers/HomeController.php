@@ -175,8 +175,9 @@ class HomeController extends Controller
         $about = $aboutModel->first();
         //employee
         $employee = DB::table('tblemployee as a')
-                    ->leftJoin('tblcredit as b','b.employeeID','=','a.employeeID');
-        $data = ['title'=>$title,'about'=>$about];
+                    ->leftJoin('tblcredit as b','b.employeeID','=','a.employeeID')
+                    ->select('a.companyID','a.surName','a.firstName','a.middleName','a.suffix','b.Vacation','b.Sick','b.Year')->get();
+        $data = ['title'=>$title,'about'=>$about,'employee'=>$employee];
         return view('hr/employee/credits',$data);
     }
 
