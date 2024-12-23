@@ -350,7 +350,7 @@
             "<'row'<'col-sm-6'f>>" + // Search box on top in the same row
             "<'row'<'col-sm-12'tr>>" + // Table
             "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'p>>", // Bottom (length + pagination)
-          scrollX: true,
+
           oLanguage: { sSearch: "" },
           initComplete: function () {
             $("#dataTable_filter input").attr(
