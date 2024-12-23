@@ -82,6 +82,7 @@ table.dataTable {
     background-color: transparent;
     color: inherit;
     margin-left: 0 !important;
+    width: 40rem;
 }
 
 .sidebar__nav {
