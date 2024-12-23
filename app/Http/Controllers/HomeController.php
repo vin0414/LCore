@@ -170,8 +170,12 @@ class HomeController extends Controller
     public function creditsEmployee()
     {
         $title = "Leave Credits";
+        //application
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
+        //employee
+        $employee = DB::table('tblemployee as a')
+                    ->leftJoin('tblcredit as b','b.employeeID','=','a.employeeID');
         $data = ['title'=>$title,'about'=>$about];
         return view('hr/employee/credits',$data);
     }
@@ -179,9 +183,14 @@ class HomeController extends Controller
     public function employeeMovement()
     {
         $title = "Employee Mobility";
+        //application
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
-        $data = ['title'=>$title,'about'=>$about];
+        //employee
+        $employee = DB::table('tblrecord as a')
+                ->leftJoin('tblemployee as b','b.employeeID','=','a.employeeID')
+                ->select('a.*','b.companyID','b.surName','b.firstName','b.middleName','b.suffix')->get();
+        $data = ['title'=>$title,'about'=>$about,'employee'=>$employee];
         return view('hr/employee/movement',$data);
     }
 

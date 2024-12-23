@@ -256,13 +256,7 @@
           </div>
         </div>
         <div class="employee__card">
-          @if(\Session::has('message'))
-            <div class="alert alert-danger">
-                {{\Session::get('message')}}
-            </div>
-          @endif
           <form class="form__container" method="POST">
-            @csrf
             <?php if($employee): ?>
             <div class="first__row grid">
               <div class="profile__picture">
@@ -273,17 +267,6 @@
                     src="/profile/{{$employee['Image']}}"
                     id="profileImage"
                   />
-                  <ion-icon
-                    class="icon__change__image"
-                    name="image-outline"
-                    id="uploadButton"
-                  ></ion-icon>
-                  <ion-icon
-                    class="icon__delete__image"
-                    name="trash-outline"
-                    id="cancelButton"
-                  ></ion-icon>
-                  <!-- Hidden File Input -->
                   <input
                     type="file"
                     id="fileInput"
@@ -299,6 +282,13 @@
               <div class="general__information">
                 <div class="info__heading__box">
                   <p class="profile__heading">General Information</p>
+                  <a href="{{route('hr/employee/edit',['companyID'=>$employee['companyID']])}}" class="btn__primary no-underline">
+                    <ion-icon
+                      name="create-outline"
+                      class=""
+                    ></ion-icon
+                    >Edit
+                  </a>
                   <a href="{{route('hr/employee')}}" class="btn__primary no-underline">
                     <ion-icon
                       name="arrow-back-outline"
@@ -398,7 +388,7 @@
                     </div>
                     <div class="input__box">
                       <input
-                        type="date"
+                        type="text"
                         class="information__input" name="date_of_birth"
                         placeholder="Enter date of birth" value="{{$employee['dob']}}"
                       />
@@ -474,7 +464,7 @@
                 <div class="input__row grid__5cols__modified">
                   <div class="input__box">
                     <input
-                      type="date"
+                      type="text"
                       class="information__input"
                       placeholder="Enter date" name="date_hired" value="{{ $employee['dateHired'] }}"
                     />
@@ -580,7 +570,7 @@
                   </div>
                   <div class="input__box">
                     <input
-                      type="date"
+                      type="text"
                       class="information__input" value="{{ $employee['regularizationDate'] }}"
                       placeholder="Enter date" name="regularization_date"
                     />
