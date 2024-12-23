@@ -10,5 +10,5 @@ class aboutModel extends Model
     use HasFactory;
     protected $table = "tblcompany";
     protected $primaryKey = "companyID";
-    protected $fillable = ['companyName', 'companyDetails','companyLogo'];
+    protected $fillable = ['companyName', 'companyDetails','companyTag','companyLogo'];
 }
