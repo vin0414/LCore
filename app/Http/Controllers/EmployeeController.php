@@ -96,7 +96,7 @@ class EmployeeController extends Controller
             'date_of_birth'=>'required',
             'religion'=>'required',
             'contact_number'=>'required',
-            'email_address'=>'required|email|unique:tblemployee,emailAddress',
+            'email_address'=>'required|email',
             'address'=>'required',
             'education'=>'required',
             'date_hired'=>'required',
@@ -120,6 +120,25 @@ class EmployeeController extends Controller
             $filename = $image->getClientOriginalName();
             // Define the path where the image should be saved
             $image->move('Profile/',$filename);
+
+            $employeeModel::where('employeeID',$request->employeeID)
+                            ->update(['surName'=>$request->surname,'firstName'=>$request->firstname,'middleName'=>$request->middlename,'suffix'=>$request->suffix,
+                            'gender'=>$request->gender,'civilStatus'=>$request->civil_status,'dob'=>$request->date_of_birth,'address'=>$request->address,'religion'=>$request->religion,'emailAddress'=>$request->email_address,
+                            'contactNumber'=>$request->contact_number,'education'=>$request->education,'dateHired'=>$request->date_hired,'designation'=>$request->designation,'employmentStatus'=>$request->employment_status,
+                            'regularizationDate'=>$request->regularization_date,'officeID'=>$request->office,'departmentID'=>$request->department,'jobLevel'=>$request->job_level,'companyPhone'=>$request->company_phone,
+                            'sssNo'=>$request->sss_no,'philhealthNo'=>$request->ph_no,'hdmfNo'=>$request->hdmf_no,'tin'=>$request->tin,
+                            'accountNumber'=>$request->account_number,'Image'=>$filename]);
         }
+        else
+        {
+            $employeeModel::where('employeeID',$request->employeeID)
+                            ->update(['surName'=>$request->surname,'firstName'=>$request->firstname,'middleName'=>$request->middlename,'suffix'=>$request->suffix,
+                            'gender'=>$request->gender,'civilStatus'=>$request->civil_status,'dob'=>$request->date_of_birth,'address'=>$request->address,'religion'=>$request->religion,'emailAddress'=>$request->email_address,
+                            'contactNumber'=>$request->contact_number,'education'=>$request->education,'dateHired'=>$request->date_hired,'designation'=>$request->designation,'employmentStatus'=>$request->employment_status,
+                            'regularizationDate'=>$request->regularization_date,'officeID'=>$request->office,'departmentID'=>$request->department,'jobLevel'=>$request->job_level,'companyPhone'=>$request->company_phone,
+                            'sssNo'=>$request->sss_no,'philhealthNo'=>$request->ph_no,'hdmfNo'=>$request->hdmf_no,'tin'=>$request->tin,
+                            'accountNumber'=>$request->account_number]);
+        }
+        return redirect('/hr/employee')->with('success','Great! Successfully applied changes');
     }
 }
