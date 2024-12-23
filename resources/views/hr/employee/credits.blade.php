@@ -260,18 +260,22 @@
           <div class="dataWrapper">
             <table id="dataTable" class="display">
               <thead>
+                  <th>#</th>
                   <th>Employee ID</th>
                   <th>Complete Name</th>
+                  <th>Designation</th>
                   <th>Vacation</th>
                   <th>Sick Leave</th>
               </thead>
               <tbody>
                 <?php foreach($employee as $row): ?>
                   <tr>
+                    <td><input type="checkbox" style="height:15px;width:15px;" value="<?php echo $row->creditID ?>" name="employeeID[]" id="employeeID" checked disabled/></td>
                     <td><?php echo $row->companyID ?></td>
                     <td><?php echo $row->surName ?> <?php echo $row->suffix ?>,&nbsp;<?php echo $row->firstName ?> <?php echo $row->middleName ?></td>
-                    <td><?php echo $row->Vacation ?></td>
-                    <td><?php echo $row->Sick ?></td>
+                    <td><?php echo $row->designation ?></td>
+                    <td><input type='text' class='form-control' value="<?php echo $row->Vacation ?>" name='item_vacation[]'/></td>
+                    <td><input type='text' class='form-control' value="<?php echo $row->Sick ?>" name='item_sick[]'/></td>
                   </tr>
                 <?php endforeach; ?>
               </tbody>
