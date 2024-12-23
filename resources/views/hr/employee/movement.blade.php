@@ -10,8 +10,10 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
     <link rel="stylesheet" href="/assets/css/reusables.css" />
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
+    <link rel="stylesheet" href="/assets/css/table.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
   </head>
   <body>
@@ -254,6 +256,54 @@
             <p class="pages">Employee | <span>{{$title}}</span></p>
           </div>
         </div>
+        <div class="pos__rel">
+          <div class="dataWrapper">
+            <table id="dataTable" class="display">
+              <thead>
+                  <th>Employee ID</th>
+                  <th>Complete Name</th>
+                  <th>Date Hired</th>
+                  <th>Designation</th>
+                  <th>Status</th>
+                  <th>End Date</th>
+                  <th>Cost</th>
+                  <th>Remarks</th>
+                  <th>Action</th>
+              </thead>
+              <tbody>
+                <?php foreach($employee as $row): ?>
+                  <tr>
+                    <td><?php echo $row->companyID ?></td>
+                    <td><?php echo $row->surName ?> <?php echo $row->suffix ?>,&nbsp;<?php echo $row->firstName ?> <?php echo $row->middleName ?></td>
+                    <td><?php echo $row->dateHired ?></td>
+                    <td><?php echo $row->Designation ?></td>
+                    <td><?php echo $row->employmentStatus ?></td>
+                    <td><?php echo $row->end_date ?></td>
+                    <td><?php echo $row->cost ?></td>
+                    <td><?php echo $row->Remarks ?></td>
+                    <td class="pos__rel">
+                      <button class="btn__select">
+                        <ion-icon
+                          name="ellipsis-horizontal-circle-outline"
+                          class="icon__button"
+                        ></ion-icon>
+                      </button>
+                      <div class="dropdown__select">
+                        <a href="" class="select__item"
+                          ><ion-icon
+                            class="select__icon"
+                            name="create-outline"
+                          ></ion-icon
+                          >Edit</a
+                        >
+                      </div>
+                    </td>
+                  </tr>
+                <?php endforeach; ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </main>
     <footer class="footer">
@@ -262,6 +312,40 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        $("#dataTable").DataTable({
+          dom:
+            "<'row'<'col-sm-6'f>>" + // Search box on top in the same row
+            "<'row'<'col-sm-12'tr>>" + // Table
+            "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'p>>", // Bottom (length + pagination)
+          scrollX: false,
+          oLanguage: { sSearch: "" },
+          initComplete: function () {
+            $("#dataTable_filter input").attr(
+              "placeholder",
+              "Search by name, etc."
+            );
+          },
+        });
+
+        $(document).on("click", ".btn__select", function () {
+          const dropdown = $(".dropdown__select");
+          const i = $(this).index(".btn__select");
+
+          dropdown.removeClass("open");
+          if (dropdown[i]) {
+            $(dropdown[i]).toggleClass("open");
+          }
+        });
+
+        $(document).on("click", function (event) {
+          const dropDownAction = $(".dropdown__select");
+          if (
+            !$(event.target).closest(".dropdown__select").length &&
+            !$(event.target).closest(".btn__select").length
+          ) {
+            dropDownAction.removeClass("open");
+          }
+        });
         $("#menuButton").on("click", function (e) {
           e.stopPropagation();
           showSideBar();
@@ -302,13 +386,9 @@
         $("#headerNav").removeClass("open");
       }
     </script>
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   </body>
 </html>
