@@ -4,6 +4,7 @@
 .text-danger {
     white-space: nowrap;
     transform: translateY(0.6rem);
+    font-weight: 400;
 }
 .first__row {
     grid-template-columns: 0.3fr 1.7fr;
@@ -223,6 +224,7 @@
         row-gap: 3rem;
     }
 }
+
 /* 586 */
 @media (max-width: 36.625em) {
     .grid__6cols__modified {
