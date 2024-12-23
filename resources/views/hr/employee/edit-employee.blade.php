@@ -264,13 +264,14 @@
           <form class="form__container" method="POST" action="{{route('update-employee')}}" enctype="multipart/form-data">
             @csrf
             <?php if($employee): ?>
+            <input type="hidden" name="employeeID" value="{{ $employee['employeeID'] }}"/> 
             <div class="first__row grid">
               <div class="profile__picture">
                 <p class="profile__heading">Profile Picture</p>
                 <div class="picture__box pos__rel">
                   <img
                     class="profile__image"
-                    src="{{ asset('public/profile' . $employee['Image']) }}"
+                    src="/profile/{{$employee['Image']}}"
                     id="profileImage"
                   />
                   <ion-icon
