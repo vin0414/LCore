@@ -82,6 +82,11 @@ class EmployeeController extends Controller
                     'Designation'=>$request->designation,'officeID'=>$request->office,
                     'employmentStatus'=>$request->employment_status,'end_date'=>'0000-00-00','cost'=>$cost];
         $recordModel->create($newData);
+        //create log record
+        $logModel = new \App\Models\logModel();
+        $date = date('Y-m-d h:i:s a');
+        $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Added new employee: '.$companyID];
+        $logModel->create($data);
         return redirect('/hr/employee')->with('success','Great! Successfully added');
         
     }
@@ -144,11 +149,17 @@ class EmployeeController extends Controller
                             'sssNo'=>$request->sss_no,'philhealthNo'=>$request->ph_no,'hdmfNo'=>$request->hdmf_no,'tin'=>$request->tin,
                             'accountNumber'=>$request->account_number]);
         }
+        //create log record
+        $logModel = new \App\Models\logModel();
+        $date = date('Y-m-d h:i:s a');
+        $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Update the existing records of Mr/Ms '.$request->surname];
+        $logModel->create($data);
         return redirect('/hr/employee')->with('success','Great! Successfully applied changes');
     }
 
     public function addCredit(Request $request)
     {
+        date_default_timezone_set('Asia/Manila');
         $creditModel = new \App\Models\creditModel();
         //data
         $employeeID = $request->employeeID;
@@ -170,6 +181,11 @@ class EmployeeController extends Controller
                 ->update(['Vacation'=>$item_vl[$i],'Sick'=>$item_sl[$i]]);
             }
         }
+        //create log record
+        $logModel = new \App\Models\logModel();
+        $date = date('Y-m-d h:i:s a');
+        $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Add and/or update leave credits'];
+        $logModel->create($data);
         return redirect('/hr/employee/credits')->with('success','Great! Successfully applied changes');
     }
 
@@ -211,6 +227,7 @@ class EmployeeController extends Controller
 
     public function addEmployeeWorkHistory(Request $request)
     {
+        date_default_timezone_set('Asia/Manila');
         $historyModel = new \App\Models\historyModel();
         //data
         $validator = Validator::make($request->all(),[
@@ -232,6 +249,14 @@ class EmployeeController extends Controller
                     'Company'=>$request->company,'Address'=>$request->address,
                     'From'=>$request->from,'To'=>$request->to];
             $historyModel->create($data);
+            //get the companyID
+            $employeeModel = new \App\Models\employeeModel();
+            $employee = $employeeModel->WHERE('employeeID',$request->employeeID)->first();
+            //create log record
+            $logModel = new \App\Models\logModel();
+            $date = date('Y-m-d h:i:s a');
+            $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Add employment records for '.$employee['companyID']];
+            $logModel->create($data);
             return response()->json(['success' => 'Form submitted successfully!']);
         }
     }
@@ -274,6 +299,7 @@ class EmployeeController extends Controller
 
     public function addEmployeeCertificates(Request $request)
     {
+        date_default_timezone_set('Asia/Manila');
         $certificateModel = new \App\Models\certificateModel();
         $validator = Validator::make($request->all(),[
             'employeeID'=>'required',
@@ -292,6 +318,14 @@ class EmployeeController extends Controller
             $data = ['employeeID'=>$request->employeeID, 'Title'=>$request->title,
                     'Venue'=>$request->venue,'From'=>$request->from_date,'To'=>$request->to_date];
             $certificateModel->create($data);
+            //get the companyID
+            $employeeModel = new \App\Models\employeeModel();
+            $employee = $employeeModel->WHERE('employeeID',$request->employeeID)->first();
+            //create log record
+            $logModel = new \App\Models\logModel();
+            $date = date('Y-m-d h:i:s a');
+            $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Add trainings and/or certificates for '.$employee['companyID']];
+            $logModel->create($data);
             return response()->json(['success' => 'Form submitted successfully!']);
         }
     }

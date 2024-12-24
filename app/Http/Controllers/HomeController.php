@@ -276,9 +276,14 @@ class HomeController extends Controller
         if(session('role')=="ADMIN"||session('role')=="Admin")
         {
             $title = "Audit Trail";
+            //application
             $aboutModel = new \App\Models\aboutModel();
             $about = $aboutModel->first();
-            $data = ['title'=>$title,'about'=>$about];
+            //logs
+            $log = DB::table('tblsystemlogs as a')
+                    ->leftJoin('tblaccount as b','b.accountID','=','a.accountID')
+                    ->select('a.*','b.Fullname','b.Role')->get();
+            $data = ['title'=>$title,'about'=>$about,'log'=>$log];
             return view('hr/audit',$data);
         }
         else
