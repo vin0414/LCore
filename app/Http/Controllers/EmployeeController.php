@@ -229,4 +229,58 @@ class EmployeeController extends Controller
             return response()->json(['success' => 'Form submitted successfully!']);
         }
     }
+
+    public function fetchEmployeeCertificates(Request $request)
+    {
+        $request->validate([
+            'employeeID'=>'required'
+        ]);
+        $certificateModel = new \App\Models\certificateModel();
+        $certificate = $certificateModel->WHERE('employeeID',$request->employeeID)->get();
+        if ($certificate->isEmpty()) 
+        {
+            echo "<tr><td colspan='5'><center>No certificate record found</center></td></tr>";
+        }
+        else
+        {
+            foreach($certificate as $row)
+            {
+                $from = Carbon::parse($row['From']);
+                $to = Carbon::parse($row['To']);
+                ?>  
+                    <tr>
+                        <td><?php echo $row['Title'] ?></td>
+                        <td><?php echo $row['Venue'] ?></td>
+                        <td><?php echo $from->format('d F, Y')?></td>
+                        <td><?php echo $to->format('d F, Y') ?></td>
+                        <td></td>
+                    </tr>
+                <?php
+            }
+        }
+    }
+
+    public function addEmployeeCertificates(Request $request)
+    {
+        $certificateModel = new \App\Models\certificateModel();
+        $validator = Validator::make($request->all(),[
+            'employeeID'=>'required',
+            'title'=>'required',
+            'venue'=>'required',
+            'from_date'=>'required',
+            'to_date'=>'required',
+        ]);
+
+        if ($validator->fails()) {
+            // Return validation errors as JSON
+            return response()->json(['errors' => $validator->errors()]);
+        }
+        else
+        {
+            $data = ['employeeID'=>$request->employeeID, 'Title'=>$request->title,
+                    'Venue'=>$request->venue,'From'=>$request->from_date,'To'=>$request->to_date];
+            $certificateModel->create($data);
+            return response()->json(['success' => 'Form submitted successfully!']);
+        }
+    }
 }

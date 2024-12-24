@@ -149,7 +149,9 @@
             </div>
             <div class="close__box"><ion-icon onclick="closeModal()" class="icon__modal" name="close-outline"></ion-icon></div>
             </div>
-            <form type="submit" class="form__modal">
+            <form method="POST" class="form__modal" id="frmCertificate">
+              @csrf
+              <input type="hidden" name="employeeID" id="employeeCertificateID"/>
               <div class="input__form__modal__box">
                 <div class="input__box">
                   <input
@@ -158,6 +160,7 @@
                     name="title"
                   />
                   <span class="input__title">Title</span>
+                  <div id="title-error" class="error-messages text-danger"></div>
                 </div>
                 <div class="input__box">
                   <input
@@ -166,28 +169,31 @@
                     name="venue"
                   />
                   <span class="input__title">Venue</span>
+                  <div id="venue-error" class="error-messages text-danger"></div>
                 </div>
                 <div class="input__box">
                   <input
                     type="date"
                     class="information__input"
                     placeholder="Enter date"
-                    name="from"
+                    name="from_date"
                   />
                   <span class="input__title">From</span>
+                  <div id="from_date-error" class="error-messages text-danger"></div>
                 </div>
                 <div class="input__box">
                   <input
                     type="date"
                     class="information__input"
                     placeholder="Enter date"
-                    name="to"
+                    name="to_date"
                   />
                   <span class="input__title">To</span>
+                  <div id="to_date-error" class="error-messages text-danger"></div>
                 </div>
               </div>
+              <button class="btn__submit__modal" type="submit"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
             </form>
-            <button class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
         </div>
     </div>
     <!-- Modal for work history  -->
@@ -747,7 +753,7 @@
                       <th class="w-150">To</th>
                       <th class="w-100">Action</th>
                   </thead>
-                  <tbody>
+                  <tbody id="tblcertificate">
                   </tbody>
                 </table>
               </div>
@@ -763,7 +769,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        fetchEmployeeHistory();
+        fetchEmployeeHistory();fetchEmployeeCertificate();
         $("#showDropdownOptions").on("click", function (e) {
           e.stopPropagation();
           showDropdownOptions();
@@ -794,6 +800,7 @@
       }
       function openModal() {
           $('#modalOverlay').css('display', 'flex');
+          $('#employeeCertificateID').attr("value",$('#employeeID').val());
           $('body').addClass('no-scroll');  
       }
 
@@ -861,6 +868,32 @@
         });
       });
 
+      $('#frmCertificate').on('submit',function(e){
+        e.preventDefault();
+        $('.error-messages').html('');
+        var formData = $(this).serialize();
+        $.ajax({
+          url:"{{route('save-employee-certificates')}}",method:"POST",
+          data:formData,success:function(response)
+          {
+            if(response.success)
+            {
+              closeModal();fetchEmployeeCertificate()
+            }
+            else
+            {
+                var errors = response.errors;
+
+                // Iterate over each error and display it under the corresponding input field
+                for (var field in errors) {
+                    $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
+                    $('#' + field).addClass('input-error'); // Highlight the input field with an error
+                }
+            }
+          }
+        });
+      });
+
       function fetchEmployeeHistory()
       {
         $('#tblhistory').html("tr><td colspan='5'><center>Loading...</center></td></tr>");
@@ -868,6 +901,16 @@
           url:"{{route('fetch-employee-history')}}",method:"GET",
           data:{employeeID:$('#employeeID').val()},
           success:function(response){$('#tblhistory').html(response);}
+        });
+      }
+
+      function fetchEmployeeCertificate()
+      {
+        $('#tblcertificate').html("tr><td colspan='5'><center>Loading...</center></td></tr>");
+        $.ajax({
+          url:"{{route('fetch-employee-certificates')}}",method:"GET",
+          data:{employeeID:$('#employeeID').val()},
+          success:function(response){$('#tblcertificate').html(response);}
         });
       }
     </script>
