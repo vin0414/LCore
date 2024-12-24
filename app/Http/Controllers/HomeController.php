@@ -239,6 +239,38 @@ class HomeController extends Controller
         }
     }
 
+    public function newAccount()
+    {
+        if(session('role')=="ADMIN"||session('role')=="Admin")
+        {
+            $title = "New Account";
+            $aboutModel = new \App\Models\aboutModel();
+            $about = $aboutModel->first();
+            $data = ['title'=>$title,'about'=>$about];
+            return view('hr/new-account',$data);
+        }
+        else
+        {
+            return redirect('hr/overview');
+        }
+    }
+
+    public function editAccount($id)
+    {
+        if(session('role')=="ADMIN"||session('role')=="Admin")
+        {
+            $title = "Edit Account";
+            $aboutModel = new \App\Models\aboutModel();
+            $about = $aboutModel->first();
+            $data = ['title'=>$title,'about'=>$about];
+            return view('hr/edit-account',$data);
+        }
+        else
+        {
+            return redirect('hr/overview');
+        }
+    }
+
     public function auditTrail()
     {
         if(session('role')=="ADMIN"||session('role')=="Admin")

@@ -44,8 +44,13 @@ Route::middleware('auth:user')->group(function () {
     Route::get('hr/memo/edit/{memoID}',[HomeController::class,'editMemo'])->name('hr/memo/edit');
     Route::get('hr/memo/archive',[HomeController::class,'archive'])->name('hr/memo/archive');
     //recovery and settings
+    //recovery module
     Route::get('hr/recovery',[HomeController::class,'recovery'])->name('hr/recovery');
+    //settings module
     Route::get('hr/settings',[HomeController::class,'settings'])->name('hr/settings');
+    Route::get('hr/new-account',[HomeController::class,'newAccount'])->name('hr/new-account');
+    Route::get('hr/edit-account/{accountID}',[HomeController::class,'editAccount'])->name('hr/edit-account');
+    //audit trail module
     Route::get('hr/audit-trail',[HomeController::class,'auditTrail'])->name('hr/audit-trail');
     //payroll modules
     Route::get('hr/payroll',[HomeController::class,'payroll'])->name('hr/payroll');

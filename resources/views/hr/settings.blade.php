@@ -329,7 +329,7 @@
             <div class="tab-pane" id="content-tab2">
               <div class="pos__rel">
                 <div class="button__box pos__abs">
-                  <a href="#" class="link add__btn"
+                  <a href="{{route('hr/new-account')}}" class="link add__btn"
                     ><ion-icon class="icon" name="add-outline"></ion-icon>Add
                     Account</a
                   >
@@ -357,7 +357,7 @@
                       <td><?php echo $row['Designation'] ?></td>
                       <td><?php echo $row['Email'] ?></td>
                       <td><?php echo $row['Role'] ?></td>
-                      <td>VIP</td>
+                      <td><?php if($row['Status']==1){echo "Active";}else{echo "Inactive";} ?></td>
                       <td class="pos__rel">
                         <button class="btn__select">
                           <ion-icon
@@ -366,20 +366,12 @@
                           ></ion-icon>
                         </button>
                         <div class="dropdown__select">
-                          <a href="#" class="select__item"
+                          <a href="{{route('hr/edit-account',['accountID'=>$row['accountID']])}}" class="select__item"
                             ><ion-icon
                               class="select__icon"
                               name="create-outline"
                             ></ion-icon
-                            >Edit</a
-                          >
-                          <a href="#" class="select__item"
-                            ><ion-icon
-                              class="select__icon"
-                              name="folder-open-outline"
-                            ></ion-icon
-                            >View</a
-                          >
+                            >Edit</a>
                         </div>
                       </td>
                     </tr>
