@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -144,5 +145,88 @@ class EmployeeController extends Controller
                             'accountNumber'=>$request->account_number]);
         }
         return redirect('/hr/employee')->with('success','Great! Successfully applied changes');
+    }
+
+    public function addCredit(Request $request)
+    {
+        $creditModel = new \App\Models\creditModel();
+        //data
+        $employeeID = $request->employeeID;
+        $item_vl = $request->item_vacation;
+        $item_sl = $request->item_sick;
+        //count
+        $count = count($employeeID);
+        for($i=0;$i<$count;$i++)
+        {
+            $credit = $creditModel->WHERE('employeeID',$employeeID[$i])->first();
+            if(empty($credit['employeeID']))
+            {
+                $data = ['employeeID'=>$employeeID[$i],'Vacation'=>$item_vl[$i],'Sick'=>$item_sl[$i]];
+                $creditModel->create($data);
+            }
+            else
+            {
+                $creditModel::where('creditID',$credit['creditID'])
+                ->update(['Vacation'=>$item_vl[$i],'Sick'=>$item_sl[$i]]);
+            }
+        }
+        return redirect('/hr/employee/credits')->with('success','Great! Successfully applied changes');
+    }
+
+    public function fetchEmployeeWorkHistory(Request $request)
+    {
+        $request->validate([
+            'employeeID'=>'required'
+        ]);
+        $historyModel = new \App\Models\historyModel();
+        $history = $historyModel->WHERE('employeeID',$request->employeeID)->get();
+        if ($history->isEmpty()) 
+        {
+            echo "<tr><td colspan='5'><center>No history record found</center></td></tr>";
+        }
+        else
+        {
+            foreach($history as $row)
+            {
+                $from = Carbon::parse($row['From']);
+                $to = Carbon::parse($row['To']);
+                ?>  
+                    <tr>
+                        <td><?php echo $row['Designation'] ?></td>
+                        <td><?php echo $row['Company'] ?><br/><small><?php echo $row['Address']?></small></td>
+                        <td><?php echo $from->format('d F, Y')?></td>
+                        <td><?php echo $to->format('d F, Y') ?></td>
+                        <td></td>
+                    </tr>
+                <?php
+            }
+        }
+    }
+
+    public function addEmployeeWorkHistory(Request $request)
+    {
+        $historyModel = new \App\Models\historyModel();
+        //data
+        $validator = Validator::make($request->all(),[
+            'employeeID'=>'required',
+            'designation'=>'required',
+            'company'=>'required',
+            'address'=>'required',
+            'from'=>'required',
+            'to'=>'required',
+        ]);
+
+        if ($validator->fails()) {
+            // Return validation errors as JSON
+            return response()->json(['errors' => $validator->errors()]);
+        }
+        else
+        {
+            $data = ['employeeID'=>$request->employeeID,'Designation'=>$request->designation,
+                    'Company'=>$request->company,'Address'=>$request->address,
+                    'From'=>$request->from,'To'=>$request->to];
+            $historyModel->create($data);
+            return response()->json(['success' => 'Form submitted successfully!']);
+        }
     }
 }

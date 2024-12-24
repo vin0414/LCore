@@ -250,17 +250,17 @@
         <?php } ?>
       </aside>
       <div class="container">
-        @if(\Session::has('success'))
-            <div class="alert alert-success">
-                {{\Session::get('success')}}
-            </div>
-          @endif
         <div class="heading__box flex flex__align__center">
           <h1 class="heading__primary">{{$title}}</h1>
           <div class="breadcrumbs">
             <p class="pages">{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }} | <span>{{$title}}</span></p>
           </div>
         </div>
+        @if(\Session::has('success'))
+            <div class="alert alert-success">
+                {{\Session::get('success')}}
+            </div>
+        @endif
         <div class="pos__rel">
           <div class="button__box pos__abs">
             <a href="{{route('hr/employee/new')}}" class="link add__btn"

@@ -200,7 +200,9 @@
             </div>
             <div class="close__box"><ion-icon onclick="closeWorkModal()" class="icon__modal" name="close-outline"></ion-icon></div>
             </div>
-            <form type="submit" class="form__modal">
+            <form type="submit" method="POST" class="form__modal" id="frmEmployment">
+              @csrf
+              <input type="hidden" name="employeeID" id="employeeWorkID"/>
               <div class="input__form__modal__box">
                 <div class="input__box">
                   <input
@@ -209,13 +211,24 @@
                     name="designation"
                   />
                   <span class="input__title">Designation</span>
+                  <div id="designation-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter company"
+                    name="company"
+                  />
+                  <span class="input__title">Company/Institution</span>
+                  <div id="company-error" class="error-message text-danger"></div>
                 </div>
                 <div class="input__box">
                   <textarea
                     class="information__input"
-                    placeholder="Enter company"
-                    name="company"></textarea>
-                  <span class="input__title">Company and Address</span>
+                    placeholder="Enter address"
+                    name="address"></textarea>
+                  <span class="input__title">Company Address</span>
+                  <div id="address-error" class="error-message text-danger"></div>
                 </div>
                 <div class="input__box">
                   <input
@@ -225,6 +238,7 @@
                     name="from"
                   />
                   <span class="input__title">From</span>
+                  <div id="from-error" class="error-message text-danger"></div>
                 </div>
                 <div class="input__box">
                   <input
@@ -234,10 +248,12 @@
                     name="to"
                   />
                   <span class="input__title">To</span>
+                  <div id="to-error" class="error-message text-danger"></div>
                 </div>
               </div>
+              <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
             </form>
-            <button class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+            <div id="error-messages"></div>
         </div>
     </div>
       <nav class="navigation">
@@ -359,6 +375,7 @@
         <div class="employee__card">
           <form class="form__container" method="POST">
             <?php if($employee): ?>
+            <input type="hidden" id="employeeID" value="{{$employee['employeeID']}}"/>
             <div class="first__row grid">
               <div class="profile__picture">
                 <p class="profile__heading">Profile Picture</p>
@@ -390,7 +407,14 @@
                           name="create-outline"
                           class="icon__view__emp"
                         ></ion-icon
-                        >Edit
+                        >Edit Profile
+                      </a>
+                      <a class="btn__primary no-underline" onclick="openPromoteModal()">
+                        <ion-icon
+                          name="trophy-outline"
+                          class="icon__view__emp"
+                        ></ion-icon
+                        >Promote
                       </a>
                       <a class="btn__primary no-underline" onclick="openModal()">
                         <ion-icon
@@ -414,7 +438,7 @@
                       ></ion-icon
                       >Back
                     </a>
-                    <a id="showDropdownOptions" class="btn__primary no-underline">Show Options<ion-icon
+                    <a id="showDropdownOptions" class="btn__primary no-underline">More <ion-icon
                           name="chevron-down-outline"
                           class="icon__view__emp"
                         ></ion-icon
@@ -432,9 +456,6 @@
                         name="surname" value="{{$employee['surName']}}"
                       />
                       <span class="input__title">Surname</span>
-                      @if ($errors->has('surname'))
-                        <p class="text-danger">{{$errors->first('surname')}}</p>
-                      @endif
                     </div>
                     <div class="input__box">
                       <input
@@ -443,9 +464,6 @@
                         name="firstname" value="{{$employee['firstName']}}"
                       />
                       <span class="input__title">Firstname</span>
-                      @if ($errors->has('firstname'))
-                        <p class="text-danger">{{$errors->first('firstname')}}</p>
-                      @endif
                     </div>
                     <div class="input__box">
                       <input
@@ -454,9 +472,6 @@
                         name="middlename" value="{{$employee['middleName']}}"
                       />
                       <span class="input__title">Middle Name</span>
-                      @if ($errors->has('middlename'))
-                        <p class="text-danger">{{$errors->first('middlename')}}</p>
-                      @endif
                     </div>
                     <div class="input__box">
                       <input
@@ -482,9 +497,6 @@
                         <option value="Female" {{ $employee['gender'] == "Female" ? 'selected' : '' }}>Female</option>
                       </select>
                       <span class="input__title">Gender</span>
-                      @if ($errors->has('gender'))
-                        <p class="text-danger">{{$errors->first('gender')}}</p>
-                      @endif
                     </div>
                     <div class="input__box">
                       <ion-icon
@@ -507,9 +519,6 @@
                       </select>
 
                       <span class="input__title">Civil Status</span>
-                      @if ($errors->has('civil_status'))
-                        <p class="text-danger">{{$errors->first('civil_status')}}</p>
-                      @endif
                     </div>
                     <div class="input__box">
                       <input
@@ -518,9 +527,6 @@
                         placeholder="Enter date of birth" value="{{$employee['dob']}}"
                       />
                       <span class="input__title">Date of Birth</span>
-                      @if ($errors->has('date_of_birth'))
-                        <p class="text-danger">{{$errors->first('date_of_birth')}}</p>
-                      @endif
                     </div>
                     <div class="input__box">
                       <input
@@ -528,9 +534,6 @@
                         placeholder="Enter religion" value="{{ $employee['religion'] }}"
                       />
                       <span class="input__title">Religion</span>
-                      @if ($errors->has('religion'))
-                        <p class="text-danger">{{$errors->first('religion')}}</p>
-                      @endif
                     </div>
                     <div class="input__box">
                       <input
@@ -540,9 +543,6 @@
                         maxlength="11" minlength="11" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                       />
                       <span class="input__title">Contact Number</span>
-                      @if ($errors->has('contact_number'))
-                        <p class="text-danger">{{$errors->first('contact_number')}}</p>
-                      @endif
                     </div>
                   </div>
                   <!-- 3 -->
@@ -554,9 +554,6 @@
                         placeholder="Enter email address" value="{{ $employee['emailAddress'] }}"
                       />
                       <span class="input__title">Email Address</span>
-                      @if ($errors->has('email_address'))
-                        <p class="text-danger">{{$errors->first('email_address')}}</p>
-                      @endif
                     </div>
                     <div class="input__box">
                       <input
@@ -564,9 +561,6 @@
                         placeholder="Enter address" value="{{ $employee['address'] }}"
                       />
                       <span class="input__title">Permanent Address</span>
-                      @if ($errors->has('address'))
-                        <p class="text-danger">{{$errors->first('address')}}</p>
-                      @endif
                     </div>
                     <div class="input__box grid__column__mod">
                       <input
@@ -574,9 +568,6 @@
                         placeholder="Enter educational attainment"
                       />
                       <span class="input__title">Educational Attainment</span>
-                      @if ($errors->has('education'))
-                        <p class="text-danger">{{$errors->first('education')}}</p>
-                      @endif
                     </div>
                   </div>
                 </div>
@@ -594,9 +585,6 @@
                       placeholder="Enter date" name="date_hired" value="{{ $employee['dateHired'] }}"
                     />
                     <span class="input__title">Date Hired</span>
-                    @if ($errors->has('date_hired'))
-                        <p class="text-danger">{{$errors->first('date_hired')}}</p>
-                      @endif
                   </div>
                   <div class="input__box">
                     <input
@@ -604,9 +592,6 @@
                       placeholder="Enter designation" value="{{ $employee['designation'] }}"
                     />
                     <span class="input__title">Designation</span>
-                    @if ($errors->has('designation'))
-                        <p class="text-danger">{{$errors->first('designation')}}</p>
-                      @endif
                   </div>
                   <div class="input__box">
                     <input
@@ -628,9 +613,6 @@
                       <?php endforeach; ?>
                     </select>
                     <span class="input__title">Office</span>
-                    @if ($errors->has('office'))
-                        <p class="text-danger">{{$errors->first('office')}}</p>
-                      @endif
                   </div>
 
                   <div class="input__box">
@@ -649,9 +631,6 @@
                     <span id="officeTitle" class="input__title"
                       >Department | Branch</span
                     >
-                    @if ($errors->has('department'))
-                        <p class="text-danger">{{$errors->first('department')}}</p>
-                      @endif
                   </div>
                 </div>
                 <!-- 2 -->
@@ -673,9 +652,6 @@
                       <option value="Executive" {{ $employee['jobLevel'] == "Executive" ? 'selected' : '' }}>Executive</option>
                     </select>
                     <span class="input__title">Job Level</span>
-                    @if ($errors->has('job_level'))
-                        <p class="text-danger">{{$errors->first('job_level')}}</p>
-                      @endif
                   </div>
                   <div class="input__box">
                     <ion-icon
@@ -689,9 +665,6 @@
                       <option {{ $employee['employmentStatus'] == "Contractual" ? 'selected' : '' }}>Contractual</option>
                     </select>
                     <span class="input__title">Employment Status</span>
-                    @if ($errors->has('employment_status'))
-                        <p class="text-danger">{{$errors->first('employment_status')}}</p>
-                      @endif
                   </div>
                   <div class="input__box">
                     <input
@@ -708,9 +681,6 @@
                       placeholder="Enter bank account no." value="{{ $employee['accountNumber'] }}"
                     />
                     <span class="input__title">Bank Account Number</span>
-                    @if ($errors->has('account_number'))
-                        <p class="text-danger">{{$errors->first('account_number')}}</p>
-                      @endif
                   </div>
                 </div>
                 <!-- 3 -->
@@ -725,9 +695,6 @@
                       placeholder="Enter SSS number" name="sss_no"
                     />
                     <span class="input__title">SSS Number</span>
-                    @if ($errors->has('sss_no'))
-                        <p class="text-danger">{{$errors->first('sss_no')}}</p>
-                      @endif
                   </div>
                   <div class="input__box">
                     <input
@@ -736,9 +703,6 @@
                       placeholder="Enter philhealth no." name="ph_no"
                     />
                     <span class="input__title">Philhealth Number</span>
-                    @if ($errors->has('ph_no'))
-                        <p class="text-danger">{{$errors->first('ph_no')}}</p>
-                      @endif
                   </div>
                   <div class="input__box">
                     <input
@@ -747,9 +711,6 @@
                       placeholder="Enter pag-ibig no." name="hdmf_no"
                     />
                     <span class="input__title">Pag-IBIG Number</span>
-                    @if ($errors->has('hdmf_no'))
-                        <p class="text-danger">{{$errors->first('hdmf_no')}}</p>
-                      @endif
                   </div>
                   <div class="input__box">
                     <input
@@ -758,9 +719,6 @@
                       placeholder="Enter TIN" value="{{ $employee['tin'] }}"
                     />
                     <span class="input__title">Tax Identification Number</span>
-                    @if ($errors->has('tin'))
-                        <p class="text-danger">{{$errors->first('tin')}}</p>
-                      @endif
                   </div>
                 </div>
                 <p class="profile__heading government__details">
@@ -774,8 +732,8 @@
                       <th class="w-150">To</th>
                       <th class="w-100">Action</th>
                   </thead>
-                  <tbody>
-                    <tr><td colspan="5"><center>No Record(s)</center></td></tr>
+                  <tbody id="tblhistory">
+                    
                   </tbody>
                 </table>
                 <p class="profile__heading government__details" style="margin-top:20px;">
@@ -790,7 +748,6 @@
                       <th class="w-100">Action</th>
                   </thead>
                   <tbody>
-                    <tr><td colspan="5"><center>No Record(s)</center></td></tr>
                   </tbody>
                 </table>
               </div>
@@ -806,6 +763,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        fetchEmployeeHistory();
         $("#showDropdownOptions").on("click", function (e) {
           e.stopPropagation();
           showDropdownOptions();
@@ -845,6 +803,7 @@
       }
       function openWorkModal() {
           $('#modalOverlay2').css('display', 'flex');
+          $('#employeeWorkID').attr("value",$('#employeeID').val());
           $('body').addClass('no-scroll');  
       }
 
@@ -874,6 +833,42 @@
         $(".account__dropdown").removeClass("show");
         $("#headerNav").removeClass("open");
         $(".dropdown__options").removeClass("show");
+      }
+
+      $('#frmEmployment').on('submit',function(e){
+        e.preventDefault();
+        $('.error-message').html('');
+        var formData = $(this).serialize();
+        $.ajax({
+          url:"{{route('save-employee-history')}}",method:"POST",
+          data:formData,success:function(response)
+          {
+            if(response.success)
+            {
+              closeWorkModal();fetchEmployeeHistory();
+            }
+            else
+            {
+                var errors = response.errors;
+
+                // Iterate over each error and display it under the corresponding input field
+                for (var field in errors) {
+                    $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
+                    $('#' + field).addClass('input-error'); // Highlight the input field with an error
+                }
+            }
+          }
+        });
+      });
+
+      function fetchEmployeeHistory()
+      {
+        $('#tblhistory').html("tr><td colspan='5'><center>Loading...</center></td></tr>");
+        $.ajax({
+          url:"{{route('fetch-employee-history')}}",method:"GET",
+          data:{employeeID:$('#employeeID').val()},
+          success:function(response){$('#tblhistory').html(response);}
+        });
       }
     </script>
     <script

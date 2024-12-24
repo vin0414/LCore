@@ -256,14 +256,19 @@
             <p class="pages">Employee | <span>{{$title}}</span></p>
           </div>
         </div>
-        <form method="POST" class="pos__rel" action="">
+        @if(\Session::has('success'))
+            <div class="alert alert-success">
+                {{\Session::get('success')}}
+            </div>
+        @endif
+        <form method="POST" class="pos__rel" action="{{route('add-credit')}}">
+          @csrf
           <div class="button__box pos__abs">
             <button type="submit" class="add__btn" onclick="return confirm('Do you want to continue?')" style="border:0px;"><ion-icon class="icon" name="save-outline"></ion-icon>Save Changes</button>
           </div>
           <div class="dataWrapper">
             <table id="dataTable" class="display">
               <thead>
-                  <th>#</th>
                   <th>Employee ID</th>
                   <th>Complete Name</th>
                   <th>Designation</th>
@@ -273,8 +278,7 @@
               <tbody>
                 <?php foreach($employee as $row): ?>
                   <tr>
-                    <td><input type="checkbox" style="height:15px;width:15px;" value="<?php echo $row->employeeID ?>" name="employeeID[]" id="employeeID" checked disabled/></td>
-                    <td><?php echo $row->companyID ?></td>
+                    <td><input type="checkbox" style="display:none;" value="<?php echo $row->employeeID ?>" name="employeeID[]" id="employeeID" checked/><?php echo $row->companyID ?></td>
                     <td><?php echo $row->surName ?> <?php echo $row->suffix ?>,&nbsp;<?php echo $row->firstName ?> <?php echo $row->middleName ?></td>
                     <td><?php echo $row->designation ?></td>
                     <td><input type='text' class='form-control' value="<?php echo $row->Vacation ?>" name='item_vacation[]'/></td>

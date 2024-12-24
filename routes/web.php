@@ -22,8 +22,10 @@ Route::post('login',[CustomAuthController::class,'auth'])->name('login')->middle
 Route::get('logout', [CustomAuthController::class, 'logout'])->name('logout');
 //charts
 Route::get('chart-data', [HomeController::class, 'getChartData'])->name('chart-data');
-//settings
+//ajax
 Route::get('fetch-department',[EmployeeController::class,'fetchDepartment'])->name('fetch-department');
+Route::get('fetch-employee-history',[EmployeeController::class,'fetchEmployeeWorkHistory'])->name('fetch-employee-history');
+Route::post('save-employee-history',[EmployeeController::class,'addEmployeeWorkHistory'])->name('save-employee-history');
 //employee
 Route::post('save-employee',[EmployeeController::class,'saveEmployee'])->name('save-employee');
 Route::post('update-employee',[EmployeeController::class,'updateEmployee'])->name('update-employee');
