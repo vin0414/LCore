@@ -10,5 +10,5 @@ class memoModel extends Model
     use HasFactory;
     protected $table = "tblmemo";
     protected $primaryKey = "memoID";
-    protected $fillable = ['Date','From','To','Subject','File','DateCreated','accountID','Status'];
+    protected $fillable = ['Date','From','To','Subject','File','accountID','Status'];
 }

@@ -63,10 +63,14 @@ class HomeController extends Controller
     //memo
     public function memo()
     {
-        $title = "Memorandum";;
+        $title = "Memorandum";
+        //application
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
-        $data = ['title'=>$title,'about'=>$about];
+        //memo
+        $memoModel = new \App\Models\memoModel();
+        $memo = $memoModel->all();
+        $data = ['title'=>$title,'about'=>$about,'memo'=>$memo];
         return view('hr/memo/index',$data);
     }
 

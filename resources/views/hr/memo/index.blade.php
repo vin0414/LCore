@@ -10,8 +10,10 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
     <link rel="stylesheet" href="/assets/css/reusables.css" />
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
+    <link rel="stylesheet" href="/assets/css/table.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
   </head>
   <body>
@@ -261,7 +263,47 @@
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="content-tab1">
-              
+              <div class="pos__rel">
+                <div class="button__box pos__abs">
+                  <a href="{{route('hr/memo/new')}}" class="link add__btn"
+                    ><ion-icon class="icon" name="add-outline"></ion-icon>New</a>
+                </div>
+                <div class="dataWrapper">
+                  <table id="dataTable" class="display">
+                    <thead>
+                        <th>Date</th>
+                        <th>Subject</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>File</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                    @foreach($memo as $row)
+                    <tr>
+                      <td>{{$row['Date']}}</td>
+                      <td>{{$row['Subject']}}</td>
+                      <td>{{$row['From']}}</td>
+                      <td>{{$row['To']}}</td>
+                      <td>{{$row['File']}}</td>
+                      <td class="pos__rel">
+                        <button class="btn__select">
+                          <ion-icon
+                            name="ellipsis-horizontal-circle-outline"
+                            class="icon__button"
+                          ></ion-icon>
+                        </button>
+                        <div class="dropdown__select">
+                          <a href="{{route('hr/memo/edit',['memoID'=>$row['memoID']])}}" class="select__item"><ion-icon class="select__icon" name="create-outline"></ion-icon>Edit</a>
+                          <a href="javascript:void(0);" class="select__item"><ion-icon class="select__icon" name="archive-outline"></ion-icon>Archive</a>
+                        </div>
+                      </td>
+                    </tr>
+                    @endforeach
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
             <div class="tab-pane" id="content-tab2">
 
@@ -276,6 +318,40 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        $("#dataTable").DataTable({
+          dom:
+            "<'row'<'col-sm-6'f>>" + // Search box on top in the same row
+            "<'row'<'col-sm-12'tr>>" + // Table
+            "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'p>>", // Bottom (length + pagination)
+          scrollX: false,
+          oLanguage: { sSearch: "" },
+          initComplete: function () {
+            $("#dataTable_filter input").attr(
+              "placeholder",
+              "Search by name, etc."
+            );
+          },
+        });
+
+        $(document).on("click", ".btn__select", function () {
+          const dropdown = $(".dropdown__select");
+          const i = $(this).index(".btn__select");
+
+          dropdown.removeClass("open");
+          if (dropdown[i]) {
+            $(dropdown[i]).toggleClass("open");
+          }
+        });
+
+        $(document).on("click", function (event) {
+          const dropDownAction = $(".dropdown__select");
+          if (
+            !$(event.target).closest(".dropdown__select").length &&
+            !$(event.target).closest(".btn__select").length
+          ) {
+            dropDownAction.removeClass("open");
+          }
+        });
         $("#menuButton").on("click", function (e) {
           e.stopPropagation();
           showSideBar();
@@ -315,7 +391,6 @@
         $(".account__dropdown").removeClass("show");
         $("#headerNav").removeClass("open");
       }
-
       function openTab(tabId) {
       // Hide all content
       const allTabs = document.querySelectorAll('.tab');
@@ -337,13 +412,9 @@
       openTab('tab1');
     });
     </script>
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   </body>
 </html>
