@@ -136,6 +136,11 @@
     cursor: pointer;
     margin-bottom: 2rem;
     font-size: 1.5rem;
+    transition: all 0.5s ease;
+}
+.btn__primary:hover {
+    background-color: var(--green-color);
+    color: var(--white-color);
 }
 .icon__add,
 .icon__edit,
@@ -220,7 +225,13 @@ body.no-scroll {
     cursor: pointer;
     margin-bottom: 2rem;
     font-size: 1.5rem;
+    transition: all 0.5s ease;
 }
+.btn__submit__modal:hover {
+    background-color: var(--green-color);
+    color: var(--white-color);
+}
+
 .modal__heading {
     display: flex;
     align-items: center;

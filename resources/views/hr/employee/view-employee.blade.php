@@ -394,14 +394,14 @@
                       </a>
                       <a class="btn__primary no-underline" onclick="openModal()">
                         <ion-icon
-                          name="create-outline"
+                          name="document-outline"
                           class="icon__view__emp"
                         ></ion-icon
                         >Add Certificates
                       </a>
                       <a class="btn__primary no-underline" onclick="openWorkModal()">
                         <ion-icon
-                          name="create-outline"
+                          name="reader-outline"
                           class="icon__view__emp"
                         ></ion-icon
                         >Add Work History
