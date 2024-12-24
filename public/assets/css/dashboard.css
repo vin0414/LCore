@@ -71,7 +71,7 @@ hr {
     right: 2rem;
     opacity: 0;
     transition: all 0.5s ease;
-    z-index: 1;
+    z-index: 3;
     visibility: hidden;
 }
 .account__dropdown.show {
