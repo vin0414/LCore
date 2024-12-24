@@ -490,7 +490,7 @@
       activeTab.classList.add('active');
       activePane.classList.add('active');
     }
-
+ 
     // Set default tab to be open
     document.addEventListener("DOMContentLoaded", () => {
       openTab('tab1');

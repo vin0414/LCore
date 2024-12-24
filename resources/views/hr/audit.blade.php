@@ -10,8 +10,10 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
     <link rel="stylesheet" href="/assets/css/reusables.css" />
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
+    <link rel="stylesheet" href="/assets/css/table.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
   </head>
   <body>
@@ -250,6 +252,34 @@
             <p class="pages">Maintenance | <span>{{$title}}</span></p>
           </div>
         </div>
+        <div class="pos__rel">
+          <div class="button__box pos__abs">
+            <a href="#" class="link export__btn"
+              ><ion-icon class="icon" name="download-outline"></ion-icon
+              >Export</a
+            >
+          </div>
+          <div class="dataWrapper">
+            <table id="dataTable" class="display">
+              <thead>
+                  <th>Date</th>
+                  <th>Complete Name</th>
+                  <th>Role</th>
+                  <th>Activities</th>
+              </thead>
+              <tbody>
+              <?php foreach($log as $row): ?>
+                <tr>
+                  <td>{{$row->Date}}</td>
+                  <td>{{$row->Fullname}}</td>
+                  <td>{{$row->Role}}</td>
+                  <td>{{$row->Activity}}</td>
+                </tr>
+              <?php endforeach; ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </main>
     <footer class="footer">
@@ -258,6 +288,40 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        $("#dataTable").DataTable({
+          dom:
+            "<'row'<'col-sm-6'f>>" + // Search box on top in the same row
+            "<'row'<'col-sm-12'tr>>" + // Table
+            "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'p>>", // Bottom (length + pagination)
+
+          oLanguage: { sSearch: "" },
+          initComplete: function () {
+            $("#dataTable_filter input").attr(
+              "placeholder",
+              "Search by name, etc."
+            );
+          },
+        });
+
+        $(document).on("click", ".btn__select", function () {
+          const dropdown = $(".dropdown__select");
+          const i = $(this).index(".btn__select");
+
+          dropdown.removeClass("open");
+          if (dropdown[i]) {
+            $(dropdown[i]).toggleClass("open");
+          }
+        });
+
+        $(document).on("click", function (event) {
+          const dropDownAction = $(".dropdown__select");
+          if (
+            !$(event.target).closest(".dropdown__select").length &&
+            !$(event.target).closest(".btn__select").length
+          ) {
+            dropDownAction.removeClass("open");
+          }
+        });
         $("#menuButton").on("click", function (e) {
           e.stopPropagation();
           showSideBar();
@@ -296,15 +360,11 @@
         $(".notification__container").removeClass("show");
         $(".account__dropdown").removeClass("show");
         $("#headerNav").removeClass("open");
-      }
+      } 
     </script>
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   </body>
 </html>
