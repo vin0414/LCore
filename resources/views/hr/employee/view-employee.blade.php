@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
     <link rel="stylesheet" href="/assets/css/employee.css" />
     <link rel="stylesheet" href="/assets/css/simple-table.css" />
+    <link rel="stylesheet" href="/assets/css/table.css" />
+    <link rel="stylesheet" href="/assets/css/view-employee.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
   </head>
   <body>
@@ -196,6 +198,63 @@
             </form>
         </div>
     </div>
+      <!-- Modal Edit for certificates  -->
+    <div class="modal-overlay" id="modalOverlay4">
+        <div class="modal">
+          <div class="modal__heading">
+            <div class="heading__modal__box">
+              <h2 class="heading__modal">Edit Certificate</h2>
+              <p class="subheading__modal">Edit employee's certificates</p>
+            </div>
+            <div class="close__box"><ion-icon onclick="closeModalEditCertOverlay()" class="icon__modal" name="close-outline"></ion-icon></div>
+            </div>
+            <form method="POST" class="form__modal" id="frmCertificate">
+              @csrf
+              <input type="hidden" name="employeeID" id="employeeCertificateID"/>
+              <div class="input__form__modal__box">
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter title"
+                    name="title"
+                  />
+                  <span class="input__title">Title</span>
+                  <div id="title-error" class="error-messages text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter venue"
+                    name="venue"
+                  />
+                  <span class="input__title">Venue</span>
+                  <div id="venue-error" class="error-messages text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input
+                    type="date"
+                    class="information__input"
+                    placeholder="Enter date"
+                    name="from_date"
+                  />
+                  <span class="input__title">From</span>
+                  <div id="from_date-error" class="error-messages text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input
+                    type="date"
+                    class="information__input"
+                    placeholder="Enter date"
+                    name="to_date"
+                  />
+                  <span class="input__title">To</span>
+                  <div id="to_date-error" class="error-messages text-danger"></div>
+                </div>
+              </div>
+              <button class="btn__submit__modal" type="submit"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Save Changes</button>
+            </form>
+        </div>
+    </div>
     <!-- Modal for work history  -->
     <div class="modal-overlay" id="modalOverlay2">
         <div class="modal">
@@ -258,6 +317,72 @@
                 </div>
               </div>
               <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+            </form>
+            <div id="error-messages"></div>
+        </div>
+    </div>
+    <!-- Modal for edit history  -->
+    <div class="modal-overlay" id="modalOverlay3">
+        <div class="modal">
+          <div class="modal__heading">
+            <div class="heading__modal__box">
+              <h2 class="heading__modal">Edit Work History</h2>
+              <p class="subheading__modal">Edit this employee's data</p>
+            </div>
+            <div class="close__box"><ion-icon onclick="closeModalEditOverlay()" class="icon__modal" name="close-outline"></ion-icon></div>
+            </div>
+            <form type="submit" method="POST" class="form__modal" id="frmEmployment">
+              @csrf
+              <input type="hidden" name="employeeID" id="employeeWorkID"/>
+              <div class="input__form__modal__box">
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter designation"
+                    name="designation"
+                  />
+                  <span class="input__title">Designation</span>
+                  <div id="designation-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter company"
+                    name="company"
+                  />
+                  <span class="input__title">Company/Institution</span>
+                  <div id="company-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <textarea
+                    class="information__input"
+                    placeholder="Enter address"
+                    name="address"></textarea>
+                  <span class="input__title">Company Address</span>
+                  <div id="address-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input
+                    type="date"
+                    class="information__input"
+                    placeholder="Enter date"
+                    name="from"
+                  />
+                  <span class="input__title">From</span>
+                  <div id="from-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input
+                    type="date"
+                    class="information__input"
+                    placeholder="Enter date"
+                    name="to"
+                  />
+                  <span class="input__title">To</span>
+                  <div id="to-error" class="error-message text-danger"></div>
+                </div>
+              </div>
+              <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Save Changes</button>
             </form>
             <div id="error-messages"></div>
         </div>
@@ -739,7 +864,7 @@
                       <th class="w-100">Action</th>
                   </thead>
                   <tbody id="tblhistory">
-                    
+      
                   </tbody>
                 </table>
                 <p class="profile__heading government__details" style="margin-top:20px;">
@@ -770,6 +895,27 @@
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         fetchEmployeeHistory();fetchEmployeeCertificate();
+
+        $(document).on("click", ".btn__select", function () {
+          const dropdown = $(".dropdown__select");
+          const i = $(this).index(".btn__select");
+
+          dropdown.removeClass("open");
+          if (dropdown[i]) {
+            $(dropdown[i]).toggleClass("open");
+          }
+        });
+
+        $(document).on("click", function (event) {
+          const dropDownAction = $(".dropdown__select");
+          if (
+            !$(event.target).closest(".dropdown__select").length &&
+            !$(event.target).closest(".btn__select").length
+          ) {
+            dropDownAction.removeClass("open");
+          }
+        });
+
         $("#showDropdownOptions").on("click", function (e) {
           e.stopPropagation();
           showDropdownOptions();
@@ -816,6 +962,26 @@
 
       function closeWorkModal() {
           $('#modalOverlay2').css('display', 'none');
+          $('body').removeClass('no-scroll'); 
+      }
+      function openModalEditOverlay() {
+        console.log("clicked");
+          $('#modalOverlay3').css('display', 'flex');
+          $('body').addClass('no-scroll');  
+      }
+
+      function closeModalEditOverlay() {
+          $('#modalOverlay3').css('display', 'none');
+          $('body').removeClass('no-scroll'); 
+      }
+      function openModalEditCertOverlay() {
+        console.log("clicked");
+          $('#modalOverlay4').css('display', 'flex');
+          $('body').addClass('no-scroll');  
+      }
+
+      function closeModalEditCertOverlay() {
+          $('#modalOverlay4').css('display', 'none');
           $('body').removeClass('no-scroll'); 
       }
 

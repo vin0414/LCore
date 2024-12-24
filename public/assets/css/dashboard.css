@@ -550,6 +550,12 @@ hr {
     padding: 5rem 0;
     border-top: 1px solid var(--line-color);
 }
+.icon__button {
+    width: 2rem;
+    height: 2rem;
+    color: var(--green-color);
+    cursor: pointer;
+}
 /* 1600 PX */
 @media (max-width: 100em) {
     html {

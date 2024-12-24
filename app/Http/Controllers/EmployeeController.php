@@ -196,7 +196,13 @@ class EmployeeController extends Controller
                         <td><?php echo $row['Company'] ?><br/><small><?php echo $row['Address']?></small></td>
                         <td><?php echo $from->format('d F, Y')?></td>
                         <td><?php echo $to->format('d F, Y') ?></td>
-                        <td></td>
+                        <td style="text-align: center; position: relative;">
+                            <ion-icon name="ellipsis-horizontal-circle-outline" class="icon__button btn__select md hydrated" role="img"></ion-icon>
+                            <div class="dropdown__select">
+                                <a class="select__item"  onClick="openModalEditOverlay()"><ion-icon class="select__icon md hydrated" name="create-outline" role="img"></ion-icon>Edit</a>
+                                <a class="select__item"><ion-icon class="select__icon md hydrated" name="trash-outline" role="img"></ion-icon>Remove</a>
+                            </div>
+                        </td>
                     </tr>
                 <?php
             }
@@ -253,7 +259,13 @@ class EmployeeController extends Controller
                         <td><?php echo $row['Venue'] ?></td>
                         <td><?php echo $from->format('d F, Y')?></td>
                         <td><?php echo $to->format('d F, Y') ?></td>
-                        <td></td>
+                        <td style="text-align: center; position: relative;">
+                            <ion-icon name="ellipsis-horizontal-circle-outline" class="icon__button btn__select md hydrated" role="img"></ion-icon>
+                            <div class="dropdown__select">
+                                <a class="select__item"  onClick="openModalEditCertOverlay()"><ion-icon class="select__icon md hydrated" name="create-outline" role="img"></ion-icon>Edit</a>
+                                <a class="select__item"><ion-icon class="select__icon md hydrated" name="trash-outline" role="img"></ion-icon>Remove</a>
+                            </div>
+                        </td>
                     </tr>
                 <?php
             }

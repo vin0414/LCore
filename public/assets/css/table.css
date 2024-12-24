@@ -272,8 +272,8 @@ table.dataTable thead .sorting_desc:before {
 
 .notification__count {
     position: absolute;
-    top: 4rem;
-    right: 22rem;
+    top: -0.5rem;
+    right: -2rem;
     padding: 0.5rem;
     border-radius: 50%;
     background-color: #e33b59;
