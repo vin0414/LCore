@@ -13,6 +13,9 @@ class employeeModel extends Model
     protected $fillable = ['companyID','employeePIN','surName','firstName','middleName','suffix',
                             'gender','civilStatus','dob','address','religion','emailAddress','contactNumber','education',
                             'dateHired','designation','employmentStatus','regularizationDate','officeID','departmentID',
-                            'jobLevel','companyPhone','sssNo','philhealthNo','hdmfNo','tin',
+                            'jobLevel','companyPhone','salaryRate','sssNo','philhealthNo','hdmfNo','tin',
                             'accountNumber','employeeStatus','Image','employeeToken'];
+    protected $casts = [
+        'salaryRate' => 'decimal:2',  // Ensures two decimal places
+    ];
 }

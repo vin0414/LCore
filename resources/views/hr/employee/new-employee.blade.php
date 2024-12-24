@@ -161,8 +161,8 @@
             <ul class="dropdown">
               <li class="dropdown__item"><a href="{{route('hr/employee')}}" class="no-underline">Master File</a></li>
               <li class="dropdown__item"><a href="{{route('hr/employee/new')}}" class="no-underline">New Employee</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/employee/movement')}}" class="no-underline">Employee Mobility</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/employee/credits')}}" class="no-underline">SL/VL Credits</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/employee/movement')}}" class="no-underline">Career Progression</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/employee/credits')}}" class="no-underline">Leave Credits</a></li>
             </ul>
           </li>
           <li class="nav__item">Memo<ion-icon name="chevron-down-outline"></ion-icon>
@@ -530,7 +530,7 @@
                   </div>
                 </div>
                 <!-- 2 -->
-                <div class="input__row grid__4cols__modified">
+                <div class="input__row grid__5cols__modified">
                   <div class="input__box">
                     <ion-icon
                       class="pos__abs input__chev__down"
@@ -566,6 +566,16 @@
                     <span class="input__title">Employment Status</span>
                     @if ($errors->has('employment_status'))
                         <p class="text-danger">{{$errors->first('employment_status')}}</p>
+                      @endif
+                  </div>
+                  <div class="input__box">
+                    <input
+                      class="information__input" name="salary_rates"
+                      placeholder="Enter rates" value="{{ old('salary_rates') }}"
+                    />
+                    <span class="input__title">Salary Rates</span>
+                    @if ($errors->has('salary_rates'))
+                        <p class="text-danger">{{$errors->first('salary_rates')}}</p>
                       @endif
                   </div>
                   <div class="input__box">
@@ -607,12 +617,12 @@
                   <div class="input__box">
                     <input
                       type="number"
-                      class="information__input" value="{{ old('ph_no') }}"
-                      placeholder="Enter philhealth no." name="ph_no"
+                      class="information__input" value="{{ old('philhealth_no') }}"
+                      placeholder="Enter philhealth no." name="philhealth_no"
                     />
                     <span class="input__title">Philhealth Number</span>
-                    @if ($errors->has('ph_no'))
-                        <p class="text-danger">{{$errors->first('ph_no')}}</p>
+                    @if ($errors->has('philhealth_no'))
+                        <p class="text-danger">{{$errors->first('philhealth_no')}}</p>
                       @endif
                   </div>
                   <div class="input__box">

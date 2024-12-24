@@ -158,8 +158,8 @@
             <ul class="dropdown">
               <li class="dropdown__item"><a href="{{route('hr/employee')}}" class="no-underline">Master File</a></li>
               <li class="dropdown__item"><a href="{{route('hr/employee/new')}}" class="no-underline">New Employee</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/employee/movement')}}" class="no-underline">Employee Mobility</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/employee/credits')}}" class="no-underline">SL/VL Credits</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/employee/movement')}}" class="no-underline">Career Progression</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/employee/credits')}}" class="no-underline">Leave Credits</a></li>
             </ul>
           </li>
           <li class="nav__item">Memo<ion-icon name="chevron-down-outline"></ion-icon>

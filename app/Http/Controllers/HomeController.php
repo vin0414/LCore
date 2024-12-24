@@ -185,7 +185,7 @@ class HomeController extends Controller
 
     public function employeeMovement()
     {
-        $title = "Employee Mobility";
+        $title = "Career Progression";
         //application
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/assets/css/reusables.css" />
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
     <link rel="stylesheet" href="/assets/css/employee.css" />
+    <link rel="stylesheet" href="/assets/css/simple-table.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
   </head>
   <body>
@@ -160,8 +161,8 @@
             <ul class="dropdown">
               <li class="dropdown__item"><a href="{{route('hr/employee')}}" class="no-underline">Master File</a></li>
               <li class="dropdown__item"><a href="{{route('hr/employee/new')}}" class="no-underline">New Employee</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/employee/movement')}}" class="no-underline">Employee Mobility</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/employee/credits')}}" class="no-underline">SL/VL Credits</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/employee/movement')}}" class="no-underline">Career Progression</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/employee/credits')}}" class="no-underline">Leave Credits</a></li>
             </ul>
           </li>
           <li class="nav__item">Memo<ion-icon name="chevron-down-outline"></ion-icon>
@@ -638,6 +639,36 @@
                       @endif
                   </div>
                 </div>
+                <p class="profile__heading government__details">
+                  Employment History
+                </p>
+                <table class="responsive-table">
+                  <thead>
+                      <th class="w-275">Designation</th>
+                      <th>Company and Address</th>
+                      <th class="w-150">From</th>
+                      <th class="w-150">To</th>
+                      <th class="w-100">Action</th>
+                  </thead>
+                  <tbody>
+                    <tr><td colspan="5"><center>No Record(s)</center></td></tr>
+                  </tbody>
+                </table>
+                <p class="profile__heading government__details" style="margin-top:20px;">
+                  Certificates/Trainings
+                </p>
+                <table class="responsive-table">
+                  <thead>
+                      <th class="w-275">Title</th>
+                      <th>Venue</th>
+                      <th class="w-150">From</th>
+                      <th class="w-150">To</th>
+                      <th class="w-100">Action</th>
+                  </thead>
+                  <tbody>
+                    <tr><td colspan="5"><center>No Record(s)</center></td></tr>
+                  </tbody>
+                </table>
               </div>
             </div>
             <?php endif; ?>

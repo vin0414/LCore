@@ -44,10 +44,11 @@ class EmployeeController extends Controller
             'department'=>'required',
             'job_level'=>'required',
             'employment_status'=>'required',
+            'salary_rates'=>'required',
             'regularization_date'=>'nullable',
             'account_number'=>'required',
             'sss_no'=>'required',
-            'ph_no'=>'required',
+            'philhealth_no'=>'required',
             'hdmf_no'=>'required',
             'tin'=>'required'
         ]);
@@ -55,6 +56,7 @@ class EmployeeController extends Controller
         $companyID = "LC-".str_pad(($employee+1), 4, '0', STR_PAD_LEFT);
         $employeePIN = "1234";
         $status = 1;
+        $cost = str_replace(",", "", $request->salary_rates);
         $token = $request->session()->token();
         //save the image
         $image = $request->file('image');$filename="";
@@ -69,13 +71,15 @@ class EmployeeController extends Controller
                 'gender'=>$request->gender,'civilStatus'=>$request->civil_status,'dob'=>$request->date_of_birth,'address'=>$request->address,'religion'=>$request->religion,'emailAddress'=>$request->email_address,
                 'contactNumber'=>$request->contact_number,'education'=>$request->education,'dateHired'=>$request->date_hired,'designation'=>$request->designation,'employmentStatus'=>$request->employment_status,
                 'regularizationDate'=>$request->regularization_date,'officeID'=>$request->office,'departmentID'=>$request->department,'jobLevel'=>$request->job_level,'companyPhone'=>$request->company_phone,
-                'sssNo'=>$request->sss_no,'philhealthNo'=>$request->ph_no,'hdmfNo'=>$request->hdmf_no,'tin'=>$request->tin,
+                'salaryRate'=>$cost,'sssNo'=>$request->sss_no,'philhealthNo'=>$request->philhealth_no,'hdmfNo'=>$request->hdmf_no,'tin'=>$request->tin,
                 'accountNumber'=>$request->account_number,'employeeStatus'=>$status,'Image'=>$filename,'employeeToken'=>$token];
         $employeeModel->create($data);
         //get the employeeID from repository
         $employeeRecord = $employeeModel->WHERE('companyID',$companyID)->first();
         //save the first record of the employee
-        $newData = ['employeeID'=>$employeeRecord['employeeID'],'dateHired'=>$request->date_hired,'Designation'=>$request->designation,'officeID'=>$request->office,'employmentStatus'=>$request->employment_status,];
+        $newData = ['employeeID'=>$employeeRecord['employeeID'],'dateHired'=>$request->date_hired,
+                    'Designation'=>$request->designation,'officeID'=>$request->office,
+                    'employmentStatus'=>$request->employment_status,'end_date'=>'0000-00-00','cost'=>$cost];
         $recordModel->create($newData);
         return redirect('/hr/employee')->with('success','Great! Successfully added');
         
