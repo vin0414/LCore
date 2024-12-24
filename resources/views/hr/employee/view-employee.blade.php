@@ -17,87 +17,87 @@
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
   </head>
   <body>
-    <header class="header pos__rel">
+  <header class="header pos__rel">
+      <div class="notification__container">
+        <div class="notification__heading">
+          <p class="subheading">Notifications</p>
+          <span class="notif__text__description"
+            >You have 5 unread messages</span
+          >
+        </div>
+        <div class="pending__box">
+          <!-- 1 -->
+          <div class="pending__notif">
+            <div class="green__circle"></div>
+            <div class="notif__title">
+              <p class="notif__heading">You have a pending approval.</p>
+              <span class="text__description">1 hour ago</span>
+            </div>
+          </div>
+          <!-- 2 -->
+          <div class="pending__notif">
+            <div class="green__circle"></div>
+            <div class="notif__title">
+              <p class="notif__heading">You have a pending approval.</p>
+              <span class="text__description">1 hour ago</span>
+            </div>
+          </div>
+          <!-- 3 -->
+          <div class="pending__notif">
+            <div class="green__circle"></div>
+            <div class="notif__title">
+              <p class="notif__heading">You have a pending approval.</p>
+              <span class="text__description">1 hour ago</span>
+            </div>
+          </div>
+          <!-- 4 -->
+          <div class="pending__notif">
+            <div class="green__circle"></div>
+            <div class="notif__title">
+              <p class="notif__heading">You have a pending approval.</p>
+              <span class="text__description">1 hour ago</span>
+            </div>
+          </div>
+          <!-- 5 -->
+          <div class="pending__notif">
+            <div class="green__circle"></div>
+            <div class="notif__title">
+              <p class="notif__heading">You have a pending approval.</p>
+              <span class="text__description">1 hour ago</span>
+            </div>
+          </div>
+          <!-- 6 -->
+          <div class="pending__notif">
+            <div class="green__circle"></div>
+            <div class="notif__title">
+              <p class="notif__heading">You have a pending approval.</p>
+              <span class="text__description">1 hour ago</span>
+            </div>
+          </div>
+          <!-- 7 -->
+          <div class="pending__notif">
+            <div class="green__circle"></div>
+            <div class="notif__title">
+              <p class="notif__heading">You have a pending approval.</p>
+              <span class="text__description">1 hour ago</span>
+            </div>
+          </div>
+        </div>
+        <button class="btn__read">Mark all as read</button>
+      </div>
       <div class="header__box flex flex__align__center">
         <div class="logo__box">
           <img class="logo" src="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : '' }}" />
         </div>
         <div class="cta__box flex flex__align__center">
           <div class="settings__icons flex flex__align__center">
-            <div class="notif__box">
+            <div class="notif__box pos__rel">
+              <p class="notification__count">34</p>
               <ion-icon
                 class="header__icon icon__notification"
                 name="notifications-outline"
               ></ion-icon>
-              <div class="notification__container">
-                <div class="notification__heading">
-                  <p class="subheading">Notifications</p>
-                  <span class="notif__text__description"
-                    >You have 5 unread messages</span
-                  >
-                </div>
-                <div class="pending__box">
-                  <!-- 1 -->
-                  <div class="pending__notif">
-                    <div class="green__circle"></div>
-                    <div class="notif__title">
-                      <p class="notif__heading">You have a pending approval.</p>
-                      <span class="text__description">1 hour ago</span>
-                    </div>
-                  </div>
-                  <!-- 2 -->
-                  <div class="pending__notif">
-                    <div class="green__circle"></div>
-                    <div class="notif__title">
-                      <p class="notif__heading">You have a pending approval.</p>
-                      <span class="text__description">1 hour ago</span>
-                    </div>
-                  </div>
-                  <!-- 3 -->
-                  <div class="pending__notif">
-                    <div class="green__circle"></div>
-                    <div class="notif__title">
-                      <p class="notif__heading">You have a pending approval.</p>
-                      <span class="text__description">1 hour ago</span>
-                    </div>
-                  </div>
-                  <!-- 4 -->
-                  <div class="pending__notif">
-                    <div class="green__circle"></div>
-                    <div class="notif__title">
-                      <p class="notif__heading">You have a pending approval.</p>
-                      <span class="text__description">1 hour ago</span>
-                    </div>
-                  </div>
-                  <!-- 5 -->
-                  <div class="pending__notif">
-                    <div class="green__circle"></div>
-                    <div class="notif__title">
-                      <p class="notif__heading">You have a pending approval.</p>
-                      <span class="text__description">1 hour ago</span>
-                    </div>
-                  </div>
-                  <!-- 6 -->
-                  <div class="pending__notif">
-                    <div class="green__circle"></div>
-                    <div class="notif__title">
-                      <p class="notif__heading">You have a pending approval.</p>
-                      <span class="text__description">1 hour ago</span>
-                    </div>
-                  </div>
-                  <!-- 7 -->
-                  <div class="pending__notif">
-                    <div class="green__circle"></div>
-                    <div class="notif__title">
-                      <p class="notif__heading">You have a pending approval.</p>
-                      <span class="text__description">1 hour ago</span>
-                    </div>
-                  </div>
-                </div>
-                <button class="btn__read">Mark all as read</button>
-              </div>
             </div>
-            <p class="notification__count">34</p>
           </div>
           <div class="user__images flex flex__align__center">
             <img
@@ -108,8 +108,7 @@
             <p id="userName" class="user__name name__screen__lg"><?php echo session('fullname') ?></p>
             <div class="account__dropdown">
               <p
-                class="user__name name__screen__sm flex flex__align__center gap__1"
-              >
+                class="user__name name__screen__sm flex flex__align__center gap__1">
                 <ion-icon name="person-outline"></ion-icon><?php echo session('fullname') ?>
               </p>
               <p
@@ -140,6 +139,107 @@
       </div>
     </header>
     <main>
+      <!-- Modal for certificates  -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+          <div class="modal__heading">
+            <div class="heading__modal__box">
+              <h2 class="heading__modal">Add Certificate</h2>
+              <p class="subheading__modal">Apply new certificates</p>
+            </div>
+            <div class="close__box"><ion-icon onclick="closeModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+            </div>
+            <form type="submit" class="form__modal">
+              <div class="input__form__modal__box">
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter title"
+                    name="title"
+                  />
+                  <span class="input__title">Title</span>
+                </div>
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter venue"
+                    name="venue"
+                  />
+                  <span class="input__title">Venue</span>
+                </div>
+                <div class="input__box">
+                  <input
+                    type="date"
+                    class="information__input"
+                    placeholder="Enter date"
+                    name="from"
+                  />
+                  <span class="input__title">From</span>
+                </div>
+                <div class="input__box">
+                  <input
+                    type="date"
+                    class="information__input"
+                    placeholder="Enter date"
+                    name="to"
+                  />
+                  <span class="input__title">To</span>
+                </div>
+              </div>
+            </form>
+            <button class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+        </div>
+    </div>
+    <!-- Modal for work history  -->
+    <div class="modal-overlay" id="modalOverlay2">
+        <div class="modal">
+          <div class="modal__heading">
+            <div class="heading__modal__box">
+              <h2 class="heading__modal">Add Work History</h2>
+              <p class="subheading__modal">Save employee work history</p>
+            </div>
+            <div class="close__box"><ion-icon onclick="closeWorkModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+            </div>
+            <form type="submit" class="form__modal">
+              <div class="input__form__modal__box">
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter designation"
+                    name="designation"
+                  />
+                  <span class="input__title">Designation</span>
+                </div>
+                <div class="input__box">
+                  <textarea
+                    class="information__input"
+                    placeholder="Enter company"
+                    name="company"></textarea>
+                  <span class="input__title">Company and Address</span>
+                </div>
+                <div class="input__box">
+                  <input
+                    type="date"
+                    class="information__input"
+                    placeholder="Enter date"
+                    name="from"
+                  />
+                  <span class="input__title">From</span>
+                </div>
+                <div class="input__box">
+                  <input
+                    type="date"
+                    class="information__input"
+                    placeholder="Enter date"
+                    name="to"
+                  />
+                  <span class="input__title">To</span>
+                </div>
+              </div>
+            </form>
+            <button class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+        </div>
+    </div>
       <nav class="navigation">
         <ion-icon id="menuButton" class="menu" name="menu-outline"></ion-icon>
         <ul id="headerNav" class="nav__items flex flex__align__center">
@@ -283,20 +383,44 @@
               <div class="general__information">
                 <div class="info__heading__box">
                   <p class="profile__heading">General Information</p>
-                  <a href="{{route('hr/employee/edit',['companyID'=>$employee['companyID']])}}" class="btn__primary no-underline">
-                    <ion-icon
-                      name="create-outline"
-                      class=""
-                    ></ion-icon
-                    >Edit
-                  </a>
-                  <a href="{{route('hr/employee')}}" class="btn__primary no-underline">
-                    <ion-icon
-                      name="arrow-back-outline"
-                      class="icon__edit"
-                    ></ion-icon
-                    >Back
-                  </a>
+                  <div class="button__box__view pos__rel">
+                    <div class="dropdown__options">
+                      <a href="{{route('hr/employee/edit',['companyID'=>$employee['companyID']])}}" class="btn__primary no-underline">
+                        <ion-icon
+                          name="create-outline"
+                          class="icon__view__emp"
+                        ></ion-icon
+                        >Edit
+                      </a>
+                      <a class="btn__primary no-underline" onclick="openModal()">
+                        <ion-icon
+                          name="create-outline"
+                          class="icon__view__emp"
+                        ></ion-icon
+                        >Add Certificates
+                      </a>
+                      <a class="btn__primary no-underline" onclick="openWorkModal()">
+                        <ion-icon
+                          name="create-outline"
+                          class="icon__view__emp"
+                        ></ion-icon
+                        >Add Work History
+                      </a>
+                    </div>
+                    <a href="{{route('hr/employee')}}" class="btn__primary no-underline">
+                      <ion-icon
+                        name="arrow-back-outline"
+                        class="icon__view__emp"
+                      ></ion-icon
+                      >Back
+                    </a>
+                    <a id="showDropdownOptions" class="btn__primary no-underline">Show Options<ion-icon
+                          name="chevron-down-outline"
+                          class="icon__view__emp"
+                        ></ion-icon
+                        >
+                    </a>
+                  </div>
                 </div>
                 <div class="input__boxes">
                   <!-- 1 -->
@@ -682,6 +806,10 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        $("#showDropdownOptions").on("click", function (e) {
+          e.stopPropagation();
+          showDropdownOptions();
+        });
         $("#menuButton").on("click", function (e) {
           e.stopPropagation();
           showSideBar();
@@ -700,6 +828,31 @@
           hideAllMenus();
         });
       });
+
+      function showDropdownOptions() {
+       let dropDownOptions = $('.dropdown__options');
+
+       dropDownOptions.toggleClass('show');
+      }
+      function openModal() {
+          $('#modalOverlay').css('display', 'flex');
+          $('body').addClass('no-scroll');  
+      }
+
+      function closeModal() {
+          $('#modalOverlay').css('display', 'none');
+          $('body').removeClass('no-scroll');  
+      }
+      function openWorkModal() {
+          $('#modalOverlay2').css('display', 'flex');
+          $('body').addClass('no-scroll');  
+      }
+
+      function closeWorkModal() {
+          $('#modalOverlay2').css('display', 'none');
+          $('body').removeClass('no-scroll'); 
+      }
+
 
       function showNotification() {
         let notifContainer = $(".notification__container");
@@ -720,6 +873,7 @@
         $(".notification__container").removeClass("show");
         $(".account__dropdown").removeClass("show");
         $("#headerNav").removeClass("open");
+        $(".dropdown__options").removeClass("show");
       }
     </script>
     <script

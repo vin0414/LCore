@@ -168,6 +168,104 @@
     right: 2rem;
     transform: translateY(-50%);
 }
+.button__box__view {
+    display: flex;
+    gap: 1rem;
+}
+.icon__view__emp {
+    width: 2rem;
+    height: 2rem;
+}
+
+/* Modal */
+.modal-overlay {
+    display: none; /* Hidden by default */
+    position: fixed; /* Positioned relative to the body */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.modal {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 40rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    position: absolute;
+}
+body.no-scroll {
+    overflow: hidden;
+}
+.heading__modal {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+.btn__submit__modal {
+    display: flex;
+    align-items: center;
+    border: none;
+    padding: 1.5rem 3rem;
+    border-radius: 1rem;
+    gap: 1rem;
+    background-color: var(--green-color-2);
+    font-family: "poppins", sans-serif;
+    font-weight: 500;
+    color: var(--black-color);
+    cursor: pointer;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+}
+.modal__heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    padding: 1rem 0;
+}
+.icon__modal {
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+}
+.subheading__modal {
+    font-size: 1.5rem;
+}
+.input__form__modal__box {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+.dropdown__options {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    top: 0;
+    transition: all 0.5s ease;
+    z-index: 5;
+    padding: 3rem;
+    background-color: var(--white-color);
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px 5px rgba(95, 95, 95, 0.2);
+}
+.dropdown__options .btn__primary:last-child {
+    margin-bottom: 0;
+}
+.dropdown__options.show {
+    visibility: visible;
+    opacity: 1;
+    top: 7rem;
+}
+.input__form__modal__box .input__box textarea {
+    height: 15rem;
+}
 /* 1272 */
 @media (max-width: 79.5em) {
     .grid__6cols__modified {

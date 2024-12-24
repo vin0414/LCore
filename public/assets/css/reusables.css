@@ -682,7 +682,15 @@ a.no-underline {
 .input__boxes .input__box {
     height: 100% !important;
 }
-
-.w-275{width:275px;}
-.w-150{width:150px;}
-.w-100{width:100px}
+textarea {
+    resize: none;
+}
+.w-275 {
+    width: 275px;
+}
+.w-150 {
+    width: 150px;
+}
+.w-100 {
+    width: 100px;
+}
