@@ -16,86 +16,86 @@
   </head>
   <body>
     <header class="header pos__rel">
+      <div class="notification__container">
+        <div class="notification__heading">
+          <p class="subheading">Notifications</p>
+          <span class="notif__text__description"
+            >You have 5 unread messages</span
+          >
+        </div>
+        <div class="pending__box">
+          <!-- 1 -->
+          <div class="pending__notif">
+            <div class="green__circle"></div>
+            <div class="notif__title">
+              <p class="notif__heading">You have a pending approval.</p>
+              <span class="text__description">1 hour ago</span>
+            </div>
+          </div>
+          <!-- 2 -->
+          <div class="pending__notif">
+            <div class="green__circle"></div>
+            <div class="notif__title">
+              <p class="notif__heading">You have a pending approval.</p>
+              <span class="text__description">1 hour ago</span>
+            </div>
+          </div>
+          <!-- 3 -->
+          <div class="pending__notif">
+            <div class="green__circle"></div>
+            <div class="notif__title">
+              <p class="notif__heading">You have a pending approval.</p>
+              <span class="text__description">1 hour ago</span>
+            </div>
+          </div>
+          <!-- 4 -->
+          <div class="pending__notif">
+            <div class="green__circle"></div>
+            <div class="notif__title">
+              <p class="notif__heading">You have a pending approval.</p>
+              <span class="text__description">1 hour ago</span>
+            </div>
+          </div>
+          <!-- 5 -->
+          <div class="pending__notif">
+            <div class="green__circle"></div>
+            <div class="notif__title">
+              <p class="notif__heading">You have a pending approval.</p>
+              <span class="text__description">1 hour ago</span>
+            </div>
+          </div>
+          <!-- 6 -->
+          <div class="pending__notif">
+            <div class="green__circle"></div>
+            <div class="notif__title">
+              <p class="notif__heading">You have a pending approval.</p>
+              <span class="text__description">1 hour ago</span>
+            </div>
+          </div>
+          <!-- 7 -->
+          <div class="pending__notif">
+            <div class="green__circle"></div>
+            <div class="notif__title">
+              <p class="notif__heading">You have a pending approval.</p>
+              <span class="text__description">1 hour ago</span>
+            </div>
+          </div>
+        </div>
+        <button class="btn__read">Mark all as read</button>
+      </div>
       <div class="header__box flex flex__align__center">
         <div class="logo__box">
           <img class="logo" src="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : '' }}" />
         </div>
         <div class="cta__box flex flex__align__center">
           <div class="settings__icons flex flex__align__center">
-            <div class="notif__box">
+            <div class="notif__box pos__rel">
+              <p class="notification__count">34</p>
               <ion-icon
                 class="header__icon icon__notification"
                 name="notifications-outline"
               ></ion-icon>
-              <div class="notification__container">
-                <div class="notification__heading">
-                  <p class="subheading">Notifications</p>
-                  <span class="notif__text__description"
-                    >You have 5 unread messages</span
-                  >
-                </div>
-                <div class="pending__box">
-                  <!-- 1 -->
-                  <div class="pending__notif">
-                    <div class="green__circle"></div>
-                    <div class="notif__title">
-                      <p class="notif__heading">You have a pending approval.</p>
-                      <span class="text__description">1 hour ago</span>
-                    </div>
-                  </div>
-                  <!-- 2 -->
-                  <div class="pending__notif">
-                    <div class="green__circle"></div>
-                    <div class="notif__title">
-                      <p class="notif__heading">You have a pending approval.</p>
-                      <span class="text__description">1 hour ago</span>
-                    </div>
-                  </div>
-                  <!-- 3 -->
-                  <div class="pending__notif">
-                    <div class="green__circle"></div>
-                    <div class="notif__title">
-                      <p class="notif__heading">You have a pending approval.</p>
-                      <span class="text__description">1 hour ago</span>
-                    </div>
-                  </div>
-                  <!-- 4 -->
-                  <div class="pending__notif">
-                    <div class="green__circle"></div>
-                    <div class="notif__title">
-                      <p class="notif__heading">You have a pending approval.</p>
-                      <span class="text__description">1 hour ago</span>
-                    </div>
-                  </div>
-                  <!-- 5 -->
-                  <div class="pending__notif">
-                    <div class="green__circle"></div>
-                    <div class="notif__title">
-                      <p class="notif__heading">You have a pending approval.</p>
-                      <span class="text__description">1 hour ago</span>
-                    </div>
-                  </div>
-                  <!-- 6 -->
-                  <div class="pending__notif">
-                    <div class="green__circle"></div>
-                    <div class="notif__title">
-                      <p class="notif__heading">You have a pending approval.</p>
-                      <span class="text__description">1 hour ago</span>
-                    </div>
-                  </div>
-                  <!-- 7 -->
-                  <div class="pending__notif">
-                    <div class="green__circle"></div>
-                    <div class="notif__title">
-                      <p class="notif__heading">You have a pending approval.</p>
-                      <span class="text__description">1 hour ago</span>
-                    </div>
-                  </div>
-                </div>
-                <button class="btn__read">Mark all as read</button>
-              </div>
             </div>
-            <p class="notification__count">34</p>
           </div>
           <div class="user__images flex flex__align__center">
             <img
@@ -320,11 +320,16 @@
               <?php foreach($recent as $row): ?>
               <div class="recent__employees">
                 <!-- 1 -->
-                <div class="employee__box">
-                  <p class="employee__name"><?php echo $row['surName'] ?>,<?php echo $row['firstName'] ?> <?php echo $row['middleName'] ?></p>
-                  <p class="employee__role"><?php echo $row['designation'] ?></p>
-                </div>
-                <a href="{{route('hr/employee/view',['companyID'=>$row['companyID']])}}" class="no-underline"><ion-icon name="chevron-forward-outline"></ion-icon></a>
+                 <a class="link__employee__container" href="{{route('hr/employee/view',['companyID'=>$row['companyID']])}}">
+                  <div class="employee__box">
+                    <div class="employee__name__title">
+                      <p class="employee__name"><?php echo $row['surName'] ?>,<?php echo $row['firstName'] ?> <?php echo $row['middleName'] ?></p>
+                      <p class="employee__role"><?php echo $row['designation'] ?></p>
+                    </div>
+                    <ion-icon class="chev__down__employee" name="chevron-forward-outline"></ion-icon>
+                  </div>
+                  <a class="no-underline"></a>
+                </a>
               </div>
               <?php endforeach; ?>
             </div>
