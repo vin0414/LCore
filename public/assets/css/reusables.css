@@ -531,7 +531,7 @@ a.no-underline {
 }
 /* Basic styling for the tabs */
 .tabs {
-    font-family: Arial, sans-serif;
+    font-family: "poppins", sans-serif;
     max-width: 100%;
     margin: 0 auto;
 }
@@ -563,10 +563,7 @@ a.no-underline {
 }
 
 .tab-content {
-    border: 1px solid #ccc;
-    border-top: none;
-    padding: 20px;
-    background-color: #f9f9f9;
+    padding: 20px 0;
 }
 
 .tab-pane {
