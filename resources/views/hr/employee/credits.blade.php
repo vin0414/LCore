@@ -256,7 +256,10 @@
             <p class="pages">Employee | <span>{{$title}}</span></p>
           </div>
         </div>
-        <div class="pos__rel">
+        <form method="POST" class="pos__rel" action="">
+          <div class="button__box pos__abs">
+            <button type="submit" class="add__btn" onclick="return confirm('Do you want to continue?')" style="border:0px;"><ion-icon class="icon" name="save-outline"></ion-icon>Save Changes</button>
+          </div>
           <div class="dataWrapper">
             <table id="dataTable" class="display">
               <thead>
@@ -264,13 +267,13 @@
                   <th>Employee ID</th>
                   <th>Complete Name</th>
                   <th>Designation</th>
-                  <th>Vacation</th>
-                  <th>Sick Leave</th>
-              </thead>
+                  <th class="w-150">Vacation</th>
+                  <th class="w-150">Sick Leave</th>
+              </thead> 
               <tbody>
                 <?php foreach($employee as $row): ?>
                   <tr>
-                    <td><input type="checkbox" style="height:15px;width:15px;" value="<?php echo $row->creditID ?>" name="employeeID[]" id="employeeID" checked disabled/></td>
+                    <td><input type="checkbox" style="height:15px;width:15px;" value="<?php echo $row->employeeID ?>" name="employeeID[]" id="employeeID" checked disabled/></td>
                     <td><?php echo $row->companyID ?></td>
                     <td><?php echo $row->surName ?> <?php echo $row->suffix ?>,&nbsp;<?php echo $row->firstName ?> <?php echo $row->middleName ?></td>
                     <td><?php echo $row->designation ?></td>
@@ -281,7 +284,7 @@
               </tbody>
             </table>
           </div>
-        </div>
+        </form>
       </div>
     </main>
     <footer class="footer">

@@ -697,3 +697,13 @@ textarea {
 .w-100 {
     width: 100px;
 }
+.form-control
+{
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid var(--line-color);
+    width: 100%;
+    font-family: "poppins", sans-serif;
+    color: var(--black-color);
+    height: 100%;
+}

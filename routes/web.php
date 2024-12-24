@@ -27,6 +27,7 @@ Route::get('fetch-department',[EmployeeController::class,'fetchDepartment'])->na
 //employee
 Route::post('save-employee',[EmployeeController::class,'saveEmployee'])->name('save-employee');
 Route::post('update-employee',[EmployeeController::class,'updateEmployee'])->name('update-employee');
+Route::post('add-credit',[EmployeeController::class,'addCredit'])->name('add-credit');
 
 Route::middleware('auth:user')->group(function () {
     //navigations
