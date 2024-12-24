@@ -307,6 +307,12 @@ body.no-scroll {
         margin-bottom: 4rem;
     }
 }
+@media (max-width: 58.75em) {
+    main {
+        display: flex;
+        flex-direction: column;
+    }
+}
 /* 790px */
 @media (max-width: 49.375em) {
     .info__heading__box {
