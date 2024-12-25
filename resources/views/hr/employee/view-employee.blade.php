@@ -209,51 +209,7 @@
             </div>
             <div class="close__box"><ion-icon onclick="closeModalEditCertOverlay()" class="icon__modal" name="close-outline"></ion-icon></div>
             </div>
-            <form method="POST" class="form__modal" id="frmCertificate">
-              @csrf
-              <input type="hidden" name="employeeID" id="employeeCertificateID"/>
-              <div class="input__form__modal__box">
-                <div class="input__box">
-                  <input
-                    class="information__input"
-                    placeholder="Enter title"
-                    name="title"
-                  />
-                  <span class="input__title">Title</span>
-                  <div id="title-error" class="error-messages text-danger"></div>
-                </div>
-                <div class="input__box">
-                  <input
-                    class="information__input"
-                    placeholder="Enter venue"
-                    name="venue"
-                  />
-                  <span class="input__title">Venue</span>
-                  <div id="venue-error" class="error-messages text-danger"></div>
-                </div>
-                <div class="input__box">
-                  <input
-                    type="date"
-                    class="information__input"
-                    placeholder="Enter date"
-                    name="from_date"
-                  />
-                  <span class="input__title">From</span>
-                  <div id="from_date-error" class="error-messages text-danger"></div>
-                </div>
-                <div class="input__box">
-                  <input
-                    type="date"
-                    class="information__input"
-                    placeholder="Enter date"
-                    name="to_date"
-                  />
-                  <span class="input__title">To</span>
-                  <div id="to_date-error" class="error-messages text-danger"></div>
-                </div>
-              </div>
-              <button class="btn__submit__modal" type="submit"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Save Changes</button>
-            </form>
+            <div id="certificateResult"></div>
         </div>
     </div>
     <!-- Modal for work history  -->
@@ -319,7 +275,6 @@
               </div>
               <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
             </form>
-            <div id="error-messages"></div>
         </div>
     </div>
     <!-- Modal for edit history  -->
@@ -332,60 +287,7 @@
             </div>
             <div class="close__box"><ion-icon onclick="closeModalEditOverlay()" class="icon__modal" name="close-outline"></ion-icon></div>
             </div>
-            <form type="submit" method="POST" class="form__modal" id="frmEmployment">
-              @csrf
-              <input type="hidden" name="employeeID" id="employeeWorkID"/>
-              <div class="input__form__modal__box">
-                <div class="input__box">
-                  <input
-                    class="information__input"
-                    placeholder="Enter designation"
-                    name="designation"
-                  />
-                  <span class="input__title">Designation</span>
-                  <div id="designation-error" class="error-message text-danger"></div>
-                </div>
-                <div class="input__box">
-                  <input
-                    class="information__input"
-                    placeholder="Enter company"
-                    name="company"
-                  />
-                  <span class="input__title">Company/Institution</span>
-                  <div id="company-error" class="error-message text-danger"></div>
-                </div>
-                <div class="input__box">
-                  <textarea
-                    class="information__input"
-                    placeholder="Enter address"
-                    name="address"></textarea>
-                  <span class="input__title">Company Address</span>
-                  <div id="address-error" class="error-message text-danger"></div>
-                </div>
-                <div class="input__box">
-                  <input
-                    type="date"
-                    class="information__input"
-                    placeholder="Enter date"
-                    name="from"
-                  />
-                  <span class="input__title">From</span>
-                  <div id="from-error" class="error-message text-danger"></div>
-                </div>
-                <div class="input__box">
-                  <input
-                    type="date"
-                    class="information__input"
-                    placeholder="Enter date"
-                    name="to"
-                  />
-                  <span class="input__title">To</span>
-                  <div id="to-error" class="error-message text-danger"></div>
-                </div>
-              </div>
-              <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Save Changes</button>
-            </form>
-            <div id="error-messages"></div>
+            <div id="workResult"></div>
         </div>
     </div>
       <nav class="navigation">
@@ -967,20 +869,35 @@
       }
 
       $(document).on('click','.editWork',function (){
-        console.log("clicked");
-          $('#modalOverlay3').css('display', 'flex');
-          $('body').addClass('no-scroll');  
+          $.ajax({
+            url:"{{route('edit-history')}}",method:"GET",
+            data:{value:$(this).val()},
+            success:function(response)
+            {
+              $('#modalOverlay3').css('display', 'flex');
+              $('body').addClass('no-scroll');
+              $('#workResult').html(response);
+            }
+          });  
       });
 
       function closeModalEditOverlay() {
           $('#modalOverlay3').css('display', 'none');
           $('body').removeClass('no-scroll'); 
       }
-      function openModalEditCertOverlay() {
-        console.log("clicked");
-          $('#modalOverlay4').css('display', 'flex');
-          $('body').addClass('no-scroll');  
-      }
+
+      $(document).on('click','.editCert',function (){
+        $.ajax({
+            url:"{{route('edit-certificate')}}",method:"GET",
+            data:{value:$(this).val()},
+            success:function(response)
+            {
+              $('#modalOverlay4').css('display', 'flex');
+              $('body').addClass('no-scroll'); 
+              $('#certificateResult').html(response);
+            }
+          }); 
+      });
 
       function closeModalEditCertOverlay() {
           $('#modalOverlay4').css('display', 'none');
@@ -1020,11 +937,30 @@
             if(response.success)
             {
               closeWorkModal();fetchEmployeeHistory();
-            }
-            else
-            {
+            }else{
                 var errors = response.errors;
+                // Iterate over each error and display it under the corresponding input field
+                for (var field in errors) {
+                    $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
+                    $('#' + field).addClass('input-error'); // Highlight the input field with an error
+                }
+            }
+          }
+        });
+      });
 
+      $(document).on('click','.editForm',function(e){
+        e.preventDefault();
+        var formData = $('#frmEditEmployment').serialize();
+        $.ajax({
+          url:"{{route('update-history')}}",method:"POST",
+          data:formData,success:function(response)
+          {
+            if(response.success)
+            {
+              closeModalEditOverlay();fetchEmployeeHistory();
+            }else{
+                var errors = response.errors;
                 // Iterate over each error and display it under the corresponding input field
                 for (var field in errors) {
                     $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
@@ -1046,11 +982,30 @@
             if(response.success)
             {
               closeModal();fetchEmployeeCertificate()
-            }
-            else
-            {
+            }else{
                 var errors = response.errors;
+                // Iterate over each error and display it under the corresponding input field
+                for (var field in errors) {
+                    $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
+                    $('#' + field).addClass('input-error'); // Highlight the input field with an error
+                }
+            }
+          }
+        });
+      });
 
+      $(document).on('click','.submitForm',function(e){
+        e.preventDefault();
+        var formData = $('#frmEditCertificate').serialize();
+        $.ajax({
+          url:"{{route('update-certificate')}}",method:"POST",
+          data:formData,success:function(response)
+          {
+            if(response.success)
+            {
+              closeModalEditCertOverlay();fetchEmployeeCertificate();
+            }else{
+                var errors = response.errors;
                 // Iterate over each error and display it under the corresponding input field
                 for (var field in errors) {
                     $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message

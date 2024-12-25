@@ -27,9 +27,13 @@ Route::get('fetch-department',[EmployeeController::class,'fetchDepartment'])->na
 Route::get('fetch-employee-history',[EmployeeController::class,'fetchEmployeeWorkHistory'])->name('fetch-employee-history');
 Route::post('save-employee-history',[EmployeeController::class,'addEmployeeWorkHistory'])->name('save-employee-history');
 Route::post('remove-employee-history',[EmployeeController::class,'removeEmployeeHistory'])->name('remove-employee-history');
+Route::get('edit-history',[EmployeeController::class,'editHistory'])->name('edit-history');
+Route::post('update-history',[EmployeeController::class,'updateHistory'])->name('update-history');
 Route::get('fetch-employee-certificates',[EmployeeController::class,'fetchEmployeeCertificates'])->name('fetch-employee-certificates');
 Route::post('save-employee-certificates',[EmployeeController::class,'addEmployeeCertificates'])->name('save-employee-certificates');
 Route::post('remove-employee-certificates',[EmployeeController::class,'removeEmployeeCertificates'])->name('remove-employee-certificates');
+Route::get('edit-certificate',[EmployeeController::class,'editCertificate'])->name('edit-certificate');
+Route::post('update-certificate',[EmployeeController::class,'updateCertificate'])->name('update-certificate');
 //employee
 Route::post('save-employee',[EmployeeController::class,'saveEmployee'])->name('save-employee');
 Route::post('update-employee',[EmployeeController::class,'updateEmployee'])->name('update-employee');

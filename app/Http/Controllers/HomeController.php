@@ -21,7 +21,7 @@ class HomeController extends Controller
     public function getChartData()
     {
         $employeeModel = new \App\Models\employeeModel();
-        $employeeCounts = $employeeModel::select(DB::raw('dateHired'), DB::raw('count(*) as total'))
+        $employeeCounts = $employeeModel::select(DB::raw('dateHired'), DB::raw('count(companyID) as total'))
                             ->groupBy(DB::raw('dateHired'))
                             ->orderBy('dateHired', 'asc') // Optional: Order by date
                             ->get();

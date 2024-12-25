@@ -281,8 +281,8 @@
                     <td><input type="checkbox" style="display:none;" value="<?php echo $row->employeeID ?>" name="employeeID[]" id="employeeID" checked/><?php echo $row->companyID ?></td>
                     <td><?php echo $row->surName ?> <?php echo $row->suffix ?>,&nbsp;<?php echo $row->firstName ?> <?php echo $row->middleName ?></td>
                     <td><?php echo $row->designation ?></td>
-                    <td><input type='text' class='form-control' value="<?php echo $row->Vacation ?>" name='item_vacation[]'/></td>
-                    <td><input type='text' class='form-control' value="<?php echo $row->Sick ?>" name='item_sick[]'/></td>
+                    <td><input type='text' class='form-control' value="<?php echo $row->Vacation ?? 0 ?>" name='item_vacation[]'/></td>
+                    <td><input type='text' class='form-control' value="<?php echo $row->Sick ?? 0 ?>" name='item_sick[]'/></td>
                   </tr>
                 <?php endforeach; ?>
               </tbody>

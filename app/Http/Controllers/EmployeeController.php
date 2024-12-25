@@ -275,6 +275,103 @@ class EmployeeController extends Controller
         echo "success";
     }
 
+    public function editHistory(Request $request)
+    {
+        $historyModel = new \App\Models\historyModel();
+        $history = $historyModel->WHERE('historyID',$request->value)->first();
+        if($history)
+        {
+            ?>
+            <form method="POST" class="form__modal" id="frmEditEmployment">
+              <input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
+              <input type="hidden" name="historyID" value="<?php echo $history['historyID'] ?>"/>
+              <div class="input__form__modal__box">
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter designation"
+                    name="editDesignation" value="<?php echo $history['Designation'] ?>"
+                  />
+                  <span class="input__title">Designation</span>
+                  <div id="editDesignation-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter company"
+                    name="editCompany" value="<?php echo $history['Company'] ?>"
+                  />
+                  <span class="input__title">Company/Institution</span>
+                  <div id="editCompany-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <textarea
+                    class="information__input"
+                    placeholder="Enter address"
+                    name="editAddress"><?php echo $history['Address'] ?></textarea>
+                  <span class="input__title">Company Address</span>
+                  <div id="editAddress-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input
+                    type="date"
+                    class="information__input"
+                    placeholder="Enter date"
+                    name="editFrom" value="<?php echo $history['From'] ?>"
+                  />
+                  <span class="input__title">From</span>
+                  <div id="editFrom-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input
+                    type="date"
+                    class="information__input"
+                    placeholder="Enter date"
+                    name="editTo" value="<?php echo $history['To'] ?>"
+                  />
+                  <span class="input__title">To</span>
+                  <div id="editTo-error" class="error-message text-danger"></div>
+                </div>
+              </div>
+              <button type="submit" class="btn__submit__modal editForm"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Save Changes</button>
+            </form>
+            <?php
+        }
+    }
+
+    public function updateHistory(Request $request)
+    {
+        date_default_timezone_set('Asia/Manila');
+        $historyModel = new \App\Models\historyModel();
+        $validator = Validator::make($request->all(),[
+            'editDesignation'=>'required',
+            'editCompany'=>'required',
+            'editAddress'=>'required',
+            'editFrom'=>'required',
+            'editTo'=>'required',
+        ]);
+
+        if ($validator->fails()) {
+            // Return validation errors as JSON
+            return response()->json(['errors' => $validator->errors()]);
+        }
+        else
+        {
+            $historyModel::where('historyID',$request->historyID)
+                ->update(['Designation'=>$request->editDesignation,
+                                        'Company'=>$request->editCompany,
+                                        'Address'=>$request->editAddress,
+                                        'From'=>$request->editFrom,
+                                        'To'=>$request->editTo]);
+            //create log record
+            $logModel = new \App\Models\logModel();
+            $date = date('Y-m-d h:i:s a');
+            $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Update employment history'];
+            $logModel->create($data);
+            return response()->json(['success' => 'Form submitted successfully!']);
+        }
+    }
+
     public function fetchEmployeeCertificates(Request $request)
     {
         $request->validate([
@@ -301,7 +398,7 @@ class EmployeeController extends Controller
                         <td style="text-align: center; position: relative;">
                             <ion-icon name="ellipsis-horizontal-circle-outline" class="icon__button btn__select md hydrated" role="img"></ion-icon>
                             <div class="dropdown__select">
-                                <a class="select__item"  onClick="openModalEditCertOverlay()"><ion-icon class="select__icon md hydrated" name="create-outline" role="img"></ion-icon>Edit</a>
+                                <button type="button" value="<?php echo $row['certificateID'] ?>" class="btn__item editCert"><ion-icon class="select__icon md hydrated" name="create-outline" role="img"></ion-icon>Edit</button>
                                 <button type="button" value="<?php echo $row['certificateID'] ?>" class="btn__item removeCert"><ion-icon class="select__icon md hydrated" name="trash-outline" role="img"></ion-icon>Remove</button>
                             </div>
                         </td>
@@ -356,5 +453,90 @@ class EmployeeController extends Controller
         $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Remove the certificate'];
         $logModel->create($data);
         echo "success";
+    }
+
+    public function editCertificate(Request $request)
+    {
+        $certificateModel = new \App\Models\certificateModel();
+        $certificate = $certificateModel->WHERE('certificateID',$request->value)->first();
+        if($certificate)
+        {
+            ?>
+            <form method="POST" class="form__modal" id="frmEditCertificate">
+              <input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
+              <input type="hidden" name="certificateID" value="<?php echo $certificate['certificateID'] ?>"/>
+              <div class="input__form__modal__box">
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter title"
+                    name="editTitle" value="<?php echo $certificate['Title'] ?>"
+                  />
+                  <span class="input__title">Title</span>
+                  <div id="editTitle-error" class="error-messages text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter venue"
+                    name="editVenue" value="<?php echo $certificate['Venue'] ?>"
+                  />
+                  <span class="input__title">Venue</span>
+                  <div id="editVenue-error" class="error-messages text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input
+                    type="date"
+                    class="information__input"
+                    placeholder="Enter date" value="<?php echo $certificate['From'] ?>"
+                    name="editFrom_date"
+                  />
+                  <span class="input__title">From</span>
+                  <div id="editFrom_date-error" class="error-messages text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input
+                    type="date"
+                    class="information__input"
+                    placeholder="Enter date"
+                    name="editTo_date" value="<?php echo $certificate['To'] ?>"
+                  />
+                  <span class="input__title">To</span>
+                  <div id="editTo_date-error" class="error-messages text-danger"></div>
+                </div>
+              </div>
+              <button class="btn__submit__modal submitForm" type="submit"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Save Changes</button>
+            </form>
+            <?php
+        }
+    }
+
+    public function updateCertificate(Request $request)
+    {
+        date_default_timezone_set('Asia/Manila');
+        $certificateModel = new \App\Models\certificateModel();
+        $validator = Validator::make($request->all(),[
+            'editTitle'=>'required',
+            'editVenue'=>'required',
+            'editFrom_date'=>'required',
+            'editTo_date'=>'required',
+        ]);
+
+        if ($validator->fails()) {
+            // Return validation errors as JSON
+            return response()->json(['errors' => $validator->errors()]);
+        }
+        else
+        {
+            $certificateModel::where('certificateID',$request->certificateID)
+                ->update(['Title'=>$request->editTitle,'Venue'=>$request->editVenue,
+                                      'From'=>$request->editFrom_date,'To'=>$request->editTo_date]);
+            //create log record
+            $logModel = new \App\Models\logModel();
+            $date = date('Y-m-d h:i:s a');
+            $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Update training/certifications'];
+            $logModel->create($data);
+            return response()->json(['success' => 'Form submitted successfully!']);
+        }
     }
 }
