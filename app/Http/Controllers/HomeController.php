@@ -152,7 +152,7 @@ class HomeController extends Controller
 
     public function viewEmployee($id)
     {
-        $title = "View Employee";
+        $title = "Employee Profile";
         //application
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();

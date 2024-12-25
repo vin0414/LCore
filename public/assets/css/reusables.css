@@ -704,6 +704,6 @@ textarea {
     color: var(--black-color);
     height: 100%;
 }
-.select__item {
+.select__item,.btn__item {
     cursor: pointer;
 }

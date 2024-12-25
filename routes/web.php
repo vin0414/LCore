@@ -26,8 +26,10 @@ Route::get('chart-data', [HomeController::class, 'getChartData'])->name('chart-d
 Route::get('fetch-department',[EmployeeController::class,'fetchDepartment'])->name('fetch-department');
 Route::get('fetch-employee-history',[EmployeeController::class,'fetchEmployeeWorkHistory'])->name('fetch-employee-history');
 Route::post('save-employee-history',[EmployeeController::class,'addEmployeeWorkHistory'])->name('save-employee-history');
+Route::post('remove-employee-history',[EmployeeController::class,'removeEmployeeHistory'])->name('remove-employee-history');
 Route::get('fetch-employee-certificates',[EmployeeController::class,'fetchEmployeeCertificates'])->name('fetch-employee-certificates');
 Route::post('save-employee-certificates',[EmployeeController::class,'addEmployeeCertificates'])->name('save-employee-certificates');
+Route::post('remove-employee-certificates',[EmployeeController::class,'removeEmployeeCertificates'])->name('remove-employee-certificates');
 //employee
 Route::post('save-employee',[EmployeeController::class,'saveEmployee'])->name('save-employee');
 Route::post('update-employee',[EmployeeController::class,'updateEmployee'])->name('update-employee');

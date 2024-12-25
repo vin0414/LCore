@@ -4,6 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -964,11 +965,12 @@
           $('#modalOverlay2').css('display', 'none');
           $('body').removeClass('no-scroll'); 
       }
-      function openModalEditOverlay() {
+
+      $(document).on('click','.editWork',function (){
         console.log("clicked");
           $('#modalOverlay3').css('display', 'flex');
           $('body').addClass('no-scroll');  
-      }
+      });
 
       function closeModalEditOverlay() {
           $('#modalOverlay3').css('display', 'none');
@@ -984,7 +986,6 @@
           $('#modalOverlay4').css('display', 'none');
           $('body').removeClass('no-scroll'); 
       }
-
 
       function showNotification() {
         let notifContainer = $(".notification__container");
@@ -1079,6 +1080,40 @@
           success:function(response){$('#tblcertificate').html(response);}
         });
       }
+
+      $(document).on('click','.removeCert',function()
+      {
+        var confirmation = confirm("Do you want to remove this certificate?");
+        if(confirmation)
+        {
+          var csrfToken = $('meta[name="csrf-token"]').attr('content');
+          $.ajax({
+            url:"{{route('remove-employee-certificates')}}",method:"POST",
+            data:{value:$(this).val()},
+            headers: {'X-CSRF-TOKEN': csrfToken},success:function(response)
+            {
+              if(response==="success"){fetchEmployeeCertificate();}else{alert(response);}
+            }
+          });
+        }
+      });
+
+      $(document).on('click','.removeWork',function()
+      {
+        var confirmation = confirm("Do you want to remove this employment record?");
+        if(confirmation)
+        {
+          var csrfToken = $('meta[name="csrf-token"]').attr('content');
+          $.ajax({
+            url:"{{route('remove-employee-history')}}",method:"POST",
+            data:{value:$(this).val()},
+            headers: {'X-CSRF-TOKEN': csrfToken},success:function(response)
+            {
+              if(response==="success"){fetchEmployeeHistory();}else{alert(response);}
+            }
+          });
+        }
+      });
     </script>
     <script
       type="module"

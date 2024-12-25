@@ -198,6 +198,8 @@ table.dataTable thead .sorting_desc:before {
     visibility: visible;
 }
 .select__item:link,
+.btn__item:link,
+.btn__item:visited,
 .select__item:visited {
     color: var(--black-color);
     text-decoration: none;
@@ -209,6 +211,8 @@ table.dataTable thead .sorting_desc:before {
     padding: 0.5rem;
 }
 .select__item:hover,
+.btn__item:hover,
+.btn__item:active,
 .select__item:active {
     color: var(--green-color);
 }

@@ -27,3 +27,12 @@
     align-items: center;
     gap: 1rem;
 }
+
+.btn__item
+{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border:0px solid #ffffff;
+    background-color: #ffffff;
+}

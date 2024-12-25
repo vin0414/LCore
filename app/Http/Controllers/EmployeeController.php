@@ -215,8 +215,8 @@ class EmployeeController extends Controller
                         <td style="text-align: center; position: relative;">
                             <ion-icon name="ellipsis-horizontal-circle-outline" class="icon__button btn__select md hydrated" role="img"></ion-icon>
                             <div class="dropdown__select">
-                                <a class="select__item"  onClick="openModalEditOverlay()"><ion-icon class="select__icon md hydrated" name="create-outline" role="img"></ion-icon>Edit</a>
-                                <a class="select__item"><ion-icon class="select__icon md hydrated" name="trash-outline" role="img"></ion-icon>Remove</a>
+                                <button type="button" value="<?php echo $row['historyID'] ?>" class="btn__item editWork"><ion-icon class="select__icon md hydrated" name="create-outline" role="img"></ion-icon>Edit</button>
+                                <button type="button" value="<?php echo $row['historyID'] ?>" class="btn__item removeWork"><ion-icon class="select__icon md hydrated" name="trash-outline" role="img"></ion-icon>Remove</button>
                             </div>
                         </td>
                     </tr>
@@ -261,6 +261,20 @@ class EmployeeController extends Controller
         }
     }
 
+    public function removeEmployeeHistory(Request $request)
+    {
+        date_default_timezone_set('Asia/Manila');
+        $historyModel = new \App\Models\historyModel();
+        $historyModel::where('historyID',$request->value)
+                ->update(['employeeID'=>0]);
+        //create log record
+        $logModel = new \App\Models\logModel();
+        $date = date('Y-m-d h:i:s a');
+        $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Remove the employment history'];
+        $logModel->create($data);
+        echo "success";
+    }
+
     public function fetchEmployeeCertificates(Request $request)
     {
         $request->validate([
@@ -288,7 +302,7 @@ class EmployeeController extends Controller
                             <ion-icon name="ellipsis-horizontal-circle-outline" class="icon__button btn__select md hydrated" role="img"></ion-icon>
                             <div class="dropdown__select">
                                 <a class="select__item"  onClick="openModalEditCertOverlay()"><ion-icon class="select__icon md hydrated" name="create-outline" role="img"></ion-icon>Edit</a>
-                                <a class="select__item"><ion-icon class="select__icon md hydrated" name="trash-outline" role="img"></ion-icon>Remove</a>
+                                <button type="button" value="<?php echo $row['certificateID'] ?>" class="btn__item removeCert"><ion-icon class="select__icon md hydrated" name="trash-outline" role="img"></ion-icon>Remove</button>
                             </div>
                         </td>
                     </tr>
@@ -328,5 +342,19 @@ class EmployeeController extends Controller
             $logModel->create($data);
             return response()->json(['success' => 'Form submitted successfully!']);
         }
+    }
+
+    public function removeEmployeeCertificates(Request $request)
+    {
+        date_default_timezone_set('Asia/Manila');
+        $certificateModel = new \App\Models\certificateModel();
+        $certificateModel::where('certificateID',$request->value)
+                ->update(['employeeID'=>0]);
+        //create log record
+        $logModel = new \App\Models\logModel();
+        $date = date('Y-m-d h:i:s a');
+        $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Remove the certificate'];
+        $logModel->create($data);
+        echo "success";
     }
 }
