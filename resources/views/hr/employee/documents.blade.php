@@ -256,6 +256,15 @@
             <p class="pages">Employee | <span>{{$title}}</span></p>
           </div>
         </div>
+        @if(count($folders) > 0)
+        <ul>
+            @foreach($folders as $subfolder)
+                <li>{{ $subfolder }}</li>
+            @endforeach
+        </ul>
+        @else
+            <p>No subfolders found in "{{ $folder }}".</p>
+        @endif
       </div>
     </main>
     <footer class="footer">
