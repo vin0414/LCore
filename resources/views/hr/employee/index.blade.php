@@ -302,20 +302,18 @@
                         ></ion-icon>
                       </button>
                       <div class="dropdown__select">
-                        <a href="{{route('hr/employee/edit',['companyID'=>$row['companyID']])}}" class="select__item"
-                          ><ion-icon
-                            class="select__icon"
-                            name="create-outline"
-                          ></ion-icon
-                          >Edit</a
-                        >
-                        <a href="{{route('hr/employee/view',['companyID'=>$row['companyID']])}}" class="select__item"
-                          ><ion-icon
-                            class="select__icon"
-                            name="folder-open-outline"
-                          ></ion-icon
-                          >View</a
-                        >
+                        <a href="{{route('hr/employee/edit',['companyID'=>$row['companyID']])}}" class="select__item">
+                          <ion-icon class="select__icon" name="create-outline"></ion-icon>Edit
+                        </a>
+                        <a href="{{route('hr/employee/view',['companyID'=>$row['companyID']])}}" class="select__item">
+                          <ion-icon class="select__icon" name="folder-open-outline"></ion-icon>View
+                        </a>
+                        <a href="" class="select__item">
+                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Transfer
+                        </a>
+                        <a href="" class="select__item">
+                          <ion-icon class="select__icon" name="document-attach-outline"></ion-icon>Files
+                        </a>
                       </div>
                     </td>
                   </tr>

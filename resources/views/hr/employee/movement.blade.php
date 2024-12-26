@@ -264,6 +264,7 @@
                   <th>Complete Name</th>
                   <th>Date Hired</th>
                   <th>Designation</th>
+                  <th>Office</th>
                   <th>Status</th>
                   <th>End Date</th>
                   <th>Cost</th>
@@ -277,6 +278,7 @@
                     <td><?php echo $row->surName ?> <?php echo $row->suffix ?>,&nbsp;<?php echo $row->firstName ?> <?php echo $row->middleName ?></td>
                     <td><?php echo $row->dateHired ?></td>
                     <td><?php echo $row->Designation ?></td>
+                    <td><?php echo $row->officeName ?></td>
                     <td><?php echo $row->employmentStatus ?></td>
                     <td><?php echo $row->end_date ?></td>
                     <td><?php echo number_format($row->cost,2) ?></td>
