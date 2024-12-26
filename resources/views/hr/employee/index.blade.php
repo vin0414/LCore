@@ -163,6 +163,7 @@
               <li class="dropdown__item"><a href="{{route('hr/employee/new')}}" class="no-underline">New Employee</a></li>
               <li class="dropdown__item"><a href="{{route('hr/employee/movement')}}" class="no-underline">Career Progression</a></li>
               <li class="dropdown__item"><a href="{{route('hr/employee/credits')}}" class="no-underline">Leave Credits</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/employee/documents')}}" class="no-underline">Other Documents</a></li>
             </ul>
           </li>
           <li class="nav__item">Memo<ion-icon name="chevron-down-outline"></ion-icon>
@@ -302,20 +303,15 @@
                         ></ion-icon>
                       </button>
                       <div class="dropdown__select">
-                        <a href="{{route('hr/employee/edit',['companyID'=>$row['companyID']])}}" class="select__item"
-                          ><ion-icon
-                            class="select__icon"
-                            name="create-outline"
-                          ></ion-icon
-                          >Edit</a
-                        >
-                        <a href="{{route('hr/employee/view',['companyID'=>$row['companyID']])}}" class="select__item"
-                          ><ion-icon
-                            class="select__icon"
-                            name="folder-open-outline"
-                          ></ion-icon
-                          >View</a
-                        >
+                        <a href="{{route('hr/employee/edit',['companyID'=>$row['companyID']])}}" class="select__item">
+                          <ion-icon class="select__icon" name="create-outline"></ion-icon>Edit
+                        </a>
+                        <a href="{{route('hr/employee/view',['companyID'=>$row['companyID']])}}" class="select__item">
+                          <ion-icon class="select__icon" name="folder-open-outline"></ion-icon>View
+                        </a>
+                        <a href="" class="select__item">
+                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Transfer
+                        </a>
                       </div>
                     </td>
                   </tr>

@@ -162,6 +162,7 @@
               <li class="dropdown__item"><a href="{{route('hr/employee/new')}}" class="no-underline">New Employee</a></li>
               <li class="dropdown__item"><a href="{{route('hr/employee/movement')}}" class="no-underline">Career Progression</a></li>
               <li class="dropdown__item"><a href="{{route('hr/employee/credits')}}" class="no-underline">Leave Credits</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/employee/documents')}}" class="no-underline">Other Documents</a></li>
             </ul>
           </li>
           <li class="nav__item">Memo<ion-icon name="chevron-down-outline"></ion-icon>
@@ -390,6 +391,7 @@
                         <option {{ $employee['civilStatus'] == "Separated" ? 'selected' : '' }}>Separated</option>
                         <option {{ $employee['civilStatus'] == "Divorced" ? 'selected' : '' }}>Divorced</option>
                         <option {{ $employee['civilStatus'] == "Single with Children" ? 'selected' : '' }}>Single with Children</option>
+                        <option {{ $employee['civilStatus'] == "With Live-In Partner" ? 'selected' : '' }}>With Live-In Partner</option>
                       </select>
 
                       <span class="input__title">Civil Status</span>
@@ -573,6 +575,7 @@
                       <option {{ $employee['employmentStatus'] == "Probationary" ? 'selected' : '' }}>Probationary</option>
                       <option {{ $employee['employmentStatus'] == "Regular" ? 'selected' : '' }}>Regular</option>
                       <option {{ $employee['employmentStatus'] == "Contractual" ? 'selected' : '' }}>Contractual</option>
+                      <option {{ $employee['employmentStatus'] == "Trainee" ? 'selected' : '' }}>Trainee</option>
                     </select>
                     <span class="input__title">Employment Status</span>
                     @if ($errors->has('employment_status'))
