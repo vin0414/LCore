@@ -269,7 +269,6 @@
                   <th>End Date</th>
                   <th>Cost</th>
                   <th>Remarks</th>
-                  <th>Action</th>
               </thead>
               <tbody>
                 <?php foreach($employee as $row): ?>
@@ -283,23 +282,6 @@
                     <td><?php echo $row->end_date ?></td>
                     <td><?php echo number_format($row->cost,2) ?></td>
                     <td><?php echo $row->Remarks ?></td>
-                    <td class="pos__rel">
-                      <button class="btn__select">
-                        <ion-icon
-                          name="ellipsis-horizontal-circle-outline"
-                          class="icon__button"
-                        ></ion-icon>
-                      </button>
-                      <div class="dropdown__select">
-                        <a href="" class="select__item"
-                          ><ion-icon
-                            class="select__icon"
-                            name="create-outline"
-                          ></ion-icon
-                          >Edit</a
-                        >
-                      </div>
-                    </td>
                   </tr>
                 <?php endforeach; ?>
               </tbody>

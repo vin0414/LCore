@@ -390,6 +390,7 @@
                         <option {{ $employee['civilStatus'] == "Separated" ? 'selected' : '' }}>Separated</option>
                         <option {{ $employee['civilStatus'] == "Divorced" ? 'selected' : '' }}>Divorced</option>
                         <option {{ $employee['civilStatus'] == "Single with Children" ? 'selected' : '' }}>Single with Children</option>
+                        <option {{ $employee['civilStatus'] == "With Live-In Partner" ? 'selected' : '' }}>With Live-In Partner</option>
                       </select>
 
                       <span class="input__title">Civil Status</span>
@@ -573,6 +574,7 @@
                       <option {{ $employee['employmentStatus'] == "Probationary" ? 'selected' : '' }}>Probationary</option>
                       <option {{ $employee['employmentStatus'] == "Regular" ? 'selected' : '' }}>Regular</option>
                       <option {{ $employee['employmentStatus'] == "Contractual" ? 'selected' : '' }}>Contractual</option>
+                      <option {{ $employee['employmentStatus'] == "Trainee" ? 'selected' : '' }}>Trainee</option>
                     </select>
                     <span class="input__title">Employment Status</span>
                     @if ($errors->has('employment_status'))
