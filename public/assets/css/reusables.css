@@ -719,3 +719,10 @@ textarea {
     cursor: pointer;
 }
 
+.logo__box {
+    height: 5rem;
+}
+.logo {
+    width: 100%;
+    height: 100%;
+}

@@ -208,10 +208,6 @@ hr {
 }
 
 /* Logo */
-.logo {
-    width: 23rem;
-    height: 5rem;
-}
 
 .user__name {
     color: var(--black-color);
