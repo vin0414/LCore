@@ -25,8 +25,17 @@ class SettingController extends Controller
             $image->move('assets/images/',$filename);
         }
 
-        $data = ['companyName'=>$request->title, 'companyDetails'=>$request->description,'companyTag'=>$request->keywords,'companyLogo'=>$filename];
-        $aboutModel->create($data);
+        $about = $aboutModel->first();
+        if(empty($about))
+        {
+            $data = ['companyName'=>$request->title, 'companyDetails'=>$request->description,'companyTag'=>$request->keywords,'companyLogo'=>$filename];
+            $aboutModel->create($data);
+        }
+        else
+        {
+            $aboutModel::where('companyID',$about['companyID'])
+                ->update(['companyName'=>$request->title, 'companyDetails'=>$request->description,'companyTag'=>$request->keywords,'companyLogo'=>$filename]);
+        }
 
         //create log record
         $logModel = new \App\Models\logModel();
