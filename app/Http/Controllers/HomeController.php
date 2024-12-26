@@ -229,8 +229,11 @@ class HomeController extends Controller
             //account
             $accountModel = new \App\Models\accountModel();
             $account = $accountModel->all();
+            //office
+            $officeModel = new \App\Models\officeModel();
+            $office = $officeModel->all();
 
-            $data = ['title'=>$title,'about'=>$about,'account'=>$account];
+            $data = ['title'=>$title,'about'=>$about,'account'=>$account,'office'=>$office];
             return view('hr/settings',$data);
         }
         else
