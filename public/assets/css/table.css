@@ -300,13 +300,19 @@ table.dataTable thead .sorting_desc:before {
         width: 14rem;
     }
 }
-/* 640px */
-@media (max-width: 40em) {
+/* 913px */
+@media (max-width: 57.0625em) {
     .button__box {
-        top: 0;
+        top: 3rem;
         right: 2rem;
         display: flex;
         gap: 1rem;
+    }
+}
+/* 640px */
+@media (max-width: 40em) {
+    .dataTables_wrapper .dataTables_filter input {
+        width: 20rem;
     }
 }
 /* 520px */

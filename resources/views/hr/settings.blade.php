@@ -592,7 +592,7 @@
         });
         // Clear image source when trash button is clicked
         $("#cancelButton").on("click", function () {
-          $("#profileImage").attr("src", "/assets/images/default_image.png");
+          $("#profileImage").attr("src", "/assets/images/default_image_mountain.png");
           $("#fileInput").val("");
         });
         // Uploading picture ends here ~
