@@ -342,12 +342,12 @@
                   <table id="dataTable" class="display">
                     <thead>
                         <th>Username</th>
-                        <th>Complete Name</th>
-                        <th>Designation</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Status</th>
-                        <th>Action</th>
+                        <th class="w-200">Complete Name</th>
+                        <th class="w-200">Designation</th>
+                        <th class="w-200">Email</th>
+                        <th class="w-150">Role</th>
+                        <th class="w-100">Status</th>
+                        <th class="w-50">Action</th>
                     </thead>
                     <tbody>
                     <?php foreach($account as $row): ?>
@@ -382,7 +382,38 @@
               </div>
             </div>
             <div class="tab-pane" id="content-tab3">
-                
+              <div class="pos__rel">
+                <div class="button__box pos__abs">
+                  <a href="{{route('hr/new-account')}}" class="link add__btn"
+                    ><ion-icon class="icon" name="add-outline"></ion-icon>New</a>
+                  <a href="#" class="link export__btn"
+                    ><ion-icon class="icon" name="download-outline"></ion-icon
+                    >Export</a
+                  >
+                </div>
+                <div class="dataWrapper">
+                  <table id="officeTable" class="display">
+                    <thead>
+                        <th>#</th>
+                        <th class="w-150">Offices</th>
+                        <th class="w-275">Address</th>
+                        <th class="w-100">Date Created</th>
+                        <th class="w-50">Action</th>
+                    </thead>
+                    <tbody>
+                    <?php foreach($office as $row): ?>
+                      <tr>
+                        <td><?php echo $row['officeID'] ?></td>
+                        <td><?php echo $row['officeName'] ?></td>
+                        <td><?php echo $row['officeAddress'] ?></td>
+                        <td><?php echo $row['created_at'] ?></td>
+                        <td></td>
+                      </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
             <div class="tab-pane" id="content-tab4">
               <h2>Content for Tab 4</h2>
@@ -411,6 +442,21 @@
           oLanguage: { sSearch: "" },
           initComplete: function () {
             $("#dataTable_filter input").attr(
+              "placeholder",
+              "Search by name, etc."
+            );
+          },
+        });
+
+        $("#officeTable").DataTable({
+          dom:
+            "<'row'<'col-sm-6'f>>" + // Search box on top in the same row
+            "<'row'<'col-sm-12'tr>>" + // Table
+            "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'p>>", // Bottom (length + pagination)
+
+          oLanguage: { sSearch: "" },
+          initComplete: function () {
+            $("#officeTable_filter input").attr(
               "placeholder",
               "Search by name, etc."
             );
