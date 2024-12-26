@@ -256,7 +256,7 @@
             <li class="tab" id="tab2" onclick="openTab('tab2')">User Accounts</li>
             <li class="tab" id="tab3" onclick="openTab('tab3')">Offices</li>
             <li class="tab" id="tab4" onclick="openTab('tab4')">Department</li>
-            <li class="tab" id="tab5" onclick="openTab('tab5')">Rules</li>
+            <li class="tab" id="tab5" onclick="openTab('tab5')">Policies</li>
             <li class="tab" id="tab6" onclick="openTab('tab6')">User Permission</li>
           </ul>
           <div class="tab-content">
