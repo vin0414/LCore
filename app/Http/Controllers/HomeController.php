@@ -1,11 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class HomeController extends Controller
 {
@@ -205,12 +202,39 @@ class HomeController extends Controller
     public function employeeDocuments()
     {
         $title = "Employee Documents";
+        $folder = "documents";
         //application
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
 
-        $data = ['title'=>$title,'about'=>$about];
+        // Get the full path of the specific folder
+        $folderPath = public_path($folder);
+        
+        // Check if the folder exists
+        if (!File::exists($folderPath) || !File::isDirectory($folderPath)) {
+            abort(404, "Folder not found");
+        }
+
+        // Get all subfolders in the specified folder
+        $folders = $this->getFolders($folderPath);
+
+        $data = ['title'=>$title,'about'=>$about,'folders'=>$folders,'folder'=>$folder];
         return view('hr/employee/documents',$data);
+    }
+
+    private function getFolders($path)
+    {
+        $folders = [];
+
+        // Scan the directory for subdirectories only (no files)
+        $items = File::directories($path);
+
+        // Loop through all found directories and store their relative paths
+        foreach ($items as $item) {
+            $folders[] = basename($item); // Get folder name only (not full path)
+        }
+
+        return $folders;
     }
 
     //recovery, settings and audit trail
