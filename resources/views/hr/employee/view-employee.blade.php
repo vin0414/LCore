@@ -313,6 +313,7 @@
               <li class="dropdown__item"><a href="{{route('hr/employee/new')}}" class="no-underline">New Employee</a></li>
               <li class="dropdown__item"><a href="{{route('hr/employee/movement')}}" class="no-underline">Career Progression</a></li>
               <li class="dropdown__item"><a href="{{route('hr/employee/credits')}}" class="no-underline">Leave Credits</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/employee/documents')}}" class="no-underline">Other Documents</a></li>
             </ul>
           </li>
           <li class="nav__item">Memo<ion-icon name="chevron-down-outline"></ion-icon>
@@ -409,6 +410,22 @@
         <div class="employee__card">
           <form class="form__container" method="POST">
             <?php if($employee): ?>
+            <?php 
+            // Example hire date (YYYY-MM-DD format)
+            $hire_date = $employee['dateHired'];
+            
+            // Create DateTime objects for the hire date and current date
+            $hireDate = new DateTime($hire_date);
+            $currentDate = new DateTime();
+            
+            // Calculate the difference between the current date and the hire date
+            $interval = $hireDate->diff($currentDate);
+            
+            // Get the difference in years, months, and days
+            $years = $interval->y;
+            $months = $interval->m;
+            $days = $interval->d;
+            ?>
             <input type="hidden" id="employeeID" value="{{$employee['employeeID']}}"/>
             <div class="first__row grid">
               <div class="profile__picture">
@@ -669,7 +686,7 @@
                   </div>
                 </div>
                 <!-- 2 -->
-                <div class="input__row grid__4cols__modified">
+                <div class="input__row grid__5cols__modified">
                   <div class="input__box">
                     <ion-icon
                       class="pos__abs input__chev__down"
@@ -709,6 +726,14 @@
                       placeholder="Enter date" name="regularization_date"
                     />
                     <span class="input__title">Regularization Date</span>
+                  </div>
+                  <div class="input__box">
+                    <input
+                      type="text"
+                      class="information__input" value="<?php echo "Years: $years, Months: $months, Days: $days"; ?>"
+                      placeholder="Enter date" name="regularization_date"
+                    />
+                    <span class="input__title">Length of Service</span>
                   </div>
                   <div class="input__box">
                     <input
