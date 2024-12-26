@@ -202,6 +202,17 @@ class HomeController extends Controller
         return view('hr/employee/movement',$data);
     }
 
+    public function employeeDocuments()
+    {
+        $title = "Employee Documents";
+        //application
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
+
+        $data = ['title'=>$title,'about'=>$about];
+        return view('hr/employee/documents',$data);
+    }
+
     //recovery, settings and audit trail
     public function recovery()
     {
@@ -233,8 +244,12 @@ class HomeController extends Controller
             //office
             $officeModel = new \App\Models\officeModel();
             $office = $officeModel->all();
+            //department
+            $department = DB::table('tbldepartment as a')
+                ->leftJoin('tbloffice as b','b.officeID','=','a.officeID')
+                ->select('b.officeName','a.departmentID','a.departmentName','a.created_at')->get();
 
-            $data = ['title'=>$title,'about'=>$about,'account'=>$account,'office'=>$office];
+            $data = ['title'=>$title,'about'=>$about,'account'=>$account,'office'=>$office,'department'=>$department];
             return view('hr/settings',$data);
         }
         else
