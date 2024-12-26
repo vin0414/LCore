@@ -259,44 +259,40 @@
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="content-tab1">
-              <form method="POST" class="">
-                <div class="box__container">                
-                  <div class="settings__picture__box pos__rel">
-                    <img
-                      class="setting__profile__img"
-                      src="/assets/images/default_image.png"
-                      id="profileImage"
-                    />
-                    <div class="settings__icon__box">
-                      <a class="settings__subheading">
-                        <ion-icon
-                        class="icon__change__image"
-                        name="image-outline"
-                        id="uploadButton"
-                      ></ion-icon> Add new logo</a>
-                    </div>
-                    <!-- <div class="settings__icon__box">
-                      <a class="settings__subheading">
-                        <ion-icon
-                        class="icon__change__image"
-                        name="trash-outline"
-                        id="uploadButton"
-                      ></ion-icon> Delete logo</a>
-                    </div> -->
-                        <!-- Hidden File Input -->
-                    <input
-                      type="file"
-                      id="fileInput"
-                      accept="image/*" name="image"
-                      style="display: none"
-                    />
-                  </div>
-                  <p class="text__description bg__color__td">
-                    <span class="note">Note:</span> Only .png, .jpg and .jpeg
-                    image files are accepted
-                  </p>
+              <form method="POST" class="form__settings">
+              <div class="profile__picture">
+                <p class="profile__heading">Logo Upload</p>
+                <div class="picture__box pos__rel">
+                  <img
+                    class="logo__image"
+                    src="/assets/images/default_image_mountain.png"
+                    id="profileImage"
+                  />
+                  <ion-icon
+                    class="icon__change__image"
+                    name="image-outline"
+                    id="uploadButton"
+                  ></ion-icon>
+                  <ion-icon
+                    class="icon__delete__image"
+                    name="trash-outline"
+                    id="cancelButton"
+                  ></ion-icon>
+                  <!-- Hidden File Input -->
+                  <input
+                    type="file"
+                    id="fileInput"
+                    accept="image/*" name="image"
+                    style="display: none"
+                  />
                 </div>
+                <p class="text__description bg__color__td small-wd">
+                  <span class="note">Note:</span> Only .png, .jpg and .jpeg
+                  image files are accepted
+                </p>
+              </div>
                 <div class="input__boxes">
+                <p class="profile__heading system__detail">System Details</p>
                   <div class="input__box">
                     <input
                       class="information__input input__settings"
@@ -306,14 +302,14 @@
                     <span class="input__title">Title</span>
                   </div>
                   <div class="input__box">
-                    <input
-                      class="information__input input__settings"
+                    <textarea
+                      class="information__input text__area__settings"
                       placeholder="Enter keywords"
                       name="keywords"
-                    />
+                    ></textarea>
                     <span class="input__title">Keywords</span>
                   </div>
-                  <div class="input__box grid__pos">
+                  <div class="input__box">
                     <textarea
                       class="information__input text__area__settings"
                       placeholder="Enter description"
@@ -341,12 +337,12 @@
                   <table id="dataTable" class="display">
                     <thead>
                         <th>Username</th>
-                        <th class="w-200">Complete Name</th>
-                        <th class="w-200">Designation</th>
-                        <th class="w-200">Email</th>
-                        <th class="w-150">Role</th>
-                        <th class="w-100">Status</th>
-                        <th class="w-50">Action</th>
+                        <th>Complete Name</th>
+                        <th>Designation</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </thead>
                     <tbody>
                     <?php foreach($account as $row): ?>
@@ -381,38 +377,7 @@
               </div>
             </div>
             <div class="tab-pane" id="content-tab3">
-              <div class="pos__rel">
-                <div class="button__box pos__abs">
-                  <a href="{{route('hr/new-account')}}" class="link add__btn"
-                    ><ion-icon class="icon" name="add-outline"></ion-icon>New</a>
-                  <a href="#" class="link export__btn"
-                    ><ion-icon class="icon" name="download-outline"></ion-icon
-                    >Export</a
-                  >
-                </div>
-                <div class="dataWrapper">
-                  <table id="officeTable" class="display">
-                    <thead>
-                        <th>#</th>
-                        <th class="w-150">Offices</th>
-                        <th class="w-275">Address</th>
-                        <th class="w-100">Date Created</th>
-                        <th class="w-50">Action</th>
-                    </thead>
-                    <tbody>
-                    <?php foreach($office as $row): ?>
-                      <tr>
-                        <td><?php echo $row['officeID'] ?></td>
-                        <td><?php echo $row['officeName'] ?></td>
-                        <td><?php echo $row['officeAddress'] ?></td>
-                        <td><?php echo $row['created_at'] ?></td>
-                        <td></td>
-                      </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+                
             </div>
             <div class="tab-pane" id="content-tab4">
               <h2>Content for Tab 4</h2>
@@ -447,21 +412,6 @@
           },
         });
 
-        $("#officeTable").DataTable({
-          dom:
-            "<'row'<'col-sm-6'f>>" + // Search box on top in the same row
-            "<'row'<'col-sm-12'tr>>" + // Table
-            "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'p>>", // Bottom (length + pagination)
-
-          oLanguage: { sSearch: "" },
-          initComplete: function () {
-            $("#officeTable_filter input").attr(
-              "placeholder",
-              "Search by name, etc."
-            );
-          },
-        });
-
         $(document).on("click", ".btn__select", function () {
           const dropdown = $(".dropdown__select");
           const i = $(this).index(".btn__select");
@@ -481,6 +431,37 @@
             dropDownAction.removeClass("open");
           }
         });
+
+                // Uploading picture Starts here ~
+        // Trigger file input click when the image icon is clicked
+        $("#uploadButton").on("click", function () {
+          $("#fileInput").click();
+        });
+
+        // Image selection
+        $("#fileInput").on("change", function () {
+          const file = this.files[0];
+
+          if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+              $("#profileImage").attr("src", e.target.result);
+            };
+
+            reader.readAsDataURL(file);
+          } else {
+            alert("No file selected!");
+          }
+        });
+        // Clear image source when trash button is clicked
+        $("#cancelButton").on("click", function () {
+          $("#profileImage").attr("src", "/assets/images/default_image.png");
+          $("#fileInput").val("");
+        });
+        // Uploading picture ends here ~
+
+
         $("#menuButton").on("click", function (e) {
           e.stopPropagation();
           showSideBar();
