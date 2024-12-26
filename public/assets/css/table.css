@@ -268,7 +268,7 @@ table.dataTable thead .sorting_desc:before {
 }
 
 .button__box {
-    top: 3rem;
+    top: 0;
     right: 2rem;
     display: flex;
     gap: 1rem;
@@ -332,7 +332,7 @@ table.dataTable thead .sorting_desc:before {
 .dataTables_wrapper {
     position: relative;
     clear: both;
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
 }
 
 @media (max-width: 57.125em) {

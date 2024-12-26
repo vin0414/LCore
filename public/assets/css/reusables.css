@@ -624,6 +624,10 @@ a.no-underline {
     margin-left: 15px;
 }
 
+/* Breadcrumbs */
+.breadcrumbs__title {
+    color: var(--black-color);
+}
 /* For settings tab  */
 .setting__profile__img {
     width: 20rem;

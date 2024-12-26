@@ -247,7 +247,7 @@
         <div class="heading__box flex flex__align__center">
           <h1 class="heading__primary">{{$title}}</h1>
           <div class="breadcrumbs">
-            <p class="pages">Maintenance | <span>{{$title}}</span></p>
+            <p class="pages">Maintenance | <span class="breadcrumbs__title">{{$title}}</span></p>
           </div>
         </div>
         <div class="tabs">
@@ -318,6 +318,9 @@
                       name="description"
                    ></textarea>
                     <span class="input__title">Description</span>
+                  </div>
+                  <div class="settings__btn__box">
+                     <button class="btn__primary"><ion-icon class="icon__settings" name="document-text-outline"></ion-icon>Save</button>  
                   </div>
                 </div>
               </div>

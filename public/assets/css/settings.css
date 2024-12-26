@@ -59,7 +59,7 @@
 }
 .form__settings {
     display: grid;
-    grid-template-columns: 0.4fr 1fr;
+    grid-template-columns: 0.32fr 1fr;
 }
 
 .profile__heading.system__detail {
@@ -72,4 +72,29 @@
 }
 .tab-content {
     padding: 3rem 0;
+}
+
+.btn__primary {
+    display: flex;
+    align-items: center;
+    border: none;
+    padding: 2rem 3rem;
+    border-radius: 1rem;
+    gap: 1rem;
+    background-color: var(--green-color-2);
+    font-family: "poppins", sans-serif;
+    font-weight: 500;
+    color: var(--black-color);
+    cursor: pointer;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    transition: all 0.5s ease;
+}
+.settings__btn__box {
+    display: inline-block;
+    justify-self: right;
+}
+.icon__settings {
+    width: 2.2rem;
+    height: 2.2rem;
 }
