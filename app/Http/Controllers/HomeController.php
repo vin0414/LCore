@@ -247,7 +247,7 @@ class HomeController extends Controller
             //department
             $department = DB::table('tbldepartment as a')
                 ->leftJoin('tbloffice as b','b.officeID','=','a.officeID')
-                ->select('b.officeName','b.departmentID','b.departmentName','b.created_at')->get();
+                ->select('b.officeName','a.departmentID','a.departmentName','a.created_at')->get();
 
             $data = ['title'=>$title,'about'=>$about,'account'=>$account,'office'=>$office,'department'=>$department];
             return view('hr/settings',$data);
