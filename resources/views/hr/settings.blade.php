@@ -260,15 +260,24 @@
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="content-tab1">
-              <form method="POST" class="form__settings">
+              <form method="POST" class="form__settings" enctype="multipart/form-data" action="{{route('save')}}">
+              @csrf
               <div class="profile__picture">
                 <p class="profile__heading">Logo Upload</p>
                 <div class="picture__box pos__rel">
+                  <?php if(empty($about['companyLogo'])){ ?>
                   <img
                     class="logo__image"
                     src="/assets/images/default_image_mountain.png"
                     id="profileImage"
                   />
+                  <?php }else { ?>
+                    <img
+                    class="logo__image"
+                    src="/assets/images/{{$about['companyLogo']}}"
+                    id="profileImage"
+                  />
+                  <?php } ?>
                   <ion-icon
                     class="icon__change__image"
                     name="image-outline"
@@ -297,7 +306,7 @@
                   <div class="input__box">
                     <input
                       class="information__input input__settings"
-                      placeholder="Enter title"
+                      placeholder="Enter title" value="{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}"
                       name="title"
                     />
                     <span class="input__title">Title</span>
@@ -306,16 +315,14 @@
                     <textarea
                       class="information__input text__area__settings"
                       placeholder="Enter keywords"
-                      name="keywords"
-                    ></textarea>
+                      name="keywords">{{isset($about['companyTag']) ? $about['companyTag'] : 'No Keywords available' }}</textarea>
                     <span class="input__title">Keywords</span>
                   </div>
                   <div class="input__box">
                     <textarea
                       class="information__input text__area__settings"
                       placeholder="Enter description"
-                      name="description"
-                   ></textarea>
+                      name="description">{{isset($about['companyDetails']) ? $about['companyDetails'] : 'No Details available' }}</textarea>
                     <span class="input__title">Description</span>
                   </div>
                   <div class="settings__btn__box">

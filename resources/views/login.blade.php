@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="{{isset($about['companyDetails']) ? $about['companyDetails'] : 'No Available Details' }}">
-    <meta name="keywords" content="{{isset($about['companyName']) ? $about['companyName'] : 'No Available keywords' }}">
+    <meta name="keywords" content="{{isset($about['companyTag']) ? $about['companyTag'] : 'No Available keywords' }}">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

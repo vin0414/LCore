@@ -4,6 +4,7 @@ use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,8 @@ Route::post('login',[CustomAuthController::class,'auth'])->name('login')->middle
 Route::get('logout', [CustomAuthController::class, 'logout'])->name('logout');
 //charts
 Route::get('chart-data', [HomeController::class, 'getChartData'])->name('chart-data');
-//ajax
+//Employee module
+///ajax
 Route::get('fetch-department',[EmployeeController::class,'fetchDepartment'])->name('fetch-department');
 Route::get('fetch-employee-history',[EmployeeController::class,'fetchEmployeeWorkHistory'])->name('fetch-employee-history');
 Route::post('save-employee-history',[EmployeeController::class,'addEmployeeWorkHistory'])->name('save-employee-history');
@@ -34,10 +36,12 @@ Route::post('save-employee-certificates',[EmployeeController::class,'addEmployee
 Route::post('remove-employee-certificates',[EmployeeController::class,'removeEmployeeCertificates'])->name('remove-employee-certificates');
 Route::get('edit-certificate',[EmployeeController::class,'editCertificate'])->name('edit-certificate');
 Route::post('update-certificate',[EmployeeController::class,'updateCertificate'])->name('update-certificate');
-//employee
+///submission of forms
 Route::post('save-employee',[EmployeeController::class,'saveEmployee'])->name('save-employee');
 Route::post('update-employee',[EmployeeController::class,'updateEmployee'])->name('update-employee');
 Route::post('add-credit',[EmployeeController::class,'addCredit'])->name('add-credit');
+//Settings module
+Route::post('save',[SettingController::class,'saveLogo'])->name('save');
 
 Route::middleware('auth:user')->group(function () {
     //navigations
