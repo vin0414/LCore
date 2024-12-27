@@ -230,7 +230,7 @@ table.dataTable thead .sorting_desc:before {
 .icon__button {
     width: 3rem;
     height: 3rem;
-    color: var(--green-color);
+    color: var(--black-color);
 }
 /* .dataTables_scrollBody {
     position: relative;

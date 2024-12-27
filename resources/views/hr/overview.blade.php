@@ -424,12 +424,22 @@
                     yaxis: {
                         title: {
                             text: 'Total Employees',
+                            style: {
+                            fontFamily: 'Poppins, sans-serif',  
+                            fontSize: '15px',
+                            fontWeight: '600' 
+                          }
                         }
                     },
                     title: {
                         text: 'Employee Count Over Date',
-                        align: 'center'
-                    }
+                        align: 'center',  
+                        style: {
+                          fontFamily: 'Poppins, sans-serif',  
+                          fontSize: '15px',
+                          fontWeight: '600' 
+                        }
+                      }
                 };
 
                 var chart = new ApexCharts(document.querySelector("#chart"), options);

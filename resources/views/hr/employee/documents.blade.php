@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="/assets/css/reusables.css" />
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
     <link rel="stylesheet" href="/assets/css/table.css" />
+    <link rel="stylesheet" href="/assets/css/documents.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
   </head>
   <body>
@@ -255,11 +256,18 @@
           <div class="breadcrumbs">
             <p class="pages">Employee | <span>{{$title}}</span></p>
           </div>
+          
+        </div>
+        <div class="btn__box">
+            <button class="btn__primary"><ion-icon class="icon__documents" name="add-outline"></ion-icon>Create Folder</button>
         </div>
         @if(count($folders) > 0)
-        <ul>
+        <ul class="card__list">
             @foreach($folders as $subfolder)
-                <li>{{ $subfolder }}</li>
+                <li class="card__folder">{{ $subfolder }}
+                  <div class="img__box__folder"><img src="/assets/images/default_image_mountain.png" class="folder__image"></div>
+                </li>
+        
             @endforeach
         </ul>
         @else

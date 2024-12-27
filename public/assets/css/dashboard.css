@@ -99,7 +99,7 @@ hr {
 
     z-index: 1;
     right: 27rem;
-    top: -2rem;
+    top: 5rem;
     transition: all 0.5s ease;
     visibility: hidden;
     opacity: 0;
@@ -395,7 +395,7 @@ hr {
 }
 
 .row {
-    margin-top: 4rem;
+    margin-top: 2rem;
 }
 
 .chart {
@@ -420,7 +420,7 @@ hr {
     padding: 3rem 2rem 3rem 3rem;
 }
 .employee__name {
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
     font-size: 1.6rem;
     font-weight: 600;
 }
@@ -524,7 +524,7 @@ hr {
 .link__employee__container:link,
 .link__employee__container:visited {
     text-decoration: none;
-    padding: 1rem;
+    padding: 1.5rem 0;
 }
 .link__employee__container:hover,
 .link__employee__container:active {

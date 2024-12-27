@@ -213,7 +213,7 @@ class EmployeeController extends Controller
                         <td><?php echo $from->format('d F, Y')?></td>
                         <td><?php echo $to->format('d F, Y') ?></td>
                         <td style="text-align: center; position: relative;">
-                            <ion-icon name="ellipsis-horizontal-circle-outline" class="icon__button btn__select md hydrated" role="img"></ion-icon>
+                            <ion-icon name="ellipsis-horizontal" class="icon__button btn__select md hydrated" role="img"></ion-icon>
                             <div class="dropdown__select">
                                 <button type="button" value="<?php echo $row['historyID'] ?>" class="btn__item editWork"><ion-icon class="select__icon md hydrated" name="create-outline" role="img"></ion-icon>Edit</button>
                                 <button type="button" value="<?php echo $row['historyID'] ?>" class="btn__item removeWork"><ion-icon class="select__icon md hydrated" name="trash-outline" role="img"></ion-icon>Remove</button>
@@ -396,7 +396,7 @@ class EmployeeController extends Controller
                         <td><?php echo $from->format('d F, Y')?></td>
                         <td><?php echo $to->format('d F, Y') ?></td>
                         <td style="text-align: center; position: relative;">
-                            <ion-icon name="ellipsis-horizontal-circle-outline" class="icon__button btn__select md hydrated" role="img"></ion-icon>
+                            <ion-icon name="ellipsis-horizontal" class="icon__button btn__select md hydrated" role="img"></ion-icon>
                             <div class="dropdown__select">
                                 <button type="button" value="<?php echo $row['certificateID'] ?>" class="btn__item editCert"><ion-icon class="select__icon md hydrated" name="create-outline" role="img"></ion-icon>Edit</button>
                                 <button type="button" value="<?php echo $row['certificateID'] ?>" class="btn__item removeCert"><ion-icon class="select__icon md hydrated" name="trash-outline" role="img"></ion-icon>Remove</button>

@@ -298,7 +298,7 @@
                     <td class="pos__rel">
                       <button class="btn__select">
                         <ion-icon
-                          name="ellipsis-horizontal-circle-outline"
+                          name="ellipsis-horizontal"
                           class="icon__button"
                         ></ion-icon>
                       </button>
