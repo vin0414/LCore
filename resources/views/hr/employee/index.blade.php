@@ -165,6 +165,7 @@
               <li class="dropdown__item"><a href="{{route('hr/employee/movement')}}" class="no-underline">Career Progression</a></li>
               <li class="dropdown__item"><a href="{{route('hr/employee/credits')}}" class="no-underline">Leave Credits</a></li>
               <li class="dropdown__item"><a href="{{route('hr/employee/documents')}}" class="no-underline">Other Documents</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/employee/directories')}}" class="no-underline">Directories</a></li>
             </ul>
           </li>
           <li class="nav__item">Memo<ion-icon name="chevron-down-outline"></ion-icon>
@@ -310,16 +311,18 @@
                         <a href="{{route('hr/employee/view',['companyID'=>$row['companyID']])}}" class="select__item">
                           <ion-icon class="select__icon" name="folder-open-outline"></ion-icon>View Profile
                         </a>
-                        <?php if($row['employmentStatus']=="Regular" || $row['employmentStatus']=="REGULAR"){ ?>
+                        <a href="" class="select__item">
+                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Promotion
+                        </a>
+                        <a href="" class="select__item">
+                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Change Schedule
+                        </a>
+                        <?php if($row['employmentStatus']=="Regular" || $row['employmentStatus']=="Probationary"){ ?>
                         <a href="{{route('hr/employee/new-allowance')}}" class="select__item">
                           <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Add Allowance
                         </a>
-                        <?php } ?>
                         <a href="" class="select__item">
-                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Salary Transfer
-                        </a>
-                        <a href="" class="select__item">
-                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Promotion
+                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Salary Adjustment
                         </a>
                         <a href="" class="select__item">
                           <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Jobs Transfer
@@ -339,9 +342,20 @@
                         <a href="" class="select__item">
                           <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Terminate
                         </a>
+                        <!-- if employee is inactive -->
+                        <?php if($row['employeeStatus']==0){ ?>
+                          <a href="" class="select__item">
+                            <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Re-Hire
+                          </a>
+                        <?php } ?>
+                        <?php }else{ ?>
                         <a href="" class="select__item">
-                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Re-Hire
+                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Back-Out
                         </a>
+                        <a href="" class="select__item">
+                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Failure
+                        </a>
+                        <?php } ?>
                       </div>
                     </td>
                   </tr>

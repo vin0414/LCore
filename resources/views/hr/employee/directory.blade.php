@@ -10,8 +10,11 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
     <link rel="stylesheet" href="/assets/css/reusables.css" />
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
+    <link rel="stylesheet" href="/assets/css/table.css" />
+    <link rel="stylesheet" href="/assets/css/documents.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
     <link rel="icon" sizes="180x180" href="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : 'No Logo' }}"/>
   </head>
@@ -246,14 +249,50 @@
               ><ion-icon name="clipboard-outline"></ion-icon>Audit Trail</a
             >
           </li>
+          <?php } ?>
         </ul>
-        <?php } ?>
       </aside>
       <div class="container">
         <div class="heading__box flex flex__align__center">
           <h1 class="heading__primary">{{$title}}</h1>
           <div class="breadcrumbs">
-            <p class="pages">{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }} | <span>{{$title}}</span></p>
+            <p class="pages">Employee | <span>{{$title}}</span></p>
+          </div>
+        </div>
+        <div class="pos__rel">
+          <div class="button__box pos__abs">
+            <a href="#" class="link export__btn"
+              ><ion-icon class="icon" name="download-outline"></ion-icon
+              >Export</a
+            >
+          </div>
+          <div class="dataWrapper">
+            <table id="dataTable" class="display">
+              <thead>
+                  <th>Employee ID</th>
+                  <th>Fullname</th>
+                  <th>Office</th>
+                  <th>Department/Branch</th>
+                  <th>Job Title</th>
+                  <th>Email Address</th>
+                  <th>Contact No</th>
+                  <th>Company Phone No</th>
+              </thead>
+              <tbody>
+              <?php foreach($employee as $row): ?>
+                <tr>
+                  <td><?php echo $row->companyID ?></td>
+                  <td><?php echo $row->surName ?>&nbsp;<?php echo $row->suffix ?>,&nbsp;<?php echo $row->firstName ?>&nbsp;<?php echo $row->middleName ?></td>
+                  <td><?php echo $row->officeName ?></td>
+                  <td><?php echo $row->departmentName ?> | <?php echo $row->departmentNumber ?></td>
+                  <td><?php echo $row->designation ?></td>
+                  <td><?php echo $row->emailAddress ?></td>
+                  <td><?php echo $row->contactNumber ?></td>
+                  <td><?php echo $row->companyPhone ?></td>
+                </tr>
+              <?php endforeach; ?> 
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -264,6 +303,20 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        $("#dataTable").DataTable({
+          dom:
+            "<'row'<'col-sm-6'f>>" + // Search box on top in the same row
+            "<'row'<'col-sm-12'tr>>" + // Table
+            "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'p>>", // Bottom (length + pagination)
+          scrollX: false,
+          oLanguage: { sSearch: "" },
+          initComplete: function () {
+            $("#dataTable_filter input").attr(
+              "placeholder",
+              "Search by name, etc."
+            );
+          },
+        });
         $("#menuButton").on("click", function (e) {
           e.stopPropagation();
           showSideBar();
@@ -304,13 +357,9 @@
         $("#headerNav").removeClass("open");
       }
     </script>
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   </body>
 </html>

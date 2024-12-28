@@ -239,10 +239,32 @@ class HomeController extends Controller
         return $folders;
     }
 
+    public function employeeDirectories()
+    {
+        if(session('role')=="ADMIN"||session('role')=="Admin"||session('role')=="MANAGER"||session('role')=="Manager")
+        {
+            $title = "Directories";
+            //application
+            $aboutModel = new \App\Models\aboutModel();
+            $about = $aboutModel->first();
+            //directories
+            $employee = DB::table('tblemployee as a')
+                ->leftJoin('tbloffice as b','b.officeID','=','a.officeID')
+                ->leftJoin('tbldepartment as c','c.departmentID','=','a.departmentID')
+                ->select('a.*','b.officeName','c.departmentName','c.departmentNumber')->get();
+            $data = ['title'=>$title,'about'=>$about,'employee'=>$employee];
+            return view('hr/employee/directory',$data);
+        }
+        else
+        {
+            return redirect('hr/overview');
+        }
+    }
+
     //recovery, settings and audit trail
     public function recovery()
     {
-        if(session('role')=="ADMIN"||session('role')=="Admin")
+        if(session('role')=="ADMIN"||session('role')=="Admin"||session('role')=="MANAGER"||session('role')=="Manager")
         {
             $title = "Recovery";
             $aboutModel = new \App\Models\aboutModel();
@@ -258,7 +280,7 @@ class HomeController extends Controller
 
     public function settings()
     {
-        if(session('role')=="ADMIN"||session('role')=="Admin")
+        if(session('role')=="ADMIN"||session('role')=="Admin"||session('role')=="MANAGER"||session('role')=="Manager")
         {
             $title = "Settings";
             //application
@@ -318,7 +340,7 @@ class HomeController extends Controller
 
     public function auditTrail()
     {
-        if(session('role')=="ADMIN"||session('role')=="Admin")
+        if(session('role')=="ADMIN"||session('role')=="Admin"||session('role')=="MANAGER"||session('role')=="Manager")
         {
             $title = "Audit Trail";
             //application

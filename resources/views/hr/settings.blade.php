@@ -162,6 +162,7 @@
               <li class="dropdown__item"><a href="{{route('hr/employee/movement')}}" class="no-underline">Career Progression</a></li>
               <li class="dropdown__item"><a href="{{route('hr/employee/credits')}}" class="no-underline">Leave Credits</a></li>
               <li class="dropdown__item"><a href="{{route('hr/employee/documents')}}" class="no-underline">Other Documents</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/employee/directories')}}" class="no-underline">Directories</a></li>
             </ul>
           </li>
           <li class="nav__item">Memo<ion-icon name="chevron-down-outline"></ion-icon>
@@ -257,7 +258,8 @@
             <li class="tab" id="tab2" onclick="openTab('tab2')">User Accounts</li>
             <li class="tab" id="tab3" onclick="openTab('tab3')">Department/Branches</li>
             <li class="tab" id="tab4" onclick="openTab('tab4')">Policies</li>
-            <li class="tab" id="tab5" onclick="openTab('tab5')">User Permission</li>
+            <li class="tab" id="tab5" onclick="openTab('tab5')">Scheduler</li>
+            <li class="tab" id="tab6" onclick="openTab('tab6')">User Permission</li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="content-tab1">
@@ -444,6 +446,10 @@
             <div class="tab-pane" id="content-tab5">
               <h2>Content for Tab 5</h2>
               <p>This is some content for Tab 5.</p>
+            </div>
+            <div class="tab-pane" id="content-tab6">
+              <h2>Content for Tab 6</h2>
+              <p>This is some content for Tab 6.</p>
             </div>
           </div>
         </div>

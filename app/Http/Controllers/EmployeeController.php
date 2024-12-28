@@ -74,7 +74,7 @@ class EmployeeController extends Controller
                 'contactNumber'=>$request->contact_number,'education'=>$request->education,'dateHired'=>$request->date_hired,'designation'=>$request->designation,'employmentStatus'=>$employment_status,
                 'regularizationDate'=>$request->regularization_date,'officeID'=>$request->office,'departmentID'=>$request->department,'jobLevel'=>$request->job_level,'companyPhone'=>$request->company_phone,
                 'salaryRate'=>$cost,'sssNo'=>$request->sss_no,'philhealthNo'=>$request->philhealth_no,'hdmfNo'=>$request->hdmf_no,'tin'=>$request->tin,
-                'payMethod'=>$request->payroll_payment,'accountNumber'=>$request->account_number,'employeeStatus'=>$status,'Image'=>$filename,'employeeToken'=>$token];
+                'payMethod'=>$request->payroll_payment,'accountNumber'=>$request->account_number,'employeeStatus'=>$status,'Image'=>$filename,'employeeToken'=>$token,'scheduleID'=>1];
         $employeeModel->create($data);
         //get the employeeID from repository
         $employeeRecord = $employeeModel->WHERE('companyID',$companyID)->first();
