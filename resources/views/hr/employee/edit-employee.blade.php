@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
     <link rel="stylesheet" href="/assets/css/employee.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
+    <link rel="icon" sizes="180x180" href="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : 'No Logo' }}"/>
   </head>
   <body>
   <header class="header pos__rel">
@@ -542,7 +543,7 @@
                   </div>
                 </div>
                 <!-- 2 -->
-                <div class="input__row grid__4cols__modified">
+                <div class="input__row grid__5cols__modified">
                   <div class="input__box">
                     <ion-icon
                       class="pos__abs input__chev__down"
@@ -590,15 +591,29 @@
                     <span class="input__title">Regularization Date</span>
                   </div>
                   <div class="input__box">
+                    <ion-icon
+                      class="pos__abs input__chev__down"
+                      name="chevron-down-outline"
+                    ></ion-icon>
+                    <select class="information__input" name="payroll_payment" id="payroll_payment">
+                      <option value="" disabled selected>
+                        Select payment
+                      </option>
+                      <option value="Cash" {{ $employee['payMethod'] == "Cash" ? 'selected' : '' }}>Cash</option>
+                      <option value="Card" {{ $employee['payMethod'] == "Card" ? 'selected' : '' }}>Card</option>
+                      <option value="Check" {{ $employee['payMethod'] == "Check" ? 'selected' : '' }}>Check</option>
+                    </select>
+                    <span class="input__title">Payroll Payment</span>
+                    @if ($errors->has('payroll_payment'))
+                        <p class="text-danger">{{$errors->first('payroll_payment')}}</p>
+                      @endif
+                  </div>
+                  <div class="input__box">
                     <input
                       type="number"
-                      class="information__input" name="account_number"
-                      placeholder="Enter bank account no." value="{{ $employee['accountNumber'] }}"
-                    />
+                      class="information__input" name="account_number" id="account_number"
+                      placeholder="Enter bank account no." value="{{ $employee['accountNumber'] }}" disabled/>
                     <span class="input__title">Bank Account Number</span>
-                    @if ($errors->has('account_number'))
-                        <p class="text-danger">{{$errors->first('account_number')}}</p>
-                      @endif
                   </div>
                 </div>
                 <!-- 3 -->
@@ -753,6 +768,19 @@
         $(".account__dropdown").removeClass("show");
         $("#headerNav").removeClass("open");
       }
+
+      $('#payroll_payment').change(function(){
+        let val = $(this).val();
+        if(val==="Cash"||val ==="Check")
+        {
+          $('#account_number').attr("disabled",true);
+          $('#account_number').attr("value","");
+        }
+        else if(val==="Card")
+        {
+          $('#account_number').attr("disabled",false);
+        }
+      });
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>

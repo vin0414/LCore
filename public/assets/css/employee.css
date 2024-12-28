@@ -99,7 +99,7 @@
 }
 .grid__3cols__modified {
     display: grid;
-    grid-template-columns: 0.8fr 1.5fr 0.8fr;
+    grid-template-columns: 0.8fr 1.3fr 1fr;
     gap: 2rem;
 }
 .general__information {

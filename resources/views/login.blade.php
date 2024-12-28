@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="assets/css/index-responsive.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
     <!-- Site favicon -->
-		<link rel="icon" sizes="180x180" href="assets/images/logo.png"/>
+		<link rel="icon" sizes="180x180" href="assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : 'No Logo' }}"/>
     <style>
         ::-webkit-scrollbar-track {
             background: #f1f1f1; 

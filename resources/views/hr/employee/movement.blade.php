@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
     <link rel="stylesheet" href="/assets/css/table.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
+    <link rel="icon" sizes="180x180" href="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : 'No Logo' }}"/>
   </head>
   <body>
   <header class="header pos__rel">
@@ -265,6 +266,7 @@
                   <th>Date Hired</th>
                   <th>Designation</th>
                   <th>Office</th>
+                  <th>Department</th>
                   <th>Status</th>
                   <th>End Date</th>
                   <th>Cost</th>
@@ -278,6 +280,7 @@
                     <td><?php echo $row->dateHired ?></td>
                     <td><?php echo $row->Designation ?></td>
                     <td><?php echo $row->officeName ?></td>
+                    <td><?php echo $row->departmentName ?></td>
                     <td><?php echo $row->employmentStatus ?></td>
                     <td><?php echo $row->end_date ?></td>
                     <td><?php echo number_format($row->cost,2) ?></td>

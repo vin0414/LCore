@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/assets/css/table.css" />
 
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
+    <link rel="icon" sizes="180x180" href="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : 'No Logo' }}"/>
   </head>
   <body>
   <header class="header pos__rel">
@@ -304,13 +305,42 @@
                       </button>
                       <div class="dropdown__select">
                         <a href="{{route('hr/employee/edit',['companyID'=>$row['companyID']])}}" class="select__item">
-                          <ion-icon class="select__icon" name="create-outline"></ion-icon>Edit
+                          <ion-icon class="select__icon" name="create-outline"></ion-icon>Edit Profile
                         </a>
                         <a href="{{route('hr/employee/view',['companyID'=>$row['companyID']])}}" class="select__item">
-                          <ion-icon class="select__icon" name="folder-open-outline"></ion-icon>View
+                          <ion-icon class="select__icon" name="folder-open-outline"></ion-icon>View Profile
+                        </a>
+                        <?php if($row['employmentStatus']=="Regular" || $row['employmentStatus']=="REGULAR"){ ?>
+                        <a href="{{route('hr/employee/new-allowance')}}" class="select__item">
+                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Add Allowance
+                        </a>
+                        <?php } ?>
+                        <a href="" class="select__item">
+                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Salary Transfer
                         </a>
                         <a href="" class="select__item">
-                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Transfer
+                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Promotion
+                        </a>
+                        <a href="" class="select__item">
+                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Jobs Transfer
+                        </a>
+                        <a href="" class="select__item">
+                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Change Job Title
+                        </a>
+                        <a href="" class="select__item">
+                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Re-Assign
+                        </a>
+                        <a href="" class="select__item">
+                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Demotion
+                        </a>
+                        <a href="" class="select__item">
+                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Resign
+                        </a>
+                        <a href="" class="select__item">
+                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Terminate
+                        </a>
+                        <a href="" class="select__item">
+                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Re-Hire
                         </a>
                       </div>
                     </td>

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/assets/css/reusables.css" />
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
+    <link rel="icon" sizes="180x180" href="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : 'No Logo' }}"/>
   </head>
   <body>
     <header class="header pos__rel">
@@ -163,6 +164,12 @@
               <li class="dropdown__item"><a href="{{route('hr/employee/documents')}}" class="no-underline">Other Documents</a></li>
             </ul>
           </li>
+          <li class="nav__item">Assets <ion-icon name="chevron-down-outline"></ion-icon>
+            <ul class="dropdown">
+              <li class="dropdown__item"><a href="" class="no-underline">Monitoring</a></li>
+              <li class="dropdown__item"><a href="" class="no-underline">New Assignment</a></li>
+            </ul>
+          </li>
           <li class="nav__item">Memo<ion-icon name="chevron-down-outline"></ion-icon>
             <ul class="dropdown">
               <li class="dropdown__item"><a href="{{route('hr/memo')}}" class="no-underline">All Memo</a></li>
@@ -273,8 +280,8 @@
           <div class="card">
             <div class="text__icon__box">
               <div class="text__items">
-                <p class="subheading">Probationary</p>
-                <p class="text__description">Newly hired</p>
+                <p class="subheading">Newly Hired</p>
+                <p class="text__description">Probationary and Trainees</p>
               </div>
               <ion-icon class="card__icon" name="people-outline"></ion-icon>
             </div>
@@ -288,7 +295,7 @@
             <div class="text__icon__box">
               <div class="text__items">
                 <p class="subheading">Total Employees</p>
-                <p class="text__description">Regular and Probationary</p>
+                <p class="text__description">Onboard Employees</p>
               </div>
               <ion-icon class="card__icon" name="people-outline"></ion-icon>
             </div>

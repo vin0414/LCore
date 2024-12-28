@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/assets/css/table.css" />
     <link rel="stylesheet" href="/assets/css/settings.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
+    <link rel="icon" sizes="180x180" href="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : 'No Logo' }}"/>
   </head>
   <body>
   <header class="header pos__rel">
@@ -254,10 +255,9 @@
           <ul class="tab-titles">
             <li class="tab active" id="tab1" onclick="openTab('tab1')">Application</li>
             <li class="tab" id="tab2" onclick="openTab('tab2')">User Accounts</li>
-            <li class="tab" id="tab3" onclick="openTab('tab3')">Offices</li>
-            <li class="tab" id="tab4" onclick="openTab('tab4')">Department</li>
-            <li class="tab" id="tab5" onclick="openTab('tab5')">Policies</li>
-            <li class="tab" id="tab6" onclick="openTab('tab6')">User Permission</li>
+            <li class="tab" id="tab3" onclick="openTab('tab3')">Department/Branches</li>
+            <li class="tab" id="tab4" onclick="openTab('tab4')">Policies</li>
+            <li class="tab" id="tab5" onclick="openTab('tab5')">User Permission</li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="content-tab1">
@@ -399,55 +399,6 @@
                   >
                 </div>
                 <div class="dataWrapper">
-                  <table id="officeTable" class="display">
-                    <thead>
-                        <th>#</th>
-                        <th class="w-200">Office</th>
-                        <th class="w-275">Address</th>
-                        <th class="w-150">Date Created</th>
-                        <th class="w-50">Action</th>
-                    </thead>
-                    <tbody>
-                    <?php foreach($office as $row): ?>
-                    <tr>
-                      <td><?php echo $row['officeID'] ?></td>
-                      <td><?php echo $row['officeName'] ?></td>
-                      <td><?php echo $row['officeAddress'] ?></td>
-                      <td><?php echo $row['created_at'] ?></td>
-                      <td class="pos__rel">
-                        <button class="btn__select">
-                          <ion-icon
-                            name="ellipsis-horizontal-circle-outline"
-                            class="icon__button"
-                          ></ion-icon>
-                        </button>
-                        <div class="dropdown__select">
-                          <a href="" class="select__item"
-                            ><ion-icon
-                              class="select__icon"
-                              name="create-outline"
-                            ></ion-icon
-                            >Edit</a>
-                        </div>
-                      </td>
-                    </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <div class="tab-pane" id="content-tab4">
-              <div class="pos__rel">
-                <div class="button__box pos__abs">
-                  <a href="" class="link add__btn"
-                    ><ion-icon class="icon" name="add-outline"></ion-icon>New</a>
-                  <a href="#" class="link export__btn"
-                    ><ion-icon class="icon" name="download-outline"></ion-icon
-                    >Export</a
-                  >
-                </div>
-                <div class="dataWrapper">
                   <table id="departmentTable" class="display">
                     <thead>
                         <th>#</th>
@@ -486,13 +437,13 @@
                 </div>
               </div>
             </div>
+            <div class="tab-pane" id="content-tab4">
+              <h2>Content for Tab 4</h2>
+              <p>This is some content for Tab 4.</p>
+            </div>
             <div class="tab-pane" id="content-tab5">
               <h2>Content for Tab 5</h2>
               <p>This is some content for Tab 5.</p>
-            </div>
-            <div class="tab-pane" id="content-tab6">
-              <h2>Content for Tab 6</h2>
-              <p>This is some content for Tab 6.</p>
             </div>
           </div>
         </div>

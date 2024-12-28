@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
     <link rel="stylesheet" href="/assets/css/employee.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
+    <link rel="icon" sizes="180x180" href="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : 'No Logo' }}"/>
   </head>
   <body>
   <header class="header pos__rel">
@@ -554,23 +555,6 @@
                       @endif
                   </div>
                   <div class="input__box">
-                    <ion-icon
-                      class="pos__abs input__chev__down"
-                      name="chevron-down-outline"
-                    ></ion-icon>
-                    <select class="information__input" name="employment_status">
-                      <option value="" disabled selected>Select status</option>
-                      <option {{ old('employment_status') == "Probationary" ? 'selected' : '' }}>Probationary</option>
-                      <option {{ old('employment_status') == "Regular" ? 'selected' : '' }}>Regular</option>
-                      <option {{ old('employment_status') == "Contractual" ? 'selected' : '' }}>Contractual</option>
-                      <option {{ old('employment_status') == "Trainee" ? 'selected' : '' }}>Trainee</option>
-                    </select>
-                    <span class="input__title">Employment Status</span>
-                    @if ($errors->has('employment_status'))
-                        <p class="text-danger">{{$errors->first('employment_status')}}</p>
-                      @endif
-                  </div>
-                  <div class="input__box">
                     <input
                       class="information__input" name="salary_rates"
                       placeholder="Enter rates" value="{{ old('salary_rates') }}"
@@ -584,20 +568,33 @@
                     <input
                       type="date"
                       class="information__input"
-                      placeholder="Enter date" name="regularization_date"
-                    />
+                      placeholder="Enter date" name="regularization_date">
                     <span class="input__title">Regularization Date</span>
+                  </div>
+                  <div class="input__box">
+                    <ion-icon
+                      class="pos__abs input__chev__down"
+                      name="chevron-down-outline"
+                    ></ion-icon>
+                    <select class="information__input" name="payroll_payment" id="payroll_payment">
+                      <option value="" disabled selected>
+                        Select payment
+                      </option>
+                      <option value="Cash" {{ old('payroll_payment') == "Cash" ? 'selected' : '' }}>Cash</option>
+                      <option value="Card" {{ old('payroll_payment') == "Card" ? 'selected' : '' }}>Card</option>
+                      <option value="Check" {{ old('payroll_payment') == "Check" ? 'selected' : '' }}>Check</option>
+                    </select>
+                    <span class="input__title">Payroll Payment</span>
+                    @if ($errors->has('payroll_payment'))
+                        <p class="text-danger">{{$errors->first('payroll_payment')}}</p>
+                      @endif
                   </div>
                   <div class="input__box">
                     <input
                       type="number"
-                      class="information__input" name="account_number"
-                      placeholder="Enter bank account no." value="{{ old('account_number') }}"
-                    />
+                      class="information__input" name="account_number" id="account_number"
+                      placeholder="Enter bank account no." value="{{ old('account_number') }}" disabled/>
                     <span class="input__title">Bank Account Number</span>
-                    @if ($errors->has('account_number'))
-                        <p class="text-danger">{{$errors->first('account_number')}}</p>
-                      @endif
                   </div>
                 </div>
                 <!-- 3 -->
@@ -612,9 +609,6 @@
                       placeholder="Enter SSS number" name="sss_no"
                     />
                     <span class="input__title">SSS Number</span>
-                    @if ($errors->has('sss_no'))
-                        <p class="text-danger">{{$errors->first('sss_no')}}</p>
-                      @endif
                   </div>
                   <div class="input__box">
                     <input
@@ -623,9 +617,6 @@
                       placeholder="Enter philhealth no." name="philhealth_no"
                     />
                     <span class="input__title">Philhealth Number</span>
-                    @if ($errors->has('philhealth_no'))
-                        <p class="text-danger">{{$errors->first('philhealth_no')}}</p>
-                      @endif
                   </div>
                   <div class="input__box">
                     <input
@@ -634,9 +625,6 @@
                       placeholder="Enter pag-ibig no." name="hdmf_no"
                     />
                     <span class="input__title">Pag-IBIG Number</span>
-                    @if ($errors->has('hdmf_no'))
-                        <p class="text-danger">{{$errors->first('hdmf_no')}}</p>
-                      @endif
                   </div>
                   <div class="input__box">
                     <input
@@ -645,9 +633,6 @@
                       placeholder="Enter TIN" value="{{ old('tin') }}"
                     />
                     <span class="input__title">Tax Identification Number</span>
-                    @if ($errors->has('tin'))
-                        <p class="text-danger">{{$errors->first('tin')}}</p>
-                      @endif
                   </div>
                 </div>
               </div>
@@ -751,6 +736,18 @@
         $(".account__dropdown").removeClass("show");
         $("#headerNav").removeClass("open");
       }
+
+      $('#payroll_payment').change(function(){
+        let val = $(this).val();
+        if(val==="Cash"||val ==="Check")
+        {
+          $('#account_number').attr("disabled",true);
+        }
+        else if(val==="Card")
+        {
+          $('#account_number').attr("disabled",false);
+        }
+      });
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>

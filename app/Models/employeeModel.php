@@ -14,7 +14,7 @@ class employeeModel extends Model
                             'gender','civilStatus','dob','address','religion','emailAddress','contactNumber','education',
                             'dateHired','designation','employmentStatus','regularizationDate','officeID','departmentID',
                             'jobLevel','companyPhone','salaryRate','sssNo','philhealthNo','hdmfNo','tin',
-                            'accountNumber','employeeStatus','Image','employeeToken'];
+                            'payMethod','accountNumber','employeeStatus','Image','employeeToken'];
     protected $casts = [
         'salaryRate' => 'decimal:2',  // Ensures two decimal places
     ];

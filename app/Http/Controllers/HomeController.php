@@ -32,9 +32,10 @@ class HomeController extends Controller
         $about = $aboutModel->first();
         $employeeModel = new \App\Models\employeeModel();
         $totalEmployee = $employeeModel->count();
+        $work = ['Trainee','Probationary'];
         $recent = $employeeModel::orderBy('employeeID', 'desc')->take(10)->get();
         $regularEmployee = $employeeModel->WHERE('employmentStatus','Regular')->count();
-        $newEmployee = $employeeModel->WHERE('employmentStatus','Probationary')->count();
+        $newEmployee = $employeeModel->WHEREIN('employmentStatus',$work)->count();
         $resignEmployee = $employeeModel->WHERE('employeeStatus','2')->count();
         $data = ['title'=>$title,'total'=>$totalEmployee,
                 'regular'=>$regularEmployee,'new'=>$newEmployee,
@@ -194,7 +195,8 @@ class HomeController extends Controller
         $employee = DB::table('tblrecord as a')
                 ->leftJoin('tblemployee as b','b.employeeID','=','a.employeeID')
                 ->leftJoin('tbloffice as c','c.officeID','=','a.officeID')
-                ->select('a.*','b.companyID','b.surName','b.firstName','b.middleName','b.suffix','c.officeName')->get();
+                ->leftJoin('tbldepartment as d','d.departmentID','=','a.departmentID')
+                ->select('a.*','b.companyID','b.surName','b.firstName','b.middleName','b.suffix','c.officeName','d.departmentName')->get();
         $data = ['title'=>$title,'about'=>$about,'employee'=>$employee];
         return view('hr/employee/movement',$data);
     }

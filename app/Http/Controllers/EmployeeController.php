@@ -44,18 +44,19 @@ class EmployeeController extends Controller
             'office'=>'required',
             'department'=>'required',
             'job_level'=>'required',
-            'employment_status'=>'required',
             'salary_rates'=>'required',
             'regularization_date'=>'nullable',
-            'account_number'=>'required',
-            'sss_no'=>'required',
-            'philhealth_no'=>'required',
-            'hdmf_no'=>'required',
-            'tin'=>'required'
+            'payroll_payment'=>'required',
+            'account_number'=>'nullable',
+            'sss_no'=>'nullable',
+            'philhealth_no'=>'nullable',
+            'hdmf_no'=>'nullable',
+            'tin'=>'nullable'
         ]);
         //generate company ID
         $companyID = "LC-".str_pad(($employee+1), 4, '0', STR_PAD_LEFT);
         $employeePIN = "1234";
+        $employment_status = "Trainee";
         $status = 1;
         $cost = str_replace(",", "", $request->salary_rates);
         $token = $request->session()->token();
@@ -70,17 +71,17 @@ class EmployeeController extends Controller
         
         $data = ['companyID'=>$companyID,'employeePIN'=>$employeePIN,'surName'=>$request->surname,'firstName'=>$request->firstname,'middleName'=>$request->middlename,'suffix'=>$request->suffix,
                 'gender'=>$request->gender,'civilStatus'=>$request->civil_status,'dob'=>$request->date_of_birth,'address'=>$request->address,'religion'=>$request->religion,'emailAddress'=>$request->email_address,
-                'contactNumber'=>$request->contact_number,'education'=>$request->education,'dateHired'=>$request->date_hired,'designation'=>$request->designation,'employmentStatus'=>$request->employment_status,
+                'contactNumber'=>$request->contact_number,'education'=>$request->education,'dateHired'=>$request->date_hired,'designation'=>$request->designation,'employmentStatus'=>$employment_status,
                 'regularizationDate'=>$request->regularization_date,'officeID'=>$request->office,'departmentID'=>$request->department,'jobLevel'=>$request->job_level,'companyPhone'=>$request->company_phone,
                 'salaryRate'=>$cost,'sssNo'=>$request->sss_no,'philhealthNo'=>$request->philhealth_no,'hdmfNo'=>$request->hdmf_no,'tin'=>$request->tin,
-                'accountNumber'=>$request->account_number,'employeeStatus'=>$status,'Image'=>$filename,'employeeToken'=>$token];
+                'payMethod'=>$request->payroll_payment,'accountNumber'=>$request->account_number,'employeeStatus'=>$status,'Image'=>$filename,'employeeToken'=>$token];
         $employeeModel->create($data);
         //get the employeeID from repository
         $employeeRecord = $employeeModel->WHERE('companyID',$companyID)->first();
         //save the first record of the employee
         $newData = ['employeeID'=>$employeeRecord['employeeID'],'dateHired'=>$request->date_hired,
-                    'Designation'=>$request->designation,'officeID'=>$request->office,
-                    'employmentStatus'=>$request->employment_status,'end_date'=>'0000-00-00','cost'=>$cost];
+                    'Designation'=>$request->designation,'officeID'=>$request->office,'departmentID'=>$request->department,
+                    'employmentStatus'=>$employment_status,'end_date'=>'0000-00-00','cost'=>$cost,'Remarks'=>'Training'];
         $recordModel->create($newData);
         //create log record
         $logModel = new \App\Models\logModel();
@@ -117,7 +118,8 @@ class EmployeeController extends Controller
             'job_level'=>'required',
             'employment_status'=>'required',
             'regularization_date'=>'nullable',
-            'account_number'=>'required',
+            'payroll_payment'=>'required',
+            'account_number'=>'nullable',
             'sss_no'=>'required',
             'ph_no'=>'required',
             'hdmf_no'=>'required',
@@ -137,7 +139,7 @@ class EmployeeController extends Controller
                             'contactNumber'=>$request->contact_number,'education'=>$request->education,'dateHired'=>$request->date_hired,'designation'=>$request->designation,'employmentStatus'=>$request->employment_status,
                             'regularizationDate'=>$request->regularization_date,'officeID'=>$request->office,'departmentID'=>$request->department,'jobLevel'=>$request->job_level,'companyPhone'=>$request->company_phone,
                             'sssNo'=>$request->sss_no,'philhealthNo'=>$request->ph_no,'hdmfNo'=>$request->hdmf_no,'tin'=>$request->tin,
-                            'accountNumber'=>$request->account_number,'Image'=>$filename]);
+                            'payMethod'=>$request->payroll_payment,'accountNumber'=>$request->account_number,'Image'=>$filename]);
         }
         else
         {
@@ -147,7 +149,7 @@ class EmployeeController extends Controller
                             'contactNumber'=>$request->contact_number,'education'=>$request->education,'dateHired'=>$request->date_hired,'designation'=>$request->designation,'employmentStatus'=>$request->employment_status,
                             'regularizationDate'=>$request->regularization_date,'officeID'=>$request->office,'departmentID'=>$request->department,'jobLevel'=>$request->job_level,'companyPhone'=>$request->company_phone,
                             'sssNo'=>$request->sss_no,'philhealthNo'=>$request->ph_no,'hdmfNo'=>$request->hdmf_no,'tin'=>$request->tin,
-                            'accountNumber'=>$request->account_number]);
+                            'payMethod'=>$request->payroll_payment,'accountNumber'=>$request->account_number]);
         }
         //create log record
         $logModel = new \App\Models\logModel();

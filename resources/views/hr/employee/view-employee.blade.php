@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="/assets/css/table.css" />
     <link rel="stylesheet" href="/assets/css/view-employee.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
+    <link rel="icon" sizes="180x180" href="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : 'No Logo' }}"/>
   </head>
   <body>
   <header class="header pos__rel">
@@ -425,6 +426,11 @@
             $years = $interval->y;
             $months = $interval->m;
             $days = $interval->d;
+
+            //compute the 
+            $dobDate = new DateTime($employee['dob']);
+            $today = new DateTime('today');
+            $age = $dobDate->diff($today)->y;
             ?>
             <input type="hidden" id="employeeID" value="{{$employee['employeeID']}}"/>
             <div class="first__row grid">
@@ -459,13 +465,6 @@
                           class="icon__view__emp"
                         ></ion-icon
                         >Edit Profile
-                      </a>
-                      <a class="btn__primary no-underline" onclick="openPromoteModal()">
-                        <ion-icon
-                          name="trophy-outline"
-                          class="icon__view__emp"
-                        ></ion-icon
-                        >Promote
                       </a>
                       <a class="btn__primary no-underline" onclick="openModal()">
                         <ion-icon
@@ -534,7 +533,7 @@
                     </div>
                   </div>
                   <!-- 2 -->
-                  <div class="input__row grid__5cols__modified">
+                  <div class="input__row grid__6cols__modified">
                     <div class="input__box">
                       <ion-icon
                         class="pos__abs input__chev__down"
@@ -579,6 +578,14 @@
                         placeholder="Enter date of birth" value="{{$employee['dob']}}"
                       />
                       <span class="input__title">Date of Birth</span>
+                    </div>
+                    <div class="input__box">
+                      <input
+                        type="text"
+                        class="information__input" name="age"
+                        placeholder="Age" value="<?php echo $age; ?>"
+                      />
+                      <span class="input__title">Age</span>
                     </div>
                     <div class="input__box">
                       <input
@@ -738,10 +745,10 @@
                   <div class="input__box">
                     <input
                       type="number"
-                      class="information__input" name="account_number"
-                      placeholder="Enter bank account no." value="{{ $employee['accountNumber'] }}"
+                      class="information__input" name="payroll_payment"
+                      placeholder="Enter payment" value="{{ $employee['payMethod'] }}"
                     />
-                    <span class="input__title">Bank Account Number</span>
+                    <span class="input__title">Payroll Payment</span>
                   </div>
                 </div>
                 <!-- 3 -->

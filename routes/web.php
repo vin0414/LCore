@@ -74,5 +74,6 @@ Route::middleware('auth:user')->group(function () {
     Route::get('hr/employee/credits',[HomeController::class,'creditsEmployee'])->name('hr/employee/credits');
     Route::get('hr/employee/movement',[HomeController::class,'employeeMovement'])->name('hr/employee/movement');
     Route::get('hr/employee/documents',[HomeController::class,'employeeDocuments'])->name('hr/employee/documents');
+    Route::get('hr/employee/new-allowance',[HomeController::class,'newAllowance'])->name('hr/employee/new-allowance');
 });
 
