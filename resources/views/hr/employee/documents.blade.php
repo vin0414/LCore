@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
     <link rel="stylesheet" href="/assets/css/reusables.css" />
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
-    <link rel="stylesheet" href="/assets/css/table.css" />
+    <link rel="stylesheet" href="/assets/css/employee.css" />
     <link rel="stylesheet" href="/assets/css/documents.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
     <link rel="icon" sizes="180x180" href="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : 'No Logo' }}"/>
@@ -261,7 +261,7 @@
           
         </div>
         <div class="btn__box">
-            <button class="btn__primary"><ion-icon class="icon__documents" name="add-outline"></ion-icon>Create Folder</button>
+            <button type="button" class="btn__primary add-folder"><ion-icon class="icon__documents" name="add-outline"></ion-icon>Create Folder</button>
         </div>
         @if(count($folders) > 0)
         <ul class="card__list">
@@ -277,6 +277,32 @@
         @endif
       </div>
     </main>
+    <div class="modal-overlay" id="folderModal">
+        <div class="modal">
+          <div class="modal__heading">
+            <div class="heading__modal__box">
+              <h2 class="heading__modal">New Folder</h2>
+              <p class="subheading__modal">Save folder</p>
+            </div>
+            <div class="close__box"><ion-icon onclick="closeWorkModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+            </div>
+            <form method="POST" class="form__modal" id="frmFolder">
+              @csrf
+              <div class="input__form__modal__box">
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter name of the folder"
+                    name="folder"
+                  />
+                  <span class="input__title">Name of the Folder</span>
+                  <div id="folder-error" class="error-message text-danger"></div>
+                </div>
+              </div>
+              <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+            </form>
+        </div>
+    </div>
     <footer class="footer">
       <p class="copyright">&copy;{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }} <?php echo date('Y') ?>. All Rights Reserved.</p>
     </footer>
@@ -322,6 +348,38 @@
         $(".account__dropdown").removeClass("show");
         $("#headerNav").removeClass("open");
       }
+
+      $(document).on('click','.add-folder',function(){
+          $('#folderModal').css('display', 'flex');
+          $('body').addClass('no-scroll');
+      });
+
+      function closeWorkModal() {
+          $('#folderModal').css('display', 'none');
+          $('body').removeClass('no-scroll'); 
+      }
+
+      $('#frmFolder').on('submit',function(e){
+        e.preventDefault();
+        var formData = $(this).serialize();
+        $.ajax({
+          url:"{{route('create-folder')}}",method:"POST",
+          data:formData,success:function(response)
+          {
+            if(response.success)
+            {
+              window.location.reload();
+            }else{
+                var errors = response.errors;
+                // Iterate over each error and display it under the corresponding input field
+                for (var field in errors) {
+                    $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
+                    $('#' + field).addClass('input-error'); // Highlight the input field with an error
+                }
+            }
+          }
+        });
+      });
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>

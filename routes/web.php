@@ -40,6 +40,7 @@ Route::post('update-certificate',[EmployeeController::class,'updateCertificate']
 Route::post('save-employee',[EmployeeController::class,'saveEmployee'])->name('save-employee');
 Route::post('update-employee',[EmployeeController::class,'updateEmployee'])->name('update-employee');
 Route::post('add-credit',[EmployeeController::class,'addCredit'])->name('add-credit');
+Route::post('create-folder',[EmployeeController::class,'createFolder'])->name('create-folder');
 //Settings module
 Route::post('save',[SettingController::class,'saveLogo'])->name('save');
 

@@ -18,6 +18,27 @@ class EmployeeController extends Controller
         }
     }
 
+    public function createFolder(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'folder'=>'required',
+        ]);
+
+        if ($validator->fails()) {
+            // Return validation errors as JSON
+            return response()->json(['errors' => $validator->errors()]);
+        }
+        else
+        {
+            $folderPath = public_path('documents/'.$request->folder);
+            if (!file_exists($folderPath))
+            {
+                mkdir($folderPath, 0777, true);
+            }
+            return response()->json(['success'=>'Successfully created']);
+        }
+    }
+
     public function saveEmployee(Request $request)
     {
         date_default_timezone_set('Asia/Manila');

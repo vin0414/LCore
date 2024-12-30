@@ -301,6 +301,13 @@
               <div class="general__information">
                 <div class="info__heading__box">
                   <p class="profile__heading">General Information</p>
+                  <a href="{{route('hr/employee')}}" class="btn__primary no-underline">
+                    <ion-icon
+                      name="arrow-back-outline"
+                      class="icon__edit"
+                    ></ion-icon
+                    >Back
+                  </a>
                 </div>
                 <div class="input__boxes">
                   <!-- 1 -->

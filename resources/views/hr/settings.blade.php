@@ -406,6 +406,7 @@
                         <th>#</th>
                         <th class="w-200">Office</th>
                         <th class="w-275">Department</th>
+                        <th class="w-150">Contact No</th>
                         <th class="w-150">Date Created</th>
                         <th class="w-50">Action</th>
                     </thead>
@@ -415,6 +416,7 @@
                       <td><?php echo $row->departmentID ?></td>
                       <td><?php echo $row->officeName ?></td>
                       <td><?php echo $row->departmentName ?></td>
+                      <td><?php echo $row->departmentNumber ?></td>
                       <td><?php echo $row->created_at ?></td>
                       <td class="pos__rel">
                         <button class="btn__select">
@@ -444,8 +446,55 @@
               <p>This is some content for Tab 4.</p>
             </div>
             <div class="tab-pane" id="content-tab5">
-              <h2>Content for Tab 5</h2>
-              <p>This is some content for Tab 5.</p>
+            <div class="pos__rel">
+                <div class="button__box pos__abs">
+                  <a href="" class="link add__btn"
+                    ><ion-icon class="icon" name="add-outline"></ion-icon>New</a>
+                  <a href="#" class="link export__btn"
+                    ><ion-icon class="icon" name="download-outline"></ion-icon
+                    >Export</a
+                  >
+                </div>
+                <div class="dataWrapper">
+                  <table id="scheduleTable" class="display">
+                    <thead>
+                        <th>#</th>
+                        <th class="w-200">Type</th>
+                        <th class="w-275">Hours</th>
+                        <th class="w-150">Break-Time</th>
+                        <th class="w-150">Notes</th>
+                        <th class="w-50">Action</th>
+                    </thead>
+                    <tbody>
+                    <?php foreach($schedule as $row):?>
+                      <tr>
+                        <td><?php echo $row['scheduleID'] ?></td>
+                        <td><?php echo $row['scheduleType'] ?></td>
+                        <td><?php echo $row['hours'] ?></td>
+                        <td><?php echo $row['breakTime'] ?></td>
+                        <td><?php echo $row['Notes'] ?></td>
+                        <td class="pos__rel">
+                          <button class="btn__select">
+                            <ion-icon
+                              name="ellipsis-horizontal-circle-outline"
+                              class="icon__button"
+                            ></ion-icon>
+                          </button>
+                          <div class="dropdown__select">
+                            <a href="" class="select__item"
+                              ><ion-icon
+                                class="select__icon"
+                                name="create-outline"
+                              ></ion-icon
+                              >Edit</a>
+                          </div>
+                        </td>
+                      </tr>
+                    <?php endforeach;?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
             <div class="tab-pane" id="content-tab6">
               <h2>Content for Tab 6</h2>
@@ -500,6 +549,21 @@
           oLanguage: { sSearch: "" },
           initComplete: function () {
             $("#departmentTable_filter input").attr(
+              "placeholder",
+              "Search by name, etc."
+            );
+          },
+        });
+
+        $("#scheduleTable").DataTable({
+          dom:
+            "<'row'<'col-sm-6'f>>" + // Search box on top in the same row
+            "<'row'<'col-sm-12'tr>>" + // Table
+            "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'p>>", // Bottom (length + pagination)
+
+          oLanguage: { sSearch: "" },
+          initComplete: function () {
+            $("#scheduleTable_filter input").attr(
               "placeholder",
               "Search by name, etc."
             );

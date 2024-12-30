@@ -208,6 +208,12 @@ class HomeController extends Controller
         //application
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
+        //create folder if not exist
+        $folderPath = public_path('/'.$folder);
+        if (!file_exists($folderPath))
+        {
+            mkdir($folderPath, 0777, true);
+        }
 
         // Get the full path of the specific folder
         $folderPath = public_path($folder);
@@ -295,9 +301,12 @@ class HomeController extends Controller
             //department
             $department = DB::table('tbldepartment as a')
                 ->leftJoin('tbloffice as b','b.officeID','=','a.officeID')
-                ->select('b.officeName','a.departmentID','a.departmentName','a.created_at')->get();
+                ->select('b.officeName','a.departmentID','a.departmentName','a.departmentNumber','a.created_at')->get();
+            //scheduler
+            $schedulerModel = new \App\Models\schedulerModel();
+            $scheduler = $schedulerModel->all();
 
-            $data = ['title'=>$title,'about'=>$about,'account'=>$account,'office'=>$office,'department'=>$department];
+            $data = ['title'=>$title,'about'=>$about,'account'=>$account,'office'=>$office,'department'=>$department,'schedule'=>$scheduler];
             return view('hr/settings',$data);
         }
         else

@@ -266,14 +266,15 @@
         @endif
         <div class="pos__rel">
           <div class="button__box pos__abs">
-            <a href="{{route('hr/employee/new')}}" class="link add__btn"
-              ><ion-icon class="icon" name="add-outline"></ion-icon>Add
-              Employee</a
-            >
-            <a href="#" class="link export__btn"
-              ><ion-icon class="icon" name="download-outline"></ion-icon
-              >Export</a
-            >
+            <a href="" class="link add__btn">
+              <ion-icon class="icon" name="cloud-upload-outline"></ion-icon>Upload
+            </a>
+            <a href="{{route('hr/employee/new')}}" class="link add__btn">
+              <ion-icon class="icon" name="add-outline"></ion-icon>Add Employee
+            </a>
+            <a href="#" class="link export__btn">
+              <ion-icon class="icon" name="download-outline"></ion-icon>Export
+            </a>
           </div>
           <div class="dataWrapper">
             <table id="dataTable" class="display">
