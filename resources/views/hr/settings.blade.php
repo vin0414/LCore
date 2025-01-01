@@ -259,7 +259,8 @@
             <li class="tab" id="tab3" onclick="openTab('tab3')">Department/Branches</li>
             <li class="tab" id="tab4" onclick="openTab('tab4')">Policies</li>
             <li class="tab" id="tab5" onclick="openTab('tab5')">Scheduler</li>
-            <li class="tab" id="tab6" onclick="openTab('tab6')">User Permission</li>
+            <li class="tab" id="tab6" onclick="openTab('tab6')">Leave Setup</li>
+            <li class="tab" id="tab7" onclick="openTab('tab7')">User Permission</li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="content-tab1">
@@ -442,11 +443,11 @@
               </div>
             </div>
             <div class="tab-pane" id="content-tab4">
-              <h2>Content for Tab 4</h2>
+              <h2>Add Holiday, late and overtime policy here</h2>
               <p>This is some content for Tab 4.</p>
             </div>
             <div class="tab-pane" id="content-tab5">
-            <div class="pos__rel">
+              <div class="pos__rel">
                 <div class="button__box pos__abs">
                   <a href="" class="link add__btn"
                     ><ion-icon class="icon" name="add-outline"></ion-icon>New</a>
@@ -497,8 +498,57 @@
               </div>
             </div>
             <div class="tab-pane" id="content-tab6">
-              <h2>Content for Tab 6</h2>
-              <p>This is some content for Tab 6.</p>
+              <div class="pos__rel">
+                <div class="button__box pos__abs">
+                  <a href="" class="link add__btn"
+                    ><ion-icon class="icon" name="add-outline"></ion-icon>New</a>
+                  <a href="#" class="link export__btn"
+                    ><ion-icon class="icon" name="download-outline"></ion-icon
+                    >Export</a
+                  >
+                </div>
+                <div class="dataWrapper">
+                  <table id="leaveSetupTable" class="display">
+                    <thead>
+                        <th>#</th>
+                        <th class="w-200">Month</th>
+                        <th class="w-150">Vacation</th>
+                        <th class="w-150">Sick</th>
+                        <th class="w-50">Action</th>
+                    </thead>
+                    <tbody>
+                    <?php foreach($leaveSetup as $row): ?>
+                      <tr>
+                        <td><?php echo $row['setupID'] ?></td>
+                        <td><?php echo $row['Month'] ?></td>
+                        <td><?php echo $row['Vacation'] ?></td>
+                        <td><?php echo $row['Sick'] ?></td>
+                        <td class="pos__rel">
+                          <button class="btn__select">
+                            <ion-icon
+                              name="ellipsis-horizontal-circle-outline"
+                              class="icon__button"
+                            ></ion-icon>
+                          </button>
+                          <div class="dropdown__select">
+                            <a href="" class="select__item"
+                              ><ion-icon
+                                class="select__icon"
+                                name="create-outline"
+                              ></ion-icon
+                              >Edit</a>
+                          </div>
+                        </td>
+                      </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="content-tab7">
+              <h2>Content for Tab 7</h2>
+              <p>This is some content for Tab 7.</p>
             </div>
           </div>
         </div>
@@ -564,6 +614,21 @@
           oLanguage: { sSearch: "" },
           initComplete: function () {
             $("#scheduleTable_filter input").attr(
+              "placeholder",
+              "Search by name, etc."
+            );
+          },
+        });
+
+        $("#leaveSetupTable").DataTable({
+          dom:
+            "<'row'<'col-sm-6'f>>" + // Search box on top in the same row
+            "<'row'<'col-sm-12'tr>>" + // Table
+            "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'p>>", // Bottom (length + pagination)
+
+          oLanguage: { sSearch: "" },
+          initComplete: function () {
+            $("#leaveSetupTable_filter input").attr(
               "placeholder",
               "Search by name, etc."
             );

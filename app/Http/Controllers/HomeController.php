@@ -305,8 +305,13 @@ class HomeController extends Controller
             //scheduler
             $schedulerModel = new \App\Models\schedulerModel();
             $scheduler = $schedulerModel->all();
+            //leave setup
+            $leaveSetupModel = new \App\Models\leaveSetupModel();
+            $leaveSetup = $leaveSetupModel->all();
 
-            $data = ['title'=>$title,'about'=>$about,'account'=>$account,'office'=>$office,'department'=>$department,'schedule'=>$scheduler];
+            $data = ['title'=>$title,'about'=>$about,'account'=>$account,
+                    'office'=>$office,'department'=>$department,'schedule'=>$scheduler,
+                    'leaveSetup'=>$leaveSetup];
             return view('hr/settings',$data);
         }
         else

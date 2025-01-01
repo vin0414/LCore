@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
@@ -43,5 +43,32 @@ class SettingController extends Controller
         $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Add/update logo and application details'];
         $logModel->create($data);
         return redirect('/hr/settings');
+    }
+
+    public function generateFirstLeaveCredit()
+    {
+        $leaveSetupModel = new \App\Models\leaveSetupModel();
+        $employeeModel = new \App\Models\employeeModel();
+        $employee = $employeeModel->all();
+        foreach($employee as $row)
+        {
+            $hire_date = $employee['dateHired'];
+            
+            // Create DateTime objects for the hire date and current date
+            $hireDate = Carbon::parse($hire_date);
+            $currentDate = Carbon::now();
+            
+            // Calculate the difference between the current date and the hire date
+            $monthsEmployed = $hireDate->diffInMonths($currentDate);
+            if($monthsEmployed==12)
+            {
+                //get the leave credits based on the month
+            }
+        }
+    }
+
+    public function generateRegularLeaveCredit()
+    {
+
     }
 }
