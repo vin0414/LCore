@@ -335,7 +335,6 @@
         @endif
         <div class="pos__rel">
           <div class="button__box pos__abs">
-            <button style="z-index: 999; cursor: pointer;" class="test__btn">TEst</button>
             <a href="" class="link add__btn">
               <ion-icon class="icon" name="cloud-upload-outline"></ion-icon>Upload
             </a>
