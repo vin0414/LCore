@@ -376,9 +376,11 @@
                       <?php if($row['employeeStatus']==0){ ?>
                         <span class="badge badge-danger">Resigned</span>
                       <?php }else if($row['employeeStatus']==1){?>
-                        <span class="badge badge-primary">Active</span>
+                        <span class="badge badge-success">Active</span>
                       <?php }else if($row['employeeStatus']==2){ ?>
                         <span class="badge badge-danger">Terminated</span>
+                      <?php }else{ ?>
+                        <span class="badge badge-dark-orange">Back-out/Failed</span>
                       <?php } ?>
                     </td>
                     <td class="pos__rel">
@@ -401,42 +403,50 @@
                             <ion-icon class="select__icon" name="person-add-outline"></ion-icon>Re-Hire
                           </a>
                         <?php }else{ ?>
-                        <a href="" class="select__item">
-                          <ion-icon class="select__icon" name="ribbon-outline"></ion-icon>Promotion
-                        </a>
-                        <a href="" class="select__item">
-                          <ion-icon class="select__icon" name="calendar-outline"></ion-icon>Change Schedule
-                        </a>
-                        <?php if($row['employmentStatus']=="Regular" || $row['employmentStatus']=="Probationary"){ ?>
-                        <a href="{{route('hr/employee/new-allowance')}}" class="select__item">
-                          <ion-icon class="select__icon" name="add-outline"></ion-icon>Add Allowance
-                        </a>
-                        <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item salaryAdjusment">
-                          <ion-icon class="select__icon" name="cash-outline"></ion-icon>Salary Adjustment
-                        </button>
-                        <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item jobTransfer">
-                          <ion-icon class="select__icon" name="file-tray-full-outline"></ion-icon>Job Transfer
-                        </button>
-                        <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item changeJobTitle">
-                          <ion-icon class="select__icon" name="pricetags-outline"></ion-icon>Change Job Title
-                        </button>
-                        <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item demote">
-                          <ion-icon class="select__icon" name="thumbs-down-outline"></ion-icon>Demotion
-                        </button>
-                        <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item resign">
-                          <ion-icon class="select__icon" name="log-out-outline"></ion-icon>Resign
-                        </button>
-                        <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item terminate">
-                          <ion-icon class="select__icon" name="person-remove-outline"></ion-icon>Terminate
-                        </button>
-                        <?php }else{ ?>
-                        <a href="" class="select__item">
-                          <ion-icon class="select__icon" name="play-back-outline"></ion-icon>Back-Out
-                        </a>
-                        <a href="" class="select__item">
-                          <ion-icon class="select__icon" name="close-outline"></ion-icon>Failure
-                        </a>
-                        <?php } ?>
+                          <?php if($row['employmentStatus']=="Regular" || $row['employmentStatus']=="Probationary"){ ?>
+                          <a href="" class="select__item">
+                            <ion-icon class="select__icon" name="ribbon-outline"></ion-icon>Promotion
+                          </a>
+                          <a href="" class="select__item">
+                            <ion-icon class="select__icon" name="calendar-outline"></ion-icon>Change Schedule
+                          </a>
+                          <a href="{{route('hr/employee/new-allowance')}}" class="select__item">
+                            <ion-icon class="select__icon" name="add-outline"></ion-icon>Add Allowance
+                          </a>
+                          <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item salaryAdjusment">
+                            <ion-icon class="select__icon" name="cash-outline"></ion-icon>Salary Adjustment
+                          </button>
+                          <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item jobTransfer">
+                            <ion-icon class="select__icon" name="file-tray-full-outline"></ion-icon>Job Transfer
+                          </button>
+                          <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item changeJobTitle">
+                            <ion-icon class="select__icon" name="pricetags-outline"></ion-icon>Change Job Title
+                          </button>
+                          <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item demote">
+                            <ion-icon class="select__icon" name="thumbs-down-outline"></ion-icon>Demotion
+                          </button>
+                          <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item resign">
+                            <ion-icon class="select__icon" name="log-out-outline"></ion-icon>Resign
+                          </button>
+                          <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item terminate">
+                            <ion-icon class="select__icon" name="person-remove-outline"></ion-icon>Terminate
+                          </button>
+                          <?php }else{ ?>
+                              <?php if($row['employeeStatus']==1){ ?>
+                              <a href="" class="select__item">
+                                <ion-icon class="select__icon" name="ribbon-outline"></ion-icon>Promotion
+                              </a>
+                              <a href="" class="select__item">
+                                <ion-icon class="select__icon" name="calendar-outline"></ion-icon>Change Schedule
+                              </a>
+                              <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item backOut">
+                                <ion-icon class="select__icon" name="play-back-outline"></ion-icon>Back-Out
+                              </button>
+                              <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item fail">
+                                <ion-icon class="select__icon" name="close-outline"></ion-icon>Failure
+                              </button>
+                              <?php } ?>
+                          <?php } ?>
                         <?php } ?>
                       </div>
                     </td>
@@ -616,6 +626,38 @@
           var csrfToken = $('meta[name="csrf-token"]').attr('content');
           $.ajax({
             url:"{{route('terminate')}}",method:"POST",
+            data:{value:$(this).val()},
+            headers: {'X-CSRF-TOKEN': csrfToken},success:function(response)
+            {
+              if(response==="success"){window.location.reload();}else{alert(response);}
+            }
+          });
+        }
+      });
+
+      $(document).on('click','.backOut',function(){
+        var confirmation = confirm("Would you like to tag this trainee as back-out?");
+        if(confirmation)
+        {
+          var csrfToken = $('meta[name="csrf-token"]').attr('content');
+          $.ajax({
+            url:"{{route('back-out')}}",method:"POST",
+            data:{value:$(this).val()},
+            headers: {'X-CSRF-TOKEN': csrfToken},success:function(response)
+            {
+              if(response==="success"){window.location.reload();}else{alert(response);}
+            }
+          });
+        }
+      });
+
+      $(document).on('click','.fail',function(){
+        var confirmation = confirm("Would you like to tag this trainee as failed?");
+        if(confirmation)
+        {
+          var csrfToken = $('meta[name="csrf-token"]').attr('content');
+          $.ajax({
+            url:"{{route('failure')}}",method:"POST",
             data:{value:$(this).val()},
             headers: {'X-CSRF-TOKEN': csrfToken},success:function(response)
             {

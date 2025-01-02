@@ -722,11 +722,53 @@ class EmployeeController extends Controller
 
     public function backOut(Request $request)
     {
-        
+        date_default_timezone_set('Asia/Manila');
+        $employeeModel = new \App\Models\employeeModel();
+        $recordModel = new \App\Models\recordModel();
+        $newDate = date('Y-m-d');
+        //data
+        $val = $request->value;
+        //get the companyID
+        $employee = $employeeModel->WHERE('employeeID',$val)->first();
+        //change the office and department
+        $employeeModel::where('employeeID',$val)
+            ->update(['employeeStatus'=>3]);
+        //get the recent record of an employee
+        $record = $recordModel->WHERE('employeeID',$val)->orderBy('recordID', 'desc')->first();
+        //update the record of the employee
+        $recordModel::where('recordID',$record['recordID'])
+            ->update(['end_date'=>$newDate,'Remarks'=>'Back-Out']);
+        //create log record
+        $logModel = new \App\Models\logModel();
+        $date = date('Y-m-d h:i:s a');
+        $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Employee : '.$employee['companyID'].' tag as back-out'];
+        $logModel->create($data);
+        echo "success";
     }
 
     public function failure(Request $request)
     {
-        
+        date_default_timezone_set('Asia/Manila');
+        $employeeModel = new \App\Models\employeeModel();
+        $recordModel = new \App\Models\recordModel();
+        $newDate = date('Y-m-d');
+        //data
+        $val = $request->value;
+        //get the companyID
+        $employee = $employeeModel->WHERE('employeeID',$val)->first();
+        //change the office and department
+        $employeeModel::where('employeeID',$val)
+            ->update(['employeeStatus'=>4]);
+        //get the recent record of an employee
+        $record = $recordModel->WHERE('employeeID',$val)->orderBy('recordID', 'desc')->first();
+        //update the record of the employee
+        $recordModel::where('recordID',$record['recordID'])
+            ->update(['end_date'=>$newDate,'Remarks'=>'Training Failed']);
+        //create log record
+        $logModel = new \App\Models\logModel();
+        $date = date('Y-m-d h:i:s a');
+        $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Employee : '.$employee['companyID'].' tag as failed'];
+        $logModel->create($data);
+        echo "success";
     }
 }

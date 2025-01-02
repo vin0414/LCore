@@ -854,6 +854,11 @@ body.no-scroll {
     background-color: #f8f9fa; /* Light background */
     color: #000; /* Dark text for light background */
   }
+
+  .badge-dark-orange
+  {
+    background-color: darkorange;
+  }
   
   .badge-pill {
     border-radius: 50px; /* Rounded corners */
