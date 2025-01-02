@@ -316,6 +316,7 @@ hr {
 .sidebar__nav {
     padding: 2rem 2rem;
     max-width: 25rem;
+    min-height: 60rem;
     border-right: 1px solid var(--line-color);
 }
 

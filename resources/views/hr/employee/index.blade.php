@@ -278,7 +278,7 @@
         @endif
         <div class="pos__rel">
           <div class="button__box pos__abs">
-            <button style="z-index: 999; cursor: pointer;" class="test__btn">TEst</button>
+
             <a href="" class="link add__btn">
               <ion-icon class="icon" name="cloud-upload-outline"></ion-icon>Upload
             </a>
@@ -411,10 +411,7 @@
           }
         });
         // Modal 
-        $(document).on('click','.test__btn',function (){
-              $('#modalOverlay4').css('display', 'flex');
-              $('body').addClass('no-scroll');
-        });
+
         // Modal up to here only
         $(document).on("click", function (event) {
           const dropDownAction = $(".dropdown__select");
