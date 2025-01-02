@@ -540,36 +540,15 @@
                   </div>
                 </div>
                 <!-- 2 -->
-                <div class="input__row grid__5cols__modified">
-                  <div class="input__box">
-                    <ion-icon
-                      class="pos__abs input__chev__down"
-                      name="chevron-down-outline"
-                    ></ion-icon>
-                    <select class="information__input" name="job_level">
-                      <option value="" disabled selected>
-                        Select job level
-                      </option>
-                      <option value="Rank and File" {{ old('job_level') == "Rank and File" ? 'selected' : '' }}>Rank and File</option>
-                      <option value="Specialist" {{ old('job_level') == "Specialist" ? 'selected' : '' }}>Specialist</option>
-                      <option value="Officer" {{ old('job_level') == "Officer" ? 'selected' : '' }}>Officer</option>
-                      <option value="Supervisor" {{ old('job_level') == "Supervisor" ? 'selected' : '' }}>Supervisor</option>
-                      <option value="Managerial" {{ old('job_level') == "Managerial" ? 'selected' : '' }}>Managerial</option>
-                      <option value="Executive" {{ old('job_level') == "Executive" ? 'selected' : '' }}>Executive</option>
-                    </select>
-                    <span class="input__title">Job Level</span>
-                    @if ($errors->has('job_level'))
-                        <p class="text-danger">{{$errors->first('job_level')}}</p>
-                      @endif
-                  </div>
+                <div class="input__row grid__4cols__modified">
                   <div class="input__box">
                     <input
-                      class="information__input" name="salary_rates"
-                      placeholder="Enter rates" value="{{ old('salary_rates') }}"
+                      class="information__input" name="allowance_rates"
+                      placeholder="Enter allowance" value="{{ old('allowance_rates') }}"
                     />
-                    <span class="input__title">Salary Rates</span>
-                    @if ($errors->has('salary_rates'))
-                        <p class="text-danger">{{$errors->first('salary_rates')}}</p>
+                    <span class="input__title">Allowance Rates</span>
+                    @if ($errors->has('allowance_rates'))
+                        <p class="text-danger">{{$errors->first('allowance_rates')}}</p>
                       @endif
                   </div>
                   <div class="input__box">

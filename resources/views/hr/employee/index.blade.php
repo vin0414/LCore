@@ -141,18 +141,75 @@
       </div>
     </header>
     <main>
-    <div class="modal-overlay" id="modalOverlay4">
+      <div class="modal-overlay" id="changeJobTitleModal">
+          <div class="modal">
+            <div class="modal__heading">
+              <div class="heading__modal__box">
+                <h2 class="heading__modal">Change Job Title</h2>
+                <p class="subheading__modal">New Job Title</p>
+              </div>
+              <div class="close__box"><ion-icon onclick="closeModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+              </div>
+              <form method="POST" class="form__modal" id="frmJobTitle">
+                @csrf
+                <input type="hidden" name="employeeID" id="employeeID"/>
+                <div class="input__form__modal__box">
+                  <div class="input__box">
+                    <input
+                      class="information__input"
+                      placeholder="Enter Job Title"
+                      name="designation"
+                    />
+                    <span class="input__title">Job Title</span>
+                    <div id="designation-error" class="error-message text-danger"></div>
+                  </div>
+                </div>
+                <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+              </form>
+          </div>
+      </div>
+      <!--Job Transfer -->
+      <div class="modal-overlay" id="jobTransferModal">
         <div class="modal">
           <div class="modal__heading">
             <div class="heading__modal__box">
-              <h2 class="heading__modal">Edit Certificate</h2>
-              <p class="subheading__modal">Edit employee's certificates</p>
+              <h2 class="heading__modal">Transfer</h2>
+              <p class="subheading__modal">New Assignment</p>
             </div>
-            <div class="close__box"><ion-icon onclick="closeModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+            <div class="close__box"><ion-icon onclick="closeJobModal()" class="icon__modal" name="close-outline"></ion-icon></div>
             </div>
-            <div id="certificateResult"></div>
+            <form method="POST" class="form__modal" id="frmJobTransfer">
+              @csrf
+              <input type="hidden" name="employeeID" id="employeeJobID"/>
+              <div class="input__form__modal__box">
+                <div class="input__box">
+                  <select class="information__input" name="office" id="office">
+                    <option value="" disabled selected>
+                      Select Office
+                    </option>
+                    <?php foreach($office as $row): ?>
+                      <option value="<?php echo $row['officeID'] ?>"><?php echo $row['officeName'] ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                  <span class="input__title">Office</span>
+                  <div id="office-error" class="error-message text-danger"></div>
+                </div>
+              </div>
+              <div class="input__form__modal__box">
+                <div class="input__box">
+                  <select class="information__input" name="department" id="department">
+                    <option value="" disabled selected>
+                      Select department or branch
+                    </option>
+                  </select>
+                  <span class="input__title">Department | Branch</span>
+                  <div id="department-error" class="error-message text-danger"></div>
+                </div>
+              </div>
+              <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+            </form>
         </div>
-    </div>
+      </div>
       <nav class="navigation">
         <ion-icon id="menuButton" class="menu" name="menu-outline"></ion-icon>
         <ul id="headerNav" class="nav__items flex flex__align__center">
@@ -278,7 +335,7 @@
         @endif
         <div class="pos__rel">
           <div class="button__box pos__abs">
-
+            <button style="z-index: 999; cursor: pointer;" class="test__btn">TEst</button>
             <a href="" class="link add__btn">
               <ion-icon class="icon" name="cloud-upload-outline"></ion-icon>Upload
             </a>
@@ -294,6 +351,7 @@
               <thead>
                   <th>Employee ID</th>
                   <th>Name</th>
+                  <th>Job Title</th>
                   <th>Email Address</th>
                   <th>Permanent Address</th>
                   <th>Birthday</th>
@@ -306,6 +364,7 @@
                   <tr>
                     <td><?php echo $row['companyID'] ?></td>
                     <td><?php echo $row['surName'] ?> <?php echo $row['suffix'] ?>,&nbsp;<?php echo $row['firstName'] ?> <?php echo $row['middleName'] ?></td>
+                    <td><?php echo $row['designation'] ?></td>
                     <td><?php echo $row['emailAddress'] ?></td>
                     <td><?php echo $row['address'] ?></td>
                     <td><?php echo $row['dob'] ?></td>
@@ -338,15 +397,15 @@
                         <a href="" class="select__item">
                           <ion-icon class="select__icon" name="cash-outline"></ion-icon>Salary Adjustment
                         </a>
-                        <a href="" class="select__item">
-                          <ion-icon class="select__icon" name="file-tray-full-outline"></ion-icon>Jobs Transfer
-                        </a>
-                        <a href="" class="select__item">
+                        <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item jobTransfer">
+                          <ion-icon class="select__icon" name="file-tray-full-outline"></ion-icon>Job Transfer
+                        </button>
+                        <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item changeJobTitle">
                           <ion-icon class="select__icon" name="pricetags-outline"></ion-icon>Change Job Title
-                        </a>
-                        <a href="" class="select__item">
+                        </button>
+                        <!-- <a href="" class="select__item">
                           <ion-icon class="select__icon" name="repeat-outline"></ion-icon>Re-Assign
-                        </a>
+                        </a> -->
                         <a href="" class="select__item">
                           <ion-icon class="select__icon" name="thumbs-down-outline"></ion-icon>Demotion
                         </a>
@@ -411,7 +470,10 @@
           }
         });
         // Modal 
-
+        $(document).on('click','.test__btn',function (){
+              $('#modalOverlay4').css('display', 'flex');
+              $('body').addClass('no-scroll');
+        });
         // Modal up to here only
         $(document).on("click", function (event) {
           const dropDownAction = $(".dropdown__select");
@@ -440,13 +502,6 @@
           hideAllMenus();
         });
       });
-
-      // Modal Here
-      function closeModal() {
-          $('#modalOverlay4').css('display', 'none');
-          $('body').removeClass('no-scroll');  
-      }
-      // Modal ends Here
       function showNotification() {
         let notifContainer = $(".notification__container");
         notifContainer.toggleClass("show");
@@ -462,13 +517,79 @@
 
         headerNav.toggle("open");
       }
+
       function hideAllMenus() {
         $(".notification__container").removeClass("show");
         $(".account__dropdown").removeClass("show");
         $("#headerNav").removeClass("open");
         
       }
+
+      $('#frmJobTitle').on('submit',function(e)
+      {
+          e.preventDefault();
+          let data = $(this).serialize();
+          $.ajax({
+              url:"{{route('change-job-title')}}",method:"POST",
+              data:data,
+              success:function(response)
+              {
+                  if(response.success)
+                  {
+                      closeModal();
+                  }
+                  else
+                  {
+                      var errors = response.errors;
+                      // Iterate over each error and display it under the corresponding input field
+                      for (var field in errors) {
+                          $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
+                          $('#' + field).addClass('input-error'); // Highlight the input field with an error
+                      }
+                  }
+              }
+          });
+      });
+
+      $('#office').change(function(){
+          $('#department').find('option').not(':first').remove();
+          $.ajax({
+              url:"{{route('fetch-department')}}",method:"GET",
+              data:{value:$(this).val()},
+              success:function(response)
+              {
+                  $('#department').append(response);
+              }
+          });
+      });
+
+      $('#frmJobTransfer').on('submit',function(e)
+      {
+          e.preventDefault();
+          let data = $(this).serialize();
+          $.ajax({
+              url:"{{route('job-transfer')}}",method:"POST",
+              data:data,
+              success:function(response)
+              {
+                  if(response.success)
+                  {
+                      closeJobModal();
+                  }
+                  else
+                  {
+                      var errors = response.errors;
+                      // Iterate over each error and display it under the corresponding input field
+                      for (var field in errors) {
+                          $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
+                          $('#' + field).addClass('input-error'); // Highlight the input field with an error
+                      }
+                  }
+              }
+          });
+      });
     </script>
+    <script src="/assets/js/master-file.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
