@@ -4,6 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -349,12 +350,12 @@
             <table id="dataTable" class="display">
               <thead>
                   <th>Employee ID</th>
-                  <th>Name</th>
-                  <th>Job Title</th>
+                  <th>Employee's Name</th>
                   <th>Email Address</th>
                   <th>Permanent Address</th>
                   <th>Birthday</th>
                   <th>Gender</th>
+                  <th>Job Status</th>
                   <th>Status</th>
                   <th>Action</th>
               </thead>
@@ -362,13 +363,24 @@
                 <?php foreach($employee as $row): ?>
                   <tr>
                     <td><?php echo $row['companyID'] ?></td>
-                    <td><?php echo $row['surName'] ?> <?php echo $row['suffix'] ?>,&nbsp;<?php echo $row['firstName'] ?> <?php echo $row['middleName'] ?></td>
-                    <td><?php echo $row['designation'] ?></td>
+                    <td>
+                      <?php echo $row['surName'] ?> <?php echo $row['suffix'] ?>,&nbsp;<?php echo $row['firstName'] ?> <?php echo $row['middleName'] ?><br/>
+                      <small><?php echo $row['designation'] ?></small>
+                    </td>
                     <td><?php echo $row['emailAddress'] ?></td>
                     <td><?php echo $row['address'] ?></td>
                     <td><?php echo $row['dob'] ?></td>
                     <td><?php echo $row['gender'] ?></td>
                     <td><?php echo $row['employmentStatus'] ?></td>
+                    <td>
+                      <?php if($row['employeeStatus']==0){ ?>
+                        <span class="badge badge-danger">Resigned</span>
+                      <?php }else if($row['employeeStatus']==1){?>
+                        <span class="badge badge-primary">Active</span>
+                      <?php }else if($row['employeeStatus']==2){ ?>
+                        <span class="badge badge-danger">Terminated</span>
+                      <?php } ?>
+                    </td>
                     <td class="pos__rel">
                       <button class="btn__select">
                         <ion-icon
@@ -383,6 +395,12 @@
                         <a href="{{route('hr/employee/view',['companyID'=>$row['companyID']])}}" class="select__item">
                           <ion-icon class="select__icon" name="folder-open-outline"></ion-icon>View Profile
                         </a>
+                        <!-- if employee is inactive -->
+                        <?php if($row['employeeStatus']==0||$row['employeeStatus']==2){ ?>
+                          <a href="" class="select__item">
+                            <ion-icon class="select__icon" name="person-add-outline"></ion-icon>Re-Hire
+                          </a>
+                        <?php }else{ ?>
                         <a href="" class="select__item">
                           <ion-icon class="select__icon" name="ribbon-outline"></ion-icon>Promotion
                         </a>
@@ -393,30 +411,24 @@
                         <a href="{{route('hr/employee/new-allowance')}}" class="select__item">
                           <ion-icon class="select__icon" name="add-outline"></ion-icon>Add Allowance
                         </a>
-                        <a href="" class="select__item">
+                        <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item salaryAdjusment">
                           <ion-icon class="select__icon" name="cash-outline"></ion-icon>Salary Adjustment
-                        </a>
+                        </button>
                         <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item jobTransfer">
                           <ion-icon class="select__icon" name="file-tray-full-outline"></ion-icon>Job Transfer
                         </button>
                         <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item changeJobTitle">
                           <ion-icon class="select__icon" name="pricetags-outline"></ion-icon>Change Job Title
                         </button>
-                        <a href="" class="select__item">
+                        <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item demote">
                           <ion-icon class="select__icon" name="thumbs-down-outline"></ion-icon>Demotion
-                        </a>
-                        <a href="" class="select__item">
+                        </button>
+                        <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item resign">
                           <ion-icon class="select__icon" name="log-out-outline"></ion-icon>Resign
-                        </a>
-                        <a href="" class="select__item">
+                        </button>
+                        <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item terminate">
                           <ion-icon class="select__icon" name="person-remove-outline"></ion-icon>Terminate
-                        </a>
-                        <!-- if employee is inactive -->
-                        <?php if($row['employeeStatus']==0){ ?>
-                          <a href="" class="select__item">
-                            <ion-icon class="select__icon" name="person-add-outline"></ion-icon>Re-Hire
-                          </a>
-                        <?php } ?>
+                        </button>
                         <?php }else{ ?>
                         <a href="" class="select__item">
                           <ion-icon class="select__icon" name="play-back-outline"></ion-icon>Back-Out
@@ -424,6 +436,7 @@
                         <a href="" class="select__item">
                           <ion-icon class="select__icon" name="close-outline"></ion-icon>Failure
                         </a>
+                        <?php } ?>
                         <?php } ?>
                       </div>
                     </td>
@@ -465,12 +478,7 @@
             $(dropdown[i]).toggleClass("open");
           }
         });
-        // Modal 
-        $(document).on('click','.test__btn',function (){
-              $('#modalOverlay4').css('display', 'flex');
-              $('body').addClass('no-scroll');
-        });
-        // Modal up to here only
+
         $(document).on("click", function (event) {
           const dropDownAction = $(".dropdown__select");
           if (
@@ -583,6 +591,38 @@
                   }
               }
           });
+      });
+
+      $(document).on('click','.resign',function(){
+        var confirmation = confirm("Would you like to tag this employee as resign?");
+        if(confirmation)
+        {
+          var csrfToken = $('meta[name="csrf-token"]').attr('content');
+          $.ajax({
+            url:"{{route('resign')}}",method:"POST",
+            data:{value:$(this).val()},
+            headers: {'X-CSRF-TOKEN': csrfToken},success:function(response)
+            {
+              if(response==="success"){window.location.reload();}else{alert(response);}
+            }
+          });
+        }
+      });
+
+      $(document).on('click','.terminate',function(){
+        var confirmation = confirm("Would you like to tag this employee as terminated?");
+        if(confirmation)
+        {
+          var csrfToken = $('meta[name="csrf-token"]').attr('content');
+          $.ajax({
+            url:"{{route('terminate')}}",method:"POST",
+            data:{value:$(this).val()},
+            headers: {'X-CSRF-TOKEN': csrfToken},success:function(response)
+            {
+              if(response==="success"){window.location.reload();}else{alert(response);}
+            }
+          });
+        }
       });
     </script>
     <script src="/assets/js/master-file.js"></script>
