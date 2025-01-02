@@ -402,9 +402,6 @@
                         <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item changeJobTitle">
                           <ion-icon class="select__icon" name="pricetags-outline"></ion-icon>Change Job Title
                         </button>
-                        <!-- <a href="" class="select__item">
-                          <ion-icon class="select__icon" name="repeat-outline"></ion-icon>Re-Assign
-                        </a> -->
                         <a href="" class="select__item">
                           <ion-icon class="select__icon" name="thumbs-down-outline"></ion-icon>Demotion
                         </a>
