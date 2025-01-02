@@ -148,7 +148,7 @@
         <div class="modal">
           <div class="modal__heading">
             <div class="heading__modal__box">
-              <h2 class="heading__modal">Add Certificate</h2>
+              <h2 class="heading__modal">Add Certificate TEST</h2>
               <p class="subheading__modal">Apply new certificates</p>
             </div>
             <div class="close__box"><ion-icon onclick="closeModal()" class="icon__modal" name="close-outline"></ion-icon></div>

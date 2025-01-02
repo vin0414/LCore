@@ -141,6 +141,18 @@
       </div>
     </header>
     <main>
+    <div class="modal-overlay" id="modalOverlay4">
+        <div class="modal">
+          <div class="modal__heading">
+            <div class="heading__modal__box">
+              <h2 class="heading__modal">Edit Certificate</h2>
+              <p class="subheading__modal">Edit employee's certificates</p>
+            </div>
+            <div class="close__box"><ion-icon onclick="closeModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+            </div>
+            <div id="certificateResult"></div>
+        </div>
+    </div>
       <nav class="navigation">
         <ion-icon id="menuButton" class="menu" name="menu-outline"></ion-icon>
         <ul id="headerNav" class="nav__items flex flex__align__center">
@@ -266,6 +278,7 @@
         @endif
         <div class="pos__rel">
           <div class="button__box pos__abs">
+            <button style="z-index: 999; cursor: pointer;" class="test__btn">TEst</button>
             <a href="" class="link add__btn">
               <ion-icon class="icon" name="cloud-upload-outline"></ion-icon>Upload
             </a>
@@ -397,7 +410,12 @@
             $(dropdown[i]).toggleClass("open");
           }
         });
-
+        // Modal 
+        $(document).on('click','.test__btn',function (){
+              $('#modalOverlay4').css('display', 'flex');
+              $('body').addClass('no-scroll');
+        });
+        // Modal up to here only
         $(document).on("click", function (event) {
           const dropDownAction = $(".dropdown__select");
           if (
@@ -426,6 +444,12 @@
         });
       });
 
+      // Modal Here
+      function closeModal() {
+          $('#modalOverlay4').css('display', 'none');
+          $('body').removeClass('no-scroll');  
+      }
+      // Modal ends Here
       function showNotification() {
         let notifContainer = $(".notification__container");
         notifContainer.toggleClass("show");
@@ -445,6 +469,7 @@
         $(".notification__container").removeClass("show");
         $(".account__dropdown").removeClass("show");
         $("#headerNav").removeClass("open");
+        
       }
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
