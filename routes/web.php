@@ -36,6 +36,9 @@ Route::post('save-employee-certificates',[EmployeeController::class,'addEmployee
 Route::post('remove-employee-certificates',[EmployeeController::class,'removeEmployeeCertificates'])->name('remove-employee-certificates');
 Route::get('edit-certificate',[EmployeeController::class,'editCertificate'])->name('edit-certificate');
 Route::post('update-certificate',[EmployeeController::class,'updateCertificate'])->name('update-certificate');
+///movement
+Route::post('change-job-title',[EmployeeController::class,'changeJobTitle'])->name('change-job-title');
+Route::post('job-transfer',[EmployeeController::class,'jobTransfer'])->name('job-transfer');
 ///submission of forms
 Route::post('save-employee',[EmployeeController::class,'saveEmployee'])->name('save-employee');
 Route::post('update-employee',[EmployeeController::class,'updateEmployee'])->name('update-employee');

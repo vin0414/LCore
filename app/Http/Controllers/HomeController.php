@@ -109,8 +109,11 @@ class HomeController extends Controller
         //employees
         $employeeModel = new \App\Models\employeeModel();
         $employee = $employeeModel->all();
+        //load the office
+        $officeModel = new \App\Models\officeModel();
+        $office = $officeModel->all();
 
-        $data = ['title'=>$title,'about'=>$about,'employee'=>$employee];
+        $data = ['title'=>$title,'about'=>$about,'employee'=>$employee,'office'=>$office];
         return view('hr/employee/index',$data);
     }
 

@@ -264,7 +264,7 @@
               <thead>
                   <th>Employee ID</th>
                   <th>Complete Name</th>
-                  <th>Date Hired</th>
+                  <th>Start Date</th>
                   <th>Designation</th>
                   <th>Office</th>
                   <th>Department</th>

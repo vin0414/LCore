@@ -803,3 +803,22 @@ body.no-scroll {
     margin-top: 2rem;
     margin-bottom: 2rem;
 }
+
+.input__form__modal__box .input__box textarea {
+    height: 15rem;
+}
+
+.input__box {
+    position: relative;
+    height: 100%;
+}
+.information__input {
+    padding: 3.5rem 2rem 1.5rem 2rem;
+    border-radius: 1rem;
+    border: 1px solid var(--line-color);
+    width: 100%;
+    font-family: "poppins", sans-serif;
+    color: var(--black-color);
+    height: 100%;
+}
+
