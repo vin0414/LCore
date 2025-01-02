@@ -647,4 +647,44 @@ class EmployeeController extends Controller
             return response()->json(['success' => 'Succesfully applied']);
         }
     }
+
+    public function salaryAdjustment(Request $request)
+    {
+
+    }
+
+    public function employeeDemotion(Request $request)
+    {
+        
+    }
+
+    public function changeSchedule(Request $request)
+    {
+        
+    }
+
+    public function employeePromotion(Request $request)
+    {
+        
+    }
+
+    public function employeeResign(Request $request)
+    {
+        
+    }
+
+    public function employeeTermination(Request $request)
+    {
+        
+    }
+
+    public function backOut(Request $request)
+    {
+        
+    }
+
+    public function failure(Request $request)
+    {
+        
+    }
 }

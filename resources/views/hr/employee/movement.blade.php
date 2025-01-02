@@ -267,7 +267,7 @@
                   <th>Start Date</th>
                   <th>Designation</th>
                   <th>Office</th>
-                  <th>Department</th>
+                  <th>Department/Branch</th>
                   <th>Status</th>
                   <th>End Date</th>
                   <th>Cost</th>
