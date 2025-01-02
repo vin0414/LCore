@@ -343,6 +343,8 @@ select:focus-visible {
 .container {
     grid-area: main;
     /* max-width: 161.1rem; */
+    /* overflow-y: scroll;
+    overflow-x: hidden; */
 }
 
 .footer {

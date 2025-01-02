@@ -313,48 +313,48 @@
                           <ion-icon class="select__icon" name="folder-open-outline"></ion-icon>View Profile
                         </a>
                         <a href="" class="select__item">
-                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Promotion
+                          <ion-icon class="select__icon" name="ribbon-outline"></ion-icon>Promotion
                         </a>
                         <a href="" class="select__item">
-                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Change Schedule
+                          <ion-icon class="select__icon" name="calendar-outline"></ion-icon>Change Schedule
                         </a>
                         <?php if($row['employmentStatus']=="Regular" || $row['employmentStatus']=="Probationary"){ ?>
                         <a href="{{route('hr/employee/new-allowance')}}" class="select__item">
-                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Add Allowance
+                          <ion-icon class="select__icon" name="add-outline"></ion-icon>Add Allowance
                         </a>
                         <a href="" class="select__item">
-                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Salary Adjustment
+                          <ion-icon class="select__icon" name="cash-outline"></ion-icon>Salary Adjustment
                         </a>
                         <a href="" class="select__item">
-                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Jobs Transfer
+                          <ion-icon class="select__icon" name="file-tray-full-outline"></ion-icon>Jobs Transfer
                         </a>
                         <a href="" class="select__item">
-                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Change Job Title
+                          <ion-icon class="select__icon" name="pricetags-outline"></ion-icon>Change Job Title
                         </a>
                         <a href="" class="select__item">
-                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Re-Assign
+                          <ion-icon class="select__icon" name="repeat-outline"></ion-icon>Re-Assign
                         </a>
                         <a href="" class="select__item">
-                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Demotion
+                          <ion-icon class="select__icon" name="thumbs-down-outline"></ion-icon>Demotion
                         </a>
                         <a href="" class="select__item">
-                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Resign
+                          <ion-icon class="select__icon" name="log-out-outline"></ion-icon>Resign
                         </a>
                         <a href="" class="select__item">
-                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Terminate
+                          <ion-icon class="select__icon" name="person-remove-outline"></ion-icon>Terminate
                         </a>
                         <!-- if employee is inactive -->
                         <?php if($row['employeeStatus']==0){ ?>
                           <a href="" class="select__item">
-                            <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Re-Hire
+                            <ion-icon class="select__icon" name="person-add-outline"></ion-icon>Re-Hire
                           </a>
                         <?php } ?>
                         <?php }else{ ?>
                         <a href="" class="select__item">
-                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Back-Out
+                          <ion-icon class="select__icon" name="play-back-outline"></ion-icon>Back-Out
                         </a>
                         <a href="" class="select__item">
-                          <ion-icon class="select__icon" name="trail-sign-outline"></ion-icon>Failure
+                          <ion-icon class="select__icon" name="close-outline"></ion-icon>Failure
                         </a>
                         <?php } ?>
                       </div>
