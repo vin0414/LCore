@@ -258,8 +258,8 @@
             <li class="tab" id="tab2" onclick="openTab('tab2')">User Accounts</li>
             <li class="tab" id="tab3" onclick="openTab('tab3')">Department/Branches</li>
             <li class="tab" id="tab4" onclick="openTab('tab4')">Policies</li>
-            <li class="tab" id="tab5" onclick="openTab('tab5')">Scheduler</li>
-            <li class="tab" id="tab6" onclick="openTab('tab6')">Leave Setup</li>
+            <li class="tab" id="tab5" onclick="openTab('tab5')">Schedule</li>
+            <li class="tab" id="tab6" onclick="openTab('tab6')">Leave Credits</li>
             <li class="tab" id="tab7" onclick="openTab('tab7')">User Permission</li>
           </ul>
           <div class="tab-content">
@@ -422,7 +422,7 @@
             </div>
             <div class="tab-pane" id="content-tab4">
               <h2>Add Holiday, late and overtime policy here</h2>
-              <p>This is some content for Tab 4.</p>
+              <p>Designation and job level</p>
             </div>
             <div class="tab-pane" id="content-tab5">
               <div class="pos__rel">

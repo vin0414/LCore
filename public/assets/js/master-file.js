@@ -57,3 +57,19 @@ function closePromoteModal() {
     $('#promoteModal').css('display', 'none');
     $('body').removeClass('no-scroll');  
 }
+
+$(document).on('click','.salaryAdjusment',function()
+{
+    var confirmation = confirm("Would you like to apply salary adjustment with this employee?");
+    if(confirmation)
+    {
+        $('#salaryModal').css('display', 'flex');
+        $('#employeeSalaryID').attr("value",$(this).val());
+        $('body').addClass('no-scroll');
+    }
+});
+
+function closeSalaryModal() {
+    $('#salaryModal').css('display', 'none');
+    $('body').removeClass('no-scroll');  
+}

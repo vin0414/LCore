@@ -301,6 +301,43 @@
             </form>
         </div>
       </div>
+      <!-- salary -->
+      <div class="modal-overlay" id="salaryModal">
+        <div class="modal">
+          <div class="modal__heading">
+            <div class="heading__modal__box">
+              <h2 class="heading__modal">Salary Adjustment</h2>
+              <p class="subheading__modal">New Salary Rate</p>
+            </div>
+            <div class="close__box"><ion-icon onclick="closeSalaryModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+            </div>
+            <form method="POST" class="form__modal" enctype="multipart/form-data" id="frmSalary">
+              @csrf
+              <input type="hidden" name="employeeID" id="employeeSalaryID"/>
+              <div class="input__form__modal__box">
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter compensation"
+                    name="salary"
+                  />
+                  <span class="input__title">New Salary</span>
+                  <div id="salary-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input type="file"
+                    class="information__input"
+                    placeholder="Attach document"
+                    name="document"
+                  />
+                  <span class="input__title">Attachment</span>
+                  <div id="document-error" class="error-message text-danger"></div>
+                </div>
+              </div>
+              <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+            </form>
+        </div>
+      </div>
       <nav class="navigation">
         <ion-icon id="menuButton" class="menu" name="menu-outline"></ion-icon>
         <ul id="headerNav" class="nav__items flex flex__align__center">
@@ -702,6 +739,32 @@
               if(response.success)
               {
                   closePromoteModal();
+              }
+              else
+              {
+                  var errors = response.errors;
+                  // Iterate over each error and display it under the corresponding input field
+                  for (var field in errors) {
+                      $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
+                      $('#' + field).addClass('input-error'); // Highlight the input field with an error
+                  }
+              }
+            }
+        });
+      });
+
+      $('#frmSalary').on('submit',function(e)
+      {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+            url:"{{route('salary-adjustment')}}",method: 'POST',data: formData,
+            processData: false,contentType: false,
+            success: function(response) 
+            {
+              if(response.success)
+              {
+                  closeSalaryModal();
               }
               else
               {

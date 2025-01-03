@@ -650,7 +650,53 @@ class EmployeeController extends Controller
 
     public function salaryAdjustment(Request $request)
     {
+        date_default_timezone_set('Asia/Manila');
+        $employeeModel = new \App\Models\employeeModel();
+        $recordModel = new \App\Models\recordModel();
+        $newDate = date('Y-m-d');
+        //data
+        $validator = Validator::make($request->all(),[
+            'salary'=>'required',
+            'document'=>'required|file|max:10240'
+        ]);
 
+        if ($validator->fails()) {
+            // Return validation errors as JSON
+            return response()->json(['errors' => $validator->errors()]);
+        }
+        else
+        {
+            $cost = str_replace(",", "", $request->salary);
+            $file = $request->file('document');$filename="";
+            if ($request->hasFile('document') && $request->file('document')->isValid()) 
+            {
+                $filename = date('Ymdhis').$file->getClientOriginalName();
+                // Define the path where the image should be saved
+                $file->move('attachment/',$filename);
+            }
+            //get the companyID
+            $employee = $employeeModel->WHERE('employeeID',$request->employeeID)->first();
+            //change the salary
+            $employeeModel::where('employeeID',$request->employeeID)
+                ->update(['salaryRate'=>$cost]);
+            //get the recent record of an employee
+            $record = $recordModel->WHERE('employeeID',$request->employeeID)->orderBy('recordID', 'desc')->first();
+            //update the record of the employee
+            $recordModel::where('recordID',$record['recordID'])
+                ->update(['end_date'=>$newDate]);
+            //add records in employee movement
+            $newData = ['employeeID'=>$record['employeeID'],'dateHired'=>$newDate,'Designation'=>$record['Designation'],
+                        'officeID'=>$record['officeID'],'departmentID'=>$record['departmentID'],
+                        'employmentStatus'=>$record['employmentStatus'],'end_date'=>'0000-00-00',
+                        'cost'=>$cost,'Remarks'=>'Salary Adjustment','Attachment'=>$filename];
+            $recordModel->create($newData);
+            //create log record
+            $logModel = new \App\Models\logModel();
+            $date = date('Y-m-d h:i:s a');
+            $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Salary adjustment for '.$employee['companyID']];
+            $logModel->create($data);
+            return response()->json(['success' => 'Successfully applied']);
+        }
     }
 
     public function employeeDemotion(Request $request)
