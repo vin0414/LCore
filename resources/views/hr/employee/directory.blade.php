@@ -284,7 +284,7 @@
                   <td><?php echo $row->companyID ?></td>
                   <td><?php echo $row->surName ?>&nbsp;<?php echo $row->suffix ?>,&nbsp;<?php echo $row->firstName ?>&nbsp;<?php echo $row->middleName ?></td>
                   <td><?php echo $row->officeName ?></td>
-                  <td><?php echo $row->departmentName ?> | <?php echo $row->departmentNumber ?></td>
+                  <td><?php echo $row->departmentName ?> / <?php echo $row->departmentNumber ?></td>
                   <td><?php echo $row->designation ?></td>
                   <td><?php echo $row->emailAddress ?></td>
                   <td><?php echo $row->contactNumber ?></td>

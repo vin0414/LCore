@@ -193,7 +193,7 @@ class HomeController extends Controller
         $employee = DB::table('tblemployee as a')
                     ->leftJoin('tblcredit as b','b.employeeID','=','a.employeeID')
                     ->select('a.companyID','a.surName','a.firstName','a.middleName','a.suffix','a.designation','b.Vacation','a.employeeID','b.Sick','b.Year')
-                    ->where('a.employeeStatus', '=',1)
+                    ->where('a.employeeStatus', '=',1)->where('employmentStatus','Regular')
                     ->get();
         $data = ['title'=>$title,'about'=>$about,'employee'=>$employee];
         return view('hr/employee/credits',$data);
