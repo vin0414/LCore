@@ -265,27 +265,32 @@
                   <th>Employee ID</th>
                   <th>Complete Name</th>
                   <th>Start Date</th>
-                  <th>Designation</th>
                   <th>Office</th>
                   <th>Department/Branch</th>
                   <th>Status</th>
                   <th>End Date</th>
                   <th>Cost</th>
                   <th>Remarks</th>
+                  <th>File</th>
               </thead>
               <tbody>
                 <?php foreach($employee as $row): ?>
                   <tr>
                     <td><?php echo $row->companyID ?></td>
-                    <td><?php echo $row->surName ?> <?php echo $row->suffix ?>,&nbsp;<?php echo $row->firstName ?> <?php echo $row->middleName ?></td>
+                    <td>
+                      <?php echo $row->surName ?> <?php echo $row->suffix ?>,&nbsp;<?php echo $row->firstName ?> <?php echo $row->middleName ?><br/>
+                      <small><?php echo $row->Designation ?></small>
+                    </td>
                     <td><?php echo $row->dateHired ?></td>
-                    <td><?php echo $row->Designation ?></td>
                     <td><?php echo $row->officeName ?></td>
                     <td><?php echo $row->departmentName ?></td>
                     <td><?php echo $row->employmentStatus ?></td>
                     <td><?php echo $row->end_date ?></td>
                     <td><?php echo number_format($row->cost,2) ?></td>
                     <td><?php echo $row->Remarks ?></td>
+                    <td>
+                      <a href="/attachment/<?php echo $row->Attachment ?>" target="_BLANK" class="no-underline"><ion-icon name="cloud-download-outline"></ion-icon> File</a>
+                    </td>
                   </tr>
                 <?php endforeach; ?>
               </tbody>

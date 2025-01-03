@@ -102,7 +102,7 @@ class EmployeeController extends Controller
         //save the first record of the employee
         $newData = ['employeeID'=>$employeeRecord['employeeID'],'dateHired'=>$request->date_hired,
                     'Designation'=>$request->designation,'officeID'=>$request->office,'departmentID'=>$request->department,
-                    'employmentStatus'=>$employment_status,'end_date'=>'0000-00-00','cost'=>$cost,'Remarks'=>'Training'];
+                    'employmentStatus'=>$employment_status,'end_date'=>'0000-00-00','cost'=>$cost,'Remarks'=>'Training','Attachment'=>''];
         $recordModel->create($newData);
         //create log record
         $logModel = new \App\Models\logModel();
@@ -594,7 +594,7 @@ class EmployeeController extends Controller
             $newData = ['employeeID'=>$record['employeeID'],'dateHired'=>$newDate,'Designation'=>$request->designation,
                         'officeID'=>$record['officeID'],'departmentID'=>$record['departmentID'],
                         'employmentStatus'=>$record['employmentStatus'],'end_date'=>$record['end_date'],
-                        'cost'=>$record['cost'],'Remarks'=>'Change Job Title'];
+                        'cost'=>$record['cost'],'Remarks'=>'Change Job Title','Attachment'=>''];
             $recordModel->create($newData);
             //create log record
             $logModel = new \App\Models\logModel();
@@ -637,7 +637,7 @@ class EmployeeController extends Controller
             $newData = ['employeeID'=>$record['employeeID'],'dateHired'=>$newDate,'Designation'=>$record['Designation'],
                         'officeID'=>$request->office,'departmentID'=>$request->department,
                         'employmentStatus'=>$record['employmentStatus'],'end_date'=>'0000-00-00',
-                        'cost'=>$record['cost'],'Remarks'=>'Transferred'];
+                        'cost'=>$record['cost'],'Remarks'=>'Transferred','Attachment'=>''];
             $recordModel->create($newData);
             //create log record
             $logModel = new \App\Models\logModel();
@@ -663,7 +663,6 @@ class EmployeeController extends Controller
         date_default_timezone_set('Asia/Manila');
         $employeeModel = new \App\Models\employeeModel();
         $recordModel = new \App\Models\recordModel();
-        $scheduleFileModel = new \App\Models\scheduleFileModel();
         $newDate = date('Y-m-d');
         //data
         $validator = Validator::make($request->all(),[
@@ -683,9 +682,6 @@ class EmployeeController extends Controller
                 $filename = date('Ymdhis').$file->getClientOriginalName();
                 // Define the path where the image should be saved
                 $file->move('attachment/',$filename);
-                //save the records
-                $newRecord = ['employeeID'=>$request->employeeID,'attachment'=>$filename,'scheduleID'=>$request->schedule];
-                $scheduleFileModel->create($newRecord);
             }
             //get the companyID
             $employee = $employeeModel->WHERE('employeeID',$request->employeeID)->first();
@@ -701,7 +697,7 @@ class EmployeeController extends Controller
             $newData = ['employeeID'=>$record['employeeID'],'dateHired'=>$newDate,'Designation'=>$record['Designation'],
                         'officeID'=>$record['officeID'],'departmentID'=>$record['departmentID'],
                         'employmentStatus'=>$record['employmentStatus'],'end_date'=>'0000-00-00',
-                        'cost'=>$record['cost'],'Remarks'=>'Change Schedule'];
+                        'cost'=>$record['cost'],'Remarks'=>'Change Schedule','Attachment'=>$filename];
             $recordModel->create($newData);
             //create log record
             $logModel = new \App\Models\logModel();
@@ -714,7 +710,54 @@ class EmployeeController extends Controller
 
     public function employeePromotion(Request $request)
     {
-        
+        date_default_timezone_set('Asia/Manila');
+        $employeeModel = new \App\Models\employeeModel();
+        $recordModel = new \App\Models\recordModel();
+        $newDate = date('Y-m-d');
+        //data
+        $validator = Validator::make($request->all(),[
+            'job_title'=>'required',
+            'rate'=>'required',
+            'attachment'=>'required|file|max:10240'
+        ]);
+
+        if ($validator->fails()) {
+            // Return validation errors as JSON
+            return response()->json(['errors' => $validator->errors()]);
+        }
+        else
+        {
+            $cost = str_replace(",", "", $request->rate);
+            $file = $request->file('file');$filename="";
+            if ($request->hasFile('file') && $request->file('file')->isValid()) 
+            {
+                $filename = date('Ymdhis').$file->getClientOriginalName();
+                // Define the path where the image should be saved
+                $file->move('attachment/',$filename);
+            }
+            //get the companyID
+            $employee = $employeeModel->WHERE('employeeID',$request->employeeID)->first();
+            //change the office and department
+            $employeeModel::where('employeeID',$request->employeeID)
+                ->update(['designation'=>$request->job_title,'jobLevel'=>'','salaryRate'=>$cost]);
+            //get the recent record of an employee
+            $record = $recordModel->WHERE('employeeID',$request->employeeID)->orderBy('recordID', 'desc')->first();
+            //update the record of the employee
+            $recordModel::where('recordID',$record['recordID'])
+                ->update(['end_date'=>$newDate]);
+            //add records in employee movement
+            $newData = ['employeeID'=>$record['employeeID'],'dateHired'=>$newDate,'Designation'=>$request->job_title,
+                        'officeID'=>$record['officeID'],'departmentID'=>$record['departmentID'],
+                        'employmentStatus'=>$record['employmentStatus'],'end_date'=>'0000-00-00',
+                        'cost'=>$cost,'Remarks'=>'Promotion','Attachment'=>$filename];
+            $recordModel->create($newData);
+            //create log record
+            $logModel = new \App\Models\logModel();
+            $date = date('Y-m-d h:i:s a');
+            $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Change schedule for '.$employee['companyID']];
+            $logModel->create($data);
+            return response()->json(['success' => 'Successfully applied']);
+        }
     }
 
     public function employeeResign(Request $request)

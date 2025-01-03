@@ -288,10 +288,10 @@
                   <input type="file"
                     class="information__input"
                     placeholder="Attach document"
-                    name="file"
+                    name="attachment"
                   />
                   <span class="input__title">Attachment</span>
-                  <div id="file-error" class="error-message text-danger"></div>
+                  <div id="attachment-error" class="error-message text-danger"></div>
                 </div>
               </div>
               <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
@@ -685,6 +685,32 @@
                   }
               }
           });
+      });
+
+      $('#frmPromote').on('submit',function(e)
+      {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+            url:"{{route('promote')}}",method: 'POST',data: formData,
+            processData: false,contentType: false,
+            success: function(response) 
+            {
+              if(response.success)
+              {
+                  closePromoteModal();
+              }
+              else
+              {
+                  var errors = response.errors;
+                  // Iterate over each error and display it under the corresponding input field
+                  for (var field in errors) {
+                      $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
+                      $('#' + field).addClass('input-error'); // Highlight the input field with an error
+                  }
+              }
+            }
+        });
       });
 
       $('#frmChange').on('submit',function(e)
