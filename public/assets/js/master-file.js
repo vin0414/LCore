@@ -42,3 +42,18 @@ function closeScheduleModal() {
     $('#changeScheduleModal').css('display', 'none');
     $('body').removeClass('no-scroll');  
 }
+
+$(document).on('click','.promote',function(){
+    var confirmation = confirm("Do you want to promote this employee?");
+    if(confirmation)
+    {
+        $('#promoteModal').css('display', 'flex');
+        $('#employeePromoteID').attr("value",$(this).val());
+        $('body').addClass('no-scroll');
+    }
+});
+
+function closePromoteModal() {
+    $('#promoteModal').css('display', 'none');
+    $('body').removeClass('no-scroll');  
+}

@@ -252,6 +252,52 @@
             </form>
         </div>
       </div>
+      <!-- promote -->
+      <div class="modal-overlay" id="promoteModal">
+        <div class="modal">
+          <div class="modal__heading">
+            <div class="heading__modal__box">
+              <h2 class="heading__modal">Promote</h2>
+              <p class="subheading__modal">Employee Promotion</p>
+            </div>
+            <div class="close__box"><ion-icon onclick="closePromoteModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+            </div>
+            <form method="POST" class="form__modal" enctype="multipart/form-data" id="frmPromote">
+              @csrf
+              <input type="hidden" name="employeeID" id="employeePromoteID"/>
+              <div class="input__form__modal__box">
+                <div class="input__box">
+                  <select class="information__input" name="job_title">
+                    <option value="" disabled selected>
+                      Select Job Title
+                    </option>
+                  </select>
+                  <span class="input__title">Job Title</span>
+                  <div id="job_title-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter compensation"
+                    name="rate"
+                  />
+                  <span class="input__title">New Rate</span>
+                  <div id="rate-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input type="file"
+                    class="information__input"
+                    placeholder="Attach document"
+                    name="file"
+                  />
+                  <span class="input__title">Attachment</span>
+                  <div id="file-error" class="error-message text-danger"></div>
+                </div>
+              </div>
+              <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+            </form>
+        </div>
+      </div>
       <nav class="navigation">
         <ion-icon id="menuButton" class="menu" name="menu-outline"></ion-icon>
         <ul id="headerNav" class="nav__items flex flex__align__center">
@@ -445,9 +491,9 @@
                           </a>
                         <?php }else{ ?>
                           <?php if($row['employmentStatus']=="Regular" || $row['employmentStatus']=="Probationary"){ ?>
-                          <a href="" class="select__item">
+                          <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item promote">
                             <ion-icon class="select__icon" name="ribbon-outline"></ion-icon>Promotion
-                          </a>
+                          </button>
                           <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item changeSchedule">
                             <ion-icon class="select__icon" name="calendar-outline"></ion-icon>Change Schedule
                           </button>
@@ -474,9 +520,9 @@
                           </button>
                           <?php }else{ ?>
                               <?php if($row['employeeStatus']==1){ ?>
-                              <a href="" class="select__item">
+                              <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item promote">
                                 <ion-icon class="select__icon" name="ribbon-outline"></ion-icon>Promotion
-                              </a>
+                              </button>
                               <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item changeSchedule">
                                 <ion-icon class="select__icon" name="calendar-outline"></ion-icon>Change Schedule
                               </button>

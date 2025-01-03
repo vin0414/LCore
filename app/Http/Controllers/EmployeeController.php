@@ -663,6 +663,7 @@ class EmployeeController extends Controller
         date_default_timezone_set('Asia/Manila');
         $employeeModel = new \App\Models\employeeModel();
         $recordModel = new \App\Models\recordModel();
+        $scheduleFileModel = new \App\Models\scheduleFileModel();
         $newDate = date('Y-m-d');
         //data
         $validator = Validator::make($request->all(),[
@@ -679,9 +680,12 @@ class EmployeeController extends Controller
             $file = $request->file('file');$filename="";
             if ($request->hasFile('file') && $request->file('file')->isValid()) 
             {
-                $filename = $file->getClientOriginalName();
+                $filename = date('Ymdhis').$file->getClientOriginalName();
                 // Define the path where the image should be saved
                 $file->move('attachment/',$filename);
+                //save the records
+                $newRecord = ['employeeID'=>$request->employeeID,'attachment'=>$filename,'scheduleID'=>$request->schedule];
+                $scheduleFileModel->create($newRecord);
             }
             //get the companyID
             $employee = $employeeModel->WHERE('employeeID',$request->employeeID)->first();
