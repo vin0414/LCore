@@ -368,21 +368,10 @@
                       <td><?php echo $row['Email'] ?></td>
                       <td><?php echo $row['Role'] ?></td>
                       <td><?php if($row['Status']==1){echo "Active";}else{echo "Inactive";} ?></td>
-                      <td class="pos__rel">
-                        <button class="btn__select">
-                          <ion-icon
-                            name="ellipsis-horizontal-circle-outline"
-                            class="icon__button"
-                          ></ion-icon>
-                        </button>
-                        <div class="dropdown__select">
-                          <a href="{{route('hr/edit-account',['accountID'=>$row['accountID']])}}" class="select__item"
-                            ><ion-icon
-                              class="select__icon"
-                              name="create-outline"
-                            ></ion-icon
-                            >Edit</a>
-                        </div>
+                      <td>
+                        <a href="{{route('hr/edit-account',['accountID'=>$row['accountID']])}}" class="select__item">
+                          <ion-icon class="select__icon" name="create-outline"></ion-icon>Edit
+                        </a>
                       </td>
                     </tr>
                     <?php endforeach; ?>
@@ -419,21 +408,10 @@
                       <td><?php echo $row->departmentName ?></td>
                       <td><?php echo $row->departmentNumber ?></td>
                       <td><?php echo $row->created_at ?></td>
-                      <td class="pos__rel">
-                        <button class="btn__select">
-                          <ion-icon
-                            name="ellipsis-horizontal-circle-outline"
-                            class="icon__button"
-                          ></ion-icon>
-                        </button>
-                        <div class="dropdown__select">
-                          <a href="" class="select__item"
-                            ><ion-icon
-                              class="select__icon"
-                              name="create-outline"
-                            ></ion-icon
-                            >Edit</a>
-                        </div>
+                      <td>
+                        <a href="" class="select__item">
+                          <ion-icon class="select__icon" name="create-outline"></ion-icon>Edit
+                        </a>
                       </td>
                     </tr>
                     <?php endforeach; ?>
@@ -474,21 +452,10 @@
                         <td><?php echo $row['hours'] ?></td>
                         <td><?php echo $row['breakTime'] ?></td>
                         <td><?php echo $row['Notes'] ?></td>
-                        <td class="pos__rel">
-                          <button class="btn__select">
-                            <ion-icon
-                              name="ellipsis-horizontal-circle-outline"
-                              class="icon__button"
-                            ></ion-icon>
-                          </button>
-                          <div class="dropdown__select">
-                            <a href="" class="select__item"
-                              ><ion-icon
-                                class="select__icon"
-                                name="create-outline"
-                              ></ion-icon
-                              >Edit</a>
-                          </div>
+                        <td>
+                          <a href="" class="select__item">
+                            <ion-icon class="select__icon" name="create-outline"></ion-icon>Edit
+                          </a>
                         </td>
                       </tr>
                     <?php endforeach;?>
@@ -523,21 +490,10 @@
                         <td><?php echo $row['Month'] ?></td>
                         <td><?php echo $row['Vacation'] ?></td>
                         <td><?php echo $row['Sick'] ?></td>
-                        <td class="pos__rel">
-                          <button class="btn__select">
-                            <ion-icon
-                              name="ellipsis-horizontal-circle-outline"
-                              class="icon__button"
-                            ></ion-icon>
-                          </button>
-                          <div class="dropdown__select">
-                            <a href="" class="select__item"
-                              ><ion-icon
-                                class="select__icon"
-                                name="create-outline"
-                              ></ion-icon
-                              >Edit</a>
-                          </div>
+                        <td>
+                          <a href="" class="select__item">
+                            <ion-icon class="select__icon" name="create-outline"></ion-icon>Edit
+                          </a>
                         </td>
                       </tr>
                     <?php endforeach; ?>

@@ -141,10 +141,10 @@ class EmployeeController extends Controller
             'regularization_date'=>'nullable',
             'payroll_payment'=>'required',
             'account_number'=>'nullable',
-            'sss_no'=>'required',
-            'ph_no'=>'required',
-            'hdmf_no'=>'required',
-            'tin'=>'required'
+            'sss_no'=>'nullable',
+            'ph_no'=>'nullable',
+            'hdmf_no'=>'nullable',
+            'tin'=>'nullable'
         ]);
 
         $image = $request->file('image');$filename="";
@@ -175,7 +175,7 @@ class EmployeeController extends Controller
         //create log record
         $logModel = new \App\Models\logModel();
         $date = date('Y-m-d h:i:s a');
-        $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Update the existing records of Mr/Ms '.$request->surname];
+        $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Update records of Mr/Ms '.$request->surname];
         $logModel->create($data);
         return redirect('/hr/employee')->with('success','Great! Successfully applied changes');
     }

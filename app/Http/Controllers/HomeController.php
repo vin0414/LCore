@@ -33,10 +33,11 @@ class HomeController extends Controller
         $employeeModel = new \App\Models\employeeModel();
         $totalEmployee = $employeeModel->count();
         $work = ['Trainee','Probationary'];
+        $status = [0,2,3,4];
         $recent = $employeeModel::orderBy('employeeID', 'desc')->take(10)->get();
-        $regularEmployee = $employeeModel->WHERE('employmentStatus','Regular')->count();
-        $newEmployee = $employeeModel->WHEREIN('employmentStatus',$work)->count();
-        $resignEmployee = $employeeModel->WHERE('employeeStatus','2')->count();
+        $regularEmployee = $employeeModel->WHERE('employmentStatus','Regular')->WHERE('employeeStatus',1)->count();
+        $newEmployee = $employeeModel->WHEREIN('employmentStatus',$work)->WHERE('employeeStatus',1)->count();
+        $resignEmployee = $employeeModel->WHEREIN('employeeStatus',$status)->count();
         $data = ['title'=>$title,'total'=>$totalEmployee,
                 'regular'=>$regularEmployee,'new'=>$newEmployee,
                 'resign'=>$resignEmployee,'recent'=>$recent,

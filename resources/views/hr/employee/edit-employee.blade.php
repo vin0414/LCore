@@ -629,9 +629,6 @@
                       placeholder="Enter SSS number" name="sss_no"
                     />
                     <span class="input__title">SSS Number</span>
-                    @if ($errors->has('sss_no'))
-                        <p class="text-danger">{{$errors->first('sss_no')}}</p>
-                      @endif
                   </div>
                   <div class="input__box">
                     <input
@@ -640,9 +637,6 @@
                       placeholder="Enter philhealth no." name="ph_no"
                     />
                     <span class="input__title">Philhealth Number</span>
-                    @if ($errors->has('ph_no'))
-                        <p class="text-danger">{{$errors->first('ph_no')}}</p>
-                      @endif
                   </div>
                   <div class="input__box">
                     <input
@@ -651,9 +645,6 @@
                       placeholder="Enter pag-ibig no." name="hdmf_no"
                     />
                     <span class="input__title">Pag-IBIG Number</span>
-                    @if ($errors->has('hdmf_no'))
-                        <p class="text-danger">{{$errors->first('hdmf_no')}}</p>
-                      @endif
                   </div>
                   <div class="input__box">
                     <input
@@ -662,9 +653,6 @@
                       placeholder="Enter TIN" value="{{ $employee['tin'] }}"
                     />
                     <span class="input__title">Tax Identification Number</span>
-                    @if ($errors->has('tin'))
-                        <p class="text-danger">{{$errors->first('tin')}}</p>
-                      @endif
                   </div>
                 </div>
               </div>

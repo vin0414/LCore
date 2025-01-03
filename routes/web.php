@@ -39,8 +39,8 @@ Route::post('update-certificate',[EmployeeController::class,'updateCertificate']
 ///movement
 Route::post('change-job-title',[EmployeeController::class,'changeJobTitle'])->name('change-job-title');
 Route::post('job-transfer',[EmployeeController::class,'jobTransfer'])->name('job-transfer');
-Route::post('salary-adjustment',[EmployeeController::class,'salaryAdjustment'])->name('salary-adjustment');
-Route::post('demote',[EmployeeController::class,'employeeDemotion'])->name('demote');
+Route::post('salary-adjustment',[EmployeeController::class,'salaryAdjustment'])->name('salary-adjustment');//not yet
+Route::post('demote',[EmployeeController::class,'employeeDemotion'])->name('demote');//not yet
 Route::post('change-schedule',[EmployeeController::class,'changeSchedule'])->name('change-schedule');
 Route::post('promote',[EmployeeController::class,'employeePromotion'])->name('promote');
 Route::post('resign',[EmployeeController::class,'employeeResign'])->name('resign');
