@@ -142,6 +142,7 @@
       </div>
     </header>
     <main>
+      <!-- change job title-->
       <div class="modal-overlay" id="changeJobTitleModal">
           <div class="modal">
             <div class="modal__heading">
@@ -205,6 +206,46 @@
                   </select>
                   <span class="input__title">Department | Branch</span>
                   <div id="department-error" class="error-message text-danger"></div>
+                </div>
+              </div>
+              <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+            </form>
+        </div>
+      </div>
+      <!--change schedule -->
+      <div class="modal-overlay" id="changeScheduleModal">
+        <div class="modal">
+          <div class="modal__heading">
+            <div class="heading__modal__box">
+              <h2 class="heading__modal">Change Schedule</h2>
+              <p class="subheading__modal">Assigning new schedule</p>
+            </div>
+            <div class="close__box"><ion-icon onclick="closeScheduleModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+            </div>
+            <form method="POST" class="form__modal" enctype="multipart/form-data" id="frmChange">
+              @csrf
+              <input type="hidden" name="employeeID" id="employeeScheduleID"/>
+              <div class="input__form__modal__box">
+                <div class="input__box">
+                  <select class="information__input" name="schedule">
+                    <option value="" disabled selected>
+                      Select schedule
+                    </option>
+                    <?php foreach($schedule as $row): ?>
+                      <option value="<?php echo $row['scheduleID'] ?>">(<?php echo $row['scheduleType'] ?>)<?php echo $row['hours'] ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                  <span class="input__title">New Schedule</span>
+                  <div id="schedule-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input type="file"
+                    class="information__input"
+                    placeholder="Attach document"
+                    name="file"
+                  />
+                  <span class="input__title">Attachment</span>
+                  <div id="file-error" class="error-message text-danger"></div>
                 </div>
               </div>
               <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
@@ -407,9 +448,9 @@
                           <a href="" class="select__item">
                             <ion-icon class="select__icon" name="ribbon-outline"></ion-icon>Promotion
                           </a>
-                          <a href="" class="select__item">
+                          <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item changeSchedule">
                             <ion-icon class="select__icon" name="calendar-outline"></ion-icon>Change Schedule
-                          </a>
+                          </button>
                           <a href="{{route('hr/employee/new-allowance')}}" class="select__item">
                             <ion-icon class="select__icon" name="add-outline"></ion-icon>Add Allowance
                           </a>
@@ -436,9 +477,9 @@
                               <a href="" class="select__item">
                                 <ion-icon class="select__icon" name="ribbon-outline"></ion-icon>Promotion
                               </a>
-                              <a href="" class="select__item">
+                              <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item changeSchedule">
                                 <ion-icon class="select__icon" name="calendar-outline"></ion-icon>Change Schedule
-                              </a>
+                              </button>
                               <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item backOut">
                                 <ion-icon class="select__icon" name="play-back-outline"></ion-icon>Back-Out
                               </button>
@@ -568,12 +609,9 @@
       $('#office').change(function(){
           $('#department').find('option').not(':first').remove();
           $.ajax({
-              url:"{{route('fetch-department')}}",method:"GET",
-              data:{value:$(this).val()},
-              success:function(response)
-              {
-                  $('#department').append(response);
-              }
+              url:"{{route('fetch-department')}}",
+              method:"GET",data:{value:$(this).val()},
+              success:function(response){$('#department').append(response);}
           });
       });
 
@@ -601,6 +639,32 @@
                   }
               }
           });
+      });
+
+      $('#frmChange').on('submit',function(e)
+      {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+            url:"{{route('change-schedule')}}",method: 'POST',data: formData,
+            processData: false,contentType: false,
+            success: function(response) 
+            {
+              if(response.success)
+              {
+                  closeScheduleModal();
+              }
+              else
+              {
+                  var errors = response.errors;
+                  // Iterate over each error and display it under the corresponding input field
+                  for (var field in errors) {
+                      $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
+                      $('#' + field).addClass('input-error'); // Highlight the input field with an error
+                  }
+              }
+            }
+        });
       });
 
       $(document).on('click','.resign',function(){

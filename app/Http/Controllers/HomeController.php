@@ -112,8 +112,11 @@ class HomeController extends Controller
         //load the office
         $officeModel = new \App\Models\officeModel();
         $office = $officeModel->all();
+        //schedule
+        $schedulerModel = new \App\Models\schedulerModel();
+        $schedule = $schedulerModel->all();
 
-        $data = ['title'=>$title,'about'=>$about,'employee'=>$employee,'office'=>$office];
+        $data = ['title'=>$title,'about'=>$about,'employee'=>$employee,'office'=>$office,'schedule'=>$schedule];
         return view('hr/employee/index',$data);
     }
 

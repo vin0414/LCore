@@ -27,3 +27,18 @@ function closeJobModal() {
     $('#jobTransferModal').css('display', 'none');
     $('body').removeClass('no-scroll');  
 }
+
+$(document).on('click','.changeSchedule',function(){
+    var confirmation = confirm("Do you want to change the schedule of this employee?");
+    if(confirmation)
+    {
+        $('#changeScheduleModal').css('display', 'flex');
+        $('#employeeScheduleID').attr("value",$(this).val());
+        $('body').addClass('no-scroll');
+    }
+});
+
+function closeScheduleModal() {
+    $('#changeScheduleModal').css('display', 'none');
+    $('body').removeClass('no-scroll');  
+}
