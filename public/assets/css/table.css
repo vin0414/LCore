@@ -209,7 +209,8 @@ table.dataTable thead .sorting_desc:before {
     transition: all 0.5s ease;
     overflow-y: scroll;
 
-    height: 25rem;
+    min-height: 5rem;
+    max-height: 25rem;
 }
 .dropdown__select.open {
     display: flex;

@@ -638,7 +638,7 @@
             </div>
             <div class="btn__box">
               <button class="btn__primary" type="submit">
-                <ion-icon class="icon__add" name="save-outline"></ion-icon> Save Records
+                <ion-icon class="icon__add" name="document-text-outline"></ion-icon> Save Records
               </button>
             </div>
           </form>

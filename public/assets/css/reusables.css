@@ -721,6 +721,19 @@ textarea {
     cursor: pointer;
 }
 
+.select__item {
+    color: var(--black-color);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.4rem;
+    transition: all 0.5s ease;
+    padding: 0.5rem;
+    background-color: transparent;
+    border: none;
+}
+
 .logo__box {
     height: 5rem;
 }
@@ -819,48 +832,48 @@ body.no-scroll {
 }
 
 .badge {
+    font-family: "poppins", sans-serif;
     display: inline-block;
     padding: 0.5em 1em;
     font-size: 10px;
-    font-weight: bold;
+    font-weight: 500;
     text-align: center;
     border-radius: 12px;
     color: #fff;
     background-color: #007bff; /* Blue background */
-  }
-  
-  /* Different badge variations */
-  .badge-success {
+}
+
+/* Different badge variations */
+.badge-success {
     background-color: #28a745; /* Green background */
-  }
-  
-  .badge-warning {
+}
+
+.badge-warning {
     background-color: #ffc107; /* Yellow background */
-  }
-  
-  .badge-danger {
+}
+
+.badge-danger {
     background-color: #dc3545; /* Red background */
-  }
-  
-  .badge-info {
+}
+
+.badge-info {
     background-color: #17a2b8; /* Cyan background */
-  }
-  
-  .badge-primary {
+}
+
+.badge-primary {
     background-color: #007bff; /* Default blue background */
-  }
-  
-  .badge-light {
+}
+
+.badge-light {
     background-color: #f8f9fa; /* Light background */
     color: #000; /* Dark text for light background */
-  }
+}
 
-  .badge-dark-orange
-  {
+.badge-dark-orange {
     background-color: darkorange;
-  }
-  
-  .badge-pill {
+}
+
+.badge-pill {
     border-radius: 50px; /* Rounded corners */
     padding: 0.3em 1em;
-  }
+}

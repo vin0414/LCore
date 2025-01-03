@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
     <link rel="stylesheet" href="/assets/css/reusables.css" />
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
-    <link rel="stylesheet" href="/assets/css/employee.css" />
+    <link rel="stylesheet" href="/assets/css/new-account.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
     <link rel="icon" sizes="180x180" href="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : 'No Logo' }}"/>
   </head>
@@ -251,10 +251,110 @@
         </ul>
         <?php } ?>
       </aside>
-      <div class="container">
-      
-
-    </div>
+    <div class="container">
+      <div class="heading__box flex flex__align__center">
+        <h1 class="heading__primary">{{$title}}</h1>
+        <div class="breadcrumbs">
+          <p class="pages">Pages | <span>{{$title}}</span></p>
+        </div>
+      </div>
+      <div class="input__boxes grid first__row">
+        <!-- 1 -->
+        <div class="input__box">
+          <input
+            class="information__input" value=""
+            placeholder="Enter username" name="username"
+          />
+          <span class="input__title">Username</span>
+        </div>
+        <!-- 2 -->
+        <div class="input__box">
+          <input
+            type="password"
+            class="information__input" value=""
+            placeholder="Enter password" name="password"
+          />
+          <span class="input__title">Password</span>
+        </div>
+        <!-- 3 -->
+        <div class="input__box">
+          <input
+            class="information__input" value=""
+            placeholder="Enter fullname" name="fullname"
+          />
+          <span class="input__title">Fullname</span>
+        </div>
+        <!-- 4 -->
+        <div class="input__box">
+          <input
+           type="email"
+            class="information__input" value=""
+            placeholder="Enter email" name="email"
+          />
+          <span class="input__title">Email</span>
+        </div>
+      </div>
+      <div class="input__boxes grid second__row">
+          <!-- 1 -->
+          <div class="input__box">
+            <ion-icon
+              class="pos__abs input__chev__down"
+              name="chevron-down-outline"
+            ></ion-icon>
+            <select
+              class="information__input" name="designation"
+            >
+              <option value="" disabled selected>
+                Select
+              </option>
+              <option>Moderator</option>
+              <option>Approver</option>
+              <option>End-user</option>
+            </select>
+            <span class="input__title">Designation</span>
+        </div>
+          <!-- 2 -->
+          <div class="input__box">
+            <ion-icon
+              class="pos__abs input__chev__down"
+              name="chevron-down-outline"
+            ></ion-icon>
+            <select
+              class="information__input" name="status"
+            >
+              <option value="" disabled selected>
+                Select
+              </option>
+              <option>Moderator</option>
+              <option>Approver</option>
+              <option>End-user</option>
+            </select>
+            <span class="input__title">Status</span>
+        </div>
+          <!-- 3 -->
+          <div class="input__box">
+            <ion-icon
+              class="pos__abs input__chev__down"
+              name="chevron-down-outline"
+            ></ion-icon>
+            <select
+              class="information__input" name="role"
+            >
+              <option value="" disabled selected>
+                Select
+              </option>
+              <option>Moderator</option>
+              <option>Approver</option>
+              <option>End-user</option>
+            </select>
+            <span class="input__title">Role</span>
+        </div>
+        <div class="btn__box">
+          <button class="btn__primary" type="submit">
+            <ion-icon class="icon__add" name="document-text-outline"></ion-icon> Create Account
+          </button>
+        </div>
+      </div>
     </main>
     <footer class="footer">
       <p class="copyright">&copy;{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }} <?php echo date('Y') ?>. All Rights Reserved.</p>
