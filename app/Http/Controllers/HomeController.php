@@ -115,8 +115,11 @@ class HomeController extends Controller
         //schedule
         $schedulerModel = new \App\Models\schedulerModel();
         $schedule = $schedulerModel->all();
+        //job
+        $designationModel = new \App\Models\designationModel();
+        $job = $designationModel->all();
 
-        $data = ['title'=>$title,'about'=>$about,'employee'=>$employee,'office'=>$office,'schedule'=>$schedule];
+        $data = ['title'=>$title,'about'=>$about,'employee'=>$employee,'office'=>$office,'schedule'=>$schedule,'job'=>$job];
         return view('hr/employee/index',$data);
     }
 
@@ -129,7 +132,11 @@ class HomeController extends Controller
         //load the offices
         $officeModel = new \App\Models\officeModel();
         $office = $officeModel->all();
-        $data = ['title'=>$title,'about'=>$about,'office'=>$office];
+        //job
+        $designationModel = new \App\Models\designationModel();
+        $job = $designationModel->all();
+
+        $data = ['title'=>$title,'about'=>$about,'office'=>$office,'job'=>$job];
         return view('hr/employee/new-employee',$data);
     }
 

@@ -685,7 +685,7 @@ class EmployeeController extends Controller
             }
             //get the companyID
             $employee = $employeeModel->WHERE('employeeID',$request->employeeID)->first();
-            //change the office and department
+            //change the schedule
             $employeeModel::where('employeeID',$request->employeeID)
                 ->update(['scheduleID'=>$request->schedule]);
             //get the recent record of an employee
@@ -713,6 +713,7 @@ class EmployeeController extends Controller
         date_default_timezone_set('Asia/Manila');
         $employeeModel = new \App\Models\employeeModel();
         $recordModel = new \App\Models\recordModel();
+        $designationModel = new \App\Models\designationModel();
         $newDate = date('Y-m-d');
         //data
         $validator = Validator::make($request->all(),[
@@ -735,11 +736,13 @@ class EmployeeController extends Controller
                 // Define the path where the image should be saved
                 $file->move('attachment/',$filename);
             }
+            //get the job level
+            $job = $designationModel->WHERE('jobTitle',$request->job_title)->first();
             //get the companyID
             $employee = $employeeModel->WHERE('employeeID',$request->employeeID)->first();
-            //change the office and department
+            //change the job title and level
             $employeeModel::where('employeeID',$request->employeeID)
-                ->update(['designation'=>$request->job_title,'jobLevel'=>'','salaryRate'=>$cost]);
+                ->update(['designation'=>$request->job_title,'jobLevel'=>$job['jobLevel'],'salaryRate'=>$cost]);
             //get the recent record of an employee
             $record = $recordModel->WHERE('employeeID',$request->employeeID)->orderBy('recordID', 'desc')->first();
             //update the record of the employee
@@ -754,7 +757,7 @@ class EmployeeController extends Controller
             //create log record
             $logModel = new \App\Models\logModel();
             $date = date('Y-m-d h:i:s a');
-            $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Change schedule for '.$employee['companyID']];
+            $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Employee : '.$employee['companyID'].' is promoted to '.$request->job_title];
             $logModel->create($data);
             return response()->json(['success' => 'Successfully applied']);
         }
@@ -770,7 +773,7 @@ class EmployeeController extends Controller
         $val = $request->value;
         //get the companyID
         $employee = $employeeModel->WHERE('employeeID',$val)->first();
-        //change the office and department
+        //change the employee status
         $employeeModel::where('employeeID',$val)
             ->update(['employeeStatus'=>0]);
         //get the recent record of an employee
@@ -796,7 +799,7 @@ class EmployeeController extends Controller
         $val = $request->value;
         //get the companyID
         $employee = $employeeModel->WHERE('employeeID',$val)->first();
-        //change the office and department
+        //change the employee status
         $employeeModel::where('employeeID',$val)
             ->update(['employeeStatus'=>2]);
         //get the recent record of an employee
@@ -822,7 +825,7 @@ class EmployeeController extends Controller
         $val = $request->value;
         //get the companyID
         $employee = $employeeModel->WHERE('employeeID',$val)->first();
-        //change the office and department
+        //change the employee status
         $employeeModel::where('employeeID',$val)
             ->update(['employeeStatus'=>3]);
         //get the recent record of an employee
@@ -848,7 +851,7 @@ class EmployeeController extends Controller
         $val = $request->value;
         //get the companyID
         $employee = $employeeModel->WHERE('employeeID',$val)->first();
-        //change the office and department
+        //change the employee status
         $employeeModel::where('employeeID',$val)
             ->update(['employeeStatus'=>4]);
         //get the recent record of an employee

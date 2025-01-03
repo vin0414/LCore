@@ -271,6 +271,9 @@
                     <option value="" disabled selected>
                       Select Job Title
                     </option>
+                    <?php foreach($job as $row): ?>
+                      <option value="<?php echo $row['jobTitle'] ?>"><?php echo $row['jobTitle'] ?> - <small><?php echo $row['jobLevel'] ?></small></option>
+                    <?php endforeach; ?>
                   </select>
                   <span class="input__title">Job Title</span>
                   <div id="job_title-error" class="error-message text-danger"></div>

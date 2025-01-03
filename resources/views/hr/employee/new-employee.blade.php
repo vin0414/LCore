@@ -487,15 +487,27 @@
                       @endif
                   </div>
                   <div class="input__box">
-                    <input
-                      class="information__input" name="designation"
-                      placeholder="Enter designation" value="{{ old('designation') }}"
-                    />
-                    <span class="input__title">Designation</span>
-                    @if ($errors->has('designation'))
+                      <ion-icon
+                        class="pos__abs input__chev__down"
+                        name="chevron-down-outline"
+                      ></ion-icon>
+                      <select
+                        class="information__input" name="designation"
+                        placeholder="Enter job title"
+                      >
+                        <option value="" disabled selected>
+                          Select
+                        </option>
+                        <?php foreach($job as $row): ?>
+                          <option value="<?php echo $row['jobTitle'] ?>"><?php echo $row['jobTitle'] ?> - <small><?php echo $row['jobLevel'] ?></small></option>
+                        <?php endforeach; ?>
+                      </select>
+
+                      <span class="input__title">Job Title</span>
+                      @if ($errors->has('designation'))
                         <p class="text-danger">{{$errors->first('designation')}}</p>
                       @endif
-                  </div>
+                    </div>
                   <div class="input__box">
                     <input
                       type="phone"
