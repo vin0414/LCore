@@ -54,6 +54,7 @@ Route::post('add-credit',[EmployeeController::class,'addCredit'])->name('add-cre
 Route::post('create-folder',[EmployeeController::class,'createFolder'])->name('create-folder');
 //Settings module
 Route::post('save',[SettingController::class,'saveLogo'])->name('save');
+Route::post('reset-password',[SettingController::class,'resetPassword'])->name('reset-password');
 Route::post('add-account',[SettingController::class,'addAccount'])->name('add-account');
 Route::post('save-account',[SettingController::class,'saveAccount'])->name('save-account');
 

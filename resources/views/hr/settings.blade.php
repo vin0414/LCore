@@ -4,6 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"/>
@@ -384,7 +385,7 @@
                         <a href="{{route('hr/edit-account',['Token'=>$row['Token']])}}" class="select__item">
                           <ion-icon class="select__icon" name="create-outline"></ion-icon>Edit Account
                         </a>
-                        <button type="button" class="select__item reset">
+                        <button type="button" value="<?php echo $row['Token'] ?>" class="select__item reset">
                           <ion-icon class="select__icon" name="refresh-circle-outline"></ion-icon>Reset Password
                         </button>
                       </div>
@@ -547,21 +548,6 @@
           },
         });
 
-        $("#officeTable").DataTable({
-          dom:
-            "<'row'<'col-sm-6'f>>" + // Search box on top in the same row
-            "<'row'<'col-sm-12'tr>>" + // Table
-            "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'p>>", // Bottom (length + pagination)
-
-          oLanguage: { sSearch: "" },
-          initComplete: function () {
-            $("#officeTable_filter input").attr(
-              "placeholder",
-              "Search by name, etc."
-            );
-          },
-        });
-
         $("#departmentTable").DataTable({
           dom:
             "<'row'<'col-sm-6'f>>" + // Search box on top in the same row
@@ -696,27 +682,25 @@
         $(".account__dropdown").removeClass("show");
         $("#headerNav").removeClass("open");
       }
-      function openTab(tabId) {
-      // Hide all content
-      const allTabs = document.querySelectorAll('.tab');
-      const allPanes = document.querySelectorAll('.tab-pane');
-      
-      allTabs.forEach(tab => tab.classList.remove('active'));
-      allPanes.forEach(pane => pane.classList.remove('active'));
-      
-      // Show the clicked tab and its corresponding content
-      const activeTab = document.getElementById(tabId);
-      const activePane = document.getElementById(`content-${tabId}`);
-      
-      activeTab.classList.add('active');
-      activePane.classList.add('active');
-    }
- 
-    // Set default tab to be open
-    document.addEventListener("DOMContentLoaded", () => {
-      openTab('tab1');
-    });
+
+      $(document).on('click','.reset',function()
+      {
+        var confirmation = confirm("Would you like to reset the password of this account?");
+        if(confirmation)
+        {
+          var csrfToken = $('meta[name="csrf-token"]').attr('content');
+          $.ajax({
+            url:"{{route('reset-password')}}",method:"POST",
+            data:{value:$(this).val()},
+            headers: {'X-CSRF-TOKEN': csrfToken},success:function(response)
+            {
+              if(response==="success"){window.location.reload();}else{alert(response);}
+            }
+          });
+        }
+      });
     </script>
+    <script src="/assets/js/settings.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

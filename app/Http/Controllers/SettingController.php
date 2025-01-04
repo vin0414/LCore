@@ -47,6 +47,28 @@ class SettingController extends Controller
         return redirect('/hr/settings');
     }
 
+    public function resetPassword(Request $request)
+    {
+        date_default_timezone_set('Asia/Manila');
+        $accountModel = new \App\Models\accountModel();
+
+        $request->validate([
+            'value'=>'required'
+        ]);
+
+        $generatedePassword = Str::random(8);
+        $password = Hash::make($generatedePassword);
+        $accountModel::WHERE('Token',$request->value)
+                    ->update(['Password'=>$password]);
+
+        //create log record
+        $logModel = new \App\Models\logModel();
+        $date = date('Y-m-d h:i:s a');
+        $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Reset password'];
+        $logModel->create($data);
+        echo "success";
+    }
+
     public function addAccount(Request $request)
     {
         date_default_timezone_set('Asia/Manila');
@@ -80,6 +102,7 @@ class SettingController extends Controller
         $accountModel = new \App\Models\accountModel();
 
         $request->validate([
+            'token'=>'required',
             'fullname'=>'required',
             'username'=>'required|min:6|max:20',
             'email_address'=>'required|email',
