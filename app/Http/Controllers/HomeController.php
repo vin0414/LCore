@@ -355,9 +355,14 @@ class HomeController extends Controller
         if(session('role')=="ADMIN"||session('role')=="Admin")
         {
             $title = "Edit Account";
+            //application
             $aboutModel = new \App\Models\aboutModel();
             $about = $aboutModel->first();
-            $data = ['title'=>$title,'about'=>$about];
+            //account
+            $accountModel = new \App\Models\accountModel();
+            $account = $accountModel->WHERE('Token',$id)->first();
+            
+            $data = ['title'=>$title,'about'=>$about,'account'=>$account];
             return view('hr/edit-account',$data);
         }
         else

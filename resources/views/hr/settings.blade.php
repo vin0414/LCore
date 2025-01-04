@@ -373,11 +373,22 @@
                       <td><?php echo $row['Email'] ?></td>
                       <td><?php echo $row['Role'] ?></td>
                       <td><?php if($row['Status']==1){echo "Active";}else{echo "Inactive";} ?></td>
-                      <td>
-                        <a href="{{route('hr/edit-account',['accountID'=>$row['accountID']])}}" class="select__item">
-                          <ion-icon class="select__icon" name="create-outline"></ion-icon>Edit
+                      <td class="pos__rel">
+                      <button class="btn__select">
+                        <ion-icon
+                          name="ellipsis-horizontal"
+                          class="icon__button"
+                        ></ion-icon>
+                      </button>
+                      <div class="dropdown__select">
+                        <a href="{{route('hr/edit-account',['Token'=>$row['Token']])}}" class="select__item">
+                          <ion-icon class="select__icon" name="create-outline"></ion-icon>Edit Account
                         </a>
-                      </td>
+                        <button type="button" class="select__item reset">
+                          <ion-icon class="select__icon" name="refresh-circle-outline"></ion-icon>Reset Password
+                        </button>
+                      </div>
+                    </td>
                     </tr>
                     <?php endforeach; ?>
                     </tbody>

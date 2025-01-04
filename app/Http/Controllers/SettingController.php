@@ -49,6 +49,7 @@ class SettingController extends Controller
 
     public function addAccount(Request $request)
     {
+        date_default_timezone_set('Asia/Manila');
         $accountModel = new \App\Models\accountModel();
 
         $request->validate([
@@ -71,6 +72,32 @@ class SettingController extends Controller
         $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Register new account'];
         $logModel->create($data);
         return redirect('/hr/settings')->with('success','Great! Successfully registered');
+    }
+
+    public function saveAccount(Request $request)
+    {
+        date_default_timezone_set('Asia/Manila');
+        $accountModel = new \App\Models\accountModel();
+
+        $request->validate([
+            'fullname'=>'required',
+            'username'=>'required|min:6|max:20',
+            'email_address'=>'required|email',
+            'role'=>'required',
+            'status'=>'required'
+        ]);
+
+        $accountModel::WHERE('Token',$request->token)
+                    ->update(['Username'=>$request->username,'Fullname'=>$request->fullname,
+                    'Designation'=>$request->role,'Email'=>$request->email_address,'Status'=>$request->status,
+                    'Role'=>$request->role]);
+
+        //create log record
+        $logModel = new \App\Models\logModel();
+        $date = date('Y-m-d h:i:s a');
+        $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Update the account of '.$request->fullname];
+        $logModel->create($data);
+        return redirect('/hr/settings')->with('success','Great! Successfully applied changes');
     }
 
     public function generateFirstLeaveCredit()

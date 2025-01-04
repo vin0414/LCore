@@ -55,6 +55,7 @@ Route::post('create-folder',[EmployeeController::class,'createFolder'])->name('c
 //Settings module
 Route::post('save',[SettingController::class,'saveLogo'])->name('save');
 Route::post('add-account',[SettingController::class,'addAccount'])->name('add-account');
+Route::post('save-account',[SettingController::class,'saveAccount'])->name('save-account');
 
 Route::middleware('auth:user')->group(function () {
     //navigations
@@ -74,7 +75,7 @@ Route::middleware('auth:user')->group(function () {
     //settings module
     Route::get('hr/settings',[HomeController::class,'settings'])->name('hr/settings');
     Route::get('hr/new-account',[HomeController::class,'newAccount'])->name('hr/new-account');
-    Route::get('hr/edit-account/{accountID}',[HomeController::class,'editAccount'])->name('hr/edit-account');
+    Route::get('hr/edit-account/{Token}',[HomeController::class,'editAccount'])->name('hr/edit-account');
     //audit trail module
     Route::get('hr/audit-trail',[HomeController::class,'auditTrail'])->name('hr/audit-trail');
     //payroll modules

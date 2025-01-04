@@ -349,17 +349,6 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        $('#office-select').change(function(){
-            $('#department-select').find('option').not(':first').remove();
-            $.ajax({
-                url:"{{route('fetch-department')}}",method:"GET",
-                data:{value:$(this).val()},
-                success:function(response)
-                {
-                    $('#department-select').append(response);
-                }
-            });
-        });
         // Uploading picture Starts here ~
         // Trigger file input click when the image icon is clicked
         $("#uploadButton").on("click", function () {
@@ -433,18 +422,6 @@
         $(".account__dropdown").removeClass("show");
         $("#headerNav").removeClass("open");
       }
-
-      $('#payroll_payment').change(function(){
-        let val = $(this).val();
-        if(val==="Cash"||val ==="Check")
-        {
-          $('#account_number').attr("disabled",true);
-        }
-        else if(val==="Card")
-        {
-          $('#account_number').attr("disabled",false);
-        }
-      });
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>

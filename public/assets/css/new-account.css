@@ -17,6 +17,13 @@
   margin-bottom: 3rem;
 }
 
+.input__boxes.grid.two_half__row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 0.5fr;
+  gap: 3rem;
+  margin-bottom: 1rem;
+}
+
 .input__chev__down {
     top: 50%;
     right: 2rem;
