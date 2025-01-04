@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class EmployeeController extends Controller
 {
@@ -80,7 +81,7 @@ class EmployeeController extends Controller
         $employment_status = "Trainee";
         $status = 1;$job_level = "Rank and File";
         $cost = str_replace(",", "", $request->allowance_rates);
-        $token = $request->session()->token();
+        $token = Str::random(32);
         //save the image
         $image = $request->file('image');$filename="";
         if ($request->hasFile('image') && $request->file('image')->isValid()) 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class SettingController extends Controller
 {
@@ -43,6 +45,32 @@ class SettingController extends Controller
         $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Add/update logo and application details'];
         $logModel->create($data);
         return redirect('/hr/settings');
+    }
+
+    public function addAccount(Request $request)
+    {
+        $accountModel = new \App\Models\accountModel();
+
+        $request->validate([
+            'fullname'=>'required',
+            'username'=>'required|min:6|max:20',
+            'password'=>'required|min:8|regex:/[A-Z]/|regex:/[a-z]/|regex:/[0-9]/|regex:/[@$!%*?&]/',
+            'email_address'=>'required|email',
+            'role'=>'required'
+        ]);
+        $token = Str::random(32);
+        $status = 1;
+        $password = Hash::make($request->password);
+        $data = ['Username'=>$request->username, 'Password'=>$password,'Fullname'=>$request->fullname,
+                'Designation'=>$request->role,'Email'=>$request->email_address,'Status'=>$status,
+                'Role'=>$request->role,'Token'=>$token];
+        $accountModel->create($data);
+        //create log record
+        $logModel = new \App\Models\logModel();
+        $date = date('Y-m-d h:i:s a');
+        $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Register new account'];
+        $logModel->create($data);
+        return redirect('/hr/settings')->with('success','Great! Successfully registered');
     }
 
     public function generateFirstLeaveCredit()

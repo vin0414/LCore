@@ -338,7 +338,7 @@ class HomeController extends Controller
     {
         if(session('role')=="ADMIN"||session('role')=="Admin")
         {
-            $title = "New Account";
+            $title = "Create Account";
             $aboutModel = new \App\Models\aboutModel();
             $about = $aboutModel->first();
             $data = ['title'=>$title,'about'=>$about];

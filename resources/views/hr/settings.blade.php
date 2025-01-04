@@ -252,6 +252,11 @@
             <p class="pages">Maintenance | <span class="breadcrumbs__title">{{$title}}</span></p>
           </div>
         </div>
+        @if(\Session::has('success'))
+            <div class="alert alert-success">
+                {{\Session::get('success')}}
+            </div>
+        @endif
         <div class="tabs">
           <ul class="tab-titles">
             <li class="tab active" id="tab1" onclick="openTab('tab1')">Application</li>

@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="/assets/css/reusables.css" />
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
     <link rel="stylesheet" href="/assets/css/new-account.css" />
+    <link rel="stylesheet" href="/assets/css/table.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
     <link rel="icon" sizes="180x180" href="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : 'No Logo' }}"/>
   </head>
@@ -255,104 +256,90 @@
       <div class="heading__box flex flex__align__center">
         <h1 class="heading__primary">{{$title}}</h1>
         <div class="breadcrumbs">
-          <p class="pages">Pages | <span>{{$title}}</span></p>
+          <p class="pages">Maintenance | <span>{{$title}}</span></p>
         </div>
       </div>
-      <div class="input__boxes grid first__row">
-        <!-- 1 -->
-        <div class="input__box">
-          <input
-            class="information__input" value=""
-            placeholder="Enter username" name="username"
-          />
-          <span class="input__title">Username</span>
-        </div>
-        <!-- 2 -->
-        <div class="input__box">
-          <input
-            type="password"
-            class="information__input" value=""
-            placeholder="Enter password" name="password"
-          />
-          <span class="input__title">Password</span>
-        </div>
-        <!-- 3 -->
-        <div class="input__box">
-          <input
-            class="information__input" value=""
-            placeholder="Enter fullname" name="fullname"
-          />
-          <span class="input__title">Fullname</span>
-        </div>
-        <!-- 4 -->
-        <div class="input__box">
-          <input
-           type="email"
-            class="information__input" value=""
-            placeholder="Enter email" name="email"
-          />
-          <span class="input__title">Email</span>
-        </div>
-      </div>
-      <div class="input__boxes grid second__row">
-          <!-- 1 -->
-          <div class="input__box">
-            <ion-icon
-              class="pos__abs input__chev__down"
-              name="chevron-down-outline"
-            ></ion-icon>
-            <select
-              class="information__input" name="designation"
-            >
-              <option value="" disabled selected>
-                Select
-              </option>
-              <option>Moderator</option>
-              <option>Approver</option>
-              <option>End-user</option>
-            </select>
-            <span class="input__title">Designation</span>
-        </div>
-          <!-- 2 -->
-          <div class="input__box">
-            <ion-icon
-              class="pos__abs input__chev__down"
-              name="chevron-down-outline"
-            ></ion-icon>
-            <select
-              class="information__input" name="status"
-            >
-              <option value="" disabled selected>
-                Select
-              </option>
-              <option>Moderator</option>
-              <option>Approver</option>
-              <option>End-user</option>
-            </select>
-            <span class="input__title">Status</span>
-        </div>
-          <!-- 3 -->
-          <div class="input__box">
-            <ion-icon
-              class="pos__abs input__chev__down"
-              name="chevron-down-outline"
-            ></ion-icon>
-            <select
-              class="information__input" name="role"
-            >
-              <option value="" disabled selected>
-                Select
-              </option>
-              <option>Moderator</option>
-              <option>Approver</option>
-              <option>End-user</option>
-            </select>
-            <span class="input__title">Role</span>
-        </div>
-        <div class="btn__box">
-          <button class="btn__primary" type="submit">
-            <ion-icon class="icon__add" name="document-text-outline"></ion-icon> Create Account
-          </button>
+      <div class="card_container">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Create Account</div>
+          </div>
+          <div class="card-body">
+            <form method="POST" id="frmAccount" action="{{route('add-account')}}">
+              @csrf
+              <div class="input__boxes grid single__row">
+                <div class="input__box">
+                  <input
+                    class="information__input" value="{{ old('fullname') }}"
+                    placeholder="Enter fullname" name="fullname"
+                  />
+                  <span class="input__title">Fullname</span>
+                  @if ($errors->has('fullname'))
+                    <p class="text-danger">{{$errors->first('fullname')}}</p>
+                  @endif
+                </div>
+              </div>
+              <div class="input__boxes grid second__row">
+                <!-- 1 -->
+                <div class="input__box">
+                  <input
+                    class="information__input" value="{{ old('username') }}"
+                    placeholder="Enter username" name="username"
+                  />
+                  <span class="input__title">Username</span>
+                  @if ($errors->has('username'))
+                    <p class="text-danger">{{$errors->first('username')}}</p>
+                  @endif
+                </div>
+                <!-- 2 -->
+                <div class="input__box">
+                  <input
+                    type="password"
+                    class="information__input" value=""
+                    placeholder="Enter password" name="password"
+                  />
+                  <span class="input__title">Password</span>
+                  @if ($errors->has('password'))
+                    <p class="text-danger">{{$errors->first('password')}}</p>
+                  @endif
+                </div>
+                <!-- 3 -->
+                <div class="input__box">
+                  <input
+                  type="email"
+                    class="information__input" value="{{ old('email_address') }}"
+                    placeholder="Enter email" name="email_address"
+                  />
+                  <span class="input__title">Email</span>
+                  @if ($errors->has('email_address'))
+                    <p class="text-danger">{{$errors->first('email_address')}}</p>
+                  @endif
+                </div>
+              </div>
+              <div class="input__boxes grid single__row">
+                <p class="text-small">System Role</p>
+                <div class="radio-group">
+                  <label>
+                    <input type="radio" name="role" value="Admin"> Administrator
+                  </label>
+                  <label>
+                    <input type="radio" name="role" value="Manager"> Manager
+                  </label>
+                  <label>
+                    <input type="radio" name="role" value="Standard-user"> Standard User
+                  </label>
+                </div>
+                  @if ($errors->has('role'))
+                    <p class="text-danger">{{$errors->first('role')}}</p>
+                  @endif
+              </div>
+              <div class="btn__box">
+                <button class="btn__primary" type="submit">
+                  <ion-icon class="icon__add" name="save-outline"></ion-icon> Create Account
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </main>
