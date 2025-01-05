@@ -289,7 +289,9 @@
                     <td><?php echo number_format($row->cost,2) ?></td>
                     <td><?php echo $row->Remarks ?></td>
                     <td>
+                      <?php if(!empty($row->Attachment)){ ?>
                       <a href="/attachment/<?php echo $row->Attachment ?>" target="_BLANK" class="no-underline"><ion-icon name="cloud-download-outline"></ion-icon> File</a>
+                      <?php } ?>
                     </td>
                   </tr>
                 <?php endforeach; ?>

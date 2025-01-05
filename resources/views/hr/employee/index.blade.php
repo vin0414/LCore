@@ -525,29 +525,31 @@
           <div class="dataWrapper">
             <table id="dataTable" class="display">
               <thead>
-                  <th>Employee ID</th>
                   <th>Employee's Name</th>
+                  <th>Contact #</th>
                   <th>Email Address</th>
                   <th>Permanent Address</th>
                   <th>Birthday</th>
                   <th>Gender</th>
-                  <th>Job Status</th>
+                  <th>Civil Status</th>
+                  <th>Educational Attainment</th>
                   <th>Status</th>
                   <th>Action</th>
               </thead>
               <tbody>
                 <?php foreach($employee as $row): ?>
                   <tr>
-                    <td><?php echo $row['companyID'] ?></td>
                     <td>
                       <?php echo $row['surName'] ?> <?php echo $row['suffix'] ?>,&nbsp;<?php echo $row['firstName'] ?> <?php echo $row['middleName'] ?><br/>
                       <small><?php echo $row['designation'] ?></small>
                     </td>
+                    <td><?php echo $row['contactNumber'] ?></td>
                     <td><?php echo $row['emailAddress'] ?></td>
                     <td><?php echo $row['address'] ?></td>
                     <td><?php echo $row['dob'] ?></td>
                     <td><?php echo $row['gender'] ?></td>
-                    <td><?php echo $row['employmentStatus'] ?></td>
+                    <td><?php echo $row['civilStatus'] ?></td>
+                    <td><?php echo $row['education'] ?></td>
                     <td>
                       <?php if($row['employeeStatus']==0){ ?>
                         <span class="badge badge-danger">Resigned</span>
