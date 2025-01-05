@@ -287,7 +287,7 @@
                       <td>{{$row['Subject']}}</td>
                       <td>{{$row['From']}}</td>
                       <td>{{$row['To']}}</td>
-                      <td>{{$row['File']}}</td>
+                      <td><a href="/memo/{{$row['File']}}" class="no-underline" target="_BLANK">{{$row['File']}}</a></td>
                       <td class="pos__rel">
                         <button class="btn__select">
                           <ion-icon

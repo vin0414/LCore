@@ -718,6 +718,7 @@
       $('#frmJobTitle').on('submit',function(e)
       {
           e.preventDefault();
+          $('.error-message').html('');
           let data = $(this).serialize();
           $.ajax({
               url:"{{route('change-job-title')}}",method:"POST",
@@ -753,6 +754,7 @@
       $('#frmJobTransfer').on('submit',function(e)
       {
           e.preventDefault();
+          $('.error-message').html('');
           let data = $(this).serialize();
           $.ajax({
               url:"{{route('job-transfer')}}",method:"POST",
@@ -779,6 +781,7 @@
       $('#frmPromote').on('submit',function(e)
       {
         e.preventDefault();
+        $('.error-message').html('');
         var formData = new FormData(this);
         $.ajax({
             url:"{{route('promote')}}",method: 'POST',data: formData,
@@ -805,6 +808,7 @@
       $('#frmdemote').on('submit',function(e)
       {
         e.preventDefault();
+        $('.error-message').html('');
         var formData = new FormData(this);
         $.ajax({
             url:"{{route('demote')}}",method: 'POST',data: formData,
@@ -831,6 +835,7 @@
       $('#frmSalary').on('submit',function(e)
       {
         e.preventDefault();
+        $('.error-message').html('');
         var formData = new FormData(this);
         $.ajax({
             url:"{{route('salary-adjustment')}}",method: 'POST',data: formData,
@@ -857,6 +862,7 @@
       $('#frmChange').on('submit',function(e)
       {
         e.preventDefault();
+        $('.error-message').html('');
         var formData = new FormData(this);
         $.ajax({
             url:"{{route('change-schedule')}}",method: 'POST',data: formData,

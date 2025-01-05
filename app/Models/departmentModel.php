@@ -10,5 +10,5 @@ class departmentModel extends Model
     use HasFactory;
     protected $table = "tbldepartment";
     protected $primaryKey = "departmentID";
-    protected $fillable = ['departmentName','contactNumber', 'officeID'];
+    protected $fillable = ['departmentName','departmentNumber', 'officeID'];
 }

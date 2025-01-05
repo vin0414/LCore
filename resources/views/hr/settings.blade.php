@@ -400,12 +400,12 @@
             <div class="tab-pane" id="content-tab3">
               <div class="pos__rel">
                 <div class="button__box pos__abs">
-                  <a href="" class="link add__btn"
-                    ><ion-icon class="icon" name="add-outline"></ion-icon>New</a>
-                  <a href="#" class="link export__btn"
-                    ><ion-icon class="icon" name="download-outline"></ion-icon
-                    >Export</a
-                  >
+                  <a href="javascript:void(0);" class="link add__btn department">
+                    <ion-icon class="icon" name="add-outline"></ion-icon>New
+                  </a>
+                  <a href="#" class="link export__btn">
+                    <ion-icon class="icon" name="download-outline"></ion-icon>Export
+                  </a>
                 </div>
                 <div class="dataWrapper">
                   <table id="departmentTable" class="display">
@@ -444,7 +444,7 @@
             <div class="tab-pane" id="content-tab5">
               <div class="pos__rel">
                 <div class="button__box pos__abs">
-                  <a href="" class="link add__btn"
+                  <a href="javascript:void(0);" class="link add__btn schedule"
                     ><ion-icon class="icon" name="add-outline"></ion-icon>New</a>
                   <a href="#" class="link export__btn"
                     ><ion-icon class="icon" name="download-outline"></ion-icon
@@ -484,12 +484,12 @@
             <div class="tab-pane" id="content-tab6">
               <div class="pos__rel">
                 <div class="button__box pos__abs">
-                  <a href="" class="link add__btn"
-                    ><ion-icon class="icon" name="add-outline"></ion-icon>New</a>
-                  <a href="#" class="link export__btn"
-                    ><ion-icon class="icon" name="download-outline"></ion-icon
-                    >Export</a
-                  >
+                  <a href="javascript:void(0);" class="link add__btn credit">
+                    <ion-icon class="icon" name="add-outline"></ion-icon>New
+                  </a>
+                  <a href="#" class="link export__btn">
+                    <ion-icon class="icon" name="download-outline"></ion-icon>Export
+                  </a>
                 </div>
                 <div class="dataWrapper">
                   <table id="leaveSetupTable" class="display">
@@ -527,6 +527,170 @@
         </div>
       </div>
     </main>
+    <!-- change job title-->
+    <div class="modal-overlay" id="departmentModal">
+        <div class="modal">
+          <div class="modal__heading">
+            <div class="heading__modal__box">
+              <h2 class="heading__modal">Add Department/Branch</h2>
+              <p class="subheading__modal">New Department/Branch</p>
+            </div>
+            <div class="close__box"><ion-icon onclick="closeModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+            </div>
+            <form method="POST" class="form__modal" id="frmDepartment">
+              @csrf
+              <div class="input__form__modal__box">
+                <div class="input__box">
+                  <select class="information__input" name="office" id="office">
+                    <option value="" disabled selected>
+                      Select Office
+                    </option>
+                    <?php foreach($office as $row): ?>
+                      <option value="<?php echo $row['officeID'] ?>"><?php echo $row['officeName'] ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                  <span class="input__title">Office</span>
+                  <div id="office-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter Department or Branch"
+                    name="department"
+                  />
+                  <span class="input__title">Department/Branch</span>
+                  <div id="department-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter Department Number"
+                    name="department_number"
+                  />
+                  <span class="input__title">Contact Number</span>
+                  <div id="department_number-error" class="error-message text-danger"></div>
+                </div>
+              </div>
+              <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+            </form>
+        </div>
+    </div>
+    <!-- add leave credit-->
+    <div class="modal-overlay" id="creditModal">
+        <div class="modal">
+          <div class="modal__heading">
+            <div class="heading__modal__box">
+              <h2 class="heading__modal">Add Leave Credits</h2>
+              <p class="subheading__modal">Leave Credit Setup</p>
+            </div>
+            <div class="close__box"><ion-icon onclick="closeCreditModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+            </div>
+            <form method="POST" class="form__modal" id="frmCredit">
+              @csrf
+              <div class="input__form__modal__box">
+                <div class="input__box">
+                  <select class="information__input" name="month">
+                    <option value="" disabled selected>
+                      Select Month
+                    </option>
+                    <option>January</option>
+                    <option>February</option>
+                    <option>March</option>
+                    <option>April</option>
+                    <option>May</option>
+                    <option>June</option>
+                    <option>July</option>
+                    <option>August</option>
+                    <option>September</option>
+                    <option>October</option>
+                    <option>November</option>
+                    <option>December</option>
+                  </select>
+                  <span class="input__title">Month</span>
+                  <div id="month-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input type="number"
+                    class="information__input"
+                    placeholder="Enter Vacation"
+                    name="vacation"
+                  />
+                  <span class="input__title">Vacation Credit</span>
+                  <div id="vacation-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input type="number"
+                    class="information__input"
+                    placeholder="Enter Sick"
+                    name="sick"
+                  />
+                  <span class="input__title">Sick Credit</span>
+                  <div id="sick-error" class="error-message text-danger"></div>
+                </div>
+              </div>
+              <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+            </form>
+        </div>
+    </div>
+    <!-- add schedule-->
+    <div class="modal-overlay" id="scheduleModal">
+        <div class="modal">
+          <div class="modal__heading">
+            <div class="heading__modal__box">
+              <h2 class="heading__modal">Add Schedule</h2>
+              <p class="subheading__modal">New Schedule</p>
+            </div>
+            <div class="close__box"><ion-icon onclick="closeScheduleModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+            </div>
+            <form method="POST" class="form__modal" id="frmSchedule">
+              @csrf
+              <div class="input__form__modal__box">
+                <div class="input__box">
+                  <select class="information__input" name="type_schedule">
+                    <option value="" disabled selected>
+                      Select Type
+                    </option>
+                    <option>Default</option>
+                    <option>Modified</option>
+                  </select>
+                  <span class="input__title">Type of Schedule</span>
+                  <div id="type_schedule-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input type="time"
+                    class="information__input"
+                    placeholder="Enter Time"
+                    name="from_time"
+                  />
+                  <span class="input__title">From</span>
+                  <div id="from_time-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input type="time"
+                    class="information__input"
+                    placeholder="Enter Time"
+                    name="to_time"
+                  />
+                  <span class="input__title">To</span>
+                  <div id="to_time-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <select class="information__input" name="break_time">
+                    <option value="" disabled selected>
+                      Select
+                    </option>
+                    <option>11:00:00 am - 12:00:00 pm</option>
+                    <option>12:00:00 pm - 01:00:00 pm</option>
+                    <option>01:00:00 pm - 02:00:00 pm</option>
+                  </select>
+                  <span class="input__title">Break Time</span>
+                  <div id="break_time-error" class="error-message text-danger"></div>
+                </div>
+              </div>
+              <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+            </form>
+        </div>
+    </div>
     <footer class="footer">
       <p class="copyright">&copy;{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }} <?php echo date('Y') ?>. All Rights Reserved.</p>
     </footer>
@@ -699,9 +863,88 @@
           });
         }
       });
+
+      $('#frmDepartment').on('submit',function(e)
+      {
+        e.preventDefault();
+        $('.error-message').html('');
+        var data = $(this).serialize();
+        $.ajax({
+            url:"{{route('add-department')}}",method: 'POST',
+            data: data,
+            success: function(response) 
+            {
+              if(response.success)
+              {
+                  window.location.reload();
+              }
+              else{
+                var errors = response.errors;
+                // Iterate over each error and display it under the corresponding input field
+                for (var field in errors) {
+                    $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
+                    $('#' + field).addClass('input-error'); // Highlight the input field with an error
+                }
+              }
+            }
+        });
+      });
+
+      $('#frmCredit').on('submit',function(e)
+      {
+        e.preventDefault();
+        $('.error-message').html('');
+        var data = $(this).serialize();
+        $.ajax({
+            url:"{{route('add-credit-leave')}}",method: 'POST',
+            data: data,
+            success: function(response) 
+            {
+              if(response.success)
+              {
+                  window.location.reload();
+              }
+              else
+              {
+                  var errors = response.errors;
+                  // Iterate over each error and display it under the corresponding input field
+                  for (var field in errors) {
+                      $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
+                      $('#' + field).addClass('input-error'); // Highlight the input field with an error
+                  }
+              }
+            }
+        });
+      });
+
+      $('#frmSchedule').on('submit',function(e)
+      {
+        e.preventDefault();
+        $('.error-message').html('');
+        var data = $(this).serialize();
+        $.ajax({
+            url:"{{route('add-schedule')}}",method: 'POST',
+            data: data,
+            success: function(response) 
+            {
+              if(response.success)
+              {
+                  window.location.reload();
+              }
+              else
+              {
+                  var errors = response.errors;
+                  // Iterate over each error and display it under the corresponding input field
+                  for (var field in errors) {
+                      $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
+                      $('#' + field).addClass('input-error'); // Highlight the input field with an error
+                  }
+              }
+            }
+        });
+      });
     </script>
     <script src="/assets/js/settings.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

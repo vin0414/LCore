@@ -57,6 +57,10 @@ Route::post('save',[SettingController::class,'saveLogo'])->name('save');
 Route::post('reset-password',[SettingController::class,'resetPassword'])->name('reset-password');
 Route::post('add-account',[SettingController::class,'addAccount'])->name('add-account');
 Route::post('save-account',[SettingController::class,'saveAccount'])->name('save-account');
+///ajax
+Route::post('add-department',[SettingController::class,'addDepartment'])->name('add-department');
+Route::post('add-credit-leave',[SettingController::class,'addCreditLeave'])->name('add-credit-leave');
+Route::post('add-schedule',[SettingController::class,'addSchedule'])->name('add-schedule');
 
 Route::middleware('auth:user')->group(function () {
     //navigations
