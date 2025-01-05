@@ -428,7 +428,7 @@
             $months = $interval->m;
             $days = $interval->d;
 
-            //compute the 
+            //compute the age
             $dobDate = new DateTime($employee['dob']);
             $today = new DateTime('today');
             $age = $dobDate->diff($today)->y;

@@ -530,6 +530,7 @@
                   <th>Email Address</th>
                   <th>Permanent Address</th>
                   <th>Birthday</th>
+                  <th>Age</th>
                   <th>Gender</th>
                   <th>Civil Status</th>
                   <th>Educational Attainment</th>
@@ -538,6 +539,11 @@
               </thead>
               <tbody>
                 <?php foreach($employee as $row): ?>
+                  <?php
+                  $dobDate = new DateTime($row['dob']);
+                  $today = new DateTime('today');
+                  $age = $dobDate->diff($today)->y;
+                  ?>
                   <tr>
                     <td>
                       <?php echo $row['surName'] ?> <?php echo $row['suffix'] ?>,&nbsp;<?php echo $row['firstName'] ?> <?php echo $row['middleName'] ?><br/>
@@ -547,6 +553,7 @@
                     <td><?php echo $row['emailAddress'] ?></td>
                     <td><?php echo $row['address'] ?></td>
                     <td><?php echo $row['dob'] ?></td>
+                    <td><?php echo $age ?></td>
                     <td><?php echo $row['gender'] ?></td>
                     <td><?php echo $row['civilStatus'] ?></td>
                     <td><?php echo $row['education'] ?></td>
