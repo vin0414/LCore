@@ -702,7 +702,57 @@ class EmployeeController extends Controller
 
     public function employeeDemotion(Request $request)
     {
-        
+        date_default_timezone_set('Asia/Manila');
+        $employeeModel = new \App\Models\employeeModel();
+        $recordModel = new \App\Models\recordModel();
+        $designationModel = new \App\Models\designationModel();
+        $newDate = date('Y-m-d');
+        //data
+        $validator = Validator::make($request->all(),[
+            'new_job_title'=>'required',
+            'new_rate'=>'required',
+            'attachments'=>'required|file|max:10240'
+        ]);
+
+        if ($validator->fails()) {
+            // Return validation errors as JSON
+            return response()->json(['errors' => $validator->errors()]);
+        }
+        else
+        {
+            $cost = str_replace(",", "", $request->new_rate);
+            $file = $request->file('attachments');$filename="";
+            if ($request->hasFile('attachments') && $request->file('attachments')->isValid()) 
+            {
+                $filename = date('Ymdhis').$file->getClientOriginalName();
+                // Define the path where the image should be saved
+                $file->move('attachment/',$filename);
+            }
+            //get the job level
+            $job = $designationModel->WHERE('jobTitle',$request->new_job_title)->first();
+            //get the companyID
+            $employee = $employeeModel->WHERE('employeeID',$request->employeeID)->first();
+            //change the job title and level
+            $employeeModel::where('employeeID',$request->employeeID)
+                ->update(['designation'=>$request->new_job_title,'jobLevel'=>$job['jobLevel'],'salaryRate'=>$cost]);
+            //get the recent record of an employee
+            $record = $recordModel->WHERE('employeeID',$request->employeeID)->orderBy('recordID', 'desc')->first();
+            //update the record of the employee
+            $recordModel::where('recordID',$record['recordID'])
+                ->update(['end_date'=>$newDate]);
+            //add records in employee movement
+            $newData = ['employeeID'=>$record['employeeID'],'dateHired'=>$newDate,'Designation'=>$request->new_job_title,
+                        'officeID'=>$record['officeID'],'departmentID'=>$record['departmentID'],
+                        'employmentStatus'=>$record['employmentStatus'],'end_date'=>'0000-00-00',
+                        'cost'=>$cost,'Remarks'=>'Demoted','Attachment'=>$filename];
+            $recordModel->create($newData);
+            //create log record
+            $logModel = new \App\Models\logModel();
+            $date = date('Y-m-d h:i:s a');
+            $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Employee : '.$employee['companyID'].' is demoted to '.$request->job_title];
+            $logModel->create($data);
+            return response()->json(['success' => 'Successfully applied']);
+        }
     }
 
     public function changeSchedule(Request $request)
@@ -776,8 +826,8 @@ class EmployeeController extends Controller
         else
         {
             $cost = str_replace(",", "", $request->rate);
-            $file = $request->file('file');$filename="";
-            if ($request->hasFile('file') && $request->file('file')->isValid()) 
+            $file = $request->file('attachment');$filename="";
+            if ($request->hasFile('attachment') && $request->file('attachment')->isValid()) 
             {
                 $filename = date('Ymdhis').$file->getClientOriginalName();
                 // Define the path where the image should be saved

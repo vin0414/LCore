@@ -73,3 +73,18 @@ function closeSalaryModal() {
     $('#salaryModal').css('display', 'none');
     $('body').removeClass('no-scroll');  
 }
+
+$(document).on('click','.demote',function(){
+    var confirmation = confirm("Do you want to demote this employee?");
+    if(confirmation)
+    {
+        $('#demoteModal').css('display', 'flex');
+        $('#employeeDemoteID').attr("value",$(this).val());
+        $('body').addClass('no-scroll');
+    }
+});
+
+function closeDemoteModal() {
+    $('#demoteModal').css('display', 'none');
+    $('body').removeClass('no-scroll');  
+}

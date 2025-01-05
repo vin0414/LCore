@@ -301,6 +301,55 @@
             </form>
         </div>
       </div>
+      <!-- demoted -->
+      <div class="modal-overlay" id="demoteModal">
+        <div class="modal">
+          <div class="modal__heading">
+            <div class="heading__modal__box">
+              <h2 class="heading__modal">Demotion</h2>
+              <p class="subheading__modal">Employee Demotion</p>
+            </div>
+            <div class="close__box"><ion-icon onclick="closeDemoteModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+            </div>
+            <form method="POST" class="form__modal" enctype="multipart/form-data" id="frmdemote">
+              @csrf
+              <input type="hidden" name="employeeID" id="employeeDemoteID"/>
+              <div class="input__form__modal__box">
+                <div class="input__box">
+                  <select class="information__input" name="new_job_title">
+                    <option value="" disabled selected>
+                      Select Job Title
+                    </option>
+                    <?php foreach($job as $row): ?>
+                      <option value="<?php echo $row['jobTitle'] ?>"><?php echo $row['jobTitle'] ?> - <small><?php echo $row['jobLevel'] ?></small></option>
+                    <?php endforeach; ?>
+                  </select>
+                  <span class="input__title">Job Title</span>
+                  <div id="new_job_title-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter compensation"
+                    name="new_rate"
+                  />
+                  <span class="input__title">New Rate</span>
+                  <div id="new_rate-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input type="file"
+                    class="information__input"
+                    placeholder="Attach document"
+                    name="attachments"
+                  />
+                  <span class="input__title">Attachment</span>
+                  <div id="attachments-error" class="error-message text-danger"></div>
+                </div>
+              </div>
+              <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+            </form>
+        </div>
+      </div>
       <!-- salary -->
       <div class="modal-overlay" id="salaryModal">
         <div class="modal">
@@ -739,6 +788,32 @@
               if(response.success)
               {
                   closePromoteModal();
+              }
+              else
+              {
+                  var errors = response.errors;
+                  // Iterate over each error and display it under the corresponding input field
+                  for (var field in errors) {
+                      $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
+                      $('#' + field).addClass('input-error'); // Highlight the input field with an error
+                  }
+              }
+            }
+        });
+      });
+
+      $('#frmdemote').on('submit',function(e)
+      {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+            url:"{{route('demote')}}",method: 'POST',data: formData,
+            processData: false,contentType: false,
+            success: function(response) 
+            {
+              if(response.success)
+              {
+                  closeDemoteModal();
               }
               else
               {
