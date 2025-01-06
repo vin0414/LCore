@@ -108,27 +108,16 @@
             />
             <p id="userName" class="user__name name__screen__lg"><?php echo session('fullname') ?></p>
             <div class="account__dropdown">
-              <p
-                class="user__name name__screen__sm flex flex__align__center gap__1">
+              <a href="javascript:void(0);" class="no-underline user__name name__screen__sm flex flex__align__center gap__1">
                 <ion-icon name="person-outline"></ion-icon><?php echo session('fullname') ?>
-              </p>
-              <p
-                class="user__name name__screen__sm flex flex__align__center gap__1"
-              >
+              </a>
+              <a href="{{route('hr/account')}}" class="no-underline user__name name__screen__sm flex flex__align__center gap__1">
                 <ion-icon
                   class="sidebar__icon"
-                  name="settings-outline"
-                ></ion-icon
-                >Account Settings
-              </p>
-              <p
-                class="user__name name__screen__sm flex flex__align__center gap__1"
-              >
-                <ion-icon
-                  class="sidebar__icon"
-                  name="settings-outline"
-                ></ion-icon
-                >Settings
+                  name="settings-outline"></ion-icon>Account Settings
+              </a>
+              <p class="user__name name__screen__sm flex flex__align__center gap__1">
+                <ion-icon class="sidebar__icon" name="invert-mode-outline"></ion-icon>Mode
               </p>
               <hr />
               <a href="{{route('logout')}}" onclick="return confirm('Do you want to sign out?')" class="link__account flex flex__align__center gap__1"

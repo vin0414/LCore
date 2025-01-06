@@ -14,7 +14,7 @@ class SettingController extends Controller
         date_default_timezone_set('Asia/Manila');
         $aboutModel = new \App\Models\aboutModel();
         $request->validate([
-            'title'=>'required',
+            'title'=>'required|max:50',
             'keywords'=>'required',
             'description'=>'required'
         ]);
