@@ -415,9 +415,9 @@
                       <td><?php echo $row->departmentNumber ?></td>
                       <td><?php echo $row->created_at ?></td>
                       <td>
-                        <a href="" class="select__item form__button">
+                        <button type="button" value="<?php echo $row->departmentID ?>" class="select__item form__button edit_department">
                           <ion-icon class="select__icon" name="repeat-outline"></ion-icon>Edit
-                        </a>
+                        </button>
                       </td>
                     </tr>
                     <?php endforeach; ?>
@@ -452,16 +452,21 @@
                     </thead>
                     <tbody>
                     <?php foreach($schedule as $row):?>
+                      <?php
+                      list($startTime, $endTime) = explode(' - ', $row['hours']);
+                      $startFormatted = date('h:i A', strtotime($startTime));
+                      $endFormatted = date('h:i A', strtotime($endTime));
+                      ?>
                       <tr>
                         <td><?php echo $row['scheduleID'] ?></td>
                         <td><?php echo $row['scheduleType'] ?></td>
-                        <td><?php echo $row['hours'] ?></td>
+                        <td><?php echo $startFormatted . " - " . $endFormatted ?></td>
                         <td><?php echo $row['breakTime'] ?></td>
                         <td><?php echo $row['Notes'] ?></td>
                         <td>
-                          <a href="" class="select__item form__button">
+                          <button type="button" value="<?php echo $row['scheduleID'] ?>" class="select__item form__button edit_schedule">
                             <ion-icon class="select__icon" name="repeat-outline"></ion-icon>Edit
-                          </a>
+                          </button>
                         </td>
                       </tr>
                     <?php endforeach;?>
@@ -485,8 +490,10 @@
                     <thead>
                         <th>#</th>
                         <th class="w-200">Month</th>
-                        <th class="w-150">Vacation</th>
-                        <th class="w-150">Sick</th>
+                        <th class="w-100">Vacation</th>
+                        <th class="w-100">Sick</th>
+                        <th>Created at</th>
+                        <th>Updated at</th>
                         <th class="w-50">Action</th>
                     </thead>
                     <tbody>
@@ -496,10 +503,12 @@
                         <td><?php echo $row['Month'] ?></td>
                         <td><?php echo $row['Vacation'] ?></td>
                         <td><?php echo $row['Sick'] ?></td>
+                        <td><?php echo $row['created_at'] ?></td>
+                        <td><?php echo $row['updated_at'] ?></td>
                         <td>
-                          <a href="" class="select__item form__button">
+                          <button type="button" value="<?php echo $row['setupID'] ?>" class="select__item form__button edit_credit">
                             <ion-icon class="select__icon" name="repeat-outline"></ion-icon>Edit
-                          </a>
+                          </button>
                         </td>
                       </tr>
                     <?php endforeach; ?>
@@ -516,7 +525,7 @@
         </div>
       </div>
     </main>
-    <!-- change job title-->
+    <!-- add department-->
     <div class="modal-overlay" id="departmentModal">
         <div class="modal">
           <div class="modal__heading">
@@ -551,7 +560,7 @@
                   <div id="department-error" class="error-message text-danger"></div>
                 </div>
                 <div class="input__box">
-                  <input
+                  <input type="number"
                     class="information__input"
                     placeholder="Enter Department Number"
                     name="department_number"
@@ -562,6 +571,19 @@
               </div>
               <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
             </form>
+        </div>
+    </div>
+    <!-- edit department-->
+    <div class="modal-overlay" id="edit_departmentModal">
+        <div class="modal">
+          <div class="modal__heading">
+            <div class="heading__modal__box">
+              <h2 class="heading__modal">Department/Branch</h2>
+              <p class="subheading__modal">Edit Department/Branch</p>
+            </div>
+            <div class="close__box"><ion-icon onclick="closeEditModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+            </div>
+            <div id="departmentResult"></div>
         </div>
     </div>
     <!-- add leave credit-->
@@ -621,6 +643,19 @@
             </form>
         </div>
     </div>
+    <!-- edit department-->
+    <div class="modal-overlay" id="edit_creditModal">
+        <div class="modal">
+          <div class="modal__heading">
+            <div class="heading__modal__box">
+              <h2 class="heading__modal">Leave Credits</h2>
+              <p class="subheading__modal">Edit Leave Credits</p>
+            </div>
+            <div class="close__box"><ion-icon onclick="closeEditCreditModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+            </div>
+            <div id="creditResult"></div>
+        </div>
+    </div>
     <!-- add schedule-->
     <div class="modal-overlay" id="scheduleModal">
         <div class="modal">
@@ -668,9 +703,9 @@
                     <option value="" disabled selected>
                       Select
                     </option>
-                    <option>11:00:00 am - 12:00:00 pm</option>
-                    <option>12:00:00 pm - 01:00:00 pm</option>
-                    <option>01:00:00 pm - 02:00:00 pm</option>
+                    <option>11:00 AM - 12:00 PM</option>
+                    <option>12:00 PM - 01:00 PM</option>
+                    <option>01:00 PM - 02:00 PM</option>
                   </select>
                   <span class="input__title">Break Time</span>
                   <div id="break_time-error" class="error-message text-danger"></div>
@@ -678,6 +713,19 @@
               </div>
               <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
             </form>
+        </div>
+    </div>
+    <!-- edit schedule-->
+    <div class="modal-overlay" id="edit_scheduleModal">
+        <div class="modal">
+          <div class="modal__heading">
+            <div class="heading__modal__box">
+              <h2 class="heading__modal">Schedule</h2>
+              <p class="subheading__modal">Edit Schedule</p>
+            </div>
+            <div class="close__box"><ion-icon onclick="closeEditScheduleModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+            </div>
+            <div id="scheduleResult"></div>
         </div>
     </div>
     <footer class="footer">
@@ -879,6 +927,43 @@
         });
       });
 
+      $(document).on('click','.edit_department',function()
+      {
+        $.ajax({
+          url:"{{route('edit-department')}}",method:"GET",
+          data:{value:$(this).val()},
+          success:function(response)
+          {
+            $('#edit_departmentModal').css('display', 'flex');
+            $('body').addClass('no-scroll');
+            $('#departmentResult').html(response);
+          }
+        }); 
+      });
+
+      $(document).on('click','.submitDeptForm',function(e){
+        e.preventDefault();
+        $('.error-message').html('');
+        var formData = $('#frmEditDepartment').serialize();
+        $.ajax({
+          url:"{{route('update-department')}}",method:"POST",
+          data:formData,success:function(response)
+          {
+            if(response.success)
+            {
+              window.location.reload();
+            }else{
+                var errors = response.errors;
+                // Iterate over each error and display it under the corresponding input field
+                for (var field in errors) {
+                    $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
+                    $('#' + field).addClass('input-error'); // Highlight the input field with an error
+                }
+            }
+          }
+        });
+      });
+
       $('#frmCredit').on('submit',function(e)
       {
         e.preventDefault();
@@ -906,6 +991,43 @@
         });
       });
 
+      $(document).on('click','.submitCreditForm',function(e){
+        e.preventDefault();
+        $('.error-message').html('');
+        var formData = $('#frmEditCredit').serialize();
+        $.ajax({
+          url:"{{route('update-credit-leave')}}",method:"POST",
+          data:formData,success:function(response)
+          {
+            if(response.success)
+            {
+              window.location.reload();
+            }else{
+                var errors = response.errors;
+                // Iterate over each error and display it under the corresponding input field
+                for (var field in errors) {
+                    $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
+                    $('#' + field).addClass('input-error'); // Highlight the input field with an error
+                }
+            }
+          }
+        });
+      });
+
+      $(document).on('click','.edit_credit',function()
+      {
+        $.ajax({
+          url:"{{route('edit-credit-leave')}}",method:"GET",
+          data:{value:$(this).val()},
+          success:function(response)
+          {
+            $('#edit_creditModal').css('display', 'flex');
+            $('body').addClass('no-scroll');
+            $('#creditResult').html(response);
+          }
+        }); 
+      });
+
       $('#frmSchedule').on('submit',function(e)
       {
         e.preventDefault();
@@ -930,6 +1052,43 @@
                   }
               }
             }
+        });
+      });
+
+      $(document).on('click','.edit_schedule',function()
+      {
+        $.ajax({
+          url:"{{route('edit-schedule')}}",method:"GET",
+          data:{value:$(this).val()},
+          success:function(response)
+          {
+            $('#edit_scheduleModal').css('display', 'flex');
+            $('body').addClass('no-scroll');
+            $('#scheduleResult').html(response);
+          }
+        }); 
+      });
+
+      $(document).on('click','.submitScheduleForm',function(e){
+        e.preventDefault();
+        $('.error-message').html('');
+        var formData = $('#frmEditSchedule').serialize();
+        $.ajax({
+          url:"{{route('update-schedule')}}",method:"POST",
+          data:formData,success:function(response)
+          {
+            if(response.success)
+            {
+              window.location.reload();
+            }else{
+                var errors = response.errors;
+                // Iterate over each error and display it under the corresponding input field
+                for (var field in errors) {
+                    $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
+                    $('#' + field).addClass('input-error'); // Highlight the input field with an error
+                }
+            }
+          }
         });
       });
     </script>

@@ -152,6 +152,69 @@ class SettingController extends Controller
         }
     }
 
+    public function editDepartment(Request $request)
+    {
+        $departmentModel = new \App\Models\departmentModel();
+        $deptID = $request->value;
+        $department = $departmentModel->WHERE('departmentID',$deptID)->first();
+        if($department)
+        {
+            ?>
+            <form method="POST" class="form__modal" id="frmEditDepartment">
+              <input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
+              <input type="hidden" name="departmentID" value="<?php echo $department['departmentID'] ?>"/>
+              <div class="input__form__modal__box">
+                <div class="input__box">
+                  <input
+                    class="information__input" value="<?php echo $department['departmentName'] ?>"
+                    placeholder="Enter Department or Branch"
+                    name="edit_department"
+                  />
+                  <span class="input__title">Department/Branch</span>
+                  <div id="edit_department-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input type="number"
+                    class="information__input"
+                    placeholder="Enter Department Number"
+                    name="edit_department_number" value="<?php echo $department['departmentNumber'] ?>"
+                  />
+                  <span class="input__title">Contact Number</span>
+                  <div id="edit_department_number-error" class="error-message text-danger"></div>
+                </div>
+              </div>
+              <button type="submit" class="btn__submit__modal submitDeptForm"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+            </form>
+            <?php
+        }
+    }
+
+    public function updateDepartment(Request $request)
+    {
+        date_default_timezone_set('Asia/Manila');
+        $departmentModel = new \App\Models\departmentModel();
+        $validator = Validator::make($request->all(),[
+            'edit_department'=>'required',
+            'edit_department_number'=>'required'
+        ]);
+
+        if ($validator->fails()) {
+            // Return validation errors as JSON
+            return response()->json(['errors' => $validator->errors()]);
+        }
+        else
+        {
+            $departmentModel::WHERE('departmentID',$request->departmentID)
+                            ->UPDATE(['departmentName'=>$request->edit_department,'departmentNumber'=>$request->edit_department_number]);
+            //create log record
+            $logModel = new \App\Models\logModel();
+            $date = date('Y-m-d h:i:s a');
+            $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Update department'];
+            $logModel->create($data);
+            return response()->json(['success' => 'Great! Successfully applied changes']);
+        }
+    }
+
     public function addCreditLeave(Request $request)
     {
         date_default_timezone_set('Asia/Manila');
@@ -175,6 +238,92 @@ class SettingController extends Controller
             $logModel = new \App\Models\logModel();
             $date = date('Y-m-d h:i:s a');
             $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Added new leave credits for '.$request->month];
+            $logModel->create($data);
+            return response()->json(['success' => 'Great! Successfully saved']);
+        }
+    }
+
+    public function editCreditLeave(Request $request)
+    {
+        $leaveSetupModel = new \App\Models\leaveSetupModel();
+        $leave = $leaveSetupModel->WHERE('setupID',$request->value)->first();
+        if($leave)
+        {
+            ?>
+            <form method="POST" class="form__modal" id="frmEditCredit">
+              <input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
+              <input type="hidden" name="creditID" value="<?php echo $leave['setupID'] ?>"/>
+              <div class="input__form__modal__box">
+                <div class="input__box">
+                  <select class="information__input" name="edit_month">
+                    <option value="" disabled selected>
+                      Select Month
+                    </option>
+                    <option <?php echo ($leave['Month'] == 'January') ? 'selected' : ''; ?>>January</option>
+                    <option <?php echo ($leave['Month'] == 'February') ? 'selected' : ''; ?>>February</option>
+                    <option <?php echo ($leave['Month'] == 'March') ? 'selected' : ''; ?>>March</option>
+                    <option <?php echo ($leave['Month'] == 'April') ? 'selected' : ''; ?>>April</option>
+                    <option <?php echo ($leave['Month'] == 'May') ? 'selected' : ''; ?>>May</option>
+                    <option <?php echo ($leave['Month'] == 'June') ? 'selected' : ''; ?>>June</option>
+                    <option <?php echo ($leave['Month'] == 'July') ? 'selected' : ''; ?>>July</option>
+                    <option <?php echo ($leave['Month'] == 'August') ? 'selected' : ''; ?>>August</option>
+                    <option <?php echo ($leave['Month'] == 'September') ? 'selected' : ''; ?>>September</option>
+                    <option <?php echo ($leave['Month'] == 'October') ? 'selected' : ''; ?>>October</option>
+                    <option <?php echo ($leave['Month'] == 'November') ? 'selected' : ''; ?>>November</option>
+                    <option <?php echo ($leave['Month'] == 'December') ? 'selected' : ''; ?>>December</option>
+                  </select>
+                  <span class="input__title">Month</span>
+                  <div id="edit_month-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input type="number"
+                    class="information__input"
+                    placeholder="Enter Vacation"
+                    name="edit_vacation" value="<?php echo $leave['Vacation'] ?>"
+                  />
+                  <span class="input__title">Vacation Credit</span>
+                  <div id="edit_vacation-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input type="number"
+                    class="information__input"
+                    placeholder="Enter Sick"
+                    name="edit_sick" value="<?php echo $leave['Sick'] ?>"
+                  />
+                  <span class="input__title">Sick Credit</span>
+                  <div id="edit_sick-error" class="error-message text-danger"></div>
+                </div>
+              </div>
+              <button type="submit" class="btn__submit__modal submitCreditForm"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+            </form>
+            <?php
+        }
+    }
+
+    public function updateCreditLeave(Request $request)
+    {
+        date_default_timezone_set('Asia/Manila');
+        $leaveSetupModel = new \App\Models\leaveSetupModel();
+        $validator = Validator::make($request->all(),[
+            'edit_month'=>'required',
+            'edit_vacation'=>'required',
+            'edit_sick'=>'required'
+        ]);
+
+        if ($validator->fails()) {
+            // Return validation errors as JSON
+            return response()->json(['errors' => $validator->errors()]);
+        }
+        else
+        {
+            $leaveSetupModel::where('setupID',$request->creditID)
+                            ->update(['Month'=>$request->edit_month, 
+                                'Vacation'=>$request->edit_vacation,
+                                'Sick'=>$request->edit_sick]);
+            //create log record
+            $logModel = new \App\Models\logModel();
+            $date = date('Y-m-d h:i:s a');
+            $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Update leave credits'];
             $logModel->create($data);
             return response()->json(['success' => 'Great! Successfully saved']);
         }
@@ -205,6 +354,98 @@ class SettingController extends Controller
             $logModel = new \App\Models\logModel();
             $date = date('Y-m-d h:i:s a');
             $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Added new schedule'];
+            $logModel->create($data);
+            return response()->json(['success' => 'Great! Successfully saved']);
+        }
+    }
+
+    public function editSchedule(Request $request)
+    {
+        $schedulerModel = new \App\Models\schedulerModel();
+        $schedule = $schedulerModel->WHERE('scheduleID',$request->value)->first();
+        if($schedule)
+        {
+            list($startTime, $endTime) = explode(' - ', $schedule['hours']);
+            $startFormatted = $startTime;
+            $endFormatted = $endTime;
+            ?>
+            <form method="POST" class="form__modal" id="frmEditSchedule">
+               <input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
+              <input type="hidden" name="scheduleID" value="<?php echo $schedule['scheduleID'] ?>"/>
+              <div class="input__form__modal__box">
+                <div class="input__box">
+                  <select class="information__input" name="edit_type_schedule">
+                    <option value="" disabled selected>
+                      Select Type
+                    </option>
+                    <option <?php echo ($schedule['scheduleType'] == 'Default') ? 'selected' : ''; ?>>Default</option>
+                    <option <?php echo ($schedule['scheduleType'] == 'Modified') ? 'selected' : ''; ?>>Modified</option>
+                  </select>
+                  <span class="input__title">Type of Schedule</span>
+                  <div id="edit_type_schedule-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input type="time"
+                    class="information__input"
+                    placeholder="Enter Time"
+                    name="edit_from_time" value="<?php echo $startFormatted ?>"
+                  />
+                  <span class="input__title">From</span>
+                  <div id="edit_from_time-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input type="time"
+                    class="information__input"
+                    placeholder="Enter Time"
+                    name="edit_to_time" value="<?php echo $endFormatted  ?>"
+                  />
+                  <span class="input__title">To</span>
+                  <div id="edit_to_time-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <select class="information__input" name="edit_break_time">
+                    <option value="" disabled selected>
+                      Select
+                    </option>
+                    <option <?php echo ($schedule['breakTime'] == '11:00 AM - 12:00 PM') ? 'selected' : ''; ?>>11:00 AM - 12:00 PM</option>
+                    <option <?php echo ($schedule['breakTime'] == '12:00 PM - 01:00 PM') ? 'selected' : ''; ?>>12:00 PM - 01:00 PM</option>
+                    <option <?php echo ($schedule['breakTime'] == '01:00 PM - 02:00 PM') ? 'selected' : ''; ?>>01:00 PM - 02:00 PM</option>
+                  </select>
+                  <span class="input__title">Break Time</span>
+                  <div id="edit_break_time-error" class="error-message text-danger"></div>
+                </div>
+              </div>
+              <button type="submit" class="btn__submit__modal submitScheduleForm"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+            </form>
+            <?php
+        }
+    }
+
+    public function updateSchedule(Request  $request)
+    {
+        date_default_timezone_set('Asia/Manila');
+        $schedulerModel = new \App\Models\schedulerModel();
+        //data
+        $validator = Validator::make($request->all(),[
+            'edit_type_schedule'=>'required',
+            'edit_from_time'=>'required',
+            'edit_to_time'=>'required',
+            'edit_break_time'=>'required'
+        ]);
+
+        if ($validator->fails()) {
+            // Return validation errors as JSON
+            return response()->json(['errors' => $validator->errors()]);
+        }
+        else
+        {
+            $mergeHour = $request->edit_from_time.' - '.$request->edit_to_time;
+            $schedulerModel::where('scheduleID',$request->scheduleID)
+                            ->update(['scheduleType'=>$request->edit_type_schedule,'hours'=>$mergeHour,'breakTime'=>$request->edit_break_time]);
+            //create log record
+            $logModel = new \App\Models\logModel();
+            $date = date('Y-m-d h:i:s a');
+            $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Update the schedule'];
             $logModel->create($data);
             return response()->json(['success' => 'Great! Successfully saved']);
         }
