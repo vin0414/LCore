@@ -24,6 +24,11 @@ $(document).on('click','.department',function(){
   $('body').addClass('no-scroll');
 });
 
+function closeEditModal() {
+  $('#edit_departmentModal').css('display', 'none');
+  $('body').removeClass('no-scroll');  
+}
+
 function closeModal() {
   $('#departmentModal').css('display', 'none');
   $('body').removeClass('no-scroll');  
@@ -39,6 +44,11 @@ function closeCreditModal() {
   $('body').removeClass('no-scroll');  
 }
 
+function closeEditCreditModal() {
+  $('#edit_creditModal').css('display', 'none');
+  $('body').removeClass('no-scroll');  
+}
+
 $(document).on('click','.schedule',function(){
   $('#scheduleModal').css('display', 'flex');
   $('body').addClass('no-scroll');
@@ -46,5 +56,10 @@ $(document).on('click','.schedule',function(){
 
 function closeScheduleModal() {
   $('#scheduleModal').css('display', 'none');
+  $('body').removeClass('no-scroll');  
+}
+
+function closeEditScheduleModal() {
+  $('#edit_scheduleModal').css('display', 'none');
   $('body').removeClass('no-scroll');  
 }

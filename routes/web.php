@@ -59,8 +59,14 @@ Route::post('add-account',[SettingController::class,'addAccount'])->name('add-ac
 Route::post('save-account',[SettingController::class,'saveAccount'])->name('save-account');
 ///ajax
 Route::post('add-department',[SettingController::class,'addDepartment'])->name('add-department');
+Route::get('edit-department',[SettingController::class,'editDepartment'])->name('edit-department');
+Route::post('update-department',[SettingController::class,'updateDepartment'])->name('update-department');
 Route::post('add-credit-leave',[SettingController::class,'addCreditLeave'])->name('add-credit-leave');
+Route::get('edit-credit-leave',[SettingController::class,'editCreditLeave'])->name('edit-credit-leave');
+Route::post('update-credit-leave',[SettingController::class,'updateCreditLeave'])->name('update-credit-leave');
 Route::post('add-schedule',[SettingController::class,'addSchedule'])->name('add-schedule');
+Route::get('edit-schedule',[SettingController::class,'editSchedule'])->name('edit-schedule');
+Route::post('update-schedule',[SettingController::class,'updateSchedule'])->name('update-schedule');
 
 Route::middleware('auth:user')->group(function () {
     //navigations
