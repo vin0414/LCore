@@ -737,9 +737,11 @@ textarea {
     gap: 1rem;
     font-size: 1.5rem;
     transition: all 0.5s ease;
-    padding: 0.5rem;
+    padding: 1rem;
     background-color: transparent;
     border: none;
+    border-radius: 1rem;
+    font-family: "poppins", sans-serif;
 }
 
 .logo__box {
@@ -953,4 +955,23 @@ body.no-scroll {
 .btn__upload:hover,
 .btn__upload:active {
     background-color: var(--btn-upload-hover-color);
+}
+
+.form__button {
+    background-color: var(--green-color-2);
+    padding: 1rem;
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    color: var(--white-color);
+    border-radius: 1rem;
+    font-size: 1.4rem;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ICONS ONLY */
+.form__icon {
+    width: 1.8rem;
+    height: 1.8rem;
 }

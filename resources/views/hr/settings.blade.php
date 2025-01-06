@@ -383,10 +383,10 @@
                       </button>
                       <div class="dropdown__select">
                         <a href="{{route('hr/edit-account',['Token'=>$row['Token']])}}" class="select__item">
-                          <ion-icon class="select__icon" name="create-outline"></ion-icon>Edit Account
+                          <ion-icon class="select__icon" name="repeat-outline"></ion-icon>Edit Account
                         </a>
                         <button type="button" value="<?php echo $row['Token'] ?>" class="select__item reset">
-                          <ion-icon class="select__icon" name="refresh-circle-outline"></ion-icon>Reset Password
+                          <ion-icon class="select__icon" name="refresh-outline"></ion-icon>Reset Password
                         </button>
                       </div>
                     </td>
@@ -426,7 +426,7 @@
                       <td><?php echo $row->departmentNumber ?></td>
                       <td><?php echo $row->created_at ?></td>
                       <td>
-                        <a href="" class="select__item">
+                        <a href="" class="select__item form__button">
                           <ion-icon class="select__icon" name="repeat-outline"></ion-icon>Edit
                         </a>
                       </td>
@@ -470,7 +470,7 @@
                         <td><?php echo $row['breakTime'] ?></td>
                         <td><?php echo $row['Notes'] ?></td>
                         <td>
-                          <a href="" class="select__item">
+                          <a href="" class="select__item form__button">
                             <ion-icon class="select__icon" name="repeat-outline"></ion-icon>Edit
                           </a>
                         </td>
