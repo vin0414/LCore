@@ -16,6 +16,8 @@
     --red-color: #f91c1c;
     --btn-return-color: #e3e3e3;
     --btn-return-hover-color: #c7c7c7;
+    --btn-upload-color: #b9d0fc;
+    --btn-upload-hover-color: #7fa6ef;
     /* Spacing */
     --gap-xsmall: 1rem;
     --gap-small: 2rem;
@@ -147,7 +149,7 @@ hr {
     border-radius: 1rem;
     position: absolute;
 
-    z-index: 1;
+    z-index: 2;
     right: 27rem;
     top: -2rem;
     transition: all 0.5s ease;
@@ -169,7 +171,6 @@ select:focus-visible {
 .notification__container.show {
     visibility: visible;
     opacity: 1;
-    z-index: 2;
     top: 10rem;
 }
 .notif__text__description {
@@ -734,7 +735,7 @@ textarea {
     display: flex;
     align-items: center;
     gap: 1rem;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     transition: all 0.5s ease;
     padding: 0.5rem;
     background-color: transparent;
@@ -930,4 +931,26 @@ body.no-scroll {
 .btn__return:hover,
 .btn__return:active {
     background-color: var(--btn-return-hover-color);
+}
+.btn__upload:link,
+.btn__upload:visited {
+    display: flex;
+    align-items: center;
+    border: none;
+    padding: 2rem 3rem;
+    border-radius: 1rem;
+    gap: 1rem;
+    background-color: var(--btn-upload-color);
+    font-family: "poppins", sans-serif;
+    font-weight: 500;
+    color: var(--black-color);
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: all 0.5s ease;
+    text-decoration: none;
+    z-index: 1;
+}
+.btn__upload:hover,
+.btn__upload:active {
+    background-color: var(--btn-upload-hover-color);
 }

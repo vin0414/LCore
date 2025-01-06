@@ -229,6 +229,7 @@ table.dataTable thead .sorting_desc:before {
     font-size: 1.4rem;
     transition: all 0.5s ease;
     padding: 0.5rem;
+    font-size: 1.5rem;
 }
 .select__item:hover,
 .btn__item:hover,
@@ -361,6 +362,10 @@ table.dataTable thead .sorting_desc:before {
         padding: 1rem 2rem;
     }
     .add__btn {
+        padding: 1rem 2rem;
+    }
+    .btn__upload:link,
+    .btn__upload:visited {
         padding: 1rem 2rem;
     }
     .button__box {
