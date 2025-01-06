@@ -117,7 +117,7 @@
                   name="settings-outline"></ion-icon>Account Settings
               </a>
               <p class="user__name name__screen__sm flex flex__align__center gap__1">
-                <ion-icon class="sidebar__icon" name="invert-mode-outline"></ion-icon>Mode
+                <ion-icon class="sidebar__icon" name="sunny-outline"></ion-icon>Mode
               </p>
               <hr />
               <a href="{{route('logout')}}" onclick="return confirm('Do you want to sign out?')" class="link__account flex flex__align__center gap__1"
