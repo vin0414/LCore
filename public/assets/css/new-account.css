@@ -8,6 +8,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 2fr;
     gap: 3rem;
+    margin-bottom: 3rem;
 }
 
 .input__boxes.grid.single__row {

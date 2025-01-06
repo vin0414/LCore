@@ -4,6 +4,7 @@ use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MemoController;
 use App\Http\Controllers\SettingController;
 
 /*
@@ -67,6 +68,8 @@ Route::post('update-credit-leave',[SettingController::class,'updateCreditLeave']
 Route::post('add-schedule',[SettingController::class,'addSchedule'])->name('add-schedule');
 Route::get('edit-schedule',[SettingController::class,'editSchedule'])->name('edit-schedule');
 Route::post('update-schedule',[SettingController::class,'updateSchedule'])->name('update-schedule');
+//memo
+Route::post('save-memo',[MemoController::class,'saveMemo'])->name('save-memo');
 
 Route::middleware('auth:user')->group(function () {
     //navigations

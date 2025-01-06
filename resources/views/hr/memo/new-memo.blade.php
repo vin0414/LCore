@@ -12,7 +12,7 @@
     />
     <link rel="stylesheet" href="/assets/css/reusables.css" />
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
-    <link rel="stylesheet" href="/assets/css/table.css" />
+    <link rel="stylesheet" href="/assets/css/new-account.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
     <link rel="icon" sizes="180x180" href="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : 'No Logo' }}"/>
   </head>
@@ -244,6 +244,70 @@
           <h1 class="heading__primary">{{$title}}</h1>
           <div class="breadcrumbs">
             <p class="pages">Memo | <span>{{$title}}</span></p>
+          </div>
+        </div>
+        <div class="card_container">
+          <div class="card">
+            <div class="card-header">
+              <div class="subheading">Create Memo</div>
+            </div>
+            <div class="card-body">
+              <form method="POST" id="frmMemo" enctype="multipart/form-data" action="{{route('save-memo')}}">
+                @csrf
+                <div class="input__boxes grid single__row">
+                  <div class="input__box">
+                    <input
+                      class="information__input" value="{{ old('subject') }}"
+                      placeholder="Enter subject" name="fullname"
+                    />
+                    <span class="input__title">Subject</span>
+                    @if ($errors->has('subject'))
+                      <p class="text-danger">{{$errors->first('subject')}}</p>
+                    @endif
+                  </div>
+                </div>
+                <div class="input__boxes grid second__row">
+                  <div class="input__box">
+                    <input type="date"
+                      class="information__input" value="{{ old('date') }}"
+                      placeholder="Enter date" name="date"
+                    />
+                    <span class="input__title">Date</span>
+                    @if ($errors->has('date'))
+                      <p class="text-danger">{{$errors->first('date')}}</p>
+                    @endif
+                  </div>
+                  <div class="input__box">
+                    <input type="date"
+                      class="information__input" value="{{ old('date') }}"
+                      placeholder="Enter date" name="date"
+                    />
+                    <span class="input__title">Date</span>
+                    @if ($errors->has('date'))
+                      <p class="text-danger">{{$errors->first('date')}}</p>
+                    @endif
+                  </div>
+                  <div class="input__box">
+                    <input type="date"
+                      class="information__input" value="{{ old('date') }}"
+                      placeholder="Enter date" name="date"
+                    />
+                    <span class="input__title">Date</span>
+                    @if ($errors->has('date'))
+                      <p class="text-danger">{{$errors->first('date')}}</p>
+                    @endif
+                  </div>
+                </div>
+                <div class="btn__box">
+                  <a href="{{route('hr/memo')}}" class="btn__return">
+                    <ion-icon class="icon__add" name="arrow-back-outline"></ion-icon> Return
+                  </a>
+                  <button class="btn__primary" type="submit">
+                    <ion-icon class="icon__add" name="save-outline"></ion-icon> Save
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
