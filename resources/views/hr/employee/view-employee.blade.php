@@ -779,39 +779,68 @@
                     <span class="input__title">Tax Identification Number</span>
                   </div>
                 </div>
-                <p class="profile__heading government__details">
-                  Employment History
-                </p>
-                <table class="responsive-table">
-                  <thead>
-                      <th class="w-275">Designation</th>
-                      <th>Company and Address</th>
-                      <th class="w-150">From</th>
-                      <th class="w-150">To</th>
-                      <th class="w-100">Action</th>
-                  </thead>
-                  <tbody id="tblhistory">
-      
-                  </tbody>
-                </table>
-                <p class="profile__heading government__details" style="margin-top:20px;">
-                  Certificates/Trainings
-                </p>
-                <table class="responsive-table">
-                  <thead>
-                      <th class="w-275">Title</th>
-                      <th>Venue</th>
-                      <th class="w-150">From</th>
-                      <th class="w-150">To</th>
-                      <th class="w-100">Action</th>
-                  </thead>
-                  <tbody id="tblcertificate">
-                  </tbody>
-                </table>
               </div>
             </div>
             <?php endif; ?>
           </form>
+        </div>
+        <div class="employee__card">
+          <form class="form__container">
+            <p class="profile__heading government__details">Employment History</p>
+            <table class="responsive-table">
+              <thead>
+                  <th class="w-275">Designation</th>
+                  <th>Company and Address</th>
+                  <th class="w-150">From</th>
+                  <th class="w-150">To</th>
+                  <th class="w-100">Action</th>
+              </thead>
+              <tbody id="tblhistory">
+              </tbody>
+            </table>
+          </form>
+        </div>
+        <div class="employee__card">
+          <form class="form__container">
+          <p class="profile__heading government__details">Certificates/Trainings</p>
+            <table class="responsive-table">
+              <thead>
+                  <th class="w-275">Title</th>
+                  <th>Venue</th>
+                  <th class="w-150">From</th>
+                  <th class="w-150">To</th>
+                  <th class="w-100">Action</th>
+              </thead>
+              <tbody id="tblcertificate">
+              </tbody>
+            </table>
+          </form>
+        </div>
+
+        <div class="employee__card history__card">
+          <form class="form__container pos__rel">
+          <p class="profile__heading government__details">Career Movement</p>
+          <div class="history__container">
+            <div class="history__box ">
+              <p class="history__date">January 2025</p>
+              <p class="history__description">Job Transfer - Area to Head Office</p>
+            </div>
+            <div class="history__box ">
+              <p class="history__date">November 2024</p>
+              <p class="history__description">Changed Job Title and Job Descsription</p>
+            </div>
+            <div class="history__box ">
+              <p class="history__date">May 2024</p>
+              <p class="history__description">Salary Increased 10%</p>
+            </div>
+            <div class="history__box ">
+              <p class="history__date">December 2023</p>
+              <p class="history__description">Promoted to Junior developer position</p>
+            </div>
+          </div>
+            <img class="pos__abs career__image" src="/assets/images/career__progression.png">
+          </form>
+
         </div>
       </div>
     </main>
