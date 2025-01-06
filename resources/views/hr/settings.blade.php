@@ -427,7 +427,7 @@
                       <td><?php echo $row->created_at ?></td>
                       <td>
                         <a href="" class="select__item">
-                          <ion-icon class="select__icon" name="create-outline"></ion-icon>Edit
+                          <ion-icon class="select__icon" name="repeat-outline"></ion-icon>Edit
                         </a>
                       </td>
                     </tr>
@@ -471,7 +471,7 @@
                         <td><?php echo $row['Notes'] ?></td>
                         <td>
                           <a href="" class="select__item">
-                            <ion-icon class="select__icon" name="create-outline"></ion-icon>Edit
+                            <ion-icon class="select__icon" name="repeat-outline"></ion-icon>Edit
                           </a>
                         </td>
                       </tr>
