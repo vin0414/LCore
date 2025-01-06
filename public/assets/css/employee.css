@@ -274,6 +274,53 @@ body.no-scroll {
 .input__form__modal__box .input__box textarea {
     height: 15rem;
 }
+
+.employee__card {
+    margin-bottom: 3rem;
+}
+.employee__card:last-child {
+    margin-bottom: 0;
+}
+/* History Box */
+.history__container {
+    /* margin: 0 auto; */
+}
+
+.history__box {
+    margin-bottom: 5rem;
+    display: flex;
+    gap: 5rem;
+    align-items: center;
+}
+/* .history__box::after {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 7rem;
+    background-color: var(--line-color);
+    right: 50%;
+    top: 7rem;
+} */
+
+.career__image {
+    width: 40rem;
+    height: 40rem;
+    right: 21rem;
+}
+
+.history__description {
+    font-size: 1.5rem;
+}
+
+.history__date {
+    padding: 2rem;
+    background-color: var(--green-color-2);
+    border-radius: 1rem;
+    font-weight: 600;
+    font-size: 1.5rem;
+    width: 20rem;
+    text-align: center;
+}
 /* 1272 */
 @media (max-width: 79.5em) {
     .grid__6cols__modified {
