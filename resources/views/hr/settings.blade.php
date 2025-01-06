@@ -508,8 +508,8 @@
                         <td><?php echo $row['Vacation'] ?></td>
                         <td><?php echo $row['Sick'] ?></td>
                         <td>
-                          <a href="" class="select__item">
-                            <ion-icon class="select__icon" name="create-outline"></ion-icon>Edit
+                          <a href="" class="select__item form__button">
+                            <ion-icon class="select__icon" name="repeat-outline"></ion-icon>Edit
                           </a>
                         </td>
                       </tr>
