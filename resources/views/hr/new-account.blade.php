@@ -262,7 +262,7 @@
       <div class="card_container">
         <div class="card">
           <div class="card-header">
-            <div class="card-title">Create Account</div>
+            <div class="subheading">Set Up Account</div>
           </div>
           <div class="card-body">
             <form method="POST" id="frmAccount" action="{{route('add-account')}}">
@@ -316,8 +316,8 @@
                   @endif
                 </div>
               </div>
-              <div class="input__boxes grid single__row">
-                <p class="text-small">System Role</p>
+              <div class="input__boxes grid single__row margin__top__3">
+                <p class="subheading margin__bottom__1">System Role</p>
                 <div class="radio-group">
                   <label>
                     <input type="radio" name="role" value="Admin"> Administrator
@@ -334,6 +334,9 @@
                   @endif
               </div>
               <div class="btn__box">
+                <a href="#" class="btn__return">
+                  <ion-icon class="icon__add" name="arrow-back-outline"></ion-icon> Return
+                </a>
                 <button class="btn__primary" type="submit">
                   <ion-icon class="icon__add" name="save-outline"></ion-icon> Create Account
                 </button>

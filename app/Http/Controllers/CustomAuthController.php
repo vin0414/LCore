@@ -16,7 +16,7 @@ class CustomAuthController extends Controller
         $date = date('Y-m-d h:i:s a');
         $request->validate([
             'username'=>'required|min:6|max:20',
-            'password'=>'required|min:8|regex:/[A-Z]/|regex:/[a-z]/|regex:/[0-9]/|regex:/[@$!%*?&]/'
+            // 'password'=>'required|min:8|regex:/[A-Z]/|regex:/[a-z]/|regex:/[0-9]/|regex:/[@$!%*?&]/'
         ]);
         $account = accountModel::where('Username', $request->username)->WHERE('Status',1)->first();
         if ($account && Hash::check($request->password, $account->Password))

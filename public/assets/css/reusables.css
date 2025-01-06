@@ -14,6 +14,8 @@
     --bg-color: #fbfbfd;
     --gray-text-color: #5a5a5a;
     --red-color: #f91c1c;
+    --btn-return-color: #e3e3e3;
+    --btn-return-hover-color: #c7c7c7;
     /* Spacing */
     --gap-xsmall: 1rem;
     --gap-small: 2rem;
@@ -441,7 +443,12 @@ select:focus-visible {
 }
 /* Spacing */
 /* ----- Margin ----- */
-
+.margin__top__3 {
+    margin-top: 3rem;
+}
+.margin__bottom__2 {
+    margin-bottom: 2rem;
+}
 .margin__bottom__3 {
     margin-bottom: 3rem;
 }
@@ -876,4 +883,51 @@ body.no-scroll {
 .badge-pill {
     border-radius: 50px; /* Rounded corners */
     padding: 0.3em 1em;
+}
+
+/* Buttons */
+/* For button elements */
+.btn__primary {
+    display: flex;
+    align-items: center;
+    border: none;
+    padding: 2rem 3rem;
+    border-radius: 1rem;
+    gap: 1rem;
+    background-color: var(--green-color-2);
+    font-family: "poppins", sans-serif;
+    font-weight: 500;
+    color: var(--black-color);
+    cursor: pointer;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    transition: all 0.5s ease;
+    text-decoration: none;
+}
+.btn__primary:hover {
+    background-color: var(--green-color);
+}
+/* For link elements */
+
+.btn__return:link,
+.btn__return:visited {
+    display: flex;
+    align-items: center;
+    border: none;
+    padding: 2rem 3rem;
+    border-radius: 1rem;
+    gap: 1rem;
+    background-color: var(--btn-return-color);
+    font-family: "poppins", sans-serif;
+    font-weight: 500;
+    color: var(--black-color);
+    cursor: pointer;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    transition: all 0.5s ease;
+    text-decoration: none;
+}
+.btn__return:hover,
+.btn__return:active {
+    background-color: var(--btn-return-hover-color);
 }
