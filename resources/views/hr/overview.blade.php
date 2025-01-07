@@ -191,12 +191,21 @@
         <p class="side_heading">Quick Links</p>
         <ul class="sidebar__items">
           <li>
-            <a href="{{route('hr/memo/new')}}" class="nav__links"
+            <a href="{{route('hr/employee/documents')}}" class="nav__links"
               ><ion-icon
                 class="sidebar__icon"
                 name="cloud-upload-outline"
               ></ion-icon
               >Upload Files</a
+            >
+          </li>
+          <li>
+            <a href="{{route('hr/memo/new')}}" class="nav__links"
+              ><ion-icon
+                class="sidebar__icon"
+                name="document-text-outline"
+              ></ion-icon
+              >Create Memo</a
             >
           </li>
           <li>

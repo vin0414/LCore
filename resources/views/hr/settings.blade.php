@@ -184,12 +184,21 @@
         <p class="side_heading">Quick Links</p>
         <ul class="sidebar__items">
           <li>
-            <a href="{{route('hr/memo/new')}}" class="nav__links"
+            <a href="{{route('hr/employee/documents')}}" class="nav__links"
               ><ion-icon
                 class="sidebar__icon"
                 name="cloud-upload-outline"
               ></ion-icon
               >Upload Files</a
+            >
+          </li>
+          <li>
+            <a href="{{route('hr/memo/new')}}" class="nav__links"
+              ><ion-icon
+                class="sidebar__icon"
+                name="document-text-outline"
+              ></ion-icon
+              >Create Memo</a
             >
           </li>
           <li>
@@ -417,7 +426,7 @@
                       <td><?php echo $row->Code ?></td>
                       <td><?php echo $row->created_at ?></td>
                       <td>
-                        <button type="button" value="<?php echo $row->departmentID ?>" class="select__item form__button edit_department">
+                        <button type="button" value="<?php echo $row->departmentID ?>" class="select__item form__button text-dark edit_department">
                           <ion-icon class="select__icon" name="repeat-outline"></ion-icon>Edit
                         </button>
                       </td>
@@ -466,7 +475,7 @@
                         <td><?php echo $row['breakTime'] ?></td>
                         <td><?php echo $row['Notes'] ?></td>
                         <td>
-                          <button type="button" value="<?php echo $row['scheduleID'] ?>" class="select__item form__button edit_schedule">
+                          <button type="button" value="<?php echo $row['scheduleID'] ?>" class="select__item form__button text-dark edit_schedule">
                             <ion-icon class="select__icon" name="repeat-outline"></ion-icon>Edit
                           </button>
                         </td>
@@ -508,7 +517,7 @@
                         <td><?php echo $row['created_at'] ?></td>
                         <td><?php echo $row['updated_at'] ?></td>
                         <td>
-                          <button type="button" value="<?php echo $row['setupID'] ?>" class="select__item form__button edit_credit">
+                          <button type="button" value="<?php echo $row['setupID'] ?>" class="select__item form__button text-dark edit_credit">
                             <ion-icon class="select__icon" name="repeat-outline"></ion-icon>Edit
                           </button>
                         </td>
