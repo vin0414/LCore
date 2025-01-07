@@ -4,6 +4,7 @@ use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MemoController;
 use App\Http\Controllers\SettingController;
 
 /*
@@ -38,9 +39,10 @@ Route::get('edit-certificate',[EmployeeController::class,'editCertificate'])->na
 Route::post('update-certificate',[EmployeeController::class,'updateCertificate'])->name('update-certificate');
 ///movement
 Route::post('change-job-title',[EmployeeController::class,'changeJobTitle'])->name('change-job-title');
+Route::post('new-assignment',[EmployeeController::class,'newAssignment'])->name('new-assignment');
 Route::post('job-transfer',[EmployeeController::class,'jobTransfer'])->name('job-transfer');
-Route::post('salary-adjustment',[EmployeeController::class,'salaryAdjustment'])->name('salary-adjustment');//not yet
-Route::post('demote',[EmployeeController::class,'employeeDemotion'])->name('demote');//not yet
+Route::post('salary-adjustment',[EmployeeController::class,'salaryAdjustment'])->name('salary-adjustment');
+Route::post('demote',[EmployeeController::class,'employeeDemotion'])->name('demote');
 Route::post('change-schedule',[EmployeeController::class,'changeSchedule'])->name('change-schedule');
 Route::post('promote',[EmployeeController::class,'employeePromotion'])->name('promote');
 Route::post('resign',[EmployeeController::class,'employeeResign'])->name('resign');
@@ -67,6 +69,8 @@ Route::post('update-credit-leave',[SettingController::class,'updateCreditLeave']
 Route::post('add-schedule',[SettingController::class,'addSchedule'])->name('add-schedule');
 Route::get('edit-schedule',[SettingController::class,'editSchedule'])->name('edit-schedule');
 Route::post('update-schedule',[SettingController::class,'updateSchedule'])->name('update-schedule');
+//memo
+Route::post('save-memo',[MemoController::class,'saveMemo'])->name('save-memo');
 
 Route::middleware('auth:user')->group(function () {
     //navigations
@@ -100,6 +104,6 @@ Route::middleware('auth:user')->group(function () {
     Route::get('hr/employee/movement',[HomeController::class,'employeeMovement'])->name('hr/employee/movement');
     Route::get('hr/employee/documents',[HomeController::class,'employeeDocuments'])->name('hr/employee/documents');
     Route::get('hr/employee/directories',[HomeController::class,'employeeDirectories'])->name('hr/employee/directories');
-    Route::get('hr/employee/new-allowance',[HomeController::class,'newAllowance'])->name('hr/employee/new-allowance');
+    Route::get('hr/employee/re-assign/{companyID}',[HomeController::class,'reAssign'])->name('hr/employee/re-assign');
 });
 

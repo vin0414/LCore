@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -113,14 +114,11 @@ class HomeController extends Controller
         //load the office
         $officeModel = new \App\Models\officeModel();
         $office = $officeModel->all();
-        //schedule
-        $schedulerModel = new \App\Models\schedulerModel();
-        $schedule = $schedulerModel->all();
         //job
         $designationModel = new \App\Models\designationModel();
         $job = $designationModel->all();
 
-        $data = ['title'=>$title,'about'=>$about,'employee'=>$employee,'office'=>$office,'schedule'=>$schedule,'job'=>$job];
+        $data = ['title'=>$title,'about'=>$about,'employee'=>$employee,'office'=>$office,'job'=>$job];
         return view('hr/employee/index',$data);
     }
 
@@ -281,6 +279,11 @@ class HomeController extends Controller
         }
     }
 
+    public function reAssign(Request $request)
+    {
+
+    }
+
     //recovery, settings and audit trail
     public function recovery()
     {
@@ -315,7 +318,7 @@ class HomeController extends Controller
             //department
             $department = DB::table('tbldepartment as a')
                 ->leftJoin('tbloffice as b','b.officeID','=','a.officeID')
-                ->select('b.officeName','a.departmentID','a.departmentName','a.departmentNumber','a.created_at')->get();
+                ->select('b.officeName','a.departmentID','a.departmentName','a.departmentNumber','a.Code','a.created_at')->get();
             //scheduler
             $schedulerModel = new \App\Models\schedulerModel();
             $scheduler = $schedulerModel->all();
