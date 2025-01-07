@@ -13,35 +13,21 @@ function closeModal() {
     $('body').removeClass('no-scroll');  
 }
 
-$(document).on('click','.jobTransfer',function(){
+$(document).on('click','.newAssignment',function(){
     var confirmation = confirm("Do you want to transfer this employee?");
     if(confirmation)
     {
-        $('#jobTransferModal').css('display', 'flex');
+        $('#newAssignmentModal').css('display', 'flex');
         $('#employeeJobID').attr("value",$(this).val());
         $('body').addClass('no-scroll');
     }
 });
 
 function closeJobModal() {
-    $('#jobTransferModal').css('display', 'none');
+    $('#newAssignmentModal').css('display', 'none');
     $('body').removeClass('no-scroll');  
 }
 
-$(document).on('click','.changeSchedule',function(){
-    var confirmation = confirm("Do you want to change the schedule of this employee?");
-    if(confirmation)
-    {
-        $('#changeScheduleModal').css('display', 'flex');
-        $('#employeeScheduleID').attr("value",$(this).val());
-        $('body').addClass('no-scroll');
-    }
-});
-
-function closeScheduleModal() {
-    $('#changeScheduleModal').css('display', 'none');
-    $('body').removeClass('no-scroll');  
-}
 
 $(document).on('click','.promote',function(){
     var confirmation = confirm("Do you want to promote this employee?");

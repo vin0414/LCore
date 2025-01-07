@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -113,14 +114,11 @@ class HomeController extends Controller
         //load the office
         $officeModel = new \App\Models\officeModel();
         $office = $officeModel->all();
-        //schedule
-        $schedulerModel = new \App\Models\schedulerModel();
-        $schedule = $schedulerModel->all();
         //job
         $designationModel = new \App\Models\designationModel();
         $job = $designationModel->all();
 
-        $data = ['title'=>$title,'about'=>$about,'employee'=>$employee,'office'=>$office,'schedule'=>$schedule,'job'=>$job];
+        $data = ['title'=>$title,'about'=>$about,'employee'=>$employee,'office'=>$office,'job'=>$job];
         return view('hr/employee/index',$data);
     }
 
@@ -279,6 +277,11 @@ class HomeController extends Controller
         {
             return redirect('hr/overview');
         }
+    }
+
+    public function reAssign(Request $request)
+    {
+
     }
 
     //recovery, settings and audit trail

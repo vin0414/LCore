@@ -282,7 +282,7 @@
                       class="information__input" value="{{ old('reference') }}"
                       placeholder="Enter Reference" name="reference"
                     />
-                    <span class="input__title">Reference (Optional)</span>
+                    <span class="input__title">Reference</span>
                     @if ($errors->has('reference'))
                       <p class="text-danger">{{$errors->first('reference')}}</p>
                     @endif
@@ -301,26 +301,26 @@
                   </div>
                   <div class="input__box">
                     <input
-                      class="information__input" value="{{ old('from') }}"
-                      placeholder="Enter Sender" name="from"
+                      class="information__input" value="{{ old('sender') }}"
+                      placeholder="Enter Sender" name="sender"
                     />
                     <span class="input__title">Sender</span>
-                    @if ($errors->has('from'))
-                      <p class="text-danger">{{$errors->first('from')}}</p>
+                    @if ($errors->has('sender'))
+                      <p class="text-danger">{{$errors->first('sender')}}</p>
                     @endif
                   </div>
                   <div class="input__box">
                     <ion-icon class="pos__abs input__chev__down" name="chevron-down-outline"></ion-icon>
                     <select
-                        class="information__input" name="to" placeholder="Select">
+                        class="information__input" name="recipient" placeholder="Select">
                         <option value="" disabled selected>
                           Select
                         </option>
                         
                     </select>
                     <span class="input__title">Recipients</span>
-                    @if ($errors->has('to'))
-                      <p class="text-danger">{{$errors->first('to')}}</p>
+                    @if ($errors->has('recipient'))
+                      <p class="text-danger">{{$errors->first('recipient')}}</p>
                     @endif
                   </div>
                 </div>

@@ -264,8 +264,8 @@
                     <thead>
                         <th>Date</th>
                         <th>Subject</th>
-                        <th>From</th>
-                        <th>To</th>
+                        <th>Sender</th>
+                        <th>Recipient</th>
                         <th>File</th>
                         <th>Action</th>
                     </thead>
@@ -274,8 +274,8 @@
                     <tr>
                       <td>{{$row['Date']}}</td>
                       <td>{{$row['Subject']}}</td>
-                      <td>{{$row['From']}}</td>
-                      <td>{{$row['To']}}</td>
+                      <td>{{$row['Sender']}}</td>
+                      <td>{{$row['Recipient']}}</td>
                       <td><a href="/memo/{{$row['File']}}" class="no-underline" target="_BLANK">{{$row['File']}}</a></td>
                       <td class="pos__rel">
                         <button class="btn__select">

@@ -10,5 +10,5 @@ class designationModel extends Model
     use HasFactory;
     protected $table = "tbljob";
     protected $primaryKey = "jobID";
-    protected $fillable = ['jobTitle','jobLevel','accountID'];
+    protected $fillable = ['jobTitle','jobLevel','Responsibilities','accountID'];
 }

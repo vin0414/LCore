@@ -39,7 +39,7 @@ Route::get('edit-certificate',[EmployeeController::class,'editCertificate'])->na
 Route::post('update-certificate',[EmployeeController::class,'updateCertificate'])->name('update-certificate');
 ///movement
 Route::post('change-job-title',[EmployeeController::class,'changeJobTitle'])->name('change-job-title');
-Route::post('job-transfer',[EmployeeController::class,'jobTransfer'])->name('job-transfer');
+Route::post('new-assignment',[EmployeeController::class,'newAssignment'])->name('new-assignment');
 Route::post('salary-adjustment',[EmployeeController::class,'salaryAdjustment'])->name('salary-adjustment');//not yet
 Route::post('demote',[EmployeeController::class,'employeeDemotion'])->name('demote');//not yet
 Route::post('change-schedule',[EmployeeController::class,'changeSchedule'])->name('change-schedule');
@@ -103,6 +103,6 @@ Route::middleware('auth:user')->group(function () {
     Route::get('hr/employee/movement',[HomeController::class,'employeeMovement'])->name('hr/employee/movement');
     Route::get('hr/employee/documents',[HomeController::class,'employeeDocuments'])->name('hr/employee/documents');
     Route::get('hr/employee/directories',[HomeController::class,'employeeDirectories'])->name('hr/employee/directories');
-    Route::get('hr/employee/new-allowance',[HomeController::class,'newAllowance'])->name('hr/employee/new-allowance');
+    Route::get('hr/employee/re-assign/{companyID}',[HomeController::class,'reAssign'])->name('hr/employee/re-assign');
 });
 

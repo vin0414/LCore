@@ -160,7 +160,7 @@
           </div>
       </div>
       <!--Job Transfer -->
-      <div class="modal-overlay" id="jobTransferModal">
+      <div class="modal-overlay" id="newAssignmentModal">
         <div class="modal">
           <div class="modal__heading">
             <div class="heading__modal__box">
@@ -169,7 +169,7 @@
             </div>
             <div class="close__box"><ion-icon onclick="closeJobModal()" class="icon__modal" name="close-outline"></ion-icon></div>
             </div>
-            <form method="POST" class="form__modal" id="frmJobTransfer">
+            <form method="POST" class="form__modal" id="frmAssignment">
               @csrf
               <input type="hidden" name="employeeID" id="employeeJobID"/>
               <div class="input__form__modal__box">
@@ -195,46 +195,6 @@
                   </select>
                   <span class="input__title">Department | Branch</span>
                   <div id="department-error" class="error-message text-danger"></div>
-                </div>
-              </div>
-              <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
-            </form>
-        </div>
-      </div>
-      <!--change schedule -->
-      <div class="modal-overlay" id="changeScheduleModal">
-        <div class="modal">
-          <div class="modal__heading">
-            <div class="heading__modal__box">
-              <h2 class="heading__modal">Change Schedule</h2>
-              <p class="subheading__modal">Assigning new schedule</p>
-            </div>
-            <div class="close__box"><ion-icon onclick="closeScheduleModal()" class="icon__modal" name="close-outline"></ion-icon></div>
-            </div>
-            <form method="POST" class="form__modal" enctype="multipart/form-data" id="frmChange">
-              @csrf
-              <input type="hidden" name="employeeID" id="employeeScheduleID"/>
-              <div class="input__form__modal__box">
-                <div class="input__box">
-                  <select class="information__input" name="schedule">
-                    <option value="" disabled selected>
-                      Select schedule
-                    </option>
-                    <?php foreach($schedule as $row): ?>
-                      <option value="<?php echo $row['scheduleID'] ?>">(<?php echo $row['scheduleType'] ?>)<?php echo $row['hours'] ?></option>
-                    <?php endforeach; ?>
-                  </select>
-                  <span class="input__title">New Schedule</span>
-                  <div id="schedule-error" class="error-message text-danger"></div>
-                </div>
-                <div class="input__box">
-                  <input type="file"
-                    class="information__input"
-                    placeholder="Attach document"
-                    name="file"
-                  />
-                  <span class="input__title">Attachment</span>
-                  <div id="file-error" class="error-message text-danger"></div>
                 </div>
               </div>
               <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
@@ -576,27 +536,23 @@
                           <ion-icon class="select__icon" name="folder-open-outline"></ion-icon>View Profile
                         </a>
                         <!-- if employee is inactive -->
-                        <?php if($row['employeeStatus']==0||$row['employeeStatus']==2){ ?>
-                          <a href="" class="select__item">
-                            <ion-icon class="select__icon" name="person-add-outline"></ion-icon>Re-Hire
-                          </a>
-                        <?php }else{ ?>
+                        <?php if($row['employeeStatus']==1){ ?>
                           <?php if($row['employmentStatus']=="Regular" || $row['employmentStatus']=="Probationary"){ ?>
                           <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item promote">
                             <ion-icon class="select__icon" name="ribbon-outline"></ion-icon>Promotion
                           </button>
-                          <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item changeSchedule">
-                            <ion-icon class="select__icon" name="calendar-outline"></ion-icon>Change Schedule
-                          </button>
-                          <a href="{{route('hr/employee/new-allowance')}}" class="select__item">
-                            <ion-icon class="select__icon" name="add-outline"></ion-icon>Add Allowance
-                          </a>
                           <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item salaryAdjusment">
                             <ion-icon class="select__icon" name="cash-outline"></ion-icon>Salary Adjustment
                           </button>
                           <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item jobTransfer">
-                            <ion-icon class="select__icon" name="file-tray-full-outline"></ion-icon>Job Transfer
+                            <ion-icon class="select__icon" name="file-tray-full-outline"></ion-icon> Job Transfer
                           </button>
+                          <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item newAssignment">
+                            <ion-icon class="select__icon" name="file-tray-full-outline"></ion-icon> New Assignment
+                          </button>
+                          <a href="{{route('hr/employee/re-assign',['companyID'=>$row['companyID']])}}" class="select__item">
+                            <ion-icon class="select__icon" name="file-tray-full-outline"></ion-icon>Re-Assignment
+                          </a>
                           <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item changeJobTitle">
                             <ion-icon class="select__icon" name="pricetags-outline"></ion-icon>Change Job Title
                           </button>
@@ -753,13 +709,13 @@
           });
       });
 
-      $('#frmJobTransfer').on('submit',function(e)
+      $('#frmAssignment').on('submit',function(e)
       {
           e.preventDefault();
           $('.error-message').html('');
           let data = $(this).serialize();
           $.ajax({
-              url:"{{route('job-transfer')}}",method:"POST",
+              url:"{{route('new-assignment')}}",method:"POST",
               data:data,
               success:function(response)
               {
@@ -847,33 +803,6 @@
               if(response.success)
               {
                   closeSalaryModal();
-              }
-              else
-              {
-                  var errors = response.errors;
-                  // Iterate over each error and display it under the corresponding input field
-                  for (var field in errors) {
-                      $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
-                      $('#' + field).addClass('input-error'); // Highlight the input field with an error
-                  }
-              }
-            }
-        });
-      });
-
-      $('#frmChange').on('submit',function(e)
-      {
-        e.preventDefault();
-        $('.error-message').html('');
-        var formData = new FormData(this);
-        $.ajax({
-            url:"{{route('change-schedule')}}",method: 'POST',data: formData,
-            processData: false,contentType: false,
-            success: function(response) 
-            {
-              if(response.success)
-              {
-                  closeScheduleModal();
               }
               else
               {
