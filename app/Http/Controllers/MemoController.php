@@ -21,5 +21,12 @@ class MemoController extends Controller
             'details'=>'required',
             'file'=>'required'
         ]);
+
+        $data = ['Date','Title','Reference','Sender','Recipient','Subject','Details','File','accountID','Status'];
+        //create log record
+        $logModel = new \App\Models\logModel();
+        $date = date('Y-m-d h:i:s a');
+        $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Posted new memo'];
+        $logModel->create($data);
     }
 }
