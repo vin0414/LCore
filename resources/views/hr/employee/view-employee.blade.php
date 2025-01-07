@@ -842,7 +842,7 @@
                 </div>  
               </div>
               <div class="desc__box">
-                <p class="history__title"><span><?php echo session('fullname') ?></span>'s</p>
+                <p class="history__title"><span>{{ $employee['firstName'] .' ' . $employee['middleName'] .'. ' . $employee['surName'] }}</span>'s</p>
                 <p class="history__description history__subheading">Career Progression</p>
                 <p class="history__description">
                 A timeline of growth, achievements, and milestones – from early career beginnings to key promotions, job transfers, skill development, and well-earned salary increases. This journey reflects dedication, adaptability, and continuous progress in pursuing greater responsibilities and new opportunities.

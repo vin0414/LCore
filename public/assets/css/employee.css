@@ -286,7 +286,7 @@ body.no-scroll {
 .history__box {
     margin-bottom: 5rem;
     display: flex;
-    gap: 5rem;
+    gap: 2rem;
     align-items: center;
 }
 .history__title__desc {
@@ -318,6 +318,30 @@ body.no-scroll {
     right: 50%;
     top: 7rem;
 } */
+.history__container::-webkit-scrollbar {
+    width: 0.5rem; /* Width of the scrollbar */
+}
+
+.history__container::-webkit-scrollbar-thumb {
+    background-color: var(--green-color); /* Default thumb color */
+    border-radius: 4px; /* Rounded corners */
+    padding: 1rem;
+}
+
+.history__container::-webkit-scrollbar-thumb:hover {
+    background-color: var(--green-color);
+    padding: 1rem;
+}
+
+.history__container::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Background of the scrollbar track */
+    padding: 1rem;
+}
+.history__container {
+    height: 63rem;
+    overflow-y: scroll;
+    padding-right: 2rem;
+}
 .history__container__parent {
     padding: 3rem 2rem;
 
@@ -335,7 +359,7 @@ body.no-scroll {
 .history__grid__layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10rem;
+    gap: 5rem;
 }
 
 .history__heading {
