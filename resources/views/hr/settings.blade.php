@@ -402,7 +402,8 @@
                         <th>#</th>
                         <th class="w-200">Office</th>
                         <th class="w-275">Department</th>
-                        <th class="w-150">Contact No</th>
+                        <th class="w-150">Landline</th>
+                        <th class="w-150">Code</th>
                         <th class="w-150">Date Created</th>
                         <th class="w-50">Action</th>
                     </thead>
@@ -413,6 +414,7 @@
                       <td><?php echo $row->officeName ?></td>
                       <td><?php echo $row->departmentName ?></td>
                       <td><?php echo $row->departmentNumber ?></td>
+                      <td><?php echo $row->Code ?></td>
                       <td><?php echo $row->created_at ?></td>
                       <td>
                         <button type="button" value="<?php echo $row->departmentID ?>" class="select__item form__button edit_department">
@@ -558,6 +560,14 @@
                   />
                   <span class="input__title">Department/Branch</span>
                   <div id="department-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <input type="date"
+                    class="information__input"
+                    placeholder="Enter date"
+                    name="date"
+                  />
+                  <span class="input__title">Date Opened</span>
                 </div>
                 <div class="input__box">
                   <input type="number"

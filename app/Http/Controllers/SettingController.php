@@ -128,11 +128,13 @@ class SettingController extends Controller
     {
         date_default_timezone_set('Asia/Manila');
         $departmentModel = new \App\Models\departmentModel();
+        $officeModel = new \App\Models\officeModel();
         //data
         $validator = Validator::make($request->all(),[
             'office'=>'required',
             'department'=>'required|unique:tbldepartment,departmentName',
-            'department_number'=>'required'
+            'department_number'=>'required',
+            'date'=>'nullable'
         ]);
 
         if ($validator->fails()) {
@@ -141,7 +143,16 @@ class SettingController extends Controller
         }
         else
         {
-            $data = ['departmentName'=>$request->department,'departmentNumber'=>$request->department_number, 'officeID'=>$request->office];
+            $code = "";$totalRecords = 0;
+            //count the department based on the officeID
+            $department = $departmentModel->WHERE('officeID',$request->office)->count();
+            $totalRecords = $department+1;
+            $office = $officeModel->WHERE('officeID',$request->office)->first();
+            if($office['officeName']=="Head Office"||$office['officeName']=="HO"){$code = "HO";}else{$code = "BR";}
+            $newCode = $code.$totalRecords;
+            
+            $data = ['departmentName'=>$request->department,'departmentNumber'=>$request->department_number, 
+                    'Date'=>$request->date,'Code'=>$newCode,'officeID'=>$request->office];
             $departmentModel->create($data);
             //create log record
             $logModel = new \App\Models\logModel();
