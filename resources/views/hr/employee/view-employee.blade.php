@@ -471,7 +471,7 @@
                         >Add Work History
                       </a>
                     </div>
-                    <a href="{{route('hr/employee')}}" class="btn__primary no-underline">
+                    <a href="{{route('hr/employee')}}" class="btn__return no-underline">
                       <ion-icon
                         name="arrow-back-outline"
                         class="icon__view__emp"
@@ -480,9 +480,7 @@
                     </a>
                     <a id="showDropdownOptions" class="btn__primary no-underline">More <ion-icon
                           name="chevron-down-outline"
-                          class="icon__view__emp"
-                        ></ion-icon
-                        >
+                          class="icon__view__emp"></ion-icon>
                     </a>
                   </div>
                 </div>
@@ -816,31 +814,66 @@
             </table>
           </form>
         </div>
-
-        <div class="employee__card history__card">
-          <form class="form__container pos__rel">
-          <p class="profile__heading government__details">Career Movement</p>
-          <div class="history__container">
-            <div class="history__box ">
-              <p class="history__date">January 2025</p>
-              <p class="history__description">Job Transfer - Area to Head Office</p>
+          <div class="employee__card history__card">
+            <form class="history__container__parent pos__rel">
+            <p class="profile__heading government__details">Career Movement</p>
+            <div class="history__grid__layout">
+              <div class="history__container">
+                <div class="history__box ">
+                  <p class="history__date">January 2025</p>
+                  <div class="history__title__desc">
+                    <div class="history__heading">
+                      <p class="history__title">Job Transfer</p>
+                      <ion-icon name="repeat-outline" class="history__icon"></ion-icon>
+                    </div>
+                    <p class="history__description">Moved from area to head office</p>
+                    <p class="history__description history__data">Taliwas Office <ion-icon name="arrow-forward-outline"></ion-icon><span class="new__data">Cabanatuan Office</span></p>
+                  </div>
+                </div>
+                <div class="history__box ">
+                  <p class="history__date">December 2025</p>
+                  <div class="history__title__desc">
+                    <div class="history__heading">
+                      <p class="history__title">Promotion</p>
+                      <ion-icon name="medal-outline" class="history__icon"></ion-icon>
+                    </div>
+                    <p class="history__description">Promoted from Jr. Developer to System Developer</p>
+                    <p class="history__description history__data">12,000.00 <ion-icon name="arrow-forward-outline"></ion-icon> <span class="new__data">21,000.00</span></p>
+                  </div>
+                </div>
+                <div class="history__box ">
+                  <p class="history__date">September 2024</p>
+                  <div class="history__title__desc">
+                    <div class="history__heading">
+                      <p class="history__title">Allowance</p>
+                      <ion-icon name="wallet-outline" class="history__icon"></ion-icon>
+                    </div>
+                    <p class="history__description">Allowance adjusted</p>
+                    <p class="history__description history__data">0.00<ion-icon name="arrow-forward-outline"></ion-icon> <span class="new__data">500.00</span></p>
+                  </div>
+                </div>
+                <div class="history__box ">
+                  <p class="history__date">May 2024</p>
+                  <div class="history__title__desc">
+                    <div class="history__heading">
+                        <p class="history__title">Salary Adjustment</p>
+                        <ion-icon name="wallet-outline" class="history__icon"></ion-icon>
+                     </div>
+                    <p class="history__description">Annual salary increase</p>
+                    <p class="history__description history__data">11,000.00 <ion-icon name="arrow-forward-outline"></ion-icon> <span class="new__data">12,000.00</span></p>
+                  </div>
+                </div>  
+              </div>
+              <div class="desc__box">
+                <p class="history__title">Tovvy Dumaplin's</p>
+                <p class="history__description history__subheading">Career Progression</p>
+                <p class="history__description">
+                A timeline of growth, achievements, and milestones – from early career beginnings to key promotions, job transfers, skill development, and well-earned salary increases. This journey reflects dedication, adaptability, and continuous progress in pursuing greater responsibilities and new opportunities.
+                </p>
+                <img class="career__image" src="/assets/images/career__progression.png">
+              </div>
             </div>
-            <div class="history__box ">
-              <p class="history__date">November 2024</p>
-              <p class="history__description">Changed Job Title and Job Descsription</p>
-            </div>
-            <div class="history__box ">
-              <p class="history__date">May 2024</p>
-              <p class="history__description">Salary Increased 10%</p>
-            </div>
-            <div class="history__box ">
-              <p class="history__date">December 2023</p>
-              <p class="history__description">Promoted to Junior developer position</p>
-            </div>
-          </div>
-            <img class="pos__abs career__image" src="/assets/images/career__progression.png">
           </form>
-
         </div>
       </div>
     </main>
