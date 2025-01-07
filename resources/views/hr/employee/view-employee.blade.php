@@ -782,39 +782,7 @@
             <?php endif; ?>
           </form>
         </div>
-        <div class="employee__card">
-          <form class="form__container">
-            <p class="profile__heading government__details">Employment History</p>
-            <table class="responsive-table">
-              <thead>
-                  <th class="w-275">Designation</th>
-                  <th>Company and Address</th>
-                  <th class="w-150">From</th>
-                  <th class="w-150">To</th>
-                  <th class="w-100">Action</th>
-              </thead>
-              <tbody id="tblhistory">
-              </tbody>
-            </table>
-          </form>
-        </div>
-        <div class="employee__card">
-          <form class="form__container">
-          <p class="profile__heading government__details">Certificates/Trainings</p>
-            <table class="responsive-table">
-              <thead>
-                  <th class="w-275">Title</th>
-                  <th>Venue</th>
-                  <th class="w-150">From</th>
-                  <th class="w-150">To</th>
-                  <th class="w-100">Action</th>
-              </thead>
-              <tbody id="tblcertificate">
-              </tbody>
-            </table>
-          </form>
-        </div>
-          <div class="employee__card history__card">
+        <div class="employee__card history__card">
             <form class="history__container__parent pos__rel">
             <p class="profile__heading government__details">Career Movement</p>
             <div class="history__grid__layout">
@@ -865,7 +833,7 @@
                 </div>  
               </div>
               <div class="desc__box">
-                <p class="history__title">Tovvy Dumaplin's</p>
+                <p class="history__title"><span><?php echo session('fullname') ?></span>'s</p>
                 <p class="history__description history__subheading">Career Progression</p>
                 <p class="history__description">
                 A timeline of growth, achievements, and milestones – from early career beginnings to key promotions, job transfers, skill development, and well-earned salary increases. This journey reflects dedication, adaptability, and continuous progress in pursuing greater responsibilities and new opportunities.
@@ -873,6 +841,38 @@
                 <img class="career__image" src="/assets/images/career__progression.png">
               </div>
             </div>
+          </form>
+        </div>
+        <div class="employee__card">
+          <form class="form__container">
+            <p class="profile__heading government__details">Employment History</p>
+            <table class="responsive-table">
+              <thead>
+                  <th class="w-275">Designation</th>
+                  <th>Company and Address</th>
+                  <th class="w-150">From</th>
+                  <th class="w-150">To</th>
+                  <th class="w-100">Action</th>
+              </thead>
+              <tbody id="tblhistory">
+              </tbody>
+            </table>
+          </form>
+        </div>
+        <div class="employee__card">
+          <form class="form__container">
+          <p class="profile__heading government__details">Certificates/Trainings</p>
+            <table class="responsive-table">
+              <thead>
+                  <th class="w-275">Title</th>
+                  <th>Venue</th>
+                  <th class="w-150">From</th>
+                  <th class="w-150">To</th>
+                  <th class="w-100">Action</th>
+              </thead>
+              <tbody id="tblcertificate">
+              </tbody>
+            </table>
           </form>
         </div>
       </div>
