@@ -529,9 +529,13 @@
               <tbody>
                 <?php foreach($employee as $row): ?>
                   <?php
+                  //age
                   $dobDate = new DateTime($row['dob']);
                   $today = new DateTime('today');
                   $age = $dobDate->diff($today)->y;
+                  //formatted date
+                  $dateObj = new DateTime($row['dob']);
+                  $formattedDate = $dateObj->format('d M Y');
                   ?>
                   <tr>
                     <td>
@@ -541,7 +545,7 @@
                     <td><?php echo $row['contactNumber'] ?></td>
                     <td><?php echo $row['emailAddress'] ?></td>
                     <td><?php echo $row['address'] ?></td>
-                    <td><?php echo $row['dob'] ?></td>
+                    <td><?php echo $formattedDate ?></td>
                     <td><?php echo $age ?></td>
                     <td><?php echo $row['gender'] ?></td>
                     <td><?php echo $row['civilStatus'] ?></td>

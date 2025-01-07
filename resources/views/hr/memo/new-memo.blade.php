@@ -257,6 +257,18 @@
                 <div class="input__boxes grid single__row">
                   <div class="input__box">
                     <input
+                      class="information__input" value="{{ old('memo_title') }}"
+                      placeholder="Enter Title" name="memo_title"
+                    />
+                    <span class="input__title">Memo Title</span>
+                    @if ($errors->has('memo_title'))
+                      <p class="text-danger">{{$errors->first('memo_title')}}</p>
+                    @endif
+                  </div>
+                </div>
+                <div class="input__boxes grid single__row_v2">
+                  <div class="input__box">
+                    <input
                       class="information__input" value="{{ old('subject') }}"
                       placeholder="Enter subject" name="fullname"
                     />
@@ -265,8 +277,18 @@
                       <p class="text-danger">{{$errors->first('subject')}}</p>
                     @endif
                   </div>
+                  <div class="input__box">
+                    <input
+                      class="information__input" value="{{ old('reference') }}"
+                      placeholder="Enter Reference" name="reference"
+                    />
+                    <span class="input__title">Reference (Optional)</span>
+                    @if ($errors->has('reference'))
+                      <p class="text-danger">{{$errors->first('reference')}}</p>
+                    @endif
+                  </div>
                 </div>
-                <div class="input__boxes grid second__row">
+                <div class="input__boxes grid second__row_v2">
                   <div class="input__box">
                     <input type="date"
                       class="information__input" value="{{ old('date') }}"
@@ -278,23 +300,51 @@
                     @endif
                   </div>
                   <div class="input__box">
-                    <input type="date"
-                      class="information__input" value="{{ old('date') }}"
-                      placeholder="Enter date" name="date"
+                    <input
+                      class="information__input" value="{{ old('from') }}"
+                      placeholder="Enter Sender" name="from"
                     />
-                    <span class="input__title">Date</span>
-                    @if ($errors->has('date'))
-                      <p class="text-danger">{{$errors->first('date')}}</p>
+                    <span class="input__title">Sender</span>
+                    @if ($errors->has('from'))
+                      <p class="text-danger">{{$errors->first('from')}}</p>
                     @endif
                   </div>
                   <div class="input__box">
-                    <input type="date"
-                      class="information__input" value="{{ old('date') }}"
-                      placeholder="Enter date" name="date"
+                    <ion-icon class="pos__abs input__chev__down" name="chevron-down-outline"></ion-icon>
+                    <select
+                        class="information__input" name="to" placeholder="Select">
+                        <option value="" disabled selected>
+                          Select
+                        </option>
+                        
+                    </select>
+                    <span class="input__title">Recipients</span>
+                    @if ($errors->has('to'))
+                      <p class="text-danger">{{$errors->first('to')}}</p>
+                    @endif
+                  </div>
+                </div>
+                <div class="input__boxes grid single__row">
+                  <div class="input__box">
+                    <textarea
+                      class="information__input" value="{{ old('details') }}"
+                      placeholder="Enter details" name="details" style="height:200px;"
+                    ></textarea>
+                    <span class="input__title">Details</span>
+                    @if ($errors->has('details'))
+                      <p class="text-danger">{{$errors->first('details')}}</p>
+                    @endif
+                  </div>
+                </div>
+                <div class="input__boxes grid single__row">
+                  <div class="input__box">
+                    <input type="file"
+                      class="information__input" value="{{ old('file') }}"
+                      placeholder="Attach file" name="file"
                     />
-                    <span class="input__title">Date</span>
-                    @if ($errors->has('date'))
-                      <p class="text-danger">{{$errors->first('date')}}</p>
+                    <span class="input__title">File</span>
+                    @if ($errors->has('file'))
+                      <p class="text-danger">{{$errors->first('file')}}</p>
                     @endif
                   </div>
                 </div>
