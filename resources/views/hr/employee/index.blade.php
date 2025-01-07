@@ -146,11 +146,14 @@
                 <input type="hidden" name="employeeID" id="employeeID"/>
                 <div class="input__form__modal__box">
                   <div class="input__box">
-                    <input
-                      class="information__input"
-                      placeholder="Enter Job Title"
-                      name="designation"
-                    />
+                    <select class="information__input" name="designation">
+                      <option value="" disabled selected>
+                        Select Job Title
+                      </option>
+                      <?php foreach($job as $row): ?>
+                        <option value="<?php echo $row['jobTitle'] ?>"><?php echo $row['jobTitle'] ?> - <small><?php echo $row['jobLevel'] ?></small></option>
+                      <?php endforeach; ?>
+                    </select>
                     <span class="input__title">Job Title</span>
                     <div id="designation-error" class="error-message text-danger"></div>
                   </div>
@@ -159,13 +162,13 @@
               </form>
           </div>
       </div>
-      <!--Job Transfer -->
+      <!--New Assignment -->
       <div class="modal-overlay" id="newAssignmentModal">
         <div class="modal">
           <div class="modal__heading">
             <div class="heading__modal__box">
-              <h2 class="heading__modal">Transfer</h2>
-              <p class="subheading__modal">New Assignment</p>
+              <h2 class="heading__modal">New Assignment</h2>
+              <p class="subheading__modal">Assigned Department/Branch</p>
             </div>
             <div class="close__box"><ion-icon onclick="closeJobModal()" class="icon__modal" name="close-outline"></ion-icon></div>
             </div>
@@ -185,8 +188,6 @@
                   <span class="input__title">Office</span>
                   <div id="office-error" class="error-message text-danger"></div>
                 </div>
-              </div>
-              <div class="input__form__modal__box">
                 <div class="input__box">
                   <select class="information__input" name="department" id="department">
                     <option value="" disabled selected>
@@ -195,6 +196,58 @@
                   </select>
                   <span class="input__title">Department | Branch</span>
                   <div id="department-error" class="error-message text-danger"></div>
+                </div>
+              </div>
+              <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+            </form>
+        </div>
+      </div>
+      <!--Job Transfer -->
+      <div class="modal-overlay" id="jobTransferModal">
+        <div class="modal">
+          <div class="modal__heading">
+            <div class="heading__modal__box">
+              <h2 class="heading__modal">Job Transfer</h2>
+              <p class="subheading__modal">New Job Assignment</p>
+            </div>
+            <div class="close__box"><ion-icon onclick="closeTransferModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+            </div>
+            <form method="POST" class="form__modal" id="frmJob">
+              @csrf
+              <input type="hidden" name="employeeID" id="employeeTransferID"/>
+              <div class="input__form__modal__box">
+                <div class="input__box">
+                  <select class="information__input" name="new_office" id="new_office">
+                    <option value="" disabled selected>
+                      Select Office
+                    </option>
+                    <?php foreach($office as $row): ?>
+                      <option value="<?php echo $row['officeID'] ?>"><?php echo $row['officeName'] ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                  <span class="input__title">Office</span>
+                  <div id="new_office-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <select class="information__input" name="new_department" id="new_department">
+                    <option value="" disabled selected>
+                      Select department or branch
+                    </option>
+                  </select>
+                  <span class="input__title">Department | Branch</span>
+                  <div id="new_department-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <select class="information__input" name="new_position">
+                    <option value="" disabled selected>
+                      Select Job Title
+                    </option>
+                    <?php foreach($job as $row): ?>
+                      <option value="<?php echo $row['jobTitle'] ?>"><?php echo $row['jobTitle'] ?> - <small><?php echo $row['jobLevel'] ?></small></option>
+                    <?php endforeach; ?>
+                  </select>
+                  <span class="input__title">Job Title</span>
+                  <div id="new_position-error" class="error-message text-danger"></div>
                 </div>
               </div>
               <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
@@ -709,6 +762,15 @@
           });
       });
 
+      $('#new_office').change(function(){
+          $('#new_department').find('option').not(':first').remove();
+          $.ajax({
+              url:"{{route('fetch-department')}}",
+              method:"GET",data:{value:$(this).val()},
+              success:function(response){$('#new_department').append(response);}
+          });
+      });
+
       $('#frmAssignment').on('submit',function(e)
       {
           e.preventDefault();
@@ -722,6 +784,33 @@
                   if(response.success)
                   {
                       closeJobModal();
+                  }
+                  else
+                  {
+                      var errors = response.errors;
+                      // Iterate over each error and display it under the corresponding input field
+                      for (var field in errors) {
+                          $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
+                          $('#' + field).addClass('input-error'); // Highlight the input field with an error
+                      }
+                  }
+              }
+          });
+      });
+
+      $('#frmJob').on('submit',function(e)
+      {
+          e.preventDefault();
+          $('.error-message').html('');
+          let data = $(this).serialize();
+          $.ajax({
+              url:"{{route('job-transfer')}}",method:"POST",
+              data:data,
+              success:function(response)
+              {
+                  if(response.success)
+                  {
+                      closeTransferModal();
                   }
                   else
                   {

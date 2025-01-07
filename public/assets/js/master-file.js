@@ -14,7 +14,7 @@ function closeModal() {
 }
 
 $(document).on('click','.newAssignment',function(){
-    var confirmation = confirm("Do you want to transfer this employee?");
+    var confirmation = confirm("Do you want to assign this employee with new assignment?");
     if(confirmation)
     {
         $('#newAssignmentModal').css('display', 'flex');
@@ -28,6 +28,20 @@ function closeJobModal() {
     $('body').removeClass('no-scroll');  
 }
 
+$(document).on('click','.jobTransfer',function(){
+    var confirmation = confirm("Do you want to transfer this employee?");
+    if(confirmation)
+    {
+        $('#jobTransferModal').css('display', 'flex');
+        $('#employeeTransferID').attr("value",$(this).val());
+        $('body').addClass('no-scroll');
+    }
+});
+
+function closeTransferModal() {
+    $('#jobTransferModal').css('display', 'none');
+    $('body').removeClass('no-scroll');  
+}
 
 $(document).on('click','.promote',function(){
     var confirmation = confirm("Do you want to promote this employee?");

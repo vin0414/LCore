@@ -638,12 +638,56 @@ class EmployeeController extends Controller
             $newData = ['employeeID'=>$record['employeeID'],'dateHired'=>$newDate,'Designation'=>$record['Designation'],
                         'officeID'=>$request->office,'departmentID'=>$request->department,
                         'employmentStatus'=>$record['employmentStatus'],'end_date'=>'0000-00-00',
-                        'cost'=>$record['cost'],'Remarks'=>'Transferred','Attachment'=>''];
+                        'cost'=>$record['cost'],'Remarks'=>'New Assignment','Attachment'=>''];
             $recordModel->create($newData);
             //create log record
             $logModel = new \App\Models\logModel();
             $date = date('Y-m-d h:i:s a');
             $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Transferred '.$employee['companyID'].' to new assignment'];
+            $logModel->create($data);
+            return response()->json(['success' => 'Successfully applied']);
+        }
+    }
+
+    public function jobTransfer(Request $request)
+    {
+        date_default_timezone_set('Asia/Manila');
+        $employeeModel = new \App\Models\employeeModel();
+        $recordModel = new \App\Models\recordModel();
+        $newDate = date('Y-m-d');
+        //data
+        $validator = Validator::make($request->all(),[
+            'new_office'=>'required',
+            'new_department'=>'required',
+            'new_position'=>'required'
+        ]);
+
+        if ($validator->fails()) {
+            // Return validation errors as JSON
+            return response()->json(['errors' => $validator->errors()]);
+        }
+        else
+        {
+            //get the companyID
+            $employee = $employeeModel->WHERE('employeeID',$request->employeeID)->first();
+            //change the office and department and designation
+            $employeeModel::where('employeeID',$request->employeeID)
+                ->update(['designation'=>$request->new_position,'officeID'=>$request->new_office,'departmentID'=>$request->new_department]);
+            //get the recent record of an employee
+            $record = $recordModel->WHERE('employeeID',$request->employeeID)->orderBy('recordID', 'desc')->first();
+            //update the record of the employee
+            $recordModel::where('recordID',$record['recordID'])
+                ->update(['end_date'=>$newDate]);
+            //add records in employee movement
+            $newData = ['employeeID'=>$record['employeeID'],'dateHired'=>$newDate,'Designation'=>$request->new_position,
+                        'officeID'=>$request->new_office,'departmentID'=>$request->new_department,
+                        'employmentStatus'=>$record['employmentStatus'],'end_date'=>'0000-00-00',
+                        'cost'=>$record['cost'],'Remarks'=>'New Job Title and Assignment','Attachment'=>''];
+            $recordModel->create($newData);
+            //create log record
+            $logModel = new \App\Models\logModel();
+            $date = date('Y-m-d h:i:s a');
+            $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'New Job Title and department/branch for '.$employee['companyID']];
             $logModel->create($data);
             return response()->json(['success' => 'Successfully applied']);
         }
