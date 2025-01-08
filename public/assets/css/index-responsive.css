@@ -1,0 +1,67 @@
+/* /* 1440 px / */
+@media (max-width: 90em) {
+    html {
+      font-size: 55%;
+    }
+  }
+  /* / 1162 px / */
+  @media (max-width: 72.625em) {
+    .card__login {
+      margin-left: 7rem;
+      margin-right: 7rem;
+    }
+  }
+  /* / 892 px / */
+  @media (max-width: 55.75em) {
+    html {
+      font-size: 50%;
+    }
+    .login__card.grid__2__cols {
+      grid-template-columns: 1fr;
+    }
+    .card__login {
+      padding: 5rem 0;
+    }
+    .card__image {
+      padding: 3.5rem 0 0 0;
+    }
+    .image__person {
+      width: 28.4rem;
+      height: 34.3rem;
+    }
+    .section__login {
+      padding: 0px 17rem;
+    }
+    .card__login {
+      margin-left: 5rem;
+      margin-right: 5rem;
+    }
+  }
+  /* / 761 px / */
+  @media (max-width: 47.5625em) {
+    .section__login {
+      padding: 0px 10rem;
+    }
+  }
+  /* / 644 px / */
+  @media (max-width: 40.25em) {
+    .section__login {
+      padding: 0px 4rem;
+    }
+  }
+  /* / 499 px */
+  @media (max-width: 31.1875em) {
+    .card__image {
+      display: none;
+    }
+    .login__heading {
+      font-size: 2.5rem;
+    }
+    .logo {
+      width: 18rem;
+      height: 4rem;
+    }
+    .section__login {
+      padding: 5rem 2rem;
+    }
+  }

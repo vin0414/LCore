@@ -278,7 +278,7 @@
                   <div class="input__box">
                     <input
                       class="information__input" value="{{ old('subject') }}"
-                      placeholder="Enter subject" name="subject"
+                      placeholder="Enter subject" name="fullname"
                     />
                     <span class="input__title">Subject</span>
                     @if ($errors->has('subject'))
@@ -290,7 +290,10 @@
                       class="information__input" value="{{ old('reference') }}"
                       placeholder="Enter Reference" name="reference"
                     />
-                    <span class="input__title">Reference (Optional)</span>
+                    <span class="input__title">Reference</span>
+                    @if ($errors->has('reference'))
+                      <p class="text-danger">{{$errors->first('reference')}}</p>
+                    @endif
                   </div>
                 </div>
                 <div class="input__boxes grid second__row_v2">
@@ -321,10 +324,7 @@
                         <option value="" disabled selected>
                           Select
                         </option>
-                        <option value="All Employees" {{ old('recipient') == "All Employees" ? 'selected' : '' }}>All Employees</option>
-                        <?php foreach($department as $row): ?>
-                        <option value="<?php echo $row['departmentName'] ?>" <?php echo (old('recipient') == $row['departmentName'])  ? 'selected' : '' ?>><?php echo $row['departmentName']  ?></option>
-                        <?php endforeach;?>
+                        
                     </select>
                     <span class="input__title">Recipients</span>
                     @if ($errors->has('recipient'))
