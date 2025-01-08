@@ -159,7 +159,6 @@
             <ul class="dropdown">
               <li class="dropdown__item"><a href="{{route('hr/memo')}}" class="no-underline">All Memo</a></li>
               <li class="dropdown__item"><a href="{{route('hr/memo/new')}}" class="no-underline">New Memo</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/memo/archive')}}" class="no-underline">Archives</a></li>
             </ul>
           </li>
           <li class="nav__item">
@@ -335,9 +334,9 @@
                 <div class="input__boxes grid single__row">
                   <div class="input__box">
                     <textarea
-                      class="information__input" value="{{ old('details') }}"
+                      class="information__input"
                       placeholder="Enter details" name="details" style="height:200px;"
-                    ></textarea>
+                    >{{ old('details') }}</textarea>
                     <span class="input__title">Details</span>
                     @if ($errors->has('details'))
                       <p class="text-danger">{{$errors->first('details')}}</p>

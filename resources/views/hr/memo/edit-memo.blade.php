@@ -159,7 +159,6 @@
             <ul class="dropdown">
               <li class="dropdown__item"><a href="{{route('hr/memo')}}" class="no-underline">All Memo</a></li>
               <li class="dropdown__item"><a href="{{route('hr/memo/new')}}" class="no-underline">New Memo</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/memo/archive')}}" class="no-underline">Archives</a></li>
             </ul>
           </li>
           <li class="nav__item">
@@ -257,15 +256,17 @@
         <div class="card_container">
           <div class="card">
             <div class="card-header">
-              <div class="subheading">Create Memo</div>
+              <div class="subheading">Edit Memo</div>
             </div>
             <div class="card-body">
-              <form method="POST" id="frmMemo" enctype="multipart/form-data" action="{{route('save-memo')}}">
+              <?php if($memo): ?>
+              <form method="POST" id="frmMemo" enctype="multipart/form-data" action="{{route('edit-memo')}}">
                 @csrf
+                <input type="hidden" name="memoID" value="{{$memo['memoID']}}"/>
                 <div class="input__boxes grid single__row">
                   <div class="input__box">
                     <input
-                      class="information__input" value="{{ old('memo_title') }}"
+                      class="information__input" value="{{$memo['Title']}}"
                       placeholder="Enter Title" name="memo_title"
                     />
                     <span class="input__title">Memo Title</span>
@@ -277,7 +278,7 @@
                 <div class="input__boxes grid single__row_v2">
                   <div class="input__box">
                     <input
-                      class="information__input" value="{{ old('subject') }}"
+                      class="information__input" value="{{$memo['Subject']}}"
                       placeholder="Enter subject" name="subject"
                     />
                     <span class="input__title">Subject</span>
@@ -287,7 +288,7 @@
                   </div>
                   <div class="input__box">
                     <input
-                      class="information__input" value="{{ old('reference') }}"
+                      class="information__input" value="{{$memo['Reference']}}"
                       placeholder="Enter Reference" name="reference"
                     />
                     <span class="input__title">Reference (Optional)</span>
@@ -296,7 +297,7 @@
                 <div class="input__boxes grid second__row_v2">
                   <div class="input__box">
                     <input type="date"
-                      class="information__input" value="{{ old('date') }}"
+                      class="information__input" value="{{$memo['Date']}}"
                       placeholder="Enter date" name="date"
                     />
                     <span class="input__title">Date</span>
@@ -306,7 +307,7 @@
                   </div>
                   <div class="input__box">
                     <input
-                      class="information__input" value="{{ old('sender') }}"
+                      class="information__input" value="{{$memo['Sender']}}"
                       placeholder="Enter Sender" name="sender"
                     />
                     <span class="input__title">Sender</span>
@@ -321,9 +322,9 @@
                         <option value="" disabled selected>
                           Select
                         </option>
-                        <option value="All Employees" {{ old('recipient') == "All Employees" ? 'selected' : '' }}>All Employees</option>
+                        <option value="All Employees" {{ $memo['Recipient'] == "All Employees" ? 'selected' : '' }}>All Employees</option>
                         <?php foreach($department as $row): ?>
-                        <option value="<?php echo $row['departmentName'] ?>" <?php echo (old('recipient') == $row['departmentName'])  ? 'selected' : '' ?>><?php echo $row['departmentName']  ?></option>
+                        <option value="<?php echo $row['departmentName'] ?>" <?php echo ($memo['Recipient'] == $row['departmentName'])  ? 'selected' : '' ?>><?php echo $row['departmentName']  ?></option>
                         <?php endforeach;?>
                     </select>
                     <span class="input__title">Recipients</span>
@@ -335,9 +336,9 @@
                 <div class="input__boxes grid single__row">
                   <div class="input__box">
                     <textarea
-                      class="information__input" value="{{ old('details') }}"
+                      class="information__input"
                       placeholder="Enter details" name="details" style="height:200px;"
-                    ></textarea>
+                    >{{$memo['Details']}}</textarea>
                     <span class="input__title">Details</span>
                     @if ($errors->has('details'))
                       <p class="text-danger">{{$errors->first('details')}}</p>
@@ -361,10 +362,11 @@
                     <ion-icon class="icon__add" name="arrow-back-outline"></ion-icon> Return
                   </a>
                   <button class="btn__primary" type="submit">
-                    <ion-icon class="icon__add" name="save-outline"></ion-icon> Save
+                    <ion-icon class="icon__add" name="save-outline"></ion-icon> Save Changes
                   </button>
                 </div>
               </form>
+              <?php endif; ?>
             </div>
           </div>
         </div>

@@ -70,4 +70,71 @@ class MemoController extends Controller
         $logModel->create($data);
         return redirect('/hr/memo')->with('success','Great! Successfully added');
     }
+
+    public function editMemo(Request $request)
+    {
+        date_default_timezone_set('Asia/Manila');
+        $memoModel = new \App\Models\memoModel();
+        //data
+        $request->validate([
+            'memo_title'=>'required',
+            'subject'=>'required',
+            'reference'=>'nullable',
+            'date'=>'required',
+            'sender'=>'required',
+            'recipient'=>'required',
+            'details'=>'required',
+        ]);
+        $file = $request->file('file');$filename="";
+        if ($request->hasFile('file') && $request->file('file')->isValid()) 
+        {
+            $filename = date('Ymdhis').$file->getClientOriginalName();
+            // Define the path where the image should be saved
+            $file->move('memo/',$filename);
+            //update
+            $memoModel::where('memoID',$request->memoID)
+                ->update(['Date'=>$request->date,'Title'=>$request->memo_title,'Reference'=>$request->reference,
+                'Sender'=>$request->sender,'Recipient'=>$request->recipient,'Subject'=>$request->subject,
+                'Details'=>$request->details,'File'=>$filename]);
+        }
+        else
+        {
+            $memoModel::where('memoID',$request->memoID)
+                ->update(['Date'=>$request->date,'Title'=>$request->memo_title,'Reference'=>$request->reference,
+                'Sender'=>$request->sender,'Recipient'=>$request->recipient,'Subject'=>$request->subject,
+                'Details'=>$request->details]);
+        }
+        //create log record
+        $logModel = new \App\Models\logModel();
+        $date = date('Y-m-d h:i:s a');
+        $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Update the posted memo'];
+        $logModel->create($data);
+        return redirect('/hr/memo')->with('success','Great! Successfully applied changes');
+    }
+
+    public function archive(Request $request)
+    {
+        date_default_timezone_set('Asia/Manila');
+        $memoModel = new \App\Models\memoModel();
+        $memoModel::WHERE('memoID',$request->value)->update(['Status'=>0]);
+        //create log record
+        $logModel = new \App\Models\logModel();
+        $date = date('Y-m-d h:i:s a');
+        $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Moved to archive'];
+        $logModel->create($data);
+        echo "success";
+    }
+
+    public function restore(Request $request)
+    {
+        date_default_timezone_set('Asia/Manila');
+        $memoModel = new \App\Models\memoModel();
+        $memoModel::WHERE('memoID',$request->value)->update(['Status'=>1]);
+        //create log record
+        $logModel = new \App\Models\logModel();
+        $date = date('Y-m-d h:i:s a');
+        $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Restore the memo'];
+        $logModel->create($data);
+        echo "success";
+    }
 }

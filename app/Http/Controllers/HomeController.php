@@ -63,7 +63,7 @@ class HomeController extends Controller
     //memo
     public function memo()
     {
-        $title = "Memorandum";
+        $title = "Memo and Announcement";
         //application
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
@@ -76,21 +76,24 @@ class HomeController extends Controller
 
     public function editMemo($id)
     {
-        $title = "Edit Memorandum";
+        $title = "Edit Memo";
         //application
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
         //department
         $departmentModel = new \App\Models\departmentModel();
         $department = $departmentModel->all();
+        //memo
+        $memoModel = new \App\Models\memoModel();
+        $memo = $memoModel->WHERE('memoID',$id)->first();
 
-        $data = ['title'=>$title,'about'=>$about,'department'=>$department];
+        $data = ['title'=>$title,'about'=>$about,'department'=>$department,'memo'=>$memo];
         return view('hr/memo/edit-memo',$data);
     }
 
     public function newMemo()
     {
-        $title = "New Memorandum";
+        $title = "New Memo";
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
         //department
@@ -101,13 +104,17 @@ class HomeController extends Controller
         return view('hr/memo/new-memo',$data);
     }
 
-    public function archive()
+    public function newAnnouncement()
     {
-        $title = "Archives";
+        $title = "New Announcement";
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
-        $data = ['title'=>$title,'about'=>$about];
-        return view('hr/memo/archive',$data);
+        //department
+        $departmentModel = new \App\Models\departmentModel();
+        $department = $departmentModel->all();
+
+        $data = ['title'=>$title,'about'=>$about,'department'=>$department];
+        return view('hr/memo/new-announcement',$data);
     }
 
     //employee management

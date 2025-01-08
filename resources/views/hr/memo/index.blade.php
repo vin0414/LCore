@@ -4,6 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -160,7 +161,6 @@
             <ul class="dropdown">
               <li class="dropdown__item"><a href="{{route('hr/memo')}}" class="no-underline">All Memo</a></li>
               <li class="dropdown__item"><a href="{{route('hr/memo/new')}}" class="no-underline">New Memo</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/memo/archive')}}" class="no-underline">Archives</a></li>
             </ul>
           </li>
           <li class="nav__item">
@@ -256,9 +256,14 @@
             <p class="pages">{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }} | <span>{{$title}}</span></p>
           </div>
         </div>
+        @if(\Session::has('success'))
+            <div class="alert alert-success">
+                {{\Session::get('success')}}
+            </div>
+        @endif
         <div class="tabs">
           <ul class="tab-titles">
-            <li class="tab active" id="tab1" onclick="openTab('tab1')">All Memo(s)</li>
+            <li class="tab active" id="tab1" onclick="openTab('tab1')">Memo</li>
             <li class="tab" id="tab2" onclick="openTab('tab2')">Announcement</li>
           </ul>
           <div class="tab-content">
@@ -275,6 +280,7 @@
                         <th>Subject</th>
                         <th>Sender</th>
                         <th>Recipient</th>
+                        <th>Status</th>
                         <th>File</th>
                         <th>Action</th>
                     </thead>
@@ -285,6 +291,11 @@
                       <td>{{$row['Subject']}}</td>
                       <td>{{$row['Sender']}}</td>
                       <td>{{$row['Recipient']}}</td>
+                      <td>
+                      <span class="badge {{ $row['Status'] == 1 ? 'badge-success' : 'badge-warning' }}">
+                        {{ $row['Status'] == 1 ? 'Active' : 'Archived' }}
+                      </span>
+                      </td>
                       <td><a href="/memo/{{$row['File']}}" class="no-underline" target="_BLANK">{{$row['File']}}</a></td>
                       <td class="pos__rel">
                         <button class="btn__select">
@@ -295,7 +306,12 @@
                         </button>
                         <div class="dropdown__select">
                           <a href="{{route('hr/memo/edit',['memoID'=>$row['memoID']])}}" class="select__item"><ion-icon class="select__icon" name="create-outline"></ion-icon>Edit</a>
-                          <a href="javascript:void(0);" class="select__item"><ion-icon class="select__icon" name="archive-outline"></ion-icon>Archive</a>
+                          @if($row['Status']==1)
+                          <button type="button" value="{{$row['memoID']}}" class="select__item archive"><ion-icon class="select__icon" name="archive-outline"></ion-icon>Archive</button>
+                          @endif
+                          @if($row['Status']==0)
+                          <button type="button" value="{{$row['memoID']}}" class="select__item restore"><ion-icon class="select__icon" name="refresh-circle-outline"></ion-icon>Restore</button>
+                          @endif
                         </div>
                       </td>
                     </tr>
@@ -306,7 +322,28 @@
               </div>
             </div>
             <div class="tab-pane" id="content-tab2">
-
+            <div class="pos__rel">
+                <div class="button__box pos__abs">
+                  <a href="{{route('hr/memo/new-announcement')}}" class="link add__btn"
+                    ><ion-icon class="icon" name="add-outline"></ion-icon>New</a>
+                </div>
+                <div class="dataWrapper">
+                  <table id="announceTable" class="display">
+                    <thead>
+                        <th>Effective Date</th>
+                        <th>Title</th>
+                        <th>Details</th>
+                        <th>Recipient</th>
+                        <th>Priority Level</th>
+                        <th>File</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                    
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -327,6 +364,21 @@
           oLanguage: { sSearch: "" },
           initComplete: function () {
             $("#dataTable_filter input").attr(
+              "placeholder",
+              "Search by name, etc."
+            );
+          },
+        });
+
+        $("#announceTable").DataTable({
+          dom:
+            "<'row'<'col-sm-6'f>>" + // Search box on top in the same row
+            "<'row'<'col-sm-12'tr>>" + // Table
+            "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'p>>", // Bottom (length + pagination)
+          scrollX: false,
+          oLanguage: { sSearch: "" },
+          initComplete: function () {
+            $("#announceTable_filter input").attr(
               "placeholder",
               "Search by name, etc."
             );
@@ -410,6 +462,40 @@
     // Set default tab to be open
     document.addEventListener("DOMContentLoaded", () => {
       openTab('tab1');
+    });
+
+    //archiving
+    $(document).on('click','.archive',function(){
+      var confirmation = confirm("Would you like to move this to archive?");
+      if(confirmation)
+      {
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+          url:"{{route('archive-memo')}}",method:"POST",
+          data:{value:$(this).val()},
+          headers: {'X-CSRF-TOKEN': csrfToken},success:function(response)
+          {
+            if(response==="success"){window.location.reload();}else{alert(response)};
+          }
+        });
+      }
+    });
+
+    //restore
+    $(document).on('click','.restore',function(){
+      var confirmation = confirm("Would you like to restore this selected memo?");
+      if(confirmation)
+      {
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+          url:"{{route('restore-memo')}}",method:"POST",
+          data:{value:$(this).val()},
+          headers: {'X-CSRF-TOKEN': csrfToken},success:function(response)
+          {
+            if(response==="success"){window.location.reload();}else{alert(response)};
+          }
+        });
+      }
     });
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

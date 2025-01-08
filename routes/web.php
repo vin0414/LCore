@@ -74,6 +74,11 @@ Route::get('edit-job',[SettingController::class,'editJob'])->name('edit-job');
 Route::post('update-job',[SettingController::class,'updateJob'])->name('update-job');
 //memo
 Route::post('save-memo',[MemoController::class,'saveMemo'])->name('save-memo');
+Route::post('edit-memo',[MemoController::class,'editMemo'])->name('edit-memo');
+Route::post('save-announcement',[MemoController::class,'saveAnnouncement'])->name('save-announcement');
+///ajax
+Route::post('archive-memo',[MemoController::class,'archive'])->name('archive-memo');
+Route::post('restore-memo',[MemoController::class,'restore'])->name('restore-memo');
 
 Route::middleware('auth:user')->group(function () {
     //navigations
@@ -86,7 +91,7 @@ Route::middleware('auth:user')->group(function () {
     //memo 
     Route::get('hr/memo/new',[HomeController::class,'newMemo'])->name('hr/memo/new');
     Route::get('hr/memo/edit/{memoID}',[HomeController::class,'editMemo'])->name('hr/memo/edit');
-    Route::get('hr/memo/archive',[HomeController::class,'archive'])->name('hr/memo/archive');
+    Route::get('hr/memo/new-announcement',[HomeController::class,'newAnnouncement'])->name('hr/memo/new-announcement');
     //recovery and settings
     //recovery module
     Route::get('hr/recovery',[HomeController::class,'recovery'])->name('hr/recovery');
