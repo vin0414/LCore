@@ -137,4 +137,9 @@ class MemoController extends Controller
         $logModel->create($data);
         echo "success";
     }
+
+    public function saveBroadcast(Request $request)
+    {
+        
+    }
 }

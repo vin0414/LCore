@@ -75,7 +75,7 @@ Route::post('update-job',[SettingController::class,'updateJob'])->name('update-j
 //memo
 Route::post('save-memo',[MemoController::class,'saveMemo'])->name('save-memo');
 Route::post('edit-memo',[MemoController::class,'editMemo'])->name('edit-memo');
-Route::post('save-announcement',[MemoController::class,'saveAnnouncement'])->name('save-announcement');
+Route::post('save-broadcast',[MemoController::class,'saveBroadcast'])->name('save-broadcast');
 ///ajax
 Route::post('archive-memo',[MemoController::class,'archive'])->name('archive-memo');
 Route::post('restore-memo',[MemoController::class,'restore'])->name('restore-memo');

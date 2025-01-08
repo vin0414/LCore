@@ -19,6 +19,13 @@
     margin-bottom: 3rem;
 }
 
+.input__boxes.grid.second__row_v3 {
+    display: grid;
+    grid-template-columns: 0.8fr 0.8fr 0.5fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
 .input__boxes.grid.single__row {
     display: grid;
     grid-template-columns: 1fr;

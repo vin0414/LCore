@@ -268,58 +268,55 @@
               <div class="subheading">New Broadcast</div>
             </div>
             <div class="card-body">
-              <form method="POST" id="frmMemo" enctype="multipart/form-data" action="{{route('save-announcement')}}">
+              <form method="POST" id="frmBroadcast" enctype="multipart/form-data" action="{{route('save-broadcast')}}">
                 @csrf
                 <div class="input__boxes grid single__row">
                   <div class="input__box">
                     <input
-                      class="information__input" value="{{ old('memo_title') }}"
-                      placeholder="Enter Title" name="memo_title"
+                      class="information__input" value="{{ old('title') }}"
+                      placeholder="Enter Title" name="title"
                     />
-                    <span class="input__title">Memo Title</span>
-                    @if ($errors->has('memo_title'))
-                      <p class="text-danger">{{$errors->first('memo_title')}}</p>
+                    <span class="input__title">Broadcast Title</span>
+                    @if ($errors->has('title'))
+                      <p class="text-danger">{{$errors->first('title')}}</p>
                     @endif
                   </div>
                 </div>
-                <div class="input__boxes grid single__row_v2">
-                  <div class="input__box">
-                    <input
-                      class="information__input" value="{{ old('subject') }}"
-                      placeholder="Enter subject" name="subject"
-                    />
-                    <span class="input__title">Subject</span>
-                    @if ($errors->has('subject'))
-                      <p class="text-danger">{{$errors->first('subject')}}</p>
-                    @endif
-                  </div>
-                  <div class="input__box">
-                    <input
-                      class="information__input" value="{{ old('reference') }}"
-                      placeholder="Enter Reference" name="reference"
-                    />
-                    <span class="input__title">Reference (Optional)</span>
-                  </div>
-                </div>
-                <div class="input__boxes grid second__row_v2">
+                <div class="input__boxes grid second__row_v3">
                   <div class="input__box">
                     <input type="date"
-                      class="information__input" value="{{ old('date') }}"
-                      placeholder="Enter date" name="date"
+                      class="information__input" value="{{ old('date_effective') }}"
+                      placeholder="Enter effective date" name="date_effective"
                     />
-                    <span class="input__title">Date</span>
-                    @if ($errors->has('date'))
-                      <p class="text-danger">{{$errors->first('date')}}</p>
+                    <span class="input__title">Effective Date</span>
+                    @if ($errors->has('date_effective'))
+                      <p class="text-danger">{{$errors->first('date_effective')}}</p>
                     @endif
                   </div>
                   <div class="input__box">
-                    <input
-                      class="information__input" value="{{ old('sender') }}"
-                      placeholder="Enter Sender" name="sender"
+                    <input type="date"
+                      class="information__input" value="{{ old('date_expired') }}"
+                      placeholder="Enter effective date" name="date_expired"
                     />
-                    <span class="input__title">Sender</span>
-                    @if ($errors->has('sender'))
-                      <p class="text-danger">{{$errors->first('sender')}}</p>
+                    <span class="input__title">Expired Date</span>
+                    @if ($errors->has('date_expired'))
+                      <p class="text-danger">{{$errors->first('date_expired')}}</p>
+                    @endif
+                  </div>
+                  <div class="input__box">
+                    <ion-icon class="pos__abs input__chev__down" name="chevron-down-outline"></ion-icon>
+                    <select
+                        class="information__input" name="priority_level" placeholder="Select">
+                        <option value="" disabled selected>
+                          Select
+                        </option>
+                        <option value="Urgent" {{ old('priority_level') == "Urgent" ? 'selected' : '' }}>Urgent</option>
+                        <option value="Immediate" {{ old('priority_level') == "Immediate" ? 'selected' : '' }}>Immediate</option>
+                        <option value="Standard" {{ old('priority_level') == "Standard" ? 'selected' : '' }}>Standard</option>
+                    </select>
+                    <span class="input__title">Priority Level</span>
+                    @if ($errors->has('priority_level'))
+                      <p class="text-danger">{{$errors->first('priority_level')}}</p>
                     @endif
                   </div>
                   <div class="input__box">
