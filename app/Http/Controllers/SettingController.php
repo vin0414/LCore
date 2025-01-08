@@ -461,6 +461,115 @@ class SettingController extends Controller
             return response()->json(['success' => 'Great! Successfully saved']);
         }
     }
+    
+
+    public function addJob(Request $request)
+    {
+        date_default_timezone_set('Asia/Manila');
+        $designationModel = new \App\Models\designationModel();
+        //data
+        $validator = Validator::make($request->all(),[
+            'job_title'=>'required|unique:tbljob,jobTitle',
+            'jobLevel'=>'required',
+            'responsibilities'=>'required',
+        ]);
+
+        if ($validator->fails()) {
+            // Return validation errors as JSON
+            return response()->json(['errors' => $validator->errors()]);
+        }
+        else
+        {
+            $data = ['jobTitle'=>$request->job_title,'jobLevel'=>$request->jobLevel,'Responsibilities'=>$request->responsibilities,'accountID'=>session('user_id')];
+            $designationModel->create($data);
+            //create log record
+            $logModel = new \App\Models\logModel();
+            $date = date('Y-m-d h:i:s a');
+            $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Add new job title and responsibilities'];
+            $logModel->create($data);
+            return response()->json(['success' => 'Great! Successfully saved']);
+        }
+    }
+
+    public function editJob(Request $request)
+    {
+        $designationModel = new \App\Models\designationModel();
+        $job = $designationModel->WHERE('jobID',$request->value)->first();
+        if($job)
+        {
+          ?>
+          <form method="POST" class="form__modal" id="frmEditDesignation">
+            <input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
+            <input type="hidden" name="jobID" value="<?php echo $job['jobID']?>"/>
+            <div class="input__form__modal__box">
+              <div class="input__box">
+                <input
+                  class="information__input"
+                  placeholder="Enter job title"
+                  name="edit_job_title" value="<?php echo $job['jobTitle']?>"
+                />
+                <span class="input__title">Job Title</span>
+                <div id="edit_job_title-error" class="error-message text-danger"></div>
+              </div>
+              <div class="input__box pos__rel">
+                <select class="information__input" name="edit_jobLevel" id="jobLevel">
+                  <option value="" disabled selected>
+                    Select Job Level
+                  </option>
+                    <option <?php echo ($job['jobLevel'] == 'Rank and File') ? 'selected' : ''; ?>>Rank and File</option>
+                    <option <?php echo ($job['jobLevel'] == 'Specialist') ? 'selected' : ''; ?>>Specialist</option>
+                    <option <?php echo ($job['jobLevel'] == 'Officer') ? 'selected' : ''; ?>>Officer</option>
+                    <option <?php echo ($job['jobLevel'] == 'Supervisor') ? 'selected' : ''; ?>>Supervisor</option>
+                    <option <?php echo ($job['jobLevel'] == 'Managerial') ? 'selected' : ''; ?>>Managerial</option>
+                    <option <?php echo ($job['jobLevel'] == 'Executive') ? 'selected' : ''; ?>>Executive</option>
+                </select>
+                <ion-icon class="pos__abs icon__select__designation" name="chevron-down-outline"></ion-icon>
+                <span class="input__title">Job Level</span>
+                <div id="edit_jobLevel-error" class="error-message text-danger"></div>
+              </div>
+              <div class="input__box">
+                <textarea
+                style="height: 15rem"
+                  class="information__input"
+                  placeholder="Enter responsibilities"
+                  name="edit_responsibilities"><?php echo $job['Responsibilities']?></textarea>
+                <span class="input__title">Responsibilities</span>
+                <div id="edit_responsibilities-error" class="error-message text-danger"></div>
+              </div>
+            </div>
+            <button type="submit" class="btn__submit__modal submitJobForm"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+          </form>
+          <?php
+        }
+    }
+
+    public function updateJob(Request $request)
+    {
+        date_default_timezone_set('Asia/Manila');
+        $designationModel = new \App\Models\designationModel();
+        //data
+        $validator = Validator::make($request->all(),[
+            'edit_job_title'=>'required',
+            'edit_jobLevel'=>'required',
+            'edit_responsibilities'=>'required',
+        ]);
+
+        if ($validator->fails()) {
+            // Return validation errors as JSON
+            return response()->json(['errors' => $validator->errors()]);
+        }
+        else
+        {
+          $designationModel::where('jobID',$request->jobID)
+              ->update(['jobTitle'=>$request->edit_job_title,'jobLevel'=>$request->edit_jobLevel,'Responsibilities'=>$request->edit_responsibilities]);
+          //create log record
+          $logModel = new \App\Models\logModel();
+          $date = date('Y-m-d h:i:s a');
+          $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Update job title and responsibilities'];
+          $logModel->create($data);
+          return response()->json(['success' => 'Great! Successfully applied changes']);
+        }
+    }
 
     public function generateFirstLeaveCredit()
     {

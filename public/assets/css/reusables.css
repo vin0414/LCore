@@ -701,6 +701,10 @@ a.no-underline {
 textarea {
     resize: none;
 }
+.w-300{
+    width:300px;
+}
+
 .w-275 {
     width: 275px;
 }
@@ -715,6 +719,9 @@ textarea {
 }
 .w-100 {
     width: 100px;
+}
+.w-50{
+    width: 50px;
 }
 .form-control {
     padding: 1rem;

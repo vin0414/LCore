@@ -74,3 +74,8 @@ function closeDesignationModal() {
     $("#jobCreateModal").css("display", "none");
     $("body").removeClass("no-scroll");
 }
+
+function closeEditDesignationModal() {
+    $("#edit_jobCreateModal").css("display", "none");
+    $("body").removeClass("no-scroll");
+}

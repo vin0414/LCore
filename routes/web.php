@@ -69,6 +69,9 @@ Route::post('update-credit-leave',[SettingController::class,'updateCreditLeave']
 Route::post('add-schedule',[SettingController::class,'addSchedule'])->name('add-schedule');
 Route::get('edit-schedule',[SettingController::class,'editSchedule'])->name('edit-schedule');
 Route::post('update-schedule',[SettingController::class,'updateSchedule'])->name('update-schedule');
+Route::post('add-job',[SettingController::class,'addJob'])->name('add-job');
+Route::get('edit-job',[SettingController::class,'editJob'])->name('edit-job');
+Route::post('update-job',[SettingController::class,'updateJob'])->name('update-job');
 //memo
 Route::post('save-memo',[MemoController::class,'saveMemo'])->name('save-memo');
 

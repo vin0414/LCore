@@ -343,10 +343,13 @@ class HomeController extends Controller
             //leave setup
             $leaveSetupModel = new \App\Models\leaveSetupModel();
             $leaveSetup = $leaveSetupModel->all();
+            //designation
+            $designationModel = new \App\Models\designationModel();
+            $job = $designationModel->all();
 
             $data = ['title'=>$title,'about'=>$about,'account'=>$account,
                     'office'=>$office,'department'=>$department,'schedule'=>$scheduler,
-                    'leaveSetup'=>$leaveSetup];
+                    'leaveSetup'=>$leaveSetup,'job'=>$job];
             return view('hr/settings',$data);
         }
         else
