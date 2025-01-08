@@ -93,7 +93,11 @@ class HomeController extends Controller
         $title = "New Memorandum";
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
-        $data = ['title'=>$title,'about'=>$about];
+        //department
+        $departmentModel = new \App\Models\departmentModel();
+        $department = $departmentModel->all();
+
+        $data = ['title'=>$title,'about'=>$about,'department'=>$department];
         return view('hr/memo/new-memo',$data);
     }
 
