@@ -40,8 +40,9 @@
 .picture__box.pos__rel {
     display: inline-block;
     padding: 3rem;
-    border: 1px solid var(--black-color);
+
     border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 .profile__heading {
     font-weight: 600;
