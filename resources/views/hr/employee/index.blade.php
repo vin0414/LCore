@@ -632,9 +632,6 @@
                               <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item promote">
                                 <ion-icon class="select__icon" name="ribbon-outline"></ion-icon>Promotion
                               </button>
-                              <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item changeSchedule">
-                                <ion-icon class="select__icon" name="calendar-outline"></ion-icon>Change Schedule
-                              </button>
                               <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item backOut">
                                 <ion-icon class="select__icon" name="play-back-outline"></ion-icon>Back-Out
                               </button>

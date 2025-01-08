@@ -176,8 +176,11 @@ class HomeController extends Controller
         //department
         $departmentModel = new \App\Models\departmentModel();
         $department = $departmentModel->WHERE('officeID',$employee['officeID'])->get();
+        //movement
+        $recordModel = new \App\Models\recordModel();
+        $record = $recordModel->WHERE('employeeID',$employee['employeeID'])->orderBy('dateHired','DESC')->get();
 
-        $data = ['title'=>$title,'employee'=>$employee,'about'=>$about,'office'=>$office,'department'=>$department];
+        $data = ['title'=>$title,'employee'=>$employee,'about'=>$about,'office'=>$office,'department'=>$department,'record'=>$record];
         return view('hr/employee/view-employee',$data);
     }
 

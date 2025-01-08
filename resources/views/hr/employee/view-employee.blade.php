@@ -796,50 +796,23 @@
             <p class="profile__heading government__details">Career Movement</p>
             <div class="history__grid__layout">
               <div class="history__container">
+                <?php foreach($record as $row):?>
+                <?php
+                $dateObj = new DateTime($row['dateHired']);
+                $formattedDate = $dateObj->format('d M Y');
+                ?>
                 <div class="history__box ">
-                  <p class="history__date">January 2025</p>
+                  <p class="history__date"><?php echo $formattedDate ?></p>
                   <div class="history__title__desc">
                     <div class="history__heading">
-                      <p class="history__title">Job Transfer</p>
+                      <p class="history__title"><?php echo $row['Remarks'] ?></p>
                       <ion-icon name="repeat-outline" class="history__icon"></ion-icon>
                     </div>
-                    <p class="history__description">Moved from area to head office</p>
-                    <p class="history__description history__data">Taliwas Office <ion-icon name="arrow-forward-outline"></ion-icon><span class="new__data">Cabanatuan Office</span></p>
+                    <p class="history__description"><?php echo $row['Comment_1'] ?></p>
+                    <p class="history__description history__data"><?php echo $row['Comment_2'] ?></p>
                   </div>
-                </div>
-                <div class="history__box ">
-                  <p class="history__date">December 2025</p>
-                  <div class="history__title__desc">
-                    <div class="history__heading">
-                      <p class="history__title">Promotion</p>
-                      <ion-icon name="medal-outline" class="history__icon"></ion-icon>
-                    </div>
-                    <p class="history__description">Promoted from Jr. Developer to System Developer</p>
-                    <p class="history__description history__data">12,000.00 <ion-icon name="arrow-forward-outline"></ion-icon> <span class="new__data">21,000.00</span></p>
-                  </div>
-                </div>
-                <div class="history__box ">
-                  <p class="history__date">September 2024</p>
-                  <div class="history__title__desc">
-                    <div class="history__heading">
-                      <p class="history__title">Allowance</p>
-                      <ion-icon name="wallet-outline" class="history__icon"></ion-icon>
-                    </div>
-                    <p class="history__description">Allowance adjusted</p>
-                    <p class="history__description history__data">0.00<ion-icon name="arrow-forward-outline"></ion-icon> <span class="new__data">500.00</span></p>
-                  </div>
-                </div>
-                <div class="history__box ">
-                  <p class="history__date">May 2024</p>
-                  <div class="history__title__desc">
-                    <div class="history__heading">
-                        <p class="history__title">Salary Adjustment</p>
-                        <ion-icon name="wallet-outline" class="history__icon"></ion-icon>
-                     </div>
-                    <p class="history__description">Annual salary increase</p>
-                    <p class="history__description history__data">11,000.00 <ion-icon name="arrow-forward-outline"></ion-icon> <span class="new__data">12,000.00</span></p>
-                  </div>
-                </div>  
+                </div> 
+                <?php endforeach; ?>
               </div>
               <div class="desc__box">
                 <p class="history__title"><span>{{ $employee['firstName'] .' ' . $employee['middleName'] .'. ' . $employee['surName'] }}</span>'s</p>

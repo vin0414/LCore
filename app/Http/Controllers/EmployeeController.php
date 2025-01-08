@@ -103,7 +103,7 @@ class EmployeeController extends Controller
         //save the first record of the employee
         $newData = ['employeeID'=>$employeeRecord['employeeID'],'dateHired'=>$request->date_hired,
                     'Designation'=>$request->designation,'officeID'=>$request->office,'departmentID'=>$request->department,
-                    'employmentStatus'=>$employment_status,'end_date'=>'0000-00-00','cost'=>$cost,'Remarks'=>'Training','Attachment'=>''];
+                    'employmentStatus'=>$employment_status,'end_date'=>'0000-00-00','cost'=>$cost,'Remarks'=>'Training','Comment_1'=>'Undergoing training','Attachment'=>''];
         $recordModel->create($newData);
         //create log record
         $logModel = new \App\Models\logModel();
@@ -581,6 +581,7 @@ class EmployeeController extends Controller
         }
         else
         {
+            $comment1 = "The employee's job title has been changed to ".$request->designation;
             //get the companyID
             $employee = $employeeModel->WHERE('employeeID',$request->employeeID)->first();
             //change the designation
@@ -595,7 +596,7 @@ class EmployeeController extends Controller
             $newData = ['employeeID'=>$record['employeeID'],'dateHired'=>$newDate,'Designation'=>$request->designation,
                         'officeID'=>$record['officeID'],'departmentID'=>$record['departmentID'],
                         'employmentStatus'=>$record['employmentStatus'],'end_date'=>$record['end_date'],
-                        'cost'=>$record['cost'],'Remarks'=>'Change Job Title','Attachment'=>''];
+                        'cost'=>$record['cost'],'Remarks'=>'Change Job Title','Comment_1'=>$comment1,'Attachment'=>''];
             $recordModel->create($newData);
             //create log record
             $logModel = new \App\Models\logModel();
@@ -624,6 +625,7 @@ class EmployeeController extends Controller
         }
         else
         {
+            $comment1 = "The employee has been given a new assignment in ".$request->department;
             //get the companyID
             $employee = $employeeModel->WHERE('employeeID',$request->employeeID)->first();
             //change the office and department
@@ -638,7 +640,7 @@ class EmployeeController extends Controller
             $newData = ['employeeID'=>$record['employeeID'],'dateHired'=>$newDate,'Designation'=>$record['Designation'],
                         'officeID'=>$request->office,'departmentID'=>$request->department,
                         'employmentStatus'=>$record['employmentStatus'],'end_date'=>'0000-00-00',
-                        'cost'=>$record['cost'],'Remarks'=>'New Assignment','Attachment'=>''];
+                        'cost'=>$record['cost'],'Remarks'=>'New Assignment','Comment_1'=>$comment1,'Attachment'=>''];
             $recordModel->create($newData);
             //create log record
             $logModel = new \App\Models\logModel();
@@ -668,6 +670,8 @@ class EmployeeController extends Controller
         }
         else
         {
+            $comment1 = "The employee has been given a new assignment in ".$request->new_department;
+            $comment2 = "The employee's job title has been changed to ".$request->new_position;
             //get the companyID
             $employee = $employeeModel->WHERE('employeeID',$request->employeeID)->first();
             //change the office and department and designation
@@ -682,7 +686,7 @@ class EmployeeController extends Controller
             $newData = ['employeeID'=>$record['employeeID'],'dateHired'=>$newDate,'Designation'=>$request->new_position,
                         'officeID'=>$request->new_office,'departmentID'=>$request->new_department,
                         'employmentStatus'=>$record['employmentStatus'],'end_date'=>'0000-00-00',
-                        'cost'=>$record['cost'],'Remarks'=>'New Job Title and Assignment','Attachment'=>''];
+                        'cost'=>$record['cost'],'Remarks'=>'New Job Title and Assignment','Comment_1'=>$comment1,'Comment_2'=>$comment2,'Attachment'=>''];
             $recordModel->create($newData);
             //create log record
             $logModel = new \App\Models\logModel();
@@ -711,6 +715,7 @@ class EmployeeController extends Controller
         }
         else
         {
+            $comment1 = "The employee has received a salary adjustment";
             $cost = str_replace(",", "", $request->salary);
             $file = $request->file('document');$filename="";
             if ($request->hasFile('document') && $request->file('document')->isValid()) 
@@ -733,7 +738,7 @@ class EmployeeController extends Controller
             $newData = ['employeeID'=>$record['employeeID'],'dateHired'=>$newDate,'Designation'=>$record['Designation'],
                         'officeID'=>$record['officeID'],'departmentID'=>$record['departmentID'],
                         'employmentStatus'=>$record['employmentStatus'],'end_date'=>'0000-00-00',
-                        'cost'=>$cost,'Remarks'=>'Salary Adjustment','Attachment'=>$filename];
+                        'cost'=>$cost,'Remarks'=>'Salary Adjustment','Comment_1'=>$comment1,'Attachment'=>$filename];
             $recordModel->create($newData);
             //create log record
             $logModel = new \App\Models\logModel();
@@ -764,6 +769,9 @@ class EmployeeController extends Controller
         }
         else
         {
+            $comment1 = "The employee has been demoted to ".$request->new_job_title;
+            $comment2 = "The employee has received a salary adjustment";
+
             $cost = str_replace(",", "", $request->new_rate);
             $file = $request->file('attachments');$filename="";
             if ($request->hasFile('attachments') && $request->file('attachments')->isValid()) 
@@ -788,7 +796,7 @@ class EmployeeController extends Controller
             $newData = ['employeeID'=>$record['employeeID'],'dateHired'=>$newDate,'Designation'=>$request->new_job_title,
                         'officeID'=>$record['officeID'],'departmentID'=>$record['departmentID'],
                         'employmentStatus'=>$record['employmentStatus'],'end_date'=>'0000-00-00',
-                        'cost'=>$cost,'Remarks'=>'Demoted','Attachment'=>$filename];
+                        'cost'=>$cost,'Remarks'=>'Demoted','Comment_1'=>$comment1,'Comment_2'=>$comment2,'Attachment'=>$filename];
             $recordModel->create($newData);
             //create log record
             $logModel = new \App\Models\logModel();
@@ -819,6 +827,9 @@ class EmployeeController extends Controller
         }
         else
         {
+            $comment1 = "The employee has been promoted to ".$request->job_title;
+            $comment2 = "The employee has received a salary adjustment";
+
             $cost = str_replace(",", "", $request->rate);
             $file = $request->file('attachment');$filename="";
             if ($request->hasFile('attachment') && $request->file('attachment')->isValid()) 
@@ -843,7 +854,7 @@ class EmployeeController extends Controller
             $newData = ['employeeID'=>$record['employeeID'],'dateHired'=>$newDate,'Designation'=>$request->job_title,
                         'officeID'=>$record['officeID'],'departmentID'=>$record['departmentID'],
                         'employmentStatus'=>$record['employmentStatus'],'end_date'=>'0000-00-00',
-                        'cost'=>$cost,'Remarks'=>'Promotion','Attachment'=>$filename];
+                        'cost'=>$cost,'Remarks'=>'Promotion','Comment_1'=>$comment1,'Comment_2'=>$comment2,'Attachment'=>$filename];
             $recordModel->create($newData);
             //create log record
             $logModel = new \App\Models\logModel();

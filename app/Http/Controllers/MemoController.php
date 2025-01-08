@@ -19,10 +19,19 @@ class MemoController extends Controller
             'sender'=>'required',
             'recipient'=>'required',
             'details'=>'required',
-            'file'=>'required'
+            'file'=>'required|file|max:10240'
         ]);
-
-        $data = ['Date','Title','Reference','Sender','Recipient','Subject','Details','File','accountID','Status'];
+        $status = 1;
+        $file = $request->file('file');$filename="";
+        if ($request->hasFile('file') && $request->file('file')->isValid()) 
+        {
+            $filename = date('Ymdhis').$file->getClientOriginalName();
+            // Define the path where the image should be saved
+            $file->move('memo/',$filename);
+        }
+        $data = ['Date'=>$request->date,'Title','Reference',
+                'Sender','Recipient','Subject',
+                'Details','File','accountID','Status'];
         //create log record
         $logModel = new \App\Models\logModel();
         $date = date('Y-m-d h:i:s a');
