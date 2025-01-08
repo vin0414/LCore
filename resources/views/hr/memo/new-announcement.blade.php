@@ -155,10 +155,19 @@
               <li class="dropdown__item"><a href="{{route('hr/employee/directories')}}" class="no-underline">Directories</a></li>
             </ul>
           </li>
-          <li class="nav__item">Memo<ion-icon name="chevron-down-outline"></ion-icon>
+          <li class="nav__item">Track Leave <ion-icon name="chevron-down-outline"></ion-icon>
             <ul class="dropdown">
-              <li class="dropdown__item"><a href="{{route('hr/memo')}}" class="no-underline">All Memo</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/memo/new')}}" class="no-underline">New Memo</a></li>
+              <li class="dropdown__item"><a href="" class="no-underline">Calendar & Request</a></li>
+              <li class="dropdown__item"><a href="" class="no-underline">Balances</a></li>
+              <li class="dropdown__item"><a href="" class="no-underline">Types & Policies</a></li>
+              <li class="dropdown__item"><a href="" class="no-underline">Approval Workflow</a></li>
+            </ul>
+          </li>
+          <li class="nav__item">Memos & Broadcast<ion-icon name="chevron-down-outline"></ion-icon>
+            <ul class="dropdown">
+              <li class="dropdown__item"><a href="{{route('hr/memo')}}" class="no-underline">Overview</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/memo/new')}}" class="no-underline">Post Memo</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/memo/new-announcement')}}" class="no-underline">New Broadcast</a></li>
             </ul>
           </li>
           <li class="nav__item">
@@ -198,7 +207,7 @@
                 class="sidebar__icon"
                 name="document-text-outline"
               ></ion-icon
-              >Create Memo</a
+              >Post Memo</a
             >
           </li>
           <li>
@@ -256,7 +265,7 @@
         <div class="card_container">
           <div class="card">
             <div class="card-header">
-              <div class="subheading">Create Announcement</div>
+              <div class="subheading">New Broadcast</div>
             </div>
             <div class="card-body">
               <form method="POST" id="frmMemo" enctype="multipart/form-data" action="{{route('save-announcement')}}">

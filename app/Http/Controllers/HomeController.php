@@ -63,14 +63,18 @@ class HomeController extends Controller
     //memo
     public function memo()
     {
-        $title = "Memo and Announcement";
+        $title = "Memos and Broadcast";
         //application
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
         //memo
         $memoModel = new \App\Models\memoModel();
         $memo = $memoModel->all();
-        $data = ['title'=>$title,'about'=>$about,'memo'=>$memo];
+        //announcement
+        $announcementModel = new \App\Models\announcementModel();
+        $announce = $announcementModel->all();
+
+        $data = ['title'=>$title,'about'=>$about,'memo'=>$memo,'announce'=>$announce];
         return view('hr/memo/index',$data);
     }
 
@@ -106,7 +110,7 @@ class HomeController extends Controller
 
     public function newAnnouncement()
     {
-        $title = "New Announcement";
+        $title = "Broadcast";
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
         //department

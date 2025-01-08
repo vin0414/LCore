@@ -157,10 +157,19 @@
               <li class="dropdown__item"><a href="{{route('hr/employee/directories')}}" class="no-underline">Directories</a></li>
             </ul>
           </li>
-          <li class="nav__item">Memo<ion-icon name="chevron-down-outline"></ion-icon>
+          <li class="nav__item">Track Leave <ion-icon name="chevron-down-outline"></ion-icon>
             <ul class="dropdown">
-              <li class="dropdown__item"><a href="{{route('hr/memo')}}" class="no-underline">All Memo</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/memo/new')}}" class="no-underline">New Memo</a></li>
+              <li class="dropdown__item"><a href="" class="no-underline">Calendar & Request</a></li>
+              <li class="dropdown__item"><a href="" class="no-underline">Balances</a></li>
+              <li class="dropdown__item"><a href="" class="no-underline">Types & Policies</a></li>
+              <li class="dropdown__item"><a href="" class="no-underline">Approval Workflow</a></li>
+            </ul>
+          </li>
+          <li class="nav__item">Memos & Broadcast<ion-icon name="chevron-down-outline"></ion-icon>
+            <ul class="dropdown">
+              <li class="dropdown__item"><a href="{{route('hr/memo')}}" class="no-underline">Overview</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/memo/new')}}" class="no-underline">Post Memo</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/memo/new-announcement')}}" class="no-underline">New Broadcast</a></li>
             </ul>
           </li>
           <li class="nav__item">
@@ -201,7 +210,7 @@
                 class="sidebar__icon"
                 name="document-text-outline"
               ></ion-icon
-              >Create Memo</a
+              >Post Memo</a
             >
           </li>
           <li>
@@ -263,8 +272,8 @@
         @endif
         <div class="tabs">
           <ul class="tab-titles">
-            <li class="tab active" id="tab1" onclick="openTab('tab1')">Memo</li>
-            <li class="tab" id="tab2" onclick="openTab('tab2')">Announcement</li>
+            <li class="tab active" id="tab1" onclick="openTab('tab1')">Memos</li>
+            <li class="tab" id="tab2" onclick="openTab('tab2')">Broadcast</li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="content-tab1">
@@ -293,7 +302,7 @@
                       <td>{{$row['Recipient']}}</td>
                       <td>
                       <span class="badge {{ $row['Status'] == 1 ? 'badge-success' : 'badge-warning' }}">
-                        {{ $row['Status'] == 1 ? 'Active' : 'Archived' }}
+                        {{ $row['Status'] == 1 ? 'Active' : 'Archive' }}
                       </span>
                       </td>
                       <td><a href="/memo/{{$row['File']}}" class="no-underline" target="_BLANK">{{$row['File']}}</a></td>
@@ -339,7 +348,17 @@
                         <th>Action</th>
                     </thead>
                     <tbody>
-                    
+                    @foreach($announce as $row)
+                    <tr>
+                      <td>{{$row['dateEffective']}}</td>
+                      <td>{{$row['Title']}}</td>
+                      <td>{{$row['Details']}}</td>
+                      <td>{{$row['Recipient']}}</td>
+                      <td>{{$row['priorityLevel']}}</td>
+                      <td><a href="/memo/{{$row['File']}}" class="no-underline" target="_BLANK">{{$row['File']}}</a></td>
+                      <td></td>
+                    </tr>
+                    @endforeach
                     </tbody>
                   </table>
                 </div>
