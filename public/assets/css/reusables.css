@@ -569,8 +569,9 @@ a.no-underline {
 }
 
 .tab.active {
-    background-color: #e7e7e7;
+    background-color: var(--green-color-2);
     border-bottom: 2px solid #7ed957;
+    font-weight: 600;
 }
 
 .tab-content {
@@ -976,7 +977,6 @@ body.no-scroll {
     height: 1.8rem;
 }
 
-.text-dark
-{
-    color:#000;
+.text-dark {
+    color: #000;
 }

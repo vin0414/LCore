@@ -261,6 +261,7 @@
             <li class="tab active" id="tab1" onclick="openTab('tab1')">Application</li>
             <li class="tab" id="tab2" onclick="openTab('tab2')">User Accounts</li>
             <li class="tab" id="tab3" onclick="openTab('tab3')">Department/Branches</li>
+            <li class="tab" id="tab8" onclick="openTab('tab8')">Job Creation</li>
             <li class="tab" id="tab4" onclick="openTab('tab4')">Policies</li>
             <li class="tab" id="tab5" onclick="openTab('tab5')">Schedule</li>
             <li class="tab" id="tab6" onclick="openTab('tab6')">Leave Credits</li>
@@ -343,7 +344,7 @@
             <div class="tab-pane" id="content-tab2">
               <div class="pos__rel">
                 <div class="button__box pos__abs">
-                  <a href="{{route('hr/new-account')}}" class="link add__btn"
+                  <a href="#" class="link add__btn"
                     ><ion-icon class="icon" name="add-outline"></ion-icon>Add
                     Account</a
                   >
@@ -437,9 +438,64 @@
                 </div>
               </div>
             </div>
+            <div class="tab-pane" id="content-tab8">
+            <div class="tab__pane__items">
+                <div class="pos__rel card__box__item">
+                    <div class="button__box pos__abs button__policy">
+                      <a href="javascript:void(0);" class="link add__btn designation"
+                        ><ion-icon class="icon" name="add-outline"></ion-icon>Add
+                        Designation</a
+                      >
+                      <a href="#" class="link export__btn"
+                        ><ion-icon class="icon" name="download-outline"></ion-icon
+                        >Export</a
+                      >
+                    </div>
+                    <div class="dataWrapper policy__wrapper">
+                      <table id="designationTable" class="display">
+                        <thead>
+                            <th>#</th>
+                            <th>Job Title</th>
+                            <th>Job Level</th>
+                            <th>Responsibilities</th>
+                            <th>Action</th>
+
+                        </thead>
+                        <tbody>
+                        <?php foreach($account as $row): ?>
+                        <tr>
+                          <td>1</td>
+                          <td>Junior Developer</td>
+                          <td>Rank and File</td>
+                          <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum.</td>
+                          <td class="pos__rel">
+                          <button class="btn__select">
+                            <ion-icon
+                              name="ellipsis-horizontal"
+                              class="icon__button"
+                            ></ion-icon>
+                          </button>
+                          <div class="dropdown__select">
+                            <a href="{{route('hr/edit-account',['Token'=>$row['Token']])}}" class="select__item">
+                              <ion-icon class="select__icon" name="repeat-outline"></ion-icon>Edit Account
+                            </a>
+                            <button type="button" value="<?php echo $row['Token'] ?>" class="select__item reset">
+                              <ion-icon class="select__icon" name="refresh-outline"></ion-icon>Reset Password
+                            </button>
+                          </div>
+                        </td>
+                        </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+            </div>
             <div class="tab-pane" id="content-tab4">
-              <h2>Add Holiday, late and overtime policy here</h2>
-              <p>Designation and job level</p>
+            <h2>Content for Tab 8</h2>
+            <p>This is some content for Tab 8.</p>
             </div>
             <div class="tab-pane" id="content-tab5">
               <div class="pos__rel">
@@ -549,7 +605,7 @@
             <form method="POST" class="form__modal" id="frmDepartment">
               @csrf
               <div class="input__form__modal__box">
-                <div class="input__box">
+                <div class="input__box pos__rel">
                   <select class="information__input" name="office" id="office">
                     <option value="" disabled selected>
                       Select Office
@@ -558,6 +614,7 @@
                       <option value="<?php echo $row['officeID'] ?>"><?php echo $row['officeName'] ?></option>
                     <?php endforeach; ?>
                   </select>
+                  <ion-icon class="pos__abs icon__select__designation" name="chevron-down-outline"></ion-icon>
                   <span class="input__title">Office</span>
                   <div id="office-error" class="error-message text-danger"></div>
                 </div>
@@ -618,7 +675,7 @@
             <form method="POST" class="form__modal" id="frmCredit">
               @csrf
               <div class="input__form__modal__box">
-                <div class="input__box">
+                <div class="input__box pos__rel">
                   <select class="information__input" name="month">
                     <option value="" disabled selected>
                       Select Month
@@ -636,6 +693,7 @@
                     <option>November</option>
                     <option>December</option>
                   </select>
+                  <ion-icon class="pos__abs icon__select__designation" name="chevron-down-outline"></ion-icon>
                   <span class="input__title">Month</span>
                   <div id="month-error" class="error-message text-danger"></div>
                 </div>
@@ -688,7 +746,7 @@
             <form method="POST" class="form__modal" id="frmSchedule">
               @csrf
               <div class="input__form__modal__box">
-                <div class="input__box">
+                <div class="input__box pos__rel">
                   <select class="information__input" name="type_schedule">
                     <option value="" disabled selected>
                       Select Type
@@ -696,6 +754,7 @@
                     <option>Default</option>
                     <option>Modified</option>
                   </select>
+                  <ion-icon class="pos__abs icon__select__designation" name="chevron-down-outline"></ion-icon>
                   <span class="input__title">Type of Schedule</span>
                   <div id="type_schedule-error" class="error-message text-danger"></div>
                 </div>
@@ -717,7 +776,7 @@
                   <span class="input__title">To</span>
                   <div id="to_time-error" class="error-message text-danger"></div>
                 </div>
-                <div class="input__box">
+                <div class="input__box pos__rel">
                   <select class="information__input" name="break_time">
                     <option value="" disabled selected>
                       Select
@@ -726,6 +785,7 @@
                     <option>12:00 PM - 01:00 PM</option>
                     <option>01:00 PM - 02:00 PM</option>
                   </select>
+                  <ion-icon class="pos__abs icon__select__designation" name="chevron-down-outline"></ion-icon>
                   <span class="input__title">Break Time</span>
                   <div id="break_time-error" class="error-message text-danger"></div>
                 </div>
@@ -747,6 +807,58 @@
             <div id="scheduleResult"></div>
         </div>
     </div>
+        <!-- add department-->
+        <div class="modal-overlay" id="jobCreateModal">
+        <div class="modal">
+          <div class="modal__heading">
+            <div class="heading__modal__box">
+              <h2 class="heading__modal">Add Designation</h2>
+              <p class="subheading__modal">New Designation</p>
+            </div>
+            <div class="close__box"><ion-icon onclick="closeDesignationModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+            </div>
+            <form method="POST" class="form__modal" id="frmDesignation">
+              @csrf
+              <div class="input__form__modal__box">
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter job title"
+                    name="job-title"
+                  />
+                  <span class="input__title">Job Title</span>
+                  <div id="job-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box pos__rel">
+                  <select class="information__input" name="jobLevel" id="jobLevel">
+                    <option value="" disabled selected>
+                      Select Job Level
+                    </option>
+                      <option value="">Rank and File</option>
+                      <option value="">Specialist</option>
+                      <option value="">Officer</option>
+                      <option value="">Supervisor</option>
+                      <option value="">Manegerial</option>
+                      <option value="">Executive</option>
+                  </select>
+                  <ion-icon class="pos__abs icon__select__designation" name="chevron-down-outline"></ion-icon>
+                  <span class="input__title">Office</span>
+                  <div id="office-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <textarea
+                  style="height: 15rem"
+                    class="information__input"
+                    placeholder="Enter responsibilities"
+                    name="department"></textarea>
+                  <span class="input__title">Responsibilities</span>
+                  <div id="department-error" class="error-message text-danger"></div>
+                </div>
+              </div>
+              <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+            </form>
+        </div>
+    </div>
     <footer class="footer">
       <p class="copyright">&copy;{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }} <?php echo date('Y') ?>. All Rights Reserved.</p>
     </footer>
@@ -763,11 +875,25 @@
           initComplete: function () {
             $("#dataTable_filter input").attr(
               "placeholder",
-              "Search by name, etc."
+              "Search by name , etc."
             );
           },
         });
 
+        $("#designationTable").DataTable({
+          dom:
+            "<'row'<'col-sm-6'f>>" + // Search box on top in the same row
+            "<'row'<'col-sm-12'tr>>" + // Table
+            "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'p>>", // Bottom (length + pagination)
+
+          oLanguage: { sSearch: "" },
+          initComplete: function () {
+            $("#designationTable_filter input").attr(
+              "placeholder",
+              "Search by designation, etc."
+            );
+          },
+        });
         $("#departmentTable").DataTable({
           dom:
             "<'row'<'col-sm-6'f>>" + // Search box on top in the same row
@@ -778,7 +904,7 @@
           initComplete: function () {
             $("#departmentTable_filter input").attr(
               "placeholder",
-              "Search by name, etc."
+              "Search by department, etc."
             );
           },
         });
@@ -793,7 +919,7 @@
           initComplete: function () {
             $("#scheduleTable_filter input").attr(
               "placeholder",
-              "Search by name, etc."
+              "Search by date, etc."
             );
           },
         });
