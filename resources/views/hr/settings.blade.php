@@ -822,12 +822,12 @@
                   <option value="" disabled selected>
                     Select Job Level
                   </option>
-                    <option>Rank and File</option>
-                    <option>Specialist</option>
-                    <option>Officer</option>
-                    <option>Supervisor</option>
-                    <option>Managerial</option>
-                    <option>Executive</option>
+                  <option>Rank and File</option>
+                  <option>Specialist</option>
+                  <option>Officer</option>
+                  <option>Supervisor</option>
+                  <option>Managerial</option>
+                  <option>Executive</option>
                 </select>
                 <ion-icon class="pos__abs icon__select__designation" name="chevron-down-outline"></ion-icon>
                 <span class="input__title">Job Level</span>
