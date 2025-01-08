@@ -77,18 +77,28 @@ class HomeController extends Controller
     public function editMemo($id)
     {
         $title = "Edit Memorandum";
+        //application
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
-        $data = ['title'=>$title,'about'=>$about];
+        //department
+        $departmentModel = new \App\Models\departmentModel();
+        $department = $departmentModel->all();
+
+        $data = ['title'=>$title,'about'=>$about,'department'=>$department];
         return view('hr/memo/edit-memo',$data);
     }
 
     public function newMemo()
     {
         $title = "New Memorandum";
+        //application
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
-        $data = ['title'=>$title,'about'=>$about];
+        //department
+        $departmentModel = new \App\Models\departmentModel();
+        $department = $departmentModel->all();
+        
+        $data = ['title'=>$title,'about'=>$about,'department'=>$department];
         return view('hr/memo/new-memo',$data);
     }
 
@@ -343,10 +353,13 @@ class HomeController extends Controller
             //leave setup
             $leaveSetupModel = new \App\Models\leaveSetupModel();
             $leaveSetup = $leaveSetupModel->all();
+            //designation
+            $designationModel = new \App\Models\designationModel();
+            $job = $designationModel->all();
 
             $data = ['title'=>$title,'about'=>$about,'account'=>$account,
                     'office'=>$office,'department'=>$department,'schedule'=>$scheduler,
-                    'leaveSetup'=>$leaveSetup];
+                    'leaveSetup'=>$leaveSetup,'job'=>$job];
             return view('hr/settings',$data);
         }
         else

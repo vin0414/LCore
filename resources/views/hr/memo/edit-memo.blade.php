@@ -12,7 +12,7 @@
     />
     <link rel="stylesheet" href="/assets/css/reusables.css" />
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
-    <link rel="stylesheet" href="/assets/css/table.css" />
+    <link rel="stylesheet" href="/assets/css/new-account.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
     <link rel="icon" sizes="180x180" href="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : 'No Logo' }}"/>
   </head>
@@ -191,8 +191,7 @@
                 class="sidebar__icon"
                 name="cloud-upload-outline"
               ></ion-icon
-              >Upload Files</a
-            >
+              >Upload Files</a>
           </li>
           <li>
             <a href="{{route('hr/memo/new')}}" class="nav__links"
@@ -245,14 +244,128 @@
               ><ion-icon name="clipboard-outline"></ion-icon>Audit Trail</a
             >
           </li>
+          <?php } ?>
         </ul>
-        <?php } ?>
       </aside>
       <div class="container">
         <div class="heading__box flex flex__align__center">
           <h1 class="heading__primary">{{$title}}</h1>
           <div class="breadcrumbs">
             <p class="pages">Memo | <span>{{$title}}</span></p>
+          </div>
+        </div>
+        <div class="card_container">
+          <div class="card">
+            <div class="card-header">
+              <div class="subheading">Create Memo</div>
+            </div>
+            <div class="card-body">
+              <form method="POST" id="frmMemo" enctype="multipart/form-data" action="{{route('save-memo')}}">
+                @csrf
+                <div class="input__boxes grid single__row">
+                  <div class="input__box">
+                    <input
+                      class="information__input" value="{{ old('memo_title') }}"
+                      placeholder="Enter Title" name="memo_title"
+                    />
+                    <span class="input__title">Memo Title</span>
+                    @if ($errors->has('memo_title'))
+                      <p class="text-danger">{{$errors->first('memo_title')}}</p>
+                    @endif
+                  </div>
+                </div>
+                <div class="input__boxes grid single__row_v2">
+                  <div class="input__box">
+                    <input
+                      class="information__input" value="{{ old('subject') }}"
+                      placeholder="Enter subject" name="subject"
+                    />
+                    <span class="input__title">Subject</span>
+                    @if ($errors->has('subject'))
+                      <p class="text-danger">{{$errors->first('subject')}}</p>
+                    @endif
+                  </div>
+                  <div class="input__box">
+                    <input
+                      class="information__input" value="{{ old('reference') }}"
+                      placeholder="Enter Reference" name="reference"
+                    />
+                    <span class="input__title">Reference (Optional)</span>
+                  </div>
+                </div>
+                <div class="input__boxes grid second__row_v2">
+                  <div class="input__box">
+                    <input type="date"
+                      class="information__input" value="{{ old('date') }}"
+                      placeholder="Enter date" name="date"
+                    />
+                    <span class="input__title">Date</span>
+                    @if ($errors->has('date'))
+                      <p class="text-danger">{{$errors->first('date')}}</p>
+                    @endif
+                  </div>
+                  <div class="input__box">
+                    <input
+                      class="information__input" value="{{ old('sender') }}"
+                      placeholder="Enter Sender" name="sender"
+                    />
+                    <span class="input__title">Sender</span>
+                    @if ($errors->has('sender'))
+                      <p class="text-danger">{{$errors->first('sender')}}</p>
+                    @endif
+                  </div>
+                  <div class="input__box">
+                    <ion-icon class="pos__abs input__chev__down" name="chevron-down-outline"></ion-icon>
+                    <select
+                        class="information__input" name="recipient" placeholder="Select">
+                        <option value="" disabled selected>
+                          Select
+                        </option>
+                        <option value="All Employees" {{ old('recipient') == "All Employees" ? 'selected' : '' }}>All Employees</option>
+                        <?php foreach($department as $row): ?>
+                        <option value="<?php echo $row['departmentName'] ?>" <?php echo (old('recipient') == $row['departmentName'])  ? 'selected' : '' ?>><?php echo $row['departmentName']  ?></option>
+                        <?php endforeach;?>
+                    </select>
+                    <span class="input__title">Recipients</span>
+                    @if ($errors->has('recipient'))
+                      <p class="text-danger">{{$errors->first('recipient')}}</p>
+                    @endif
+                  </div>
+                </div>
+                <div class="input__boxes grid single__row">
+                  <div class="input__box">
+                    <textarea
+                      class="information__input" value="{{ old('details') }}"
+                      placeholder="Enter details" name="details" style="height:200px;"
+                    ></textarea>
+                    <span class="input__title">Details</span>
+                    @if ($errors->has('details'))
+                      <p class="text-danger">{{$errors->first('details')}}</p>
+                    @endif
+                  </div>
+                </div>
+                <div class="input__boxes grid single__row">
+                  <div class="input__box">
+                    <input type="file"
+                      class="information__input" value="{{ old('file') }}"
+                      placeholder="Attach file" name="file"
+                    />
+                    <span class="input__title">File</span>
+                    @if ($errors->has('file'))
+                      <p class="text-danger">{{$errors->first('file')}}</p>
+                    @endif
+                  </div>
+                </div>
+                <div class="btn__box">
+                  <a href="{{route('hr/memo')}}" class="btn__return">
+                    <ion-icon class="icon__add" name="arrow-back-outline"></ion-icon> Return
+                  </a>
+                  <button class="btn__primary" type="submit">
+                    <ion-icon class="icon__add" name="save-outline"></ion-icon> Save
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>

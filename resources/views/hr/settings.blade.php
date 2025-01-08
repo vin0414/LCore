@@ -412,7 +412,7 @@
                         <th>#</th>
                         <th class="w-200">Office</th>
                         <th class="w-275">Department</th>
-                        <th class="w-150">Landline</th>
+                        <th class="w-150">Landline #</th>
                         <th class="w-150">Code</th>
                         <th class="w-150">Date Created</th>
                         <th class="w-50">Action</th>
@@ -455,35 +455,23 @@
                       <table id="designationTable" class="display">
                         <thead>
                             <th>#</th>
-                            <th>Job Title</th>
-                            <th>Job Level</th>
-                            <th>Responsibilities</th>
-                            <th>Action</th>
-
+                            <th class="w-250">Job Title</th>
+                            <th class="w-150">Job Level</th>
+                            <th class="w-300">Responsibilities</th>
+                            <th class="w-50">Action</th>
                         </thead>
                         <tbody>
-                        <?php foreach($account as $row): ?>
+                        <?php foreach($job as $row): ?>
                         <tr>
-                          <td>1</td>
-                          <td>Junior Developer</td>
-                          <td>Rank and File</td>
-                          <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum.</td>
-                          <td class="pos__rel">
-                          <button class="btn__select">
-                            <ion-icon
-                              name="ellipsis-horizontal"
-                              class="icon__button"
-                            ></ion-icon>
-                          </button>
-                          <div class="dropdown__select">
-                            <a href="{{route('hr/edit-account',['Token'=>$row['Token']])}}" class="select__item">
-                              <ion-icon class="select__icon" name="repeat-outline"></ion-icon>Edit Account
-                            </a>
-                            <button type="button" value="<?php echo $row['Token'] ?>" class="select__item reset">
-                              <ion-icon class="select__icon" name="refresh-outline"></ion-icon>Reset Password
+                          <td><?php echo $row['jobID'] ?></td>
+                          <td><?php echo $row['jobTitle'] ?></td>
+                          <td><?php echo $row['jobLevel'] ?></td>
+                          <td><?php echo $row['Responsibilities'] ?></td>
+                          <td>
+                            <button type="button" value="<?php echo $row['jobID'] ?>" class="select__item form__button text-dark edit_job">
+                              <ion-icon class="select__icon" name="repeat-outline"></ion-icon>Edit
                             </button>
-                          </div>
-                        </td>
+                          </td>
                         </tr>
                         <?php endforeach; ?>
                         </tbody>
@@ -633,7 +621,7 @@
                     placeholder="Enter date"
                     name="date"
                   />
-                  <span class="input__title">Date Opened</span>
+                  <span class="input__title">Date Opened (Optional)</span>
                 </div>
                 <div class="input__box">
                   <input type="number"
@@ -641,7 +629,7 @@
                     placeholder="Enter Department Number"
                     name="department_number"
                   />
-                  <span class="input__title">Contact Number</span>
+                  <span class="input__title">Landline Number</span>
                   <div id="department_number-error" class="error-message text-danger"></div>
                 </div>
               </div>
@@ -807,57 +795,70 @@
             <div id="scheduleResult"></div>
         </div>
     </div>
-        <!-- add department-->
-        <div class="modal-overlay" id="jobCreateModal">
-        <div class="modal">
-          <div class="modal__heading">
-            <div class="heading__modal__box">
-              <h2 class="heading__modal">Add Designation</h2>
-              <p class="subheading__modal">New Designation</p>
-            </div>
-            <div class="close__box"><ion-icon onclick="closeDesignationModal()" class="icon__modal" name="close-outline"></ion-icon></div>
-            </div>
-            <form method="POST" class="form__modal" id="frmDesignation">
-              @csrf
-              <div class="input__form__modal__box">
-                <div class="input__box">
-                  <input
-                    class="information__input"
-                    placeholder="Enter job title"
-                    name="job-title"
-                  />
-                  <span class="input__title">Job Title</span>
-                  <div id="job-error" class="error-message text-danger"></div>
-                </div>
-                <div class="input__box pos__rel">
-                  <select class="information__input" name="jobLevel" id="jobLevel">
-                    <option value="" disabled selected>
-                      Select Job Level
-                    </option>
-                      <option value="">Rank and File</option>
-                      <option value="">Specialist</option>
-                      <option value="">Officer</option>
-                      <option value="">Supervisor</option>
-                      <option value="">Manegerial</option>
-                      <option value="">Executive</option>
-                  </select>
-                  <ion-icon class="pos__abs icon__select__designation" name="chevron-down-outline"></ion-icon>
-                  <span class="input__title">Office</span>
-                  <div id="office-error" class="error-message text-danger"></div>
-                </div>
-                <div class="input__box">
-                  <textarea
-                  style="height: 15rem"
-                    class="information__input"
-                    placeholder="Enter responsibilities"
-                    name="department"></textarea>
-                  <span class="input__title">Responsibilities</span>
-                  <div id="department-error" class="error-message text-danger"></div>
-                </div>
+    <!-- add job-->
+    <div class="modal-overlay" id="jobCreateModal">
+      <div class="modal">
+        <div class="modal__heading">
+          <div class="heading__modal__box">
+            <h2 class="heading__modal">Add Designation</h2>
+            <p class="subheading__modal">New Designation</p>
+          </div>
+          <div class="close__box"><ion-icon onclick="closeDesignationModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+          </div>
+          <form method="POST" class="form__modal" id="frmDesignation">
+            @csrf
+            <div class="input__form__modal__box">
+              <div class="input__box">
+                <input
+                  class="information__input"
+                  placeholder="Enter job title"
+                  name="job_title"
+                />
+                <span class="input__title">Job Title</span>
+                <div id="job_title-error" class="error-message text-danger"></div>
               </div>
-              <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
-            </form>
-        </div>
+              <div class="input__box pos__rel">
+                <select class="information__input" name="jobLevel" id="jobLevel">
+                  <option value="" disabled selected>
+                    Select Job Level
+                  </option>
+                  <option>Rank and File</option>
+                  <option>Specialist</option>
+                  <option>Officer</option>
+                  <option>Supervisor</option>
+                  <option>Managerial</option>
+                  <option>Executive</option>
+                </select>
+                <ion-icon class="pos__abs icon__select__designation" name="chevron-down-outline"></ion-icon>
+                <span class="input__title">Job Level</span>
+                <div id="jobLevel-error" class="error-message text-danger"></div>
+              </div>
+              <div class="input__box">
+                <textarea
+                style="height: 15rem"
+                  class="information__input"
+                  placeholder="Enter responsibilities"
+                  name="responsibilities"></textarea>
+                <span class="input__title">Responsibilities</span>
+                <div id="responsibilities-error" class="error-message text-danger"></div>
+              </div>
+            </div>
+            <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+          </form>
+      </div>
+    </div>
+    <!-- edit job-->
+    <div class="modal-overlay" id="edit_jobCreateModal">
+      <div class="modal">
+        <div class="modal__heading">
+          <div class="heading__modal__box">
+            <h2 class="heading__modal">Designation</h2>
+            <p class="subheading__modal">Edit Designation</p>
+          </div>
+          <div class="close__box"><ion-icon onclick="closeEditDesignationModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+          </div>
+          <div id="editJobResult"></div>
+      </div>
     </div>
     <footer class="footer">
       <p class="copyright">&copy;{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }} <?php echo date('Y') ?>. All Rights Reserved.</p>
@@ -1044,6 +1045,69 @@
             }
           });
         }
+      });
+
+      $('#frmDesignation').on('submit',function(e)
+      {
+        e.preventDefault();
+        $('.error-message').html('');
+        var data = $(this).serialize();
+        $.ajax({
+            url:"{{route('add-job')}}",method: 'POST',
+            data: data,
+            success: function(response) 
+            {
+              if(response.success)
+              {
+                  window.location.reload();
+              }
+              else{
+                var errors = response.errors;
+                // Iterate over each error and display it under the corresponding input field
+                for (var field in errors) {
+                    $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
+                    $('#' + field).addClass('input-error'); // Highlight the input field with an error
+                }
+              }
+            }
+        });
+      });
+
+      $(document).on('click','.edit_job',function()
+      {
+        $.ajax({
+          url:"{{route('edit-job')}}",method:"GET",
+          data:{value:$(this).val()},
+          success:function(response)
+          {
+            $('#edit_jobCreateModal').css('display', 'flex');
+            $('body').addClass('no-scroll');
+            $('#editJobResult').html(response);
+          }
+        }); 
+      });
+
+      $(document).on('click','.submitJobForm',function(e){
+        e.preventDefault();
+        $('.error-message').html('');
+        var formData = $('#frmEditDesignation').serialize();
+        $.ajax({
+          url:"{{route('update-job')}}",method:"POST",
+          data:formData,success:function(response)
+          {
+            if(response.success)
+            {
+              window.location.reload();
+            }else{
+                var errors = response.errors;
+                // Iterate over each error and display it under the corresponding input field
+                for (var field in errors) {
+                    $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
+                    $('#' + field).addClass('input-error'); // Highlight the input field with an error
+                }
+            }
+          }
+        });
       });
 
       $('#frmDepartment').on('submit',function(e)
