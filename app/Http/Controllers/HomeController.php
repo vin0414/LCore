@@ -282,9 +282,24 @@ class HomeController extends Controller
         }
     }
 
-    public function reAssign(Request $request)
+    public function reAssign($id)
     {
+        $title = "Re-Assignment";
+        //application
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
+        //office
+        $officeModel = new \App\Models\officeModel();
+        $office = $officeModel->all();
+        //employee
+        $employeeModel = new \App\Models\employeeModel();
+        $employee = $employeeModel->WHERE('companyID',$id)->first();
+        //job
+        $designationModel = new \App\Models\designationModel();
+        $job = $designationModel->all();
 
+        $data = ['title'=>$title,'about'=>$about,'office'=>$office,'employee'=>$employee,'job'=>$job];
+        return view('hr/employee/re-assign',$data);
     }
 
     //recovery, settings and audit trail
