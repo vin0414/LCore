@@ -114,6 +114,6 @@ Route::middleware('auth:user')->group(function () {
     Route::get('hr/employee/movement',[HomeController::class,'employeeMovement'])->name('hr/employee/movement');
     Route::get('hr/employee/documents',[HomeController::class,'employeeDocuments'])->name('hr/employee/documents');
     Route::get('hr/employee/directories',[HomeController::class,'employeeDirectories'])->name('hr/employee/directories');
-    Route::get('hr/employee/re-assign/{companyID}',[HomeController::class,'reAssign'])->name('hr/employee/re-assign');
+    // Route::get('hr/employee/re-assign/{companyID}',[HomeController::class,'reAssign'])->name('hr/employee/re-assign');
 });
 

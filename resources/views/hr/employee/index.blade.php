@@ -620,9 +620,6 @@
                           <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item newAssignment">
                             <ion-icon class="select__icon" name="file-tray-full-outline"></ion-icon> New Assignment
                           </button>
-                          <a href="{{route('hr/employee/re-assign',['companyID'=>$row['companyID']])}}" class="select__item">
-                            <ion-icon class="select__icon" name="file-tray-full-outline"></ion-icon>Re-Assignment
-                          </a>
                           <button type="button" value="<?php echo $row['employeeID'] ?>" class="select__item changeJobTitle">
                             <ion-icon class="select__icon" name="pricetags-outline"></ion-icon>Change Job Title
                           </button>
