@@ -851,18 +851,21 @@ body.no-scroll {
 .badge {
     font-family: "poppins", sans-serif;
     display: inline-block;
-    padding: 0.5em 1em;
-    font-size: 10px;
-    font-weight: 500;
+    padding: 1rem 1.6rem;
+    font-size: 1.2rem;
+    font-weight: 700;
     text-align: center;
-    border-radius: 12px;
+    border-radius: 7px;
     color: #fff;
-    background-color: #007bff; /* Blue background */
+    background-color: #007bff;
 }
 
 /* Different badge variations */
 .badge-success {
-    background-color: #28a745; /* Green background */
+    background-color: #deffd0;
+    color: #4c8932;
+    border: 1px solid var(--green-color);
+    text-transform: uppercase;
 }
 
 .badge-warning {
@@ -870,7 +873,10 @@ body.no-scroll {
 }
 
 .badge-danger {
-    background-color: #dc3545; /* Red background */
+    background-color: #ffeeee;
+    color: #e84949;
+    text-transform: uppercase;
+    border: 1px solid #e84949;
 }
 
 .badge-info {
@@ -887,7 +893,10 @@ body.no-scroll {
 }
 
 .badge-dark-orange {
-    background-color: darkorange;
+    background-color: #fdeedc;
+    text-transform: uppercase;
+    color: #d88923;
+    border: 1px solid #e49910;
 }
 
 .badge-pill {
