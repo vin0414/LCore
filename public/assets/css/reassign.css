@@ -1,0 +1,181 @@
+.employee__details__box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: #bfffa3;
+    padding: 3rem;
+    border-radius: 1rem;
+    margin-top: 2rem;
+}
+.employee__detail {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.title__tag {
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+.text__details {
+    font-weight: 400;
+}
+
+.checkbox__container {
+    display: flex;
+    gap: 10rem;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.reassign__input__box {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 0.5fr;
+    height: 100%;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.reassign__input__box.promotion {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.reassign__input__box.demotion {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+.reassign__input__box:last-child {
+    margin-bottom: 0;
+}
+.input__box.area__1 {
+    grid-area: 2/2;
+    height: 15rem;
+}
+.input__box.area__2 {
+    grid-area: 2 / 1;
+    height: 15rem;
+}
+
+.input__box.area__1 .information__input,
+.input__box.area__2 .information__input {
+    line-height: 1.5;
+}
+
+.col__span2 {
+    grid-column: span 2;
+}
+.input__box {
+    height: 100%;
+}
+input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+}
+
+input[type="checkbox"]:checked {
+    padding: 5px;
+    background-color: var(--green-color);
+}
+
+input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--green-color);
+}
+
+.check__box {
+    gap: 1.5rem;
+    align-items: center;
+}
+.checkbox__input {
+    width: 2rem;
+    height: 2rem;
+}
+
+.btn__box {
+    margin-top: 3rem;
+}
+
+.option__text {
+    font-size: 1.5rem;
+}
+.promotion__title {
+    text-transform: capitalize;
+}
+.reassign__input__box.promotion,
+.reassign__input__box.demotion,
+.reassign__input__box.assignment,
+.reassign__input__box.designation,
+.reassign__input__box.job,
+.reassign__input__box.salary,
+.reassign__input__box.phone,
+.promotion__title {
+    display: none;
+}
+.reassign__input__box.promotion.show,
+.reassign__input__box.demotion.show,
+.reassign__input__box.assignment.show,
+.reassign__input__box.designation.show,
+.reassign__input__box.job.show,
+.reassign__input__box.salary.show,
+.reassign__input__box.phone.show {
+    display: grid;
+}
+.promotion__title.show {
+    display: block;
+}
+
+.checkbox__input {
+    pointer-events: none;
+}
+
+.checkbox__input.allowed {
+    pointer-events: unset;
+}
+
+.subheading {
+    margin-bottom: 2rem;
+}
+/* 913 px */
+@media (max-width: 57.0625em) {
+    .reassign__input__box {
+        grid-template-columns: 1fr 1fr;
+    }
+    .checkbox__container {
+        gap: 4rem;
+    }
+}
+
+/* 703 px */
+
+@media (max-width: 43.9375em) {
+    .checkbox__container {
+        gap: 3rem;
+        flex-direction: column;
+        align-items: start;
+    }
+}
+
+/* 567 px */
+@media (max-width: 35.4375em) {
+    .reassign__input__box {
+        display: grid;
+        grid-template-columns: 1fr;
+        height: 100%;
+        gap: 0;
+        margin-bottom: 0;
+    }
+    .form__box .subheading {
+        margin-top: 2rem;
+    }
+    .employee__details__box {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}

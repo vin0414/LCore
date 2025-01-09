@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
     <link rel="stylesheet" href="/assets/css/new-account.css" />
     <link rel="stylesheet" href="/assets/css/table.css" />
+    <link rel="stylesheet" href="/assets/css/reassign.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
     <link rel="icon" sizes="180x180" href="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : 'No Logo' }}"/>
   </head>
@@ -252,100 +253,292 @@
       </aside>
       <div class="container">
         <div class="heading__box flex flex__align__center">
-          <h1 class="heading__primary">{{$title}}</h1>
+          <h1 class="heading__primary">Employee Reassignment</h1>
           <div class="breadcrumbs">
             <p class="pages">Employee | <span>{{$title}}</span></p>
           </div>
         </div>
         <div class="card_container">
-            <div class="card">
-                <div class="card-header">
-                    <div class="subheading">Re-Assign Employee</div>
+          <div class="card">
+            <div class="card-header">
+              <p class="subheading">Employee Details</p>
+              <div class="employee__details__box">
+                <div class="employee__detail">
+                  <p class="title__tag">Fullname: <span class="text__details">Tovvy Dumaplin</span></p>
+                  <p class="title__tag">Designation: <span class="text__details">Junior Developer</span></p>
                 </div>
-                <div class="card-body">
-                    <form method="POST" id="frmReAssign" action="">
-                    @csrf
-                    <div class="input__boxes grid third__row">
-                        <div class="input__box">
-                            <ion-icon class="pos__abs input__chev__down" name="chevron-down-outline"></ion-icon>
-                            <select
-                                class="information__input" name="office"
-                                placeholder="Select office">
-                                <option value="" disabled selected>
-                                Select Office
-                                </option>
-                            </select>
-                            <span class="input__title">Office</span>
-                            @if ($errors->has('office'))
-                                <p class="text-danger">{{$errors->first('office')}}</p>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="input__boxes grid second__row">
-                        <!-- 1 -->
-                        <div class="input__box">
-                        <input
-                            class="information__input" value="{{ old('username') }}"
-                            placeholder="Enter username" name="username"
-                        />
-                        <span class="input__title">Username</span>
-                        @if ($errors->has('username'))
-                            <p class="text-danger">{{$errors->first('username')}}</p>
-                        @endif
-                        </div>
-                        <!-- 2 -->
-                        <div class="input__box">
-                        <input
-                            type="password"
-                            class="information__input" value=""
-                            placeholder="Enter password" name="password"
-                        />
-                        <span class="input__title">Password</span>
-                        @if ($errors->has('password'))
-                            <p class="text-danger">{{$errors->first('password')}}</p>
-                        @endif
-                        </div>
-                        <!-- 3 -->
-                        <div class="input__box">
-                        <input
-                        type="email"
-                            class="information__input" value="{{ old('email_address') }}"
-                            placeholder="Enter email" name="email_address"
-                        />
-                        <span class="input__title">Email</span>
-                        @if ($errors->has('email_address'))
-                            <p class="text-danger">{{$errors->first('email_address')}}</p>
-                        @endif
-                        </div>
-                    </div>
-                    <div class="input__boxes grid single__row margin__top__3">
-                        <p class="subheading margin__bottom__1">System Role</p>
-                        <div class="radio-group">
-                        <label>
-                            <input type="radio" name="role" value="Admin"> Administrator
-                        </label>
-                        <label>
-                            <input type="radio" name="role" value="Manager"> Manager
-                        </label>
-                        <label>
-                            <input type="radio" name="role" value="Standard-user"> Standard User
-                        </label>
-                        </div>
-                        @if ($errors->has('role'))
-                            <p class="text-danger">{{$errors->first('role')}}</p>
-                        @endif
-                    </div>
-                    <div class="btn__box">
-                        <a href="{{route('hr/settings')}}" class="btn__return">
-                        <ion-icon class="icon__add" name="arrow-back-outline"></ion-icon> Return
-                        </a>
-                        <button class="btn__primary" type="submit">
-                        <ion-icon class="icon__add" name="save-outline"></ion-icon> Create Account
-                        </button>
-                    </div>
-                    </form>
+                <div class="employee__detail">
+                  <p class="title__tag">Job Level: <span class="text__details">Rank and File</span></p>
+                  <p class="title__tag">Status: <span class="text__details">Probationary</span></p>
                 </div>
+              </div>
             </div>
+            <div class="card-body">
+              <form method="POST" class="form__box" id="frmReAssign" action="">
+              <p class="subheading">Reassign Employee</p>
+                <div class="reassign__input__box">
+                  <!-- 1 -->
+                  <div class="input__box">
+                    <ion-icon class="pos__abs input__chev__down" name="chevron-down-outline"></ion-icon>
+                    <select class="information__input" name="office">
+                      <option value="" disabled selected>
+                        Select
+                      </option>
+                        <option value="">Head Office</option>
+                        <option value="">Branch</option>
+                    </select>
+                    <span class="input__title">Office</span>
+                    @if ($errors->has('designation'))
+                      <p class="text-danger">{{$errors->first('designation')}}</p>
+                    @endif
+                  </div>
+                  <!-- 2 -->
+                  <div class="input__box">
+                    <ion-icon class="pos__abs input__chev__down" name="chevron-down-outline"></ion-icon>
+                    <select class="information__input" name="office-branch" placeholder="Enter job title">
+                      <option value="" disabled selected>
+                        Select
+                      </option>
+                    </select>
+                    <span class="input__title">Head Office | Branch</span>
+                    @if ($errors->has('designation'))
+                      <p class="text-danger">{{$errors->first('designation')}}</p>
+                    @endif
+                  </div>
+                  <!-- 3 -->
+                  <div class="input__box">
+                    <ion-icon class="pos__abs input__chev__down" name="chevron-down-outline"></ion-icon>
+                    <select class="information__input" name="movement" id="movementSelect">
+                      <option value="" disabled selected>Select</option>
+                      <option value="promotion">Promotion</option>
+                      <option value="demotion">Demotion</option>
+                      <option value="assignment">Transfer of Assignment</option>
+                      <option value="designation">Change of Designation</option>
+                      <option value="job">Job Transfer</option>
+                      <option value="salary">Salary Adjustment</option>
+                    </select>
+                    <span class="input__title">Movement Options</span>
+                    @if ($errors->has('designation'))
+                      <p class="text-danger">{{$errors->first('designation')}}</p>
+                    @endif
+                  </div>
+                  <!-- 3 -->
+                  <div class="input__box">
+                      <input type="date" class="information__input" name="date_of_birth" value=""/>
+                      <span class="input__title">Effectivity Date</span>
+                      @if ($errors->has('date_of_birth'))
+                        <p class="text-danger">{{$errors->first('date_of_birth')}}</p>
+                      @endif
+                    </div>
+                </div>
+                <p id="inputGroupTitle" class="subheading promotion__title">Promotion Information</p>
+                <!-- Input group for promotion -->
+                <div class="reassign__input__box promotion">
+                  <!-- 1 -->
+                  <div class="input__box col__span2">
+                    <input
+                      class="information__input" 
+                      placeholder="Enter job title"
+                    />
+                    <span class="input__title">Job Title</span>
+                  </div>
+                  <!-- 1 -->
+                  <div class="input__box area__1 text__area__reassign">
+                    <textarea
+                      class="information__input"
+                      placeholder="Enter job description"
+                    ></textarea>
+                    <span class="input__title">Job Description</span>
+                  </div>
+                  <!-- 1 -->
+                  <div class="input__box area__2 text__area__reassign">
+                    <textarea
+                      class="information__input" 
+                      placeholder="Enter responsibilities"
+                    ></textarea>  
+                    <span class="input__title">Responsibilities</span>
+                  </div>
+                </div>
+                <!-- Input group for demotion -->
+                <div class="reassign__input__box demotion">
+                  <!-- 1 -->
+                  <div class="input__box col__span2">
+                    <input
+                      class="information__input" 
+                      placeholder="Enter job title"
+                    />
+                    <span class="input__title">Job Title</span>
+                  </div>
+                  <!-- 1 -->
+                  <div class="input__box area__1 text__area__reassign">
+                    <textarea
+                      class="information__input"
+                      placeholder="Enter job description"
+                    ></textarea>
+                    <span class="input__title">Job Description</span>
+                  </div>
+                  <!-- 1 -->
+                  <div class="input__box area__2 text__area__reassign">
+                    <textarea
+                      class="information__input" 
+                      placeholder="Enter responsibilities"
+                    ></textarea>  
+                    <span class="input__title">Responsibilities</span>
+                  </div>
+                </div>
+                <!-- Input group for transfer of assignment -->
+                <div class="reassign__input__box assignment">
+                  <!-- 1 -->
+                  <div class="input__box">
+                    <ion-icon class="pos__abs input__chev__down" name="chevron-down-outline"></ion-icon>
+                    <select class="information__input" name="office">
+                      <option value="" disabled selected>
+                        Select
+                      </option>
+                        <option value="">Head Office</option>
+                        <option value="">Branch</option>
+                    </select>
+                    <span class="input__title">Office</span>
+                    @if ($errors->has('designation'))
+                      <p class="text-danger">{{$errors->first('designation')}}</p>
+                    @endif
+                  </div>
+                  <!-- 2 -->
+                  <div class="input__box">
+                    <ion-icon class="pos__abs input__chev__down" name="chevron-down-outline"></ion-icon>
+                    <select class="information__input" name="office-branch" placeholder="Enter job title">
+                      <option value="" disabled selected>
+                        Select
+                      </option>
+                    </select>
+                    <span class="input__title">Job Title</span>
+                    @if ($errors->has('designation'))
+                      <p class="text-danger">{{$errors->first('designation')}}</p>
+                    @endif
+                  </div>
+                </div>
+                <!-- Input group for transfer of designation -->
+                <div class="reassign__input__box designation">
+                  <!-- 1 -->
+                  <div class="input__box">
+                    <ion-icon class="pos__abs input__chev__down" name="chevron-down-outline"></ion-icon>
+                    <select class="information__input" name="office-branch" placeholder="Enter job title">
+                      <option value="" disabled selected>
+                        Select
+                      </option>
+                    </select>
+                    <span class="input__title">Job Title</span>
+                    @if ($errors->has('designation'))
+                      <p class="text-danger">{{$errors->first('designation')}}</p>
+                    @endif
+                  </div>
+                </div>
+                <!-- Input group for transfer of job transfer -->
+                <div class="reassign__input__box job">
+                  <!-- 1 -->
+                  <div class="input__box">
+                    <ion-icon class="pos__abs input__chev__down" name="chevron-down-outline"></ion-icon>
+                    <select class="information__input" name="office">
+                      <option value="" disabled selected>
+                        Select
+                      </option>
+                        <option value="">Head Office</option>
+                        <option value="">Branch</option>
+                    </select>
+                    <span class="input__title">Office</span>
+                    @if ($errors->has('designation'))
+                      <p class="text-danger">{{$errors->first('designation')}}</p>
+                    @endif
+                  </div>
+                  <!-- 2 -->
+                  <div class="input__box">
+                    <ion-icon class="pos__abs input__chev__down" name="chevron-down-outline"></ion-icon>
+                    <select class="information__input" name="office-branch" placeholder="Enter job title">
+                      <option value="" disabled selected>
+                        Select
+                      </option>
+                    </select>
+                    <span class="input__title">Job Title</span>
+                    @if ($errors->has('designation'))
+                      <p class="text-danger">{{$errors->first('designation')}}</p>
+                    @endif
+                  </div>
+                  <!-- 3 -->
+                  <div class="input__box">
+                    <ion-icon class="pos__abs input__chev__down" name="chevron-down-outline"></ion-icon>
+                    <select class="information__input" name="office-branch" placeholder="Enter job title">
+                      <option value="" disabled selected>
+                        Select
+                      </option>
+                    </select>
+                    <span class="input__title">Job Title</span>
+                    @if ($errors->has('designation'))
+                      <p class="text-danger">{{$errors->first('designation')}}</p>
+                    @endif
+                  </div>
+                </div>
+                <!-- Input group for salary adjustment -->
+                <div class="reassign__input__box salary">
+                  <!-- 1 -->
+                  <div class="input__box">
+                    <input
+                      class="information__input" 
+                      placeholder="Enter salary"
+                    />
+                    <span class="input__title">New Salary</span>
+                  </div>
+                </div>
+                <!-- Input group for phone and assets update -->
+                <div class="reassign__input__box phone">
+                  <!-- 1 -->
+                  <div class="input__box">
+                    <input
+                      class="information__input" 
+                      placeholder="Enter company phone no."
+                    />
+                    <span class="input__title">Company Phone</span>
+                  </div>
+                </div>
+
+                <!-- INPUT GROUP ENDS HERE -->
+                <p class="subheading">Additional Information</p>
+                <div class="checkbox__container">
+                  <!-- 1 -->
+                  <div class="check__box flex job__title__box">
+                    <input
+                      class="checkbox__input job__title"
+                      type="checkbox"
+                      name="checkbox"
+                    />
+                    <p class="option__text">Job Title and Description</p>
+                  </div>
+                  <!-- 1 -->
+                  <div class="check__box flex salary__update__box">
+                    <input
+                      class="checkbox__input salary__update"
+                      type="checkbox"
+                      name="checkbox"
+                    />
+                    <p class="option__text">Update Compensation</p>
+                  </div>
+                  <!-- 1 -->
+                  <div class="check__box flex">
+                    <input
+                      class="checkbox__input phone__update"
+                      type="checkbox"
+                      name="checkbox"
+                    />
+                    <p class="option__text">Company Phone and Assets</p>
+                  </div>
+                </div>
+                <div class="btn__box">
+                  <button class="btn__primary" type="submit">
+                    <ion-icon class="icon__add" name="document-text-outline"></ion-icon> Reassign
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </main>
@@ -355,6 +548,56 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        // Handle checkbox changes
+        $('.checkbox__input').on('change', function () {
+          const $checkbox = $(this);
+          const isChecked = $checkbox.prop('checked');
+          let titleText = 'Additional Information';
+
+          if ($checkbox.hasClass('job__title')) {
+            $('.promotion').toggleClass('show', isChecked);
+            titleText = 'Job Title and Description';
+          } else if ($checkbox.hasClass('salary__update')) {
+            $('.salary').toggleClass('show', isChecked);
+            titleText = 'Update Compensation';
+          } else if ($checkbox.hasClass('phone__update')) {
+            $('.phone').toggleClass('show', isChecked);
+            titleText = 'Company Phone and Assets';
+          }
+        });
+
+
+        $('#movementSelect').on('change', function() {
+            $('.reassign__input__box').removeClass('show'); 
+            const selectedValue = $(this).val();
+            const checkBoxInput = $('.checkbox__input');
+            $('.checkbox__input').prop('checked', false);
+            switch (selectedValue) {
+              case 'promotion':
+                $('.job__title__box').hide();
+                $('.salary__update__box').show();
+                break;
+              case 'demotion':
+                $('.job__title__box').hide();
+                $('.salary__update__box').show();
+                break;
+              case 'salary':
+                $('.salary__update__box').hide();
+                $('.job__title__box').show();
+                break;
+              default:
+              $('.salary__update__box').show();
+              $('.job__title__box').show();
+            }
+            checkBoxInput.addClass('allowed');
+            $(`.reassign__input__box.${selectedValue}`).addClass('show'); 
+            $(`#${selectedValue}`).addClass('show'); 
+            $('#inputGroupTitle').addClass('show'); 
+            $('#inputGroupTitle').text(`${selectedValue} Information`);
+            console.log('test');
+        });
+
+      
         $(document).on("click", ".btn__select", function () {
           const dropdown = $(".dropdown__select");
           const i = $(this).index(".btn__select");
