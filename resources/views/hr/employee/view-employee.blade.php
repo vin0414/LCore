@@ -814,7 +814,7 @@
                   <div class="history__title__desc">
                     <div class="history__heading">
                       <p class="history__title"><?php echo $row['Remarks'] ?></p>
-                      <ion-icon name="repeat-outline" class="history__icon"></ion-icon>
+                      <ion-icon name="ribbon-outline" class="history__icon"></ion-icon>
                     </div>
                     <p class="history__description"><?php echo $row['Comment_1'] ?></p>
                     <p class="history__description history__data"><?php echo $row['Comment_2'] ?></p>

@@ -290,6 +290,22 @@
                   <div id="rate-error" class="error-message text-danger"></div>
                 </div>
                 <div class="input__box">
+                  <select class="information__input" name="assign_office" id="assign_office">
+                    <option value="" disabled selected>
+                      Select Office
+                    </option>
+                    <?php foreach($office as $row): ?>
+                      <option value="<?php echo $row['officeID'] ?>"><?php echo $row['officeName'] ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                  <span class="input__title">Office</span>
+                </div>
+                <div class="input__box">
+                  <select class="information__input" name="assign_department" id="assign_department">
+                  </select>
+                  <span class="input__title">Department | Branch</span>
+                </div>
+                <div class="input__box">
                   <input type="file"
                     class="information__input"
                     placeholder="Attach document"
@@ -337,6 +353,22 @@
                   />
                   <span class="input__title">New Rate</span>
                   <div id="new_rate-error" class="error-message text-danger"></div>
+                </div>
+                <div class="input__box">
+                  <select class="information__input" name="assign_new_office" id="assign_new_office">
+                    <option value="" disabled selected>
+                      Select Office
+                    </option>
+                    <?php foreach($office as $row): ?>
+                      <option value="<?php echo $row['officeID'] ?>"><?php echo $row['officeName'] ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                  <span class="input__title">Office</span>
+                </div>
+                <div class="input__box">
+                  <select class="information__input" name="assign_new_department" id="assign_new_department">
+                  </select>
+                  <span class="input__title">Department | Branch</span>
                 </div>
                 <div class="input__box">
                   <input type="file"
@@ -776,6 +808,24 @@
               url:"{{route('fetch-department')}}",
               method:"GET",data:{value:$(this).val()},
               success:function(response){$('#new_department').append(response);}
+          });
+      });
+
+      $('#assign_office').change(function(){
+          $('#assign_department').find('option').remove();
+          $.ajax({
+              url:"{{route('fetch-department')}}",
+              method:"GET",data:{value:$(this).val()},
+              success:function(response){$('#assign_department').append(response);}
+          });
+      });
+
+      $('#assign_new_office').change(function(){
+          $('#assign_new_department').find('option').remove();
+          $.ajax({
+              url:"{{route('fetch-department')}}",
+              method:"GET",data:{value:$(this).val()},
+              success:function(response){$('#assign_new_department').append(response);}
           });
       });
 

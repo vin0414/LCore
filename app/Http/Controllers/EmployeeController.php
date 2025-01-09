@@ -118,7 +118,9 @@ class EmployeeController extends Controller
     {
         date_default_timezone_set('Asia/Manila');
         $employeeModel = new \App\Models\employeeModel();
-
+        $recordModel = new \App\Models\recordModel();
+        $newDate = date('Y-m-d');
+        //data
         $request->validate([
             'surname'=>'required',
             'firstname'=>'required',
@@ -147,31 +149,76 @@ class EmployeeController extends Controller
             'hdmf_no'=>'nullable',
             'tin'=>'nullable'
         ]);
-
-        $image = $request->file('image');$filename="";
-        if ($request->hasFile('image') && $request->file('image')->isValid()) 
+        $employee = $employeeModel->WHERE('employeeID',$request->employeeID)->first();
+        if($employee['employmentStatus']==$request->employment_status)
         {
-            $filename = $image->getClientOriginalName();
-            // Define the path where the image should be saved
-            $image->move('Profile/',$filename);
+            //no changes
+            $image = $request->file('image');$filename="";
+            if ($request->hasFile('image') && $request->file('image')->isValid()) 
+            {
+                $filename = $image->getClientOriginalName();
+                // Define the path where the image should be saved
+                $image->move('Profile/',$filename);
 
-            $employeeModel::where('employeeID',$request->employeeID)
-                            ->update(['surName'=>$request->surname,'firstName'=>$request->firstname,'middleName'=>$request->middlename,'suffix'=>$request->suffix,
-                            'gender'=>$request->gender,'civilStatus'=>$request->civil_status,'dob'=>$request->date_of_birth,'address'=>$request->address,'religion'=>$request->religion,'emailAddress'=>$request->email_address,
-                            'contactNumber'=>$request->contact_number,'education'=>$request->education,'dateHired'=>$request->date_hired,'designation'=>$request->designation,'employmentStatus'=>$request->employment_status,
-                            'regularizationDate'=>$request->regularization_date,'officeID'=>$request->office,'departmentID'=>$request->department,'jobLevel'=>$request->job_level,'companyPhone'=>$request->company_phone,
-                            'sssNo'=>$request->sss_no,'philhealthNo'=>$request->ph_no,'hdmfNo'=>$request->hdmf_no,'tin'=>$request->tin,
-                            'payMethod'=>$request->payroll_payment,'accountNumber'=>$request->account_number,'Image'=>$filename]);
+                $employeeModel::where('employeeID',$request->employeeID)
+                                ->update(['surName'=>$request->surname,'firstName'=>$request->firstname,'middleName'=>$request->middlename,'suffix'=>$request->suffix,
+                                'gender'=>$request->gender,'civilStatus'=>$request->civil_status,'dob'=>$request->date_of_birth,'address'=>$request->address,'religion'=>$request->religion,'emailAddress'=>$request->email_address,
+                                'contactNumber'=>$request->contact_number,'education'=>$request->education,'dateHired'=>$request->date_hired,'designation'=>$request->designation,'employmentStatus'=>$request->employment_status,
+                                'regularizationDate'=>$request->regularization_date,'officeID'=>$request->office,'departmentID'=>$request->department,'jobLevel'=>$request->job_level,'companyPhone'=>$request->company_phone,
+                                'sssNo'=>$request->sss_no,'philhealthNo'=>$request->ph_no,'hdmfNo'=>$request->hdmf_no,'tin'=>$request->tin,
+                                'payMethod'=>$request->payroll_payment,'accountNumber'=>$request->account_number,'Image'=>$filename]);
+            }
+            else
+            {
+                $employeeModel::where('employeeID',$request->employeeID)
+                                ->update(['surName'=>$request->surname,'firstName'=>$request->firstname,'middleName'=>$request->middlename,'suffix'=>$request->suffix,
+                                'gender'=>$request->gender,'civilStatus'=>$request->civil_status,'dob'=>$request->date_of_birth,'address'=>$request->address,'religion'=>$request->religion,'emailAddress'=>$request->email_address,
+                                'contactNumber'=>$request->contact_number,'education'=>$request->education,'dateHired'=>$request->date_hired,'designation'=>$request->designation,'employmentStatus'=>$request->employment_status,
+                                'regularizationDate'=>$request->regularization_date,'officeID'=>$request->office,'departmentID'=>$request->department,'jobLevel'=>$request->job_level,'companyPhone'=>$request->company_phone,
+                                'sssNo'=>$request->sss_no,'philhealthNo'=>$request->ph_no,'hdmfNo'=>$request->hdmf_no,'tin'=>$request->tin,
+                                'payMethod'=>$request->payroll_payment,'accountNumber'=>$request->account_number]);
+            }
         }
         else
         {
-            $employeeModel::where('employeeID',$request->employeeID)
-                            ->update(['surName'=>$request->surname,'firstName'=>$request->firstname,'middleName'=>$request->middlename,'suffix'=>$request->suffix,
-                            'gender'=>$request->gender,'civilStatus'=>$request->civil_status,'dob'=>$request->date_of_birth,'address'=>$request->address,'religion'=>$request->religion,'emailAddress'=>$request->email_address,
-                            'contactNumber'=>$request->contact_number,'education'=>$request->education,'dateHired'=>$request->date_hired,'designation'=>$request->designation,'employmentStatus'=>$request->employment_status,
-                            'regularizationDate'=>$request->regularization_date,'officeID'=>$request->office,'departmentID'=>$request->department,'jobLevel'=>$request->job_level,'companyPhone'=>$request->company_phone,
-                            'sssNo'=>$request->sss_no,'philhealthNo'=>$request->ph_no,'hdmfNo'=>$request->hdmf_no,'tin'=>$request->tin,
-                            'payMethod'=>$request->payroll_payment,'accountNumber'=>$request->account_number]);
+            $image = $request->file('image');$filename="";
+            if ($request->hasFile('image') && $request->file('image')->isValid()) 
+            {
+                $filename = $image->getClientOriginalName();
+                // Define the path where the image should be saved
+                $image->move('Profile/',$filename);
+
+                $employeeModel::where('employeeID',$request->employeeID)
+                                ->update(['surName'=>$request->surname,'firstName'=>$request->firstname,'middleName'=>$request->middlename,'suffix'=>$request->suffix,
+                                'gender'=>$request->gender,'civilStatus'=>$request->civil_status,'dob'=>$request->date_of_birth,'address'=>$request->address,'religion'=>$request->religion,'emailAddress'=>$request->email_address,
+                                'contactNumber'=>$request->contact_number,'education'=>$request->education,'dateHired'=>$request->date_hired,'designation'=>$request->designation,'employmentStatus'=>$request->employment_status,
+                                'regularizationDate'=>$request->regularization_date,'officeID'=>$request->office,'departmentID'=>$request->department,'jobLevel'=>$request->job_level,'companyPhone'=>$request->company_phone,
+                                'sssNo'=>$request->sss_no,'philhealthNo'=>$request->ph_no,'hdmfNo'=>$request->hdmf_no,'tin'=>$request->tin,
+                                'payMethod'=>$request->payroll_payment,'accountNumber'=>$request->account_number,'Image'=>$filename]);
+            }
+            else
+            {
+                $employeeModel::where('employeeID',$request->employeeID)
+                                ->update(['surName'=>$request->surname,'firstName'=>$request->firstname,'middleName'=>$request->middlename,'suffix'=>$request->suffix,
+                                'gender'=>$request->gender,'civilStatus'=>$request->civil_status,'dob'=>$request->date_of_birth,'address'=>$request->address,'religion'=>$request->religion,'emailAddress'=>$request->email_address,
+                                'contactNumber'=>$request->contact_number,'education'=>$request->education,'dateHired'=>$request->date_hired,'designation'=>$request->designation,'employmentStatus'=>$request->employment_status,
+                                'regularizationDate'=>$request->regularization_date,'officeID'=>$request->office,'departmentID'=>$request->department,'jobLevel'=>$request->job_level,'companyPhone'=>$request->company_phone,
+                                'sssNo'=>$request->sss_no,'philhealthNo'=>$request->ph_no,'hdmfNo'=>$request->hdmf_no,'tin'=>$request->tin,
+                                'payMethod'=>$request->payroll_payment,'accountNumber'=>$request->account_number]);
+            }
+            //add movement
+            $comment1 = "The employee's employment status has been updated to ".$request->employment_status;
+            //get the recent record of an employee
+            $record = $recordModel->WHERE('employeeID',$request->employeeID)->orderBy('recordID', 'desc')->first();
+            //update the record of the employee
+            $recordModel::where('recordID',$record['recordID'])
+                ->update(['end_date'=>$newDate]);
+            //add records in employee movement
+            $newData = ['employeeID'=>$record['employeeID'],'dateHired'=>$newDate,'Designation'=>$record['Designation'],
+                        'officeID'=>$record['officeID'],'departmentID'=>$record['departmentID'],
+                        'employmentStatus'=>$request->employment_status,'end_date'=>$record['end_date'],
+                        'cost'=>$record['cost'],'Remarks'=>'Modify Employment Status','Comment_1'=>$comment1,'Attachment'=>''];
+            $recordModel->create($newData);
         }
         //create log record
         $logModel = new \App\Models\logModel();
@@ -760,6 +807,8 @@ class EmployeeController extends Controller
         $validator = Validator::make($request->all(),[
             'new_job_title'=>'required',
             'new_rate'=>'required',
+            'assign_new_office'=>'nullable',
+            'assign_new_department'=>'nullable',
             'attachments'=>'required|file|max:10240'
         ]);
 
@@ -785,18 +834,38 @@ class EmployeeController extends Controller
             //get the companyID
             $employee = $employeeModel->WHERE('employeeID',$request->employeeID)->first();
             //change the job title and level
-            $employeeModel::where('employeeID',$request->employeeID)
-                ->update(['designation'=>$request->new_job_title,'jobLevel'=>$job['jobLevel'],'salaryRate'=>$cost]);
+            if(empty($request->assign_new_office))
+            {
+                $employeeModel::where('employeeID',$request->employeeID)
+                    ->update(['designation'=>$request->new_job_title,'jobLevel'=>$job['jobLevel'],'salaryRate'=>$cost]);
+            }
+            else
+            {
+                $employeeModel::where('employeeID',$request->employeeID)
+                    ->update(['designation'=>$request->new_job_title,
+                    'officeID'=>$request->assign_new_office,'departmentID'=>$request->assign_new_department,
+                    'jobLevel'=>$job['jobLevel'],'salaryRate'=>$cost]);
+            }
             //get the recent record of an employee
             $record = $recordModel->WHERE('employeeID',$request->employeeID)->orderBy('recordID', 'desc')->first();
             //update the record of the employee
             $recordModel::where('recordID',$record['recordID'])
                 ->update(['end_date'=>$newDate]);
             //add records in employee movement
-            $newData = ['employeeID'=>$record['employeeID'],'dateHired'=>$newDate,'Designation'=>$request->new_job_title,
-                        'officeID'=>$record['officeID'],'departmentID'=>$record['departmentID'],
-                        'employmentStatus'=>$record['employmentStatus'],'end_date'=>'0000-00-00',
-                        'cost'=>$cost,'Remarks'=>'Demoted','Comment_1'=>$comment1,'Comment_2'=>$comment2,'Attachment'=>$filename];
+            if(empty($request->assign_new_office))
+            {
+                $newData = ['employeeID'=>$record['employeeID'],'dateHired'=>$newDate,'Designation'=>$request->new_job_title,
+                            'officeID'=>$record['officeID'],'departmentID'=>$record['departmentID'],
+                            'employmentStatus'=>$record['employmentStatus'],'end_date'=>'0000-00-00',
+                            'cost'=>$cost,'Remarks'=>'Demoted','Comment_1'=>$comment1,'Comment_2'=>$comment2,'Attachment'=>$filename];
+            }
+            else
+            {
+                $newData = ['employeeID'=>$record['employeeID'],'dateHired'=>$newDate,'Designation'=>$request->new_job_title,
+                            'officeID'=>$request->assign_new_office,'departmentID'=>$request->assign_new_department,
+                            'employmentStatus'=>$record['employmentStatus'],'end_date'=>'0000-00-00',
+                            'cost'=>$cost,'Remarks'=>'Demoted','Comment_1'=>$comment1,'Comment_2'=>$comment2,'Attachment'=>$filename];
+            }
             $recordModel->create($newData);
             //create log record
             $logModel = new \App\Models\logModel();
@@ -818,6 +887,8 @@ class EmployeeController extends Controller
         $validator = Validator::make($request->all(),[
             'job_title'=>'required',
             'rate'=>'required',
+            'assign_office'=>'nullable',
+            'assign_department'=>'nullable',
             'attachment'=>'required|file|max:10240'
         ]);
 
@@ -842,20 +913,41 @@ class EmployeeController extends Controller
             $job = $designationModel->WHERE('jobTitle',$request->job_title)->first();
             //get the companyID
             $employee = $employeeModel->WHERE('employeeID',$request->employeeID)->first();
-            //change the job title and level
-            $employeeModel::where('employeeID',$request->employeeID)
-                ->update(['designation'=>$request->job_title,'jobLevel'=>$job['jobLevel'],'salaryRate'=>$cost]);
+            //change the job title, level and rate
+            if(empty($request->assign_office))
+            {
+                $employeeModel::where('employeeID',$request->employeeID)
+                    ->update(['designation'=>$request->job_title,'jobLevel'=>$job['jobLevel'],'salaryRate'=>$cost]);
+            }
+            else
+            {
+                $employeeModel::where('employeeID',$request->employeeID)
+                    ->update(['designation'=>$request->job_title,
+                    'officeID'=>$request->assign_office,'departmentID'=>$request->assign_department,
+                    'jobLevel'=>$job['jobLevel'],'salaryRate'=>$cost]);
+            }
             //get the recent record of an employee
             $record = $recordModel->WHERE('employeeID',$request->employeeID)->orderBy('recordID', 'desc')->first();
             //update the record of the employee
             $recordModel::where('recordID',$record['recordID'])
                 ->update(['end_date'=>$newDate]);
             //add records in employee movement
-            $newData = ['employeeID'=>$record['employeeID'],'dateHired'=>$newDate,'Designation'=>$request->job_title,
-                        'officeID'=>$record['officeID'],'departmentID'=>$record['departmentID'],
-                        'employmentStatus'=>$record['employmentStatus'],'end_date'=>'0000-00-00',
-                        'cost'=>$cost,'Remarks'=>'Promotion','Comment_1'=>$comment1,'Comment_2'=>$comment2,'Attachment'=>$filename];
-            $recordModel->create($newData);
+            if(empty($request->assign_office))
+            {
+                $newData = ['employeeID'=>$record['employeeID'],'dateHired'=>$newDate,'Designation'=>$request->job_title,
+                            'officeID'=>$record['officeID'],'departmentID'=>$record['departmentID'],
+                            'employmentStatus'=>$record['employmentStatus'],'end_date'=>'0000-00-00',
+                            'cost'=>$cost,'Remarks'=>'Promotion','Comment_1'=>$comment1,'Comment_2'=>$comment2,'Attachment'=>$filename];
+                $recordModel->create($newData);
+            }
+            else
+            {
+                $newData = ['employeeID'=>$record['employeeID'],'dateHired'=>$newDate,'Designation'=>$request->job_title,
+                            'officeID'=>$request->assign_office,'departmentID'=>$request->assign_department,
+                            'employmentStatus'=>$record['employmentStatus'],'end_date'=>'0000-00-00',
+                            'cost'=>$cost,'Remarks'=>'Promotion','Comment_1'=>$comment1,'Comment_2'=>$comment2,'Attachment'=>$filename];
+                $recordModel->create($newData);
+            }
             //create log record
             $logModel = new \App\Models\logModel();
             $date = date('Y-m-d h:i:s a');
