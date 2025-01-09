@@ -327,9 +327,9 @@
                           Select
                         </option>
                         <option value="All Employees" {{ old('recipient') == "All Employees" ? 'selected' : '' }}>All Employees</option>
-                        <?php foreach($department as $row): ?>
-                        <option value="<?php echo $row['departmentName'] ?>" <?php echo (old('recipient') == $row['departmentName'])  ? 'selected' : '' ?>><?php echo $row['departmentName']  ?></option>
-                        <?php endforeach;?>
+                        <option value="All HO Managers" {{ old('recipient') == "All HO Managers" ? 'selected' : '' }}>All HO Managers</option>
+                        <option value="All Branch Managers" {{ old('recipient') == "All Branch Managers" ? 'selected' : '' }}>All Branch Managers</option>
+                        <option value="All Managers" {{ old('recipient') == "All Managers" ? 'selected' : '' }}>All Managers</option>
                     </select>
                     <span class="input__title">Recipients</span>
                     @if ($errors->has('recipient'))

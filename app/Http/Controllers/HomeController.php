@@ -113,12 +113,23 @@ class HomeController extends Controller
         $title = "Broadcast";
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
-        //department
-        $departmentModel = new \App\Models\departmentModel();
-        $department = $departmentModel->all();
 
-        $data = ['title'=>$title,'about'=>$about,'department'=>$department];
+        $data = ['title'=>$title,'about'=>$about];
         return view('hr/memo/new-announcement',$data);
+    }
+
+    public function editAnnouncement($id)
+    {
+        $title = "Edit Broadcast";
+        //application
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
+        //broadcast
+        $announcementModel = new \App\Models\announcementModel();
+        $announcement = $announcementModel->WHERE('announcementID',$id)->first();
+
+        $data = ['title'=>$title,'about'=>$about,'announcement'=>$announcement];
+        return view('hr/memo/edit-announcement',$data);
     }
 
     //employee management

@@ -4,17 +4,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
     <link rel="stylesheet" href="/assets/css/reusables.css" />
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
-    <link rel="stylesheet" href="/assets/css/table.css" />
+    <link rel="stylesheet" href="/assets/css/new-account.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
     <link rel="icon" sizes="180x180" href="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : 'No Logo' }}"/>
   </head>
@@ -201,8 +199,7 @@
                 class="sidebar__icon"
                 name="cloud-upload-outline"
               ></ion-icon
-              >Upload Files</a
-            >
+              >Upload Files</a>
           </li>
           <li>
             <a href="{{route('hr/memo/new')}}" class="nav__links"
@@ -255,124 +252,127 @@
               ><ion-icon name="clipboard-outline"></ion-icon>Audit Trail</a
             >
           </li>
+          <?php } ?>
         </ul>
-        <?php } ?>
       </aside>
       <div class="container">
         <div class="heading__box flex flex__align__center">
           <h1 class="heading__primary">{{$title}}</h1>
           <div class="breadcrumbs">
-            <p class="pages">{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }} | <span>{{$title}}</span></p>
+            <p class="pages">Memo | <span>{{$title}}</span></p>
           </div>
         </div>
-        @if(\Session::has('success'))
-            <div class="alert alert-success">
-                {{\Session::get('success')}}
+        <div class="card_container">
+          <div class="card">
+            <div class="card-header">
+              <div class="subheading">Edit Broadcast</div>
             </div>
-        @endif
-        <div class="tabs">
-          <ul class="tab-titles">
-            <li class="tab active" id="tab1" onclick="openTab('tab1')">Memos</li>
-            <li class="tab" id="tab2" onclick="openTab('tab2')">Broadcast</li>
-          </ul>
-          <div class="tab-content">
-            <div class="tab-pane active" id="content-tab1">
-              <div class="pos__rel">
-                <div class="button__box pos__abs">
-                  <a href="{{route('hr/memo/new')}}" class="link add__btn"
-                    ><ion-icon class="icon" name="add-outline"></ion-icon>New</a>
+            <div class="card-body">
+              @if($announcement)
+              <form method="POST" id="frmBroadcast" enctype="multipart/form-data" action="{{route('edit-broadcast')}}">
+                @csrf
+                <input type="hidden" name="announcementID" value="{{$announcement['announcementID']}}"/>
+                <div class="input__boxes grid single__row">
+                  <div class="input__box">
+                    <input
+                      class="information__input" value="{{ $announcement['Title'] }}"
+                      placeholder="Enter Title" name="title"
+                    />
+                    <span class="input__title">Broadcast Title</span>
+                    @if ($errors->has('title'))
+                      <p class="text-danger">{{$errors->first('title')}}</p>
+                    @endif
+                  </div>
                 </div>
-                <div class="dataWrapper">
-                  <table id="dataTable" class="display">
-                    <thead>
-                        <th>Date</th>
-                        <th>Subject</th>
-                        <th>Sender</th>
-                        <th>Recipient</th>
-                        <th>Status</th>
-                        <th>File</th>
-                        <th>Action</th>
-                    </thead>
-                    <tbody>
-                    @foreach($memo as $row)
-                    <tr>
-                      <td>{{$row['Date']}}</td>
-                      <td>{{$row['Subject']}}</td>
-                      <td>{{$row['Sender']}}</td>
-                      <td>{{$row['Recipient']}}</td>
-                      <td>
-                      <span class="badge {{ $row['Status'] == 1 ? 'badge-success' : 'badge-warning' }}">
-                        {{ $row['Status'] == 1 ? 'Active' : 'Archive' }}
-                      </span>
-                      </td>
-                      <td><a href="/memo/{{$row['File']}}" class="no-underline" target="_BLANK">{{$row['File']}}</a></td>
-                      <td class="pos__rel">
-                        <button class="btn__select">
-                          <ion-icon
-                            name="ellipsis-horizontal-circle-outline"
-                            class="icon__button"
-                          ></ion-icon>
-                        </button>
-                        <div class="dropdown__select">
-                          <a href="{{route('hr/memo/edit',['memoID'=>$row['memoID']])}}" class="select__item"><ion-icon class="select__icon" name="create-outline"></ion-icon>Edit</a>
-                          @if($row['Status']==1)
-                          <button type="button" value="{{$row['memoID']}}" class="select__item archive"><ion-icon class="select__icon" name="archive-outline"></ion-icon>Archive</button>
-                          @endif
-                          @if($row['Status']==0)
-                          <button type="button" value="{{$row['memoID']}}" class="select__item restore"><ion-icon class="select__icon" name="refresh-circle-outline"></ion-icon>Restore</button>
-                          @endif
-                        </div>
-                      </td>
-                    </tr>
-                    @endforeach
-                    </tbody>
-                  </table>
+                <div class="input__boxes grid second__row_v3">
+                  <div class="input__box">
+                    <input type="date"
+                      class="information__input" value="{{ $announcement['dateEffective'] }}"
+                      placeholder="Enter effective date" name="date_effective"
+                    />
+                    <span class="input__title">Effective Date</span>
+                    @if ($errors->has('date_effective'))
+                      <p class="text-danger">{{$errors->first('date_effective')}}</p>
+                    @endif
+                  </div>
+                  <div class="input__box">
+                    <input type="date"
+                      class="information__input" value="{{ $announcement['dateExpired'] }}"
+                      placeholder="Enter effective date" name="date_expired"
+                    />
+                    <span class="input__title">Expired Date</span>
+                    @if ($errors->has('date_expired'))
+                      <p class="text-danger">{{$errors->first('date_expired')}}</p>
+                    @endif
+                  </div>
+                  <div class="input__box">
+                    <ion-icon class="pos__abs input__chev__down" name="chevron-down-outline"></ion-icon>
+                    <select
+                        class="information__input" name="priority_level" placeholder="Select">
+                        <option value="" disabled selected>
+                          Select
+                        </option>
+                        <option value="Urgent" {{ $announcement['priorityLevel'] == "Urgent" ? 'selected' : '' }}>Urgent</option>
+                        <option value="Immediate" {{ $announcement['priorityLevel'] == "Immediate" ? 'selected' : '' }}>Immediate</option>
+                        <option value="Standard" {{ $announcement['priorityLevel'] == "Standard" ? 'selected' : '' }}>Standard</option>
+                    </select>
+                    <span class="input__title">Priority Level</span>
+                    @if ($errors->has('priority_level'))
+                      <p class="text-danger">{{$errors->first('priority_level')}}</p>
+                    @endif
+                  </div>
+                  <div class="input__box">
+                    <ion-icon class="pos__abs input__chev__down" name="chevron-down-outline"></ion-icon>
+                    <select
+                        class="information__input" name="recipient" placeholder="Select">
+                        <option value="" disabled selected>
+                          Select
+                        </option>
+                        <option value="All Employees" {{ $announcement['Recipient'] == "All Employees" ? 'selected' : '' }}>All Employees</option>
+                        <option value="All HO Managers" {{ $announcement['Recipient'] == "All HO Managers" ? 'selected' : '' }}>All HO Managers</option>
+                        <option value="All Branch Managers" {{ $announcement['Recipient'] == "All Branch Managers" ? 'selected' : '' }}>All Branch Managers</option>
+                        <option value="All Managers" {{ $announcement['Recipient'] == "All Managers" ? 'selected' : '' }}>All Managers</option>
+                    </select>
+                    <span class="input__title">Recipients</span>
+                    @if ($errors->has('recipient'))
+                      <p class="text-danger">{{$errors->first('recipient')}}</p>
+                    @endif
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div class="tab-pane" id="content-tab2">
-            <div class="pos__rel">
-                <div class="button__box pos__abs">
-                  <a href="{{route('hr/memo/new-announcement')}}" class="link add__btn"
-                    ><ion-icon class="icon" name="add-outline"></ion-icon>New</a>
+                <div class="input__boxes grid single__row">
+                  <div class="input__box">
+                    <textarea
+                      class="information__input"
+                      placeholder="Enter details" name="details" style="height:200px;"
+                    >{{ $announcement['Details'] }}</textarea>
+                    <span class="input__title">Details</span>
+                    @if ($errors->has('details'))
+                      <p class="text-danger">{{$errors->first('details')}}</p>
+                    @endif
+                  </div>
                 </div>
-                <div class="dataWrapper">
-                  <table id="announceTable" class="display">
-                    <thead>
-                        <th class="w-100">Date</th>
-                        <th class="w-200">Title</th>
-                        <th class="w-300">Details</th>
-                        <th>Recipient</th>
-                        <th>Priority Level</th>
-                        <th>Status</th>
-                        <th>File</th>
-                        <th>Action</th>
-                    </thead>
-                    <tbody>
-                    @foreach($announce as $row)
-                    <tr>
-                      <td>{{$row['dateEffective']}}</td>
-                      <td>{{$row['Title']}}</td>
-                      <td>{{ substr($row['Details'], 0, 100) }}...</td>
-                      <td>{{$row['Recipient']}}</td>
-                      <td>{{$row['priorityLevel']}}</td>
-                      <td>
-                      <span class="badge {{ $row['Status'] == 1 ? 'badge-success' : 'badge-warning' }}">
-                        {{ $row['Status'] == 1 ? 'Active' : 'Expired' }}
-                      </span>
-                      </td>
-                      <td><a href="/memo/{{$row['File']}}" class="no-underline" target="_BLANK">{{$row['File']}}</a></td>
-                      <td>
-                        <a href="{{route('hr/memo/edit-announcement',['announcementID'=>$row['announcementID']])}}" class="select__item form__button text-dark">
-                          <ion-icon class="select__icon" name="repeat-outline"></ion-icon>Edit
-                        </a>
-                      </td>
-                    </tr>
-                    @endforeach
-                    </tbody>
-                  </table>
+                <div class="input__boxes grid single__row">
+                  <div class="input__box">
+                    <input type="file"
+                      class="information__input" value="{{ old('file') }}"
+                      placeholder="Attach file" name="file"
+                    />
+                    <span class="input__title">File</span>
+                    @if ($errors->has('file'))
+                      <p class="text-danger">{{$errors->first('file')}}</p>
+                    @endif
+                  </div>
                 </div>
-              </div>
+                <div class="btn__box">
+                  <a href="{{route('hr/memo')}}" class="btn__return">
+                    <ion-icon class="icon__add" name="arrow-back-outline"></ion-icon> Return
+                  </a>
+                  <button class="btn__primary" type="submit">
+                    <ion-icon class="icon__add" name="save-outline"></ion-icon> Save Changes
+                  </button>
+                </div>
+              </form>
+              @endif
             </div>
           </div>
         </div>
@@ -384,55 +384,6 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        $("#dataTable").DataTable({
-          dom:
-            "<'row'<'col-sm-6'f>>" + // Search box on top in the same row
-            "<'row'<'col-sm-12'tr>>" + // Table
-            "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'p>>", // Bottom (length + pagination)
-          scrollX: false,
-          oLanguage: { sSearch: "" },
-          initComplete: function () {
-            $("#dataTable_filter input").attr(
-              "placeholder",
-              "Search by name, etc."
-            );
-          },
-        });
-
-        $("#announceTable").DataTable({
-          dom:
-            "<'row'<'col-sm-6'f>>" + // Search box on top in the same row
-            "<'row'<'col-sm-12'tr>>" + // Table
-            "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'p>>", // Bottom (length + pagination)
-          scrollX: false,
-          oLanguage: { sSearch: "" },
-          initComplete: function () {
-            $("#announceTable_filter input").attr(
-              "placeholder",
-              "Search by name, etc."
-            );
-          },
-        });
-
-        $(document).on("click", ".btn__select", function () {
-          const dropdown = $(".dropdown__select");
-          const i = $(this).index(".btn__select");
-
-          dropdown.removeClass("open");
-          if (dropdown[i]) {
-            $(dropdown[i]).toggleClass("open");
-          }
-        });
-
-        $(document).on("click", function (event) {
-          const dropDownAction = $(".dropdown__select");
-          if (
-            !$(event.target).closest(".dropdown__select").length &&
-            !$(event.target).closest(".btn__select").length
-          ) {
-            dropDownAction.removeClass("open");
-          }
-        });
         $("#menuButton").on("click", function (e) {
           e.stopPropagation();
           showSideBar();
@@ -472,64 +423,14 @@
         $(".account__dropdown").removeClass("show");
         $("#headerNav").removeClass("open");
       }
-      function openTab(tabId) {
-      // Hide all content
-      const allTabs = document.querySelectorAll('.tab');
-      const allPanes = document.querySelectorAll('.tab-pane');
-      
-      allTabs.forEach(tab => tab.classList.remove('active'));
-      allPanes.forEach(pane => pane.classList.remove('active'));
-      
-      // Show the clicked tab and its corresponding content
-      const activeTab = document.getElementById(tabId);
-      const activePane = document.getElementById(`content-${tabId}`);
-      
-      activeTab.classList.add('active');
-      activePane.classList.add('active');
-    }
-
-    // Set default tab to be open
-    document.addEventListener("DOMContentLoaded", () => {
-      openTab('tab1');
-    });
-
-    //archiving
-    $(document).on('click','.archive',function(){
-      var confirmation = confirm("Would you like to move this to archive?");
-      if(confirmation)
-      {
-        var csrfToken = $('meta[name="csrf-token"]').attr('content');
-        $.ajax({
-          url:"{{route('archive-memo')}}",method:"POST",
-          data:{value:$(this).val()},
-          headers: {'X-CSRF-TOKEN': csrfToken},success:function(response)
-          {
-            if(response==="success"){window.location.reload();}else{alert(response)};
-          }
-        });
-      }
-    });
-
-    //restore
-    $(document).on('click','.restore',function(){
-      var confirmation = confirm("Would you like to restore this selected memo?");
-      if(confirmation)
-      {
-        var csrfToken = $('meta[name="csrf-token"]').attr('content');
-        $.ajax({
-          url:"{{route('restore-memo')}}",method:"POST",
-          data:{value:$(this).val()},
-          headers: {'X-CSRF-TOKEN': csrfToken},success:function(response)
-          {
-            if(response==="success"){window.location.reload();}else{alert(response)};
-          }
-        });
-      }
-    });
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
   </body>
 </html>

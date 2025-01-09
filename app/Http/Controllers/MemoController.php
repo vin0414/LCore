@@ -50,7 +50,6 @@ class MemoController extends Controller
                 $data = ['employeeID'=>$row['employeeID'],'memoID'=>$memo['memoID'],'dateReceived'=>$today,'read_status'=>'No'];
                 $memoReceiveModel->create($data);
             }
-            //send email
         }
         else
         {
@@ -61,8 +60,8 @@ class MemoController extends Controller
                 $data = ['employeeID'=>$row['employeeID'],'memoID'=>$memo['memoID'],'dateReceived'=>$today,'read_status'=>'No'];
                 $memoReceiveModel->create($data);
             }
-            //send email
         }
+        //send email
         //create log record
         $logModel = new \App\Models\logModel();
         $date = date('Y-m-d h:i:s a');
@@ -84,6 +83,7 @@ class MemoController extends Controller
             'sender'=>'required',
             'recipient'=>'required',
             'details'=>'required',
+            'file'=>'nullable|file|max:10240'
         ]);
         $file = $request->file('file');$filename="";
         if ($request->hasFile('file') && $request->file('file')->isValid()) 
@@ -140,6 +140,131 @@ class MemoController extends Controller
 
     public function saveBroadcast(Request $request)
     {
-        
+        date_default_timezone_set('Asia/Manila');
+        $announcementModel = new \App\Models\announcementModel();
+        $employeeModel = new \App\Models\employeeModel();
+        $announceTrackModel = new \App\Models\announceTrackModel();
+        $departmentModel = new \App\Models\departmentModel();
+        //data
+        $request->validate([
+            'title'=>'required|unique:tblannouncement,Title',
+            'date_effective'=>'required',
+            'date_expired'=>'required',
+            'priority_level'=>'required',
+            'recipient'=>'required',
+            'details'=>'required',
+            'file'=>'required|file|max:10240'
+        ]);
+        $status = 1;
+        $file = $request->file('file');$filename="";
+        if ($request->hasFile('file') && $request->file('file')->isValid()) 
+        {
+            $filename = date('Ymdhis').$file->getClientOriginalName();
+            // Define the path where the image should be saved
+            $file->move('memo/',$filename);
+        }
+        //save the data
+        $data = ['dateEffective'=>$request->date_effective,'Title'=>$request->title,'Details'=>$request->details,
+                'Recipient'=>$request->recipient,'priorityLevel'=>$request->priority_level,'File'=>$filename,
+                'dateExpired'=>$request->date_expired,'accountID'=>session('user_id'),'Status'=>$status];
+        $announcementModel->create($data);
+        //get the id of the created broadcast
+        $announcement = $announcementModel->WHERE('Title',$request->title)->first();
+        //date today
+        $today = date('Y-m-d');
+        switch($request->recipient)
+        {
+            case "All Employees":
+            $employee = $employeeModel->all();
+            foreach($employee as $row)
+            {
+                $data = ['employeeID'=>$row['employeeID'],'memoID'=>$announcement['announcementID'],'dateReceived'=>$today,'read_status'=>'No'];
+                $announceTrackModel->create($data);
+            }
+            break;  
+            
+            case "All HO Managers":
+            $department = $departmentModel->where('Code', 'LIKE', '%HO\'%')->get();
+            $employee = $employeeModel->WHERE('departmentID',$department['departmentID'])->get();
+            foreach($employee as $row)
+            {
+                $data = ['employeeID'=>$row['employeeID'],'memoID'=>$announcement['announcementID'],'dateReceived'=>$today,'read_status'=>'No'];
+                $announceTrackModel->create($data);
+            }
+            break;
+
+            case "All Branch Managers":
+            $department = $departmentModel->where('Code', 'LIKE', '%BR\'%')->get();
+            $employee = $employeeModel->WHERE('departmentID',$department['departmentID'])->get();
+            foreach($employee as $row)
+            {
+                $data = ['employeeID'=>$row['employeeID'],'memoID'=>$announcement['announcementID'],'dateReceived'=>$today,'read_status'=>'No'];
+                $announceTrackModel->create($data);
+            }
+            break;
+
+            case "All Managers":
+            $employee = $employeeModel->WHERE('jobLevel','Managerial')->get();
+            foreach($employee as $row)
+            {
+                $data = ['employeeID'=>$row['employeeID'],'memoID'=>$announcement['announcementID'],'dateReceived'=>$today,'read_status'=>'No'];
+                $announceTrackModel->create($data);
+            }
+            break;
+
+            default:
+            break;
+        }
+        //send email
+
+        //create log record
+        $logModel = new \App\Models\logModel();
+        $date = date('Y-m-d h:i:s a');
+        $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Posted new broadcast'];
+        $logModel->create($data);
+        return redirect('/hr/memo')->with('success','Great! Successfully added');
+    }
+
+    public function editBroadcast(Request $request)
+    {
+        date_default_timezone_set('Asia/Manila');
+        $announcementModel = new \App\Models\announcementModel();
+        //data
+        $request->validate([
+            'title'=>'required',
+            'date_effective'=>'required',
+            'date_expired'=>'required',
+            'priority_level'=>'required',
+            'recipient'=>'required',
+            'details'=>'required',
+            'file'=>'nullable|file|max:10240'
+        ]);
+
+        $file = $request->file('file');$filename="";
+        if ($request->hasFile('file') && $request->file('file')->isValid()) 
+        {
+            $filename = date('Ymdhis').$file->getClientOriginalName();
+            // Define the path where the image should be saved
+            $file->move('memo/',$filename);
+            //update
+            $announcementModel::WHERE('announcementID',$request->announcementID)
+                    ->update(['dateEffective'=>$request->date_effective,'Title'=>$request->title,'Details'=>$request->details,
+                                        'Recipient'=>$request->recipient,'priorityLevel'=>$request->priority_level,'File'=>$filename,
+                                        'dateExpired'=>$request->date_expired]);
+        }
+        else
+        {
+            $announcementModel::WHERE('announcementID',$request->announcementID)
+                    ->update(['dateEffective'=>$request->date_effective,'Title'=>$request->title,'Details'=>$request->details,
+                                        'Recipient'=>$request->recipient,'priorityLevel'=>$request->priority_level,
+                                        'dateExpired'=>$request->date_expired]);
+        }
+
+        //create log record
+        $logModel = new \App\Models\logModel();
+        $date = date('Y-m-d h:i:s a');
+        $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Update the posted broadcast'];
+        $logModel->create($data);
+        return redirect('/hr/memo')->with('success','Great! Successfully applied changes');
     }
 }
