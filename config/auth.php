@@ -44,6 +44,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'employee' => [ // New guard for employees
+            'driver' => 'session',
+            'provider' => 'employees',
+        ],
     ],
 
     /*
@@ -72,6 +76,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\accountModel::class,
+        ],
+        'employees' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\employeeModel::class,
         ],
     ],
 

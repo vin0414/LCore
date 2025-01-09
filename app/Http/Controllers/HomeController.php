@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -10,10 +11,24 @@ class HomeController extends Controller
     //
     public function home()
     {
+        if (Auth::guard('user')->check()) {
+            return redirect("hr/overview");
+        }
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
         $data = ['about'=>$about];
         return view('login',$data);
+    }
+
+    public function employeePortal()
+    {
+        if (Auth::guard('employee')->check()) {
+            return redirect("employee/overview");
+        }
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
+        $data = ['about'=>$about];
+        return view('employee-login',$data);
     }
 
     public function getChartData()

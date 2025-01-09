@@ -3,6 +3,8 @@
 use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
+use App\Http\Controllers\EmployeeAuthController;
+use App\Http\Controllers\EmployeePortalController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemoController;
 use App\Http\Controllers\SettingController;
@@ -17,11 +19,15 @@ use App\Http\Controllers\SettingController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//HR Access
 Route::get('/',[HomeController::class,'home'])->name('/');
 Route::get('/login',[HomeController::class,'home'])->name('/login');
-//login and logout
 Route::post('login',[CustomAuthController::class,'auth'])->name('login')->middleware('throttle:5,1');
 Route::get('logout', [CustomAuthController::class, 'logout'])->name('logout');
+//Employee Access
+Route::get('/portal',[HomeController::class,'employeePortal'])->name('/portal');
+Route::post('authenticate',[EmployeeAuthController::class,'auth'])->name('authenticate')->middleware('throttle:5,1');
+Route::get('signout', [EmployeeAuthController::class, 'signOut'])->name('signout');
 //charts
 Route::get('chart-data', [HomeController::class, 'getChartData'])->name('chart-data');
 //Employee module
@@ -115,5 +121,9 @@ Route::middleware('auth:user')->group(function () {
     Route::get('hr/employee/documents',[HomeController::class,'employeeDocuments'])->name('hr/employee/documents');
     Route::get('hr/employee/directories',[HomeController::class,'employeeDirectories'])->name('hr/employee/directories');
     // Route::get('hr/employee/re-assign/{companyID}',[HomeController::class,'reAssign'])->name('hr/employee/re-assign');
+});
+
+Route::middleware('auth:employee')->group(function () {
+    Route::get('employee/overview',[EmployeePortalController::class,'overview'])->name('employee/overview');
 });
 

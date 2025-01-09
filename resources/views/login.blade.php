@@ -71,6 +71,9 @@
                     {{\Session::get('message')}}
                 </div>
               @endif
+              @if(Auth::guard('user')->check())
+              <p>You are already logged in. <a href="{{ route('hr/overview') }}">Go to Dashboard</a></p>
+              @else
               <form class="form__login" id="formLogin" method="POST" action="{{route('login')}}">
                 @csrf
                 <div class="input__container flex">
@@ -111,6 +114,7 @@
                 </div>
                 <button class='btn__primary' type="submit">Login</button>
               </form>
+              @endif
             </div>
           </div>
         </div>
