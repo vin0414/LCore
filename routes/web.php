@@ -119,6 +119,7 @@ Route::middleware('auth:user')->group(function () {
     Route::get('hr/employee/credits',[HomeController::class,'creditsEmployee'])->name('hr/employee/credits');
     Route::get('hr/employee/movement',[HomeController::class,'employeeMovement'])->name('hr/employee/movement');
     Route::get('hr/employee/documents',[HomeController::class,'employeeDocuments'])->name('hr/employee/documents');
+    Route::get('hr/employee/upload/{folderName}',[HomeController::class,'uploadFile'])->name('hr/employee/upload');
     Route::get('hr/employee/directories',[HomeController::class,'employeeDirectories'])->name('hr/employee/directories');
     // Route::get('hr/employee/re-assign/{companyID}',[HomeController::class,'reAssign'])->name('hr/employee/re-assign');
 });
