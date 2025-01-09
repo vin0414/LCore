@@ -701,8 +701,8 @@ a.no-underline {
 textarea {
     resize: none;
 }
-.w-300{
-    width:300px;
+.w-300 {
+    width: 300px;
 }
 
 .w-275 {
@@ -720,7 +720,7 @@ textarea {
 .w-100 {
     width: 100px;
 }
-.w-50{
+.w-50 {
     width: 50px;
 }
 .form-control {
@@ -778,9 +778,9 @@ textarea {
 
 .modal {
     background: white;
-    padding: 2rem;
+    padding: 3rem;
     border-radius: 1rem;
-    width: 55rem;
+    width: 75rem;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     position: absolute;
 }
@@ -803,7 +803,6 @@ body.no-scroll {
     font-weight: 500;
     color: var(--black-color);
     cursor: pointer;
-    margin-bottom: 2rem;
     font-size: 1.5rem;
     transition: all 0.5s ease;
 }
@@ -814,14 +813,14 @@ body.no-scroll {
 
 .modal__heading {
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: space-between;
     text-align: left;
-    padding: 1rem 0;
+    padding: 0;
 }
 .icon__modal {
-    width: 2rem;
-    height: 2rem;
+    width: 3rem;
+    height: 3rem;
     cursor: pointer;
 }
 .subheading__modal {

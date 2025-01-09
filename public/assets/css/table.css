@@ -10,7 +10,7 @@
 .dataTables_wrapper .dataTables_filter {
     float: left !important;
     text-align: left !important;
-    padding-bottom: 2rem;
+    padding-bottom: 4rem;
 }
 .dataTables_wrapper .dataTables_length {
     float: right !important;
