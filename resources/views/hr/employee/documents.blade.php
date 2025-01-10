@@ -288,7 +288,7 @@
                 <ion-icon class="icon__open" name="ellipsis-vertical"></ion-icon>
                 <div class="modal__options">
                   <ul class="list__items">
-                    <li class="item"><a href="{{route('hr/employee/upload',['folderName'=>$subfolder])}}" class="no-underline"><ion-icon class="icon__list" name="expand-outline"></ion-icon>Open</a></li>
+                    <li class="item"><a href="{{route('hr/employee/upload',['folderName'=>$subfolder])}}" class="no-underline list__text"><ion-icon class="icon__list" name="expand-outline"></ion-icon>Open</a></li>
                     <li class="item"><ion-icon class="icon__list" name="pencil-outline"></ion-icon>Rename</li>
                     <li class="item red"><button type="button" class="delete" value="{{ $subfolder }}"><ion-icon class="icon__list" name="trash-outline"></ion-icon>Delete </button></li>
                   </ul>
