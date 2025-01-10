@@ -270,7 +270,7 @@
             <li class="tab" id="tab2" onclick="openTab('tab2')">User Accounts</li>
             <li class="tab" id="tab3" onclick="openTab('tab3')">Department/Branches</li>
             <li class="tab" id="tab8" onclick="openTab('tab8')">Job Creation</li>
-            <li class="tab" id="tab4" onclick="openTab('tab4')">Policies</li>
+            <li class="tab" id="tab4" onclick="openTab('tab4')">Payroll Policies</li>
             <li class="tab" id="tab5" onclick="openTab('tab5')">Schedule</li>
             <li class="tab" id="tab6" onclick="openTab('tab6')">Pro-Rated Computation</li>
             <li class="tab" id="tab7" onclick="openTab('tab7')">User Permission</li>

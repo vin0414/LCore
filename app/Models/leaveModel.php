@@ -10,5 +10,5 @@ class leaveModel extends Model
     use HasFactory;
     protected $table = "tbl_leave";
     protected $primaryKey = "leaveID";
-    protected $fillable = ['leaveName', 'gender','civilStatus','employmentStatus'];
+    protected $fillable = ['leaveTypeID','leaveName', 'gender','civilStatus','employmentStatus'];
 }
