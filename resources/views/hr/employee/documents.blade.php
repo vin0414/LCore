@@ -264,57 +264,172 @@
           <div class="breadcrumbs">
             <p class="pages">Employee | <span>{{$title}}</span></p>
           </div>
-          
         </div>
-        <div class="btn__box">
-            <button type="button" class="btn__primary add-folder"><ion-icon class="icon__documents" name="add-outline"></ion-icon>Create Folder</button>
+        <div class="btn__grid__container">
+          <div class="btn__box">
+              <button type="button" class="btn__primary add-folder"><ion-icon class="icon__documents" name="add-outline"></ion-icon>Create Folder</button>
+          </div>
+          <div class="grid__options">
+            <ion-icon name="list-outline" class="icon__grid list__layout__button"></ion-icon>
+            <ion-icon name="grid-outline" class="icon__grid grid__layout__button"></ion-icon>
+          </div>
         </div>
         @if(count($folders) > 0)
-        <ul class="card__list">
+        <ul class="card__list grid__layout">
             @foreach($folders as $subfolder)
-                <li class="card__folder">{{ $subfolder }}
-                  <div class="img__box__folder"><img src="/assets/images/default_image_mountain.png" class="folder__image"></div>
+                <li class="card__folder">
+                <a href="#" class="link__folder" onclick="openFolderModal('{{ $subfolder }}')">
+                  <div class="img__box__folder">
+                    <ion-icon class="folder__icon" name="folder-open"></ion-icon>
+                    <p class="folder__title">{{ $subfolder }}</p>
+                  </div>
+                </a>
+                <ion-icon class="icon__open" name="ellipsis-vertical"></ion-icon>
+                <div class="modal__options">
+                  <ul class="list__items">
+                    <li class="item"><ion-icon class="icon__list" name="expand-outline"></ion-icon>Open</li>
+                    <li class="item"><ion-icon class="icon__list" name="pencil-outline"></ion-icon>Edit</li>
+                    <li class="item red"><ion-icon class="icon__list" name="trash-outline"></ion-icon>Delete </li>
+                  </ul>
+                </div>
                 </li>
-        
             @endforeach
         </ul>
         @else
-            <p>No subfolders found in "{{ $folder }}".</p>
+          <p>No subfolders found in "{{ $folder }}".</p>
         @endif
       </div>
     </main>
     <div class="modal-overlay" id="folderModal">
-        <div class="modal">
-          <div class="modal__heading">
-            <div class="heading__modal__box">
-              <h2 class="heading__modal">New Folder</h2>
-              <p class="subheading__modal">Save folder</p>
-            </div>
-            <div class="close__box"><ion-icon onclick="closeWorkModal()" class="icon__modal" name="close-outline"></ion-icon></div>
-            </div>
-            <form method="POST" class="form__modal" id="frmFolder">
-              @csrf
-              <div class="input__form__modal__box">
-                <div class="input__box">
-                  <input
-                    class="information__input"
-                    placeholder="Enter name of the folder"
-                    name="folder"
-                  />
-                  <span class="input__title">Name of the Folder</span>
-                  <div id="folder-error" class="error-message text-danger"></div>
-                </div>
+      <div class="modal">
+        <div class="modal__heading">
+          <div class="heading__modal__box">
+            <h2 class="heading__modal">New Folder</h2>
+            <p class="subheading__modal">Save folder</p>
+          </div>
+          <div class="close__box"><ion-icon onclick="closeWorkModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+          </div>
+          <form method="POST" class="form__modal" id="frmFolder">
+            @csrf
+            <div class="input__form__modal__box">
+              <div class="input__box">
+                <input
+                  class="information__input"
+                  placeholder="Enter name of the folder"
+                  name="folder"
+                />
+                <span class="input__title">Name of the Folder</span>
+                <div id="folder-error" class="error-message text-danger"></div>
               </div>
-              <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
-            </form>
-        </div>
+            </div>
+            <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+          </form>
+      </div>
+    </div>
+    <div class="modal-overlay" id="folderContents">
+      <div class="folder__modal">
+        <div class="modal__heading">
+          <div class="heading__modal__box">
+            <h2 class="heading__modal" id="modalFolderName"></h2>
+          </div>
+          <div class="close__box"><ion-icon onclick="closeFolderModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+          </div>
+          <form method="POST" class="form__modal" id="frmFolder">
+            @csrf
+            <div id="drop-area" class="drop-area">
+    <p>Drag & Drop Files Here</p>
+    <p>Or</p>
+    <input type="file" id="file-input" class="file-input" multiple />
+</div>
+<ul id="file-list"></ul>
+
+            <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+          </form>
+      </div>
     </div>
     <footer class="footer">
       <p class="copyright">&copy;{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }} <?php echo date('Y') ?>. All Rights Reserved.</p>
     </footer>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
+      document.addEventListener("DOMContentLoaded", function() {
+
+});
+
       document.addEventListener("DOMContentLoaded", function () {
+      // Drop down
+      const dropArea = document.getElementById('drop-area');
+    const fileInput = document.getElementById('file-input');
+    const fileList = document.getElementById('file-list');
+
+    // Prevent default behavior for drag events
+    dropArea.addEventListener('dragover', function(e) {
+        e.preventDefault(); // Prevent default behavior (required for drag and drop)
+        e.stopPropagation(); // Prevent event propagation
+        dropArea.classList.add('dragging'); // Add 'dragging' class when files are dragged over
+    });
+
+    // Handle drag leave
+    dropArea.addEventListener('dragleave', function() {
+        dropArea.classList.remove('dragging'); // Remove 'dragging' class when files leave the area
+    });
+
+    // Handle file drop event
+    dropArea.addEventListener('drop', function(e) {
+        e.preventDefault(); // Prevent default behavior
+        e.stopPropagation(); // Prevent event propagation
+        dropArea.classList.remove('dragging'); // Remove 'dragging' class
+
+        const files = e.dataTransfer.files; // Get the dropped files
+        handleFiles(files); // Process the files
+    });
+
+    // Trigger the file input click when the drop area is clicked (fallback)
+    dropArea.addEventListener('click', function() {
+        fileInput.click();
+    });
+
+    // Handle file selection from the file input
+    fileInput.addEventListener('change', function() {
+        const files = fileInput.files;
+        handleFiles(files); // Process the files
+    });
+
+    // Function to handle file uploads (or display file names)
+    function handleFiles(files) {
+        for (let file of files) {
+            console.log(`File name: ${file.name}, File size: ${file.size} bytes`);
+
+            // Display the file names in a list
+            const listItem = document.createElement('li');
+            listItem.textContent = file.name;
+            fileList.appendChild(listItem);
+        }
+    }
+      // List view
+      $('.list__layout__button').on("click", function(){
+        $('.card__list').removeClass("grid__layout");
+        $('.card__list').addClass("list__layout");
+        $('.folder__icon').addClass("small");
+      });
+      // Grid view
+      $('.grid__layout__button').on("click", function(){
+        $('.card__list').removeClass("list__layout");
+        $('.card__list').addClass("grid__layout");
+        $('.folder__icon').removeClass("small");
+      });
+
+        $('.icon__open').on("click", function(e) {
+          e.stopPropagation(); 
+          $('.modal__options').removeClass("show");
+          $(this).siblings('.modal__options').toggleClass("show");
+        });
+
+        $(document).on("click", function() {
+          $('.modal__options').removeClass("show");
+        });
+
+
         $("#menuButton").on("click", function (e) {
           e.stopPropagation();
           showSideBar();
@@ -334,6 +449,18 @@
         });
       });
 
+      // Open folder modal
+      function openFolderModal(folderName) {
+            $('#modalFolderName').text(folderName);
+            $('#folderContents').css('display', 'flex');
+            $('body').addClass('no-scroll');
+      }
+
+      function closeFolderModal() {
+            $('#folderContents').css('display', 'none');
+            $('body').removeClass('no-scroll');
+      }
+      // Open folder modal end
       function showNotification() {
         let notifContainer = $(".notification__container");
         notifContainer.toggleClass("show");
@@ -362,6 +489,10 @@
 
       function closeWorkModal() {
           $('#folderModal').css('display', 'none');
+          $('body').removeClass('no-scroll'); 
+      }
+      function closeFolderModal() {
+          $('#folderContents').css('display', 'none');
           $('body').removeClass('no-scroll'); 
       }
 
