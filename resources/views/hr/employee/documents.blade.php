@@ -4,6 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -161,7 +162,7 @@
             <ul class="dropdown">
               <li class="dropdown__item"><a href="" class="no-underline">Calendar & Request</a></li>
               <li class="dropdown__item"><a href="" class="no-underline">Balances</a></li>
-              <li class="dropdown__item"><a href="" class="no-underline">Types & Policies</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/leave/policies')}}" class="no-underline">Types & Policies</a></li>
               <li class="dropdown__item"><a href="" class="no-underline">Approval Workflow</a></li>
             </ul>
           </li>
@@ -287,9 +288,9 @@
                 <ion-icon class="icon__open" name="ellipsis-vertical"></ion-icon>
                 <div class="modal__options">
                   <ul class="list__items">
-                    <li class="item"><ion-icon class="icon__list" name="expand-outline"></ion-icon>Open</li>
-                    <li class="item"><ion-icon class="icon__list" name="pencil-outline"></ion-icon>Edit</li>
-                    <li class="item red"><ion-icon class="icon__list" name="trash-outline"></ion-icon>Delete </li>
+                    <li class="item"><a href="{{route('hr/employee/upload',['folderName'=>$subfolder])}}" class="no-underline"><ion-icon class="icon__list" name="expand-outline"></ion-icon>Open</a></li>
+                    <li class="item"><ion-icon class="icon__list" name="pencil-outline"></ion-icon>Rename</li>
+                    <li class="item red"><button type="button" class="delete" value="{{ $subfolder }}"><ion-icon class="icon__list" name="trash-outline"></ion-icon>Delete </button></li>
                   </ul>
                 </div>
                 </li>
@@ -353,8 +354,23 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function() {
-
-});
+        $(document).on('click','.delete',function()
+        {
+          var confirmation = confirm("Are you sure you want to delete this folder and all its contents? This action cannot be undone");
+          if(confirmation)
+          {
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+              url:"{{route('delete-folder')}}",method:"POST",
+              data:{value:$(this).val()},
+              headers: {'X-CSRF-TOKEN': csrfToken},success:function(response)
+              {
+                if(response==="success"){location.reload();}else{alert(response);}
+              }
+            });
+          }
+        });
+      });
 
       document.addEventListener("DOMContentLoaded", function () {
       // Drop down

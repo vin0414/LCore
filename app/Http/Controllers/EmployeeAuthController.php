@@ -16,7 +16,7 @@ class EmployeeAuthController extends Controller
         $employee = $employeeModel::where('companyID', $request->employeeID)->WHERE('employeeStatus',1)->first();
         if ($employee && ($request->password==$employee->employeePIN))
         {
-            $fullname = $employee->firstName." ".$employee->middleName. " ".$request->surName." ".$employee->suffix;
+            $fullname = $employee->firstName." ".$employee->middleName. " ".$employee->surName." ".$employee->suffix;
             session(['user_id' => $employee->employeeID]);
             session(['fullname'=>$fullname]);
             session(['designation'=>$employee->designation]);

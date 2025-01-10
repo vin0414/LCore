@@ -5,6 +5,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 
 class EmployeeController extends Controller
 {
@@ -38,6 +39,17 @@ class EmployeeController extends Controller
             }
             return response()->json(['success'=>'Successfully created']);
         }
+    }
+
+    public function deleteFolder(Request $request)
+    {
+        $folder = $request->value;
+        $folderPath = public_path('documents/'.$folder);
+        if (File::exists($folderPath)) {
+            // Delete the folder and its contents
+            File::deleteDirectory($folderPath);
+        }
+        echo "success";
     }
 
     public function saveEmployee(Request $request)

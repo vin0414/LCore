@@ -328,24 +328,21 @@ class HomeController extends Controller
         }
     }
 
-    public function reAssign($id)
+    public function uploadFile($id)
     {
-        $title = "Re-Assignment";
-        //application
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
-        //office
-        $officeModel = new \App\Models\officeModel();
-        $office = $officeModel->all();
-        //employee
-        $employeeModel = new \App\Models\employeeModel();
-        $employee = $employeeModel->WHERE('companyID',$id)->first();
-        //job
-        $designationModel = new \App\Models\designationModel();
-        $job = $designationModel->all();
+        $data = ['title'=>$id,'about'=>$about];
+        return view('hr/employee/upload',$data);
+    }
 
-        $data = ['title'=>$title,'about'=>$about,'office'=>$office,'employee'=>$employee,'job'=>$job];
-        return view('hr/employee/re-assign',$data);
+    public function leave()
+    {
+        $title = "Types and Policy";
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
+        $data = ['title'=>$title,'about'=>$about];
+        return view('hr/leave/policy',$data);
     }
 
     //recovery, settings and audit trail

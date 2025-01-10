@@ -60,6 +60,7 @@ Route::post('save-employee',[EmployeeController::class,'saveEmployee'])->name('s
 Route::post('update-employee',[EmployeeController::class,'updateEmployee'])->name('update-employee');
 Route::post('add-credit',[EmployeeController::class,'addCredit'])->name('add-credit');
 Route::post('create-folder',[EmployeeController::class,'createFolder'])->name('create-folder');
+Route::post('delete-folder',[EmployeeController::class,'deleteFolder'])->name('delete-folder');
 //Settings module
 Route::post('save',[SettingController::class,'saveLogo'])->name('save');
 Route::post('reset-password',[SettingController::class,'resetPassword'])->name('reset-password');
@@ -121,7 +122,8 @@ Route::middleware('auth:user')->group(function () {
     Route::get('hr/employee/documents',[HomeController::class,'employeeDocuments'])->name('hr/employee/documents');
     Route::get('hr/employee/upload/{folderName}',[HomeController::class,'uploadFile'])->name('hr/employee/upload');
     Route::get('hr/employee/directories',[HomeController::class,'employeeDirectories'])->name('hr/employee/directories');
-    // Route::get('hr/employee/re-assign/{companyID}',[HomeController::class,'reAssign'])->name('hr/employee/re-assign');
+    //leave
+    Route::get('hr/leave/policies',[HomeController::class,'leave'])->name('hr/leave/policies');
 });
 
 Route::middleware('auth:employee')->group(function () {
