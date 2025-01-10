@@ -211,7 +211,24 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     position: absolute;
 }
+a.no-underline {
+    display: flex;
+    align-items: center;
+    color: var(--black-color);
+    gap: 1rem;
+}
 
+.delete {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border: none;
+    background-color: transparent;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    color: inherit;
+    cursor: pointer;
+}
 /* DRAG AND DROP CSS */
 
 .drop-area {
