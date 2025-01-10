@@ -289,7 +289,7 @@
                 <div class="modal__options">
                   <ul class="list__items">
                     <li class="item"><a href="{{route('hr/employee/upload',['folderName'=>$subfolder])}}" class="no-underline list__text"><ion-icon class="icon__list" name="expand-outline"></ion-icon>Open</a></li>
-                    <li class="item"><ion-icon class="icon__list" name="pencil-outline"></ion-icon>Rename</li>
+                    <li class="item"><button type="button" class="rename" value="{{ $subfolder }}"><ion-icon class="icon__list" name="pencil-outline"></ion-icon>Rename</button></li>
                     <li class="item red"><button type="button" class="delete" value="{{ $subfolder }}"><ion-icon class="icon__list" name="trash-outline"></ion-icon>Delete </button></li>
                   </ul>
                 </div>
@@ -363,6 +363,24 @@
             $.ajax({
               url:"{{route('delete-folder')}}",method:"POST",
               data:{value:$(this).val()},
+              headers: {'X-CSRF-TOKEN': csrfToken},success:function(response)
+              {
+                if(response==="success"){location.reload();}else{alert(response);}
+              }
+            });
+          }
+        });
+
+        $(document).on('click','.rename',function()
+        {
+          var confirmation = confirm("Are you sure you want to rename this folder? The new name will be applied immediately.");
+          if(confirmation)
+          {
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            var name = prompt("Enter new folder name");
+            $.ajax({
+              url:"{{route('rename-folder')}}",method:"POST",
+              data:{value:$(this).val(),name:name},
               headers: {'X-CSRF-TOKEN': csrfToken},success:function(response)
               {
                 if(response==="success"){location.reload();}else{alert(response);}
