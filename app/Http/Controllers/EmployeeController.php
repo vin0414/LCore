@@ -52,6 +52,21 @@ class EmployeeController extends Controller
         echo "success";
     }
 
+    public function renameFolder(Request $request)
+    {
+        $oldFolderPath = public_path('documents/'.$request->value); // Current folder path
+        $newFolderPath = public_path('documents/'.$request->name); // New folder path
+        if (File::isDirectory($oldFolderPath)) {
+            if (File::move($oldFolderPath, $newFolderPath)) {
+                echo "success";
+            } else {
+                echo "Failed to rename the folder.";
+            }
+        } else {
+            echo "The folder does not exist.";
+        }
+    }
+
     public function saveEmployee(Request $request)
     {
         date_default_timezone_set('Asia/Manila');

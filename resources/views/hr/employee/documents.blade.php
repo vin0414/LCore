@@ -338,11 +338,11 @@
           <form method="POST" class="form__modal" id="frmFolder">
             @csrf
             <div id="drop-area" class="drop-area">
-    <p>Drag & Drop Files Here</p>
-    <p>Or</p>
-    <input type="file" id="file-input" class="file-input" multiple />
-</div>
-<ul id="file-list"></ul>
+                <p>Drag & Drop Files Here</p>
+                <p>Or</p>
+                <input type="file" id="file-input" class="file-input" multiple />
+            </div>
+            <ul id="file-list"></ul>
 
             <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
           </form>
