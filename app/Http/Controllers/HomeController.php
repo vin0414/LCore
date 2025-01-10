@@ -336,9 +336,18 @@ class HomeController extends Controller
         return view('hr/employee/upload',$data);
     }
 
+    public function calendar()
+    {
+        $title = "Calendar and Request";
+        $aboutModel = new \App\Models\aboutModel();
+        $about = $aboutModel->first();
+        $data = ['title'=>$title,'about'=>$about];
+        return view('hr/leave/index',$data);
+    }
+
     public function leave()
     {
-        $title = "Types and Policy";
+        $title = "Leave Types and Policy";
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
         $data = ['title'=>$title,'about'=>$about];

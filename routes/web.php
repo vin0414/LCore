@@ -124,6 +124,7 @@ Route::middleware('auth:user')->group(function () {
     Route::get('hr/employee/upload/{folderName}',[HomeController::class,'uploadFile'])->name('hr/employee/upload');
     Route::get('hr/employee/directories',[HomeController::class,'employeeDirectories'])->name('hr/employee/directories');
     //leave
+    Route::get('hr/leave/calendar',[HomeController::class,'calendar'])->name('hr/leave/calendar');
     Route::get('hr/leave/policies',[HomeController::class,'leave'])->name('hr/leave/policies');
 });
 

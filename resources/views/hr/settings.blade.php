@@ -157,7 +157,7 @@
           </li>
           <li class="nav__item">Track Leave <ion-icon name="chevron-down-outline"></ion-icon>
             <ul class="dropdown">
-              <li class="dropdown__item"><a href="" class="no-underline">Calendar & Request</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/leave/calendar')}}" class="no-underline">Calendar & Request</a></li>
               <li class="dropdown__item"><a href="" class="no-underline">Balances</a></li>
               <li class="dropdown__item"><a href="{{route('hr/leave/policies')}}" class="no-underline">Types & Policies</a></li>
               <li class="dropdown__item"><a href="" class="no-underline">Approval Workflow</a></li>
@@ -272,7 +272,7 @@
             <li class="tab" id="tab8" onclick="openTab('tab8')">Job Creation</li>
             <li class="tab" id="tab4" onclick="openTab('tab4')">Policies</li>
             <li class="tab" id="tab5" onclick="openTab('tab5')">Schedule</li>
-            <li class="tab" id="tab6" onclick="openTab('tab6')">Leave Credits</li>
+            <li class="tab" id="tab6" onclick="openTab('tab6')">Pro-Rated Computation</li>
             <li class="tab" id="tab7" onclick="openTab('tab7')">User Permission</li>
           </ul>
           <div class="tab-content">

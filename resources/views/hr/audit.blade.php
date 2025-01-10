@@ -158,7 +158,7 @@
           </li>
           <li class="nav__item">Track Leave <ion-icon name="chevron-down-outline"></ion-icon>
             <ul class="dropdown">
-              <li class="dropdown__item"><a href="" class="no-underline">Calendar & Request</a></li>
+              <li class="dropdown__item"><a href="{{route('hr/leave/calendar')}}" class="no-underline">Calendar & Request</a></li>
               <li class="dropdown__item"><a href="" class="no-underline">Balances</a></li>
               <li class="dropdown__item"><a href="{{route('hr/leave/policies')}}" class="no-underline">Types & Policies</a></li>
               <li class="dropdown__item"><a href="" class="no-underline">Approval Workflow</a></li>
