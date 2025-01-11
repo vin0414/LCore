@@ -279,7 +279,7 @@
         <ul class="card__list grid__layout">
             @foreach($folders as $subfolder)
                 <li class="card__folder">
-                <a href="#" class="link__folder" onclick="openFolderModal('{{ $subfolder }}')">
+                <a href="{{route('hr/employee/upload',['folderName'=>$subfolder])}}" class="link__folder">
                   <div class="img__box__folder">
                     <ion-icon class="folder__icon" name="folder-open"></ion-icon>
                     <p class="folder__title">{{ $subfolder }}</p>
@@ -327,27 +327,6 @@
           </form>
       </div>
     </div>
-    <div class="modal-overlay" id="folderContents">
-      <div class="folder__modal">
-        <div class="modal__heading">
-          <div class="heading__modal__box">
-            <h2 class="heading__modal" id="modalFolderName"></h2>
-          </div>
-          <div class="close__box"><ion-icon onclick="closeFolderModal()" class="icon__modal" name="close-outline"></ion-icon></div>
-          </div>
-          <form method="POST" class="form__modal" id="frmFolder">
-            @csrf
-            <div id="drop-area" class="drop-area">
-                <p>Drag & Drop Files Here</p>
-                <p>Or</p>
-                <input type="file" id="file-input" class="file-input" multiple />
-            </div>
-            <ul id="file-list"></ul>
-
-            <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
-          </form>
-      </div>
-    </div>
     <footer class="footer">
       <p class="copyright">&copy;{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }} <?php echo date('Y') ?>. All Rights Reserved.</p>
     </footer>
@@ -389,57 +368,6 @@
           }
         });
       });
-
-      document.addEventListener("DOMContentLoaded", function () {
-      // Drop down
-      const dropArea = document.getElementById('drop-area');
-    const fileInput = document.getElementById('file-input');
-    const fileList = document.getElementById('file-list');
-
-    // Prevent default behavior for drag events
-    dropArea.addEventListener('dragover', function(e) {
-        e.preventDefault(); // Prevent default behavior (required for drag and drop)
-        e.stopPropagation(); // Prevent event propagation
-        dropArea.classList.add('dragging'); // Add 'dragging' class when files are dragged over
-    });
-
-    // Handle drag leave
-    dropArea.addEventListener('dragleave', function() {
-        dropArea.classList.remove('dragging'); // Remove 'dragging' class when files leave the area
-    });
-
-    // Handle file drop event
-    dropArea.addEventListener('drop', function(e) {
-        e.preventDefault(); // Prevent default behavior
-        e.stopPropagation(); // Prevent event propagation
-        dropArea.classList.remove('dragging'); // Remove 'dragging' class
-
-        const files = e.dataTransfer.files; // Get the dropped files
-        handleFiles(files); // Process the files
-    });
-
-    // Trigger the file input click when the drop area is clicked (fallback)
-    dropArea.addEventListener('click', function() {
-        fileInput.click();
-    });
-
-    // Handle file selection from the file input
-    fileInput.addEventListener('change', function() {
-        const files = fileInput.files;
-        handleFiles(files); // Process the files
-    });
-
-    // Function to handle file uploads (or display file names)
-    function handleFiles(files) {
-        for (let file of files) {
-            console.log(`File name: ${file.name}, File size: ${file.size} bytes`);
-
-            // Display the file names in a list
-            const listItem = document.createElement('li');
-            listItem.textContent = file.name;
-            fileList.appendChild(listItem);
-        }
-    }
       // List view
       $('.list__layout__button').on("click", function(){
         $('.card__list').removeClass("grid__layout");
@@ -481,7 +409,6 @@
         $(document).on("click", function () {
           hideAllMenus();
         });
-      });
 
       // Open folder modal
       function openFolderModal(folderName) {
