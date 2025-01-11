@@ -62,6 +62,7 @@ Route::post('add-credit',[EmployeeController::class,'addCredit'])->name('add-cre
 Route::post('create-folder',[EmployeeController::class,'createFolder'])->name('create-folder');
 Route::post('delete-folder',[EmployeeController::class,'deleteFolder'])->name('delete-folder');
 Route::post('rename-folder',[EmployeeController::class,'renameFolder'])->name('rename-folder');
+Route::post('delete-file',[EmployeeController::class,'deleteFile'])->name('delete-file');
 //Settings module
 Route::post('save',[SettingController::class,'saveLogo'])->name('save');
 Route::post('reset-password',[SettingController::class,'resetPassword'])->name('reset-password');

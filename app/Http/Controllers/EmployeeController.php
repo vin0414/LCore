@@ -67,6 +67,24 @@ class EmployeeController extends Controller
         }
     }
 
+    public function deleteFile(Request $request)
+    {
+        $folder = $request->folder;
+        $file = $request->value;
+        $directory = 'documents/'.$folder;
+        $file_path = $directory . '/' . $file;
+        if (file_exists($file_path)) {
+            // Delete the file
+            if (unlink($file_path)) {
+                echo "success";
+            } else {
+                echo "Error: Unable to delete the file.";
+            }
+        } else {
+            echo "Error: File does not exist.";
+        }
+    }
+
     public function saveEmployee(Request $request)
     {
         date_default_timezone_set('Asia/Manila');

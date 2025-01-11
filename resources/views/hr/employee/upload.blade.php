@@ -20,179 +20,9 @@
     <link rel="icon" sizes="180x180" href="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : 'No Logo' }}"/>
   </head>
   <body>
-  <header class="header pos__rel">
-      <div class="notification__container">
-        <div class="notification__heading">
-          <p class="subheading">Notifications</p>
-          <span class="notif__text__description"
-            >You have 5 unread messages</span
-          >
-        </div>
-        <div class="pending__box">
-          <!-- 1 -->
-          <div class="pending__notif">
-            <div class="green__circle"></div>
-            <div class="notif__title">
-              <p class="notif__heading">You have a pending approval.</p>
-              <span class="text__description">1 hour ago</span>
-            </div>
-          </div>
-          <!-- 2 -->
-          <div class="pending__notif">
-            <div class="green__circle"></div>
-            <div class="notif__title">
-              <p class="notif__heading">You have a pending approval.</p>
-              <span class="text__description">1 hour ago</span>
-            </div>
-          </div>
-          <!-- 3 -->
-          <div class="pending__notif">
-            <div class="green__circle"></div>
-            <div class="notif__title">
-              <p class="notif__heading">You have a pending approval.</p>
-              <span class="text__description">1 hour ago</span>
-            </div>
-          </div>
-          <!-- 4 -->
-          <div class="pending__notif">
-            <div class="green__circle"></div>
-            <div class="notif__title">
-              <p class="notif__heading">You have a pending approval.</p>
-              <span class="text__description">1 hour ago</span>
-            </div>
-          </div>
-          <!-- 5 -->
-          <div class="pending__notif">
-            <div class="green__circle"></div>
-            <div class="notif__title">
-              <p class="notif__heading">You have a pending approval.</p>
-              <span class="text__description">1 hour ago</span>
-            </div>
-          </div>
-          <!-- 6 -->
-          <div class="pending__notif">
-            <div class="green__circle"></div>
-            <div class="notif__title">
-              <p class="notif__heading">You have a pending approval.</p>
-              <span class="text__description">1 hour ago</span>
-            </div>
-          </div>
-          <!-- 7 -->
-          <div class="pending__notif">
-            <div class="green__circle"></div>
-            <div class="notif__title">
-              <p class="notif__heading">You have a pending approval.</p>
-              <span class="text__description">1 hour ago</span>
-            </div>
-          </div>
-        </div>
-        <button class="btn__read">Mark all as read</button>
-      </div>
-      <div class="header__box flex flex__align__center">
-        <div class="logo__box">
-          <img class="logo" src="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : '' }}" />
-        </div>
-        <div class="cta__box flex flex__align__center">
-          <div class="settings__icons flex flex__align__center">
-            <div class="notif__box pos__rel">
-              <p class="notification__count">34</p>
-              <ion-icon
-                class="header__icon icon__notification"
-                name="notifications-outline"
-              ></ion-icon>
-            </div>
-          </div>
-          <div class="user__images flex flex__align__center">
-            <img
-              src="/assets/images/user.png"
-              alt="Image of the user" height="40"
-              class="user__image"
-            />
-            <p id="userName" class="user__name name__screen__lg"><?php echo session('fullname') ?></p>
-            <div class="account__dropdown">
-              <a href="javascript:void(0);" class="no-underline user__name name__screen__sm flex flex__align__center gap__1">
-                <ion-icon name="person-outline"></ion-icon><?php echo session('fullname') ?>
-              </a>
-              <a href="{{route('hr/account')}}" class="no-underline user__name name__screen__sm flex flex__align__center gap__1">
-                <ion-icon
-                  class="sidebar__icon"
-                  name="settings-outline"></ion-icon>Account Settings
-              </a>
-              <p class="user__name name__screen__sm flex flex__align__center gap__1">
-                <ion-icon class="sidebar__icon" name="sunny-outline"></ion-icon>Mode
-              </p>
-              <hr />
-              <a href="{{route('logout')}}" onclick="return confirm('Do you want to sign out?')" class="link__account flex flex__align__center gap__1"
-                ><ion-icon name="log-out-outline"></ion-icon>Logout</a
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-  </header>
+    @include('hr.templates.header')
     <main>
-      <nav class="navigation">
-        <ion-icon id="menuButton" class="menu" name="menu-outline"></ion-icon>
-        <ul id="headerNav" class="nav__items flex flex__align__center">
-          <li class="nav__item"><a href="{{route('hr/overview')}}" class="no-underline">Dashboard</a></li>
-          <li class="nav__item">Payroll Management <ion-icon name="chevron-down-outline"></ion-icon>
-            <ul class="dropdown">
-              <li class="dropdown__item"><a href="{{route('hr/payroll')}}" class="no-underline">Payroll</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/payroll/attendance')}}" class="no-underline">Attendance</a></li>
-              <li class="dropdown__item">Salary</li>
-            </ul>
-          </li>
-          <li class="nav__item">Loans & Deduction <ion-icon name="chevron-down-outline"></ion-icon>
-            <ul class="dropdown">
-              <li class="dropdown__item"><a href="{{route('hr/loans')}}" class="no-underline">Loans</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/deductions')}}" class="no-underline">Deductions</a></li>
-            </ul>
-          </li>
-          <li class="nav__item">Employee Management<ion-icon name="chevron-down-outline"></ion-icon>
-            <ul class="dropdown">
-              <li class="dropdown__item"><a href="{{route('hr/employee')}}" class="no-underline">Master File</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/employee/new')}}" class="no-underline">New Employee</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/employee/movement')}}" class="no-underline">Career Progression</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/employee/credits')}}" class="no-underline">Leave Credits</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/employee/documents')}}" class="no-underline">Other Documents</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/employee/directories')}}" class="no-underline">Directories</a></li>
-            </ul>
-          </li>
-          <li class="nav__item">Track Leave <ion-icon name="chevron-down-outline"></ion-icon>
-            <ul class="dropdown">
-              <li class="dropdown__item"><a href="" class="no-underline">Calendar & Request</a></li>
-              <li class="dropdown__item"><a href="" class="no-underline">Balances</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/leave/policies')}}" class="no-underline">Types & Policies</a></li>
-              <li class="dropdown__item"><a href="" class="no-underline">Approval Workflow</a></li>
-            </ul>
-          </li>
-          <li class="nav__item">Memos & Broadcast<ion-icon name="chevron-down-outline"></ion-icon>
-            <ul class="dropdown">
-              <li class="dropdown__item"><a href="{{route('hr/memo')}}" class="no-underline">Overview</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/memo/new')}}" class="no-underline">Post Memo</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/memo/new-announcement')}}" class="no-underline">New Broadcast</a></li>
-            </ul>
-          </li>
-          <li class="nav__item">
-            Reports <ion-icon name="chevron-down-outline"></ion-icon>
-            <ul class="dropdown">
-              <li class="dropdown__item">Salary</li>
-              <li class="dropdown__item">Salary</li>
-              <li class="dropdown__item">Salary</li>
-            </ul>
-          </li>
-          <?php if(session('role')=="ADMIN"||session('role')=="Admin"){ ?>
-          <li class="nav__item">
-            Maintenance<ion-icon name="chevron-down-outline"></ion-icon>
-            <ul class="dropdown">
-              <li class="dropdown__item"><a href="{{route('hr/recovery')}}" class="no-underline">Recovery</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/settings')}}" class="no-underline">System Settings</a></li>
-              <li class="dropdown__item"><a href="{{route('hr/audit-trail')}}" class="no-underline">Audit Trail</a></li>
-            </ul>
-          </li>
-          <?php } ?>
-        </ul>
-      </nav>
+      @include('hr.templates.nav')
       <aside class="sidebar__nav">
         <p class="side_heading">Quick Links</p>
         <ul class="sidebar__items">
@@ -253,7 +83,7 @@
           </li>
           <li>
             <a href="{{route('hr/audit-trail')}}" class="nav__links"
-              ><ion-icon name="clipboard-outline"></ion-icon>Audit Trail</a
+           ><ion-icon name="clipboard-outline"></ion-icon>Audit Trail</a
             >
           </li>
           <?php } ?>
@@ -268,7 +98,7 @@
         </div>
         <div class="btn__grid__container">
           <div class="btn__box">
-              <a href="#" type="button" class="btn__return"><ion-icon class="icon__documents" name="arrow-back-outline"></ion-icon>Return</a>
+              <a href="{{route('hr/employee/documents')}}" type="button" class="btn__return"><ion-icon class="icon__documents" name="arrow-back-outline"></ion-icon>Return</a>
               <button type="button" class="btn__primary add-folder" onclick="openFolderModal()"><ion-icon class="icon__documents" name="add-outline"></ion-icon>Upload Files</button>
           </div>
           <div class="grid__options">
@@ -278,15 +108,22 @@
         </div>
         <ul class="card__list grid__layout">
           @php
-              $files = ['Test1.jpg', 'Test2.jpg', 'Test3.jpg', 'TestManyTextSampleOnlyForDisplay4.jpg', 'Test5.jpg', 'Test6.jpg', 'Test7.jpg', 'Test8.jpg', 'Test9.jpg', 'Test10.jpg', 'Test10.jpg', 'Test10.jpg', 'Test10.jpg', 'Test10.jpg', 'Test10.jpg', 'Test10.jpg', 'Test10.jpg', 'Test10.jpg'];
+            $directory = 'documents/'.$title;
+            $files = scandir($directory);
           @endphp
 
           @foreach($files as $file)
+          <?php 
+          if($file !== '.' && $file !== '..') { 
+            $file_info = pathinfo($file);
+            $extension = isset($file_info['extension']) ? $file_info['extension'] : 'No extension';
+          ?>
               <li class="card__folder">
                   <a href="#" class="link__folder">
                       <div class="img__box__folder">
-                          <ion-icon class="folder__icon" name="document-outline"></ion-icon>
-                          <p class="folder__title" title="{{ $file }}">{{ $file }}</p>
+                          <!-- <ion-icon class="folder__icon" name="document-outline"></ion-icon> -->
+                          <img src="/assets/icons/<?php echo $extension ?>.png" width="30"/>
+                          <a href="/documents/{{$title}}/{{$file}}" class="folder__title no-underline" target="_BLANK" title="{{ $file_info['filename'] }}">{{ $file_info['filename'] }}</a>
                       </div>
                   </a>
                   <ion-icon class="icon__trash" name="trash-outline"></ion-icon>
@@ -295,11 +132,12 @@
                           <div class="item"><p class="text__description">Delete this file?</p></div>
                           <div class="item">
                               <button type="button" class="cancel">Cancel</button>
-                              <button type="button" class="delete">Delete</button>
+                              <button type="button" value="{{$file}}" class="delete">Delete</button>
                           </div>
                       </div>
                   </div>
               </li>
+          <?php } ?>
           @endforeach
         </ul>
       </div>
@@ -314,7 +152,7 @@
             <ion-icon onclick="closeFolderModal()" class="icon__modal" name="close-outline"></ion-icon>
           </div>
           </div>
-          <form method="POST" class="form__modal" id="frmFolder">
+          <form method="POST" enctype="multipart/form-data" class="form__modal" id="frmFolder">
             @csrf
             <div id="drop-area" class="drop-area">
                 <p>Drag & Drop Files Here</p>
@@ -427,14 +265,11 @@
     fileInput.value = '';
 }
 
-
-
-
-// Event listener for the file input
-fileInput.addEventListener('change', function () {
-    const files = fileInput.files;
-    handleFiles(files);
-});
+      // Event listener for the file input
+      fileInput.addEventListener('change', function () {
+          const files = fileInput.files;
+          handleFiles(files);
+      });
 
 
       // List view
@@ -522,24 +357,16 @@ fileInput.addEventListener('change', function () {
           $('body').removeClass('no-scroll'); 
       }
 
-      $('#frmFolder').on('submit',function(e){
-        e.preventDefault();
-        var formData = $(this).serialize();
+      $(document).on('click','.delete',function()
+      {
+        var folder = "<?php echo $title ?>";
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
         $.ajax({
-          url:"{{route('create-folder')}}",method:"POST",
-          data:formData,success:function(response)
+          url:"{{route('delete-file')}}",method:"POST",
+          data:{value:$(this).val(),folder:folder},
+          headers: {'X-CSRF-TOKEN': csrfToken},success:function(response)
           {
-            if(response.success)
-            {
-              window.location.reload();
-            }else{
-                var errors = response.errors;
-                // Iterate over each error and display it under the corresponding input field
-                for (var field in errors) {
-                    $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
-                    $('#' + field).addClass('input-error'); // Highlight the input field with an error
-                }
-            }
+            if(response==="success"){location.reload();}else{alert(response);}
           }
         });
       });
