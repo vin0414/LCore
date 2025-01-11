@@ -228,7 +228,7 @@ hr {
     list-style: none;
     padding: 1rem;
     margin: 0;
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
     width: 100%;
     border-bottom-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
