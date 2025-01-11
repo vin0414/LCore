@@ -112,7 +112,7 @@
                 <a href="{{route('hr/employee/upload',['folderName'=>$subfolder])}}" class="link__folder">
                   <div class="img__box__folder">
                     <ion-icon class="folder__icon" name="folder-open"></ion-icon>
-                    <p class="folder__title">{{ $subfolder }}</p>
+                    <p class="folder__title" title="{{ $subfolder }}">{{ $subfolder }}</p>
                   </div>
                 </a>
                 <ion-icon class="icon__open" name="ellipsis-vertical"></ion-icon>

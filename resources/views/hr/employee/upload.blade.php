@@ -277,60 +277,30 @@
           </div>
         </div>
         <ul class="card__list grid__layout">
-            <li class="card__folder">
-                <a href="#" class="link__folder">
-                    <div class="img__box__folder">
-                    <ion-icon class="folder__icon" name="document-outline"></ion-icon>
-                    <p class="folder__title">Test.jpg</p>
-                    </div>
-                </a>
-                <ion-icon class="icon__trash" name="trash-outline"></ion-icon>
-                <div class="modal__options">
-                    <div class="list__items">
-                        <div class="item"><p class="text__description">Delete this file?</p></div>
-                        <div class="item">
-                        <button type="button" class="cancel">Cancel</button>
-                        <button type="button" class="delete">Delete </button>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="card__folder">
-                <a href="#" class="link__folder">
-                    <div class="img__box__folder">
-                    <ion-icon class="folder__icon" name="document-outline"></ion-icon>
-                    <p class="folder__title">Test.jpg</p>
-                    </div>
-                </a>
-                <ion-icon class="icon__trash" name="trash-outline"></ion-icon>
-                <div class="modal__options">
-                    <div class="list__items">
-                        <div class="item"><p class="text__description">Delete this file?</p></div>
-                        <div class="item">
-                        <button type="button" class="cancel">Cancel</button>
-                        <button type="button" class="delete">Delete </button>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="card__folder">
-                <a href="#" class="link__folder">
-                    <div class="img__box__folder">
-                    <ion-icon class="folder__icon" name="document-outline"></ion-icon>
-                    <p class="folder__title">Test.jpg</p>
-                    </div>
-                </a>
-                <ion-icon class="icon__trash" name="trash-outline"></ion-icon>
-                <div class="modal__options">
-                    <div class="list__items">
-                        <div class="item"><p class="text__description">Delete this file?</p></div>
-                        <div class="item">
-                        <button type="button" class="cancel">Cancel</button>
-                        <button type="button" class="delete">Delete </button>
-                        </div>
-                    </div>
-                </div>
-            </li>
+          @php
+              $files = ['Test1.jpg', 'Test2.jpg', 'Test3.jpg', 'TestManyTextSampleOnlyForDisplay4.jpg', 'Test5.jpg', 'Test6.jpg', 'Test7.jpg', 'Test8.jpg', 'Test9.jpg', 'Test10.jpg', 'Test10.jpg', 'Test10.jpg', 'Test10.jpg', 'Test10.jpg', 'Test10.jpg', 'Test10.jpg', 'Test10.jpg', 'Test10.jpg'];
+          @endphp
+
+          @foreach($files as $file)
+              <li class="card__folder">
+                  <a href="#" class="link__folder">
+                      <div class="img__box__folder">
+                          <ion-icon class="folder__icon" name="document-outline"></ion-icon>
+                          <p class="folder__title" title="{{ $file }}">{{ $file }}</p>
+                      </div>
+                  </a>
+                  <ion-icon class="icon__trash" name="trash-outline"></ion-icon>
+                  <div class="modal__options">
+                      <div class="list__items">
+                          <div class="item"><p class="text__description">Delete this file?</p></div>
+                          <div class="item">
+                              <button type="button" class="cancel">Cancel</button>
+                              <button type="button" class="delete">Delete</button>
+                          </div>
+                      </div>
+                  </div>
+              </li>
+          @endforeach
         </ul>
       </div>
     </main>
