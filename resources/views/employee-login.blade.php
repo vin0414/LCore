@@ -73,7 +73,7 @@
                 </div>
               @endif
               @if(Auth::guard('employee')->check())
-              <p>You are already logged in. <a href="{{ route('employee/overview') }}">Go to Dashboard</a></p>
+              @php return redirect("employee/overview");@endphp
               @else
               <form class="form__login" id="formLogin" method="POST" action="{{route('authenticate')}}">
                 @csrf
