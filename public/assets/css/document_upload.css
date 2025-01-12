@@ -48,6 +48,13 @@
     cursor: pointer;
     text-align: center;
 }
+.file-count {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+}
+.file-count.note__size {
+    margin-top: 1rem;
+}
 
 .drop-area p {
     margin: 10px;
