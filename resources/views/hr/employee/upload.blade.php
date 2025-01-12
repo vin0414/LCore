@@ -102,6 +102,7 @@
               <button type="button" class="btn__primary add-folder" onclick="openFolderModal()"><ion-icon class="icon__documents" name="add-outline"></ion-icon>Upload Files</button>
           </div>
           <div class="grid__options">
+            <!-- <ion-icon name="trash-outline" class="icon__grid icon__delete"></ion-icon> -->
             <ion-icon name="list-outline" class="icon__grid list__layout__button"></ion-icon>
             <ion-icon name="grid-outline" class="icon__grid grid__layout__button"></ion-icon>
           </div>
@@ -173,105 +174,100 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // Drop down
-    const dropArea = document.getElementById('drop-area');
-    const fileInput = document.getElementById('files');
-    const fileList = document.getElementById('file-list');
+      // File upload here
+      const dropArea = document.getElementById("drop-area");
+      const fileInput = document.getElementById("files");
+      const fileList = document.getElementById("file-list");
 
-    dropArea.addEventListener('dragover', function(e) {
-        e.preventDefault(); 
-        e.stopPropagation(); 
-        dropArea.classList.add('dragging');
-    });
+      let selectedFiles = [];
 
-    // Handle drag leave
-    dropArea.addEventListener('dragleave', function() {
-        dropArea.classList.remove('dragging'); 
-    });
-
-    // Handle file drop event
-    dropArea.addEventListener('drop', function(e) {
-        e.preventDefault(); 
-        e.stopPropagation(); 
-        dropArea.classList.remove('dragging'); 
-
-        const files = e.dataTransfer.files; 
-        handleFiles(files); 
-    });
-
-    dropArea.addEventListener('click', function() {
-        fileInput.click();
-    });
-
-    // Handle file selection from the file input
-    fileInput.addEventListener('change', function() {
-        const files = fileInput.files;
-        handleFiles(files); 
-    });
-
-    const uploadedFiles = [];
-
-    function handleFiles(files) {
-    for (let file of files) {
-        // Track the uploaded files
-        uploadedFiles.push(file);
-
-        // Create list item for the file
-        const listItem = document.createElement('li');
-        listItem.style.display = 'flex';
-        listItem.style.alignItems = 'center';
-        listItem.style.justifyContent = 'space-between';
-        listItem.style.marginBottom = '8px';
-
-        // Create a container for file name, size, and trash icon
-        const fileInfoContainer = document.createElement('div');
-        fileInfoContainer.style.display = 'flex';
-        fileInfoContainer.style.justifyContent = 'space-between'; 
-        fileInfoContainer.style.width = '100%'; 
-        fileInfoContainer.style.alignItems = 'center'; 
-        fileInfoContainer.style.gap = '8px';
-
-        // Add file name to the container
-        const fileInfoSpan = document.createElement('span');
-        fileInfoSpan.textContent = file.name;
-        fileInfoContainer.appendChild(fileInfoSpan);
-
-        // Add file size to the container
-        const fileSizeSpan = document.createElement('span');
-        const fileSize = (file.size / 1024).toFixed(2); 
-        fileSizeSpan.textContent = `${fileSize} KB`;
-        fileSizeSpan.style.color = '#3b3b3b'; 
-        fileSizeSpan.style.fontSize = '1.2rem';
-        fileInfoContainer.appendChild(fileSizeSpan);
-
-        // Create a trash icon for deleting the file
-        const trashIcon = document.createElement('ion-icon');
-        trashIcon.setAttribute('name', 'trash-outline');
-        trashIcon.style.cursor = 'pointer';
-        trashIcon.style.color = '#f00'; 
-        trashIcon.style.width = '2rem';
-        trashIcon.style.height = '2rem';
-
-        trashIcon.addEventListener('click', function () {
-            const index = uploadedFiles.indexOf(file);
-            if (index !== -1) {
-                uploadedFiles.splice(index, 1); 
-            }
-            listItem.remove(); 
-        });
-        fileInfoContainer.appendChild(trashIcon);
-        listItem.appendChild(fileInfoContainer);
-        fileList.appendChild(listItem);
-    }
-    fileInput.value = '';
-}
-
-      // Event listener for the file input
-      fileInput.addEventListener('change', function () {
-          const files = fileInput.files;
-          handleFiles(files);
+      ["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
+          dropArea.addEventListener(eventName, e => e.preventDefault());
       });
 
+      dropArea.addEventListener("dragover", () => {
+          dropArea.classList.add("drag-over");
+      });
+
+      ["dragleave", "drop"].forEach(eventName => {
+          dropArea.addEventListener(eventName, () => {
+              dropArea.classList.remove("drag-over");
+          });
+      });
+
+      dropArea.addEventListener("drop", e => {
+          const files = e.dataTransfer.files;
+          selectedFiles = Array.from(files); 
+          updateFileList(selectedFiles); 
+          fileInput.files = files; 
+      });
+
+      fileInput.addEventListener("change", () => {
+          selectedFiles = Array.from(fileInput.files); 
+          updateFileList(selectedFiles); 
+      });
+
+      function updateFileList(files) {
+          fileList.innerHTML = ""; 
+
+          if (files.length === 0) {
+              fileInput.value = '';
+              selectedFiles = [];
+              return;
+          }
+
+          files.forEach(file => {
+              const listItem = document.createElement("li");
+              listItem.style.display = 'flex';
+              listItem.style.alignItems = 'center';
+              listItem.style.justifyContent = 'space-between';
+              listItem.style.marginBottom = '8px';
+
+              const fileInfoContainer = document.createElement('div');
+              fileInfoContainer.style.display = 'flex';
+              fileInfoContainer.style.justifyContent = 'space-between';
+              fileInfoContainer.style.width = '100%';
+              fileInfoContainer.style.alignItems = 'center';
+              fileInfoContainer.style.gap = '8px';
+
+              const fileInfoSpan = document.createElement('span');
+              fileInfoSpan.textContent = file.name;
+              fileInfoSpan.classList.add("file__info__span");
+              fileInfoSpan.setAttribute("title", file.name);
+              fileInfoContainer.appendChild(fileInfoSpan);
+
+              const fileSizeSpan = document.createElement('span');
+              const fileSize = (file.size / 1024 / 1024).toFixed(2); 
+              fileSizeSpan.textContent = `${fileSize} MB`;
+              fileSizeSpan.style.color = '#3b3b3b';
+              fileSizeSpan.style.fontSize = '1.2rem';
+              fileSizeSpan.style.marginLeft = '10px'; 
+              fileInfoContainer.appendChild(fileSizeSpan);
+
+              const trashIcon = document.createElement('ion-icon');
+              trashIcon.setAttribute('name', 'trash-outline');
+              trashIcon.style.cursor = 'pointer';
+              trashIcon.style.color = '#f00';
+              trashIcon.style.width = '2rem';
+              trashIcon.style.height = '2rem';
+
+              trashIcon.addEventListener('click', function () {
+                  selectedFiles = selectedFiles.filter(f => f.name !== file.name);
+                  updateFileList(selectedFiles);
+                  if (selectedFiles.length === 0) {
+                      fileInput.value = ''; 
+                  } else {
+                      const dataTransfer = new DataTransfer();
+                      selectedFiles.forEach(f => dataTransfer.items.add(f));
+                      fileInput.files = dataTransfer.files; 
+                  }
+              });
+              fileInfoContainer.appendChild(trashIcon);
+              listItem.appendChild(fileInfoContainer);
+              fileList.appendChild(listItem);
+          });
+      }
+      // File upload ends here
 
       // List view
       $('.list__layout__button').on("click", function(){
