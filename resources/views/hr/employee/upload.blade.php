@@ -119,11 +119,11 @@
             $extension = isset($file_info['extension']) ? $file_info['extension'] : 'No extension';
           ?>
               <li class="card__folder">
-                  <a href="#" class="link__folder">
+                  <a href="/documents/{{$title}}/{{$file}}" class="link__folder" target="_BLANK">
                       <div class="img__box__folder">
                           <!-- <ion-icon class="folder__icon" name="document-outline"></ion-icon> -->
                           <img src="/assets/icons/<?php echo $extension ?>.png" width="30"/>
-                          <a href="/documents/{{$title}}/{{$file}}" class="folder__title no-underline" target="_BLANK" title="{{ $file_info['filename'] }}">{{ $file_info['filename'] }}</a>
+                          <p class="folder__title" title="{{ $file_info['filename'] }}">{{ $file_info['filename'] }}</p>
                       </div>
                   </a>
                   <ion-icon class="icon__trash" name="trash-outline"></ion-icon>
@@ -152,17 +152,18 @@
             <ion-icon onclick="closeFolderModal()" class="icon__modal" name="close-outline"></ion-icon>
           </div>
           </div>
-          <form method="POST" enctype="multipart/form-data" class="form__modal" id="frmFolder">
+          <form method="POST" enctype="multipart/form-data" class="form__modal" id="frmUpload">
             @csrf
+            <input type="hidden" name="folderName" value="{{$title}}"/>
             <div id="drop-area" class="drop-area">
                 <p>Drag & Drop Files Here</p>
                 <p>Or</p>
                 <p>Click to upload</p>
-                <input type="file" id="file-input" class="file-input" multiple />
+                <input type="file" id="files" name="file[]" class="" multiple/>
             </div>
+            <div id="file-error" class="error-message text-danger"></div>
             <ul id="file-list" class="file-list"></ul>
-
-            <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+            <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="cloud-upload-outline"></ion-icon>Upload</button>
           </form>
       </div>
     </div>
@@ -174,7 +175,7 @@
     document.addEventListener("DOMContentLoaded", function () {
       // Drop down
     const dropArea = document.getElementById('drop-area');
-    const fileInput = document.getElementById('file-input');
+    const fileInput = document.getElementById('files');
     const fileList = document.getElementById('file-list');
 
     dropArea.addEventListener('dragover', function(e) {
@@ -370,6 +371,34 @@
           }
         });
       });
+
+      $('#frmUpload').on('submit', function (e) 
+      {
+            e.preventDefault(); // Prevent default form submission
+            $('.error-message').html('');
+            var formData = new FormData(this);
+            // If validation passes, make the AJAX request
+            $.ajax({
+                url: '{{ route("file-upload") }}', // Your Laravel route
+                method: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) 
+                {
+                    if (response.success) {
+                        location.reload();
+                    } else {
+                      var errors = response.errors;
+                      // Iterate over each error and display it under the corresponding input field
+                      for (var field in errors) {
+                          $('#file-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
+                          $('#file').addClass('input-error'); // Highlight the input field with an error
+                      }
+                    }
+                }
+            });
+        });
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>

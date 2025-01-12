@@ -69,6 +69,7 @@ class EmployeeController extends Controller
 
     public function deleteFile(Request $request)
     {
+        date_default_timezone_set('Asia/Manila');
         $folder = $request->folder;
         $file = $request->value;
         $directory = 'documents/'.$folder;
@@ -76,6 +77,11 @@ class EmployeeController extends Controller
         if (file_exists($file_path)) {
             // Delete the file
             if (unlink($file_path)) {
+                //create log record
+                $logModel = new \App\Models\logModel();
+                $date = date('Y-m-d h:i:s a');
+                $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Deleted file '.$file];
+                $logModel->create($data);
                 echo "success";
             } else {
                 echo "Error: Unable to delete the file.";
@@ -83,6 +89,36 @@ class EmployeeController extends Controller
         } else {
             echo "Error: File does not exist.";
         }
+    }
+
+    public function uploadFile(Request $request)
+    {
+        date_default_timezone_set('Asia/Manila');
+        $validator = Validator::make($request->all(),[
+            'file.*' => 'required|file|mimes:jpg,jpeg,png,pdf,docx,doc,txt,xls,xlsx|max:5120' // 5MB max
+        ]);
+
+        if ($validator->fails()) {
+            // Return validation errors as JSON
+            return response()->json(['errors' => $validator->errors()]);
+        }
+        else
+        {
+            foreach($request->file as $file)
+            {
+                $fileName = $file->getClientOriginalName();
+                $file->move("documents/".$request->folderName."/",$fileName);
+            }
+        }
+        //create log record
+        $logModel = new \App\Models\logModel();
+        $date = date('Y-m-d h:i:s a');
+        $data = ['accountID'=>session('user_id'),'Date'=>$date,'Activity'=>'Uploaded files'];
+        $logModel->create($data);
+        // Return a JSON response for AJAX
+        return response()->json([
+            'success' => 'Files uploaded successfully!',
+        ]);
     }
 
     public function saveEmployee(Request $request)
