@@ -71,7 +71,7 @@ hr {
     top: 8rem;
     right: 2rem;
     opacity: 0;
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
     z-index: 3;
     visibility: hidden;
 }
@@ -88,7 +88,7 @@ hr {
     cursor: pointer;
 }
 .header__icon {
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
     cursor: pointer;
 }
 
@@ -108,7 +108,7 @@ hr {
     font-family: "poppins", sans-serif;
     border-radius: 1rem;
     background-color: var(--light-green-color);
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
     cursor: pointer;
     display: flex;
     width: 100%;
@@ -167,7 +167,7 @@ hr {
     cursor: pointer;
     padding: 1rem;
     border-radius: 1rem;
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
 }
 .pending__notif:hover {
     background-color: var(--light-green-color);
@@ -240,11 +240,12 @@ hr {
     padding: 1rem;
     cursor: pointer;
     white-space: nowrap;
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
+    border-radius: 1rem;
 }
 .dropdown__item:hover {
     /* color: var(--white-color); */
-    background-color: #ecfce5;
+    background-color: #f9f9f9;
 }
 
 .nav__item:hover .dropdown {

@@ -495,7 +495,8 @@ select:focus-visible {
 }
 .nav__links:hover,
 .nav__links:active {
-    color: #31880c;
+    color: black;
+    font-weight: 600;
 }
 
 .side_heading {

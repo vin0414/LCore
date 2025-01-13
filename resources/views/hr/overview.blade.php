@@ -162,7 +162,7 @@
                  <a class="link__employee__container" href="{{route('hr/employee/view',['companyID'=>$row['companyID']])}}">
                   <div class="employee__box">
                     <div class="employee__name__title">
-                      <p class="employee__name"><?php echo $row['surName'] ?>,<?php echo $row['firstName'] ?> <?php echo $row['middleName'] ?></p>
+                      <p class="employee__name"><?php echo $row['surName'] ?>, <?php echo $row['firstName'] ?> <?php echo $row['middleName'] ?></p>
                       <p class="employee__role"><?php echo $row['designation'] ?></p>
                     </div>
                     <ion-icon class="chev__down__employee" name="chevron-forward-outline"></ion-icon>
