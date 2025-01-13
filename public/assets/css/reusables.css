@@ -1074,3 +1074,27 @@ body.no-scroll {
 .dropdown__item.highlight {
     color: var(--green-color);
 }
+
+.pages {
+    color: var(--black-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Bread crumbs links */
+.link__breadcrumbs:link,
+.link__breadcrumbs:visited {
+    text-decoration: none;
+    color: var(--black-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.link__breadcrumbs:hover,
+.link__breadcrumbs:active {
+    color: var(--green-color);
+}
+.breadcrumbs__right__text {
+    color: rgb(153, 153, 153);
+    text-transform: capitalize;
+}

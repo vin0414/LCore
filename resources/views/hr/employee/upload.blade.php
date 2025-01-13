@@ -93,7 +93,7 @@
         <div class="heading__box flex flex__align__center">
           <h1 class="heading__primary flex flex__align__center gap__1"><ion-icon class="folder__icon heading" name="folder-open"></ion-icon>{{$title}}</h1>
           <div class="breadcrumbs">
-            <p class="pages">Employee | <span>{{$title}}</span></p>
+            <p class="pages"><a href="{{route('hr/employee/documents')}}" class="link__breadcrumbs">Employee Documents</a><ion-icon name="chevron-forward-outline"></ion-icon><span class="breadcrumbs__right__text">{{$title}}</span></p>
           </div>
         </div>
         <div class="btn__grid__container">
