@@ -12,6 +12,7 @@
     />
     <link rel="stylesheet" href="/assets/css/reusables.css" />
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
+    <link rel="stylesheet" href="/assets/css/accountPage.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
     <link rel="icon" sizes="180x180" href="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : 'No Logo' }}"/>
   </head>
@@ -103,23 +104,25 @@
                 <span class="input__title">Fullname</span>
                 <div id="" class="error-messages text-danger"></div>
               </div>
-              <!-- 2 -->
-              <div class="input__box">
-                <input
-                  class="information__input"
-                  name=""
-                />
-                <span class="input__title">Username</span>
-                <div id="" class="error-messages text-danger"></div>
-              </div>
-              <!-- 3 -->
-              <div class="input__box">
-                <input
-                  class="information__input"
-                  name=""
-                />
-                <span class="input__title">Designation</span>
-                <div id="" class="error-messages text-danger"></div>
+              <div class="input__group__items">
+                <!-- 2 -->
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    name=""
+                  />
+                  <span class="input__title">Username</span>
+                  <div id="" class="error-messages text-danger"></div>
+                </div>
+                <!-- 3 -->
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    name=""
+                  />
+                  <span class="input__title">Designation</span>
+                  <div id="" class="error-messages text-danger"></div>
+                </div>
               </div>
               <!-- 4 -->
               <div class="input__box">
@@ -147,6 +150,13 @@
               <div class="input__box pos__rel">
                 <input class="information__input password__field" name="" type="password" autocomplete="new-password" />
                 <span class="input__title">New Password</span>
+                <ion-icon name="eye-outline" class="icon__account eye__icon toggle__visibility"></ion-icon>
+                <div id="" class="error-messages text-danger"></div>
+              </div>
+              <!-- 2 -->
+              <div class="input__box pos__rel">
+                <input class="information__input password__field" name="" type="password" />
+                <span class="input__title">Confirm Password</span>
                 <ion-icon name="eye-outline" class="icon__account eye__icon toggle__visibility"></ion-icon>
                 <div id="" class="error-messages text-danger"></div>
               </div>

@@ -1,0 +1,17 @@
+/* 1100 px */
+@media (max-width: 68.75em) {
+    .card__container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+/* 400 px */
+@media (max-width: 27.5em) {
+    .input__group__items {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        gap: 2rem;
+    }
+}

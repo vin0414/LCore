@@ -999,9 +999,17 @@ body.no-scroll {
 
 /* INPUT FIELDS FOR ACCOUNT PROFILE AND LEAVE POLICY */
 
+.input__group__items {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+.input__group__items .input__box {
+    width: 100%;
+}
 .card__container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.5fr 0.5fr;
     gap: 2rem;
 }
 .card__container .information__input {
