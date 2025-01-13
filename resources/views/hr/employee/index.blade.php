@@ -549,117 +549,139 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // upload modal
-          const dropArea = document.getElementById("drop-area");
-          const fileInput = document.getElementById("files");
-          const fileList = document.getElementById("file-list");
-          const fileCountDisplay = document.getElementById("file-count"); // Display element for the count
+      // upload modal
+      const dropArea = document.getElementById("drop-area");
+      const fileInput = document.getElementById("files");
+      const fileList = document.getElementById("file-list");
+      const fileCountDisplay = document.getElementById("file-count"); // Display element for the count
 
-          let selectedFiles = [];
+      let selectedFiles = [];
 
-          ["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
-              dropArea.addEventListener(eventName, e => e.preventDefault());
+      ["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
+          dropArea.addEventListener(eventName, e => e.preventDefault());
+      });
+
+      dropArea.addEventListener("dragover", () => {
+          dropArea.classList.add("drag-over");
+      });
+
+      ["dragleave", "drop"].forEach(eventName => {
+          dropArea.addEventListener(eventName, () => {
+              dropArea.classList.remove("drag-over");
           });
+      });
 
-          dropArea.addEventListener("dragover", () => {
-              dropArea.classList.add("drag-over");
-          });
+      dropArea.addEventListener("drop", e => {
+          const files = Array.from(e.dataTransfer.files);
+          handleFileSelection(files);
+      });
 
-          ["dragleave", "drop"].forEach(eventName => {
-              dropArea.addEventListener(eventName, () => {
-                  dropArea.classList.remove("drag-over");
-              });
-          });
+      fileInput.addEventListener("change", () => {
+          const files = Array.from(fileInput.files);
+          handleFileSelection(files);
+      });
 
-          dropArea.addEventListener("drop", e => {
-              const files = e.dataTransfer.files;
-              selectedFiles = Array.from(files); 
-              updateFileList(selectedFiles); 
-              fileInput.files = files; 
-          });
+      dropArea.addEventListener("click", function () {
+          fileInput.click();
+      });
 
-          fileInput.addEventListener("change", () => {
-              selectedFiles = Array.from(fileInput.files); 
-              updateFileList(selectedFiles); 
-          });
-          dropArea.addEventListener("click", function () {
-              fileInput.click(); 
-          });
-
-          // Function to update the file list in the UI
-          function updateFileList(files) {
-              fileList.innerHTML = ""; 
-
-              if (files.length === 0) {
-                  fileInput.value = '';
-                  selectedFiles = [];
-                  updateFileCount(0); // Reset the file count display
-                  return;
-              }
-
-              files.forEach(file => {
-                  const listItem = document.createElement("li");
-                  listItem.style.display = 'flex';
-                  listItem.style.alignItems = 'center';
-                  listItem.style.justifyContent = 'space-between';
-                  listItem.style.marginBottom = '8px';
-
-                  const fileInfoContainer = document.createElement('div');
-                  fileInfoContainer.style.display = 'flex';
-                  fileInfoContainer.style.justifyContent = 'space-between';
-                  fileInfoContainer.style.width = '100%';
-                  fileInfoContainer.style.alignItems = 'center';
-                  fileInfoContainer.style.gap = '8px';
-
-                  const fileInfoSpan = document.createElement('span');
-                  fileInfoSpan.textContent = file.name;
-                  fileInfoSpan.classList.add("file__info__span");
-                  fileInfoSpan.setAttribute("title", file.name);
-                  fileInfoContainer.appendChild(fileInfoSpan);
-
-                  const fileSizeSpan = document.createElement('span');
-                  const fileSize = (file.size / 1024 / 1024).toFixed(2); 
-                  fileSizeSpan.textContent = `${fileSize} MB`;
-                  fileSizeSpan.style.color = '#3b3b3b';
-                  fileSizeSpan.style.fontSize = '1.2rem';
-                  fileSizeSpan.style.marginLeft = '10px'; 
-                  fileInfoContainer.appendChild(fileSizeSpan);
-
-                  const trashIcon = document.createElement('ion-icon');
-                  trashIcon.setAttribute('name', 'trash-outline');
-                  trashIcon.style.cursor = 'pointer';
-                  trashIcon.style.color = '#f00';
-                  trashIcon.style.width = '2rem';
-                  trashIcon.style.height = '2rem';
-
-                  trashIcon.addEventListener('click', function () {
-                      selectedFiles = selectedFiles.filter(f => f.name !== file.name);
-                      updateFileList(selectedFiles);
-                      if (selectedFiles.length === 0) {
-                          fileInput.value = ''; 
-                      } else {
-                          const dataTransfer = new DataTransfer();
-                          selectedFiles.forEach(f => dataTransfer.items.add(f));
-                          fileInput.files = dataTransfer.files; 
-                      }
-                  });
-
-                  fileInfoContainer.appendChild(trashIcon);
-                  listItem.appendChild(fileInfoContainer);
-                  fileList.appendChild(listItem);
-              });
-              updateFileCount(files.length);
-          }
-          function updateFileCount(count) {
-              fileCountDisplay.textContent = `Total Files: ${count}`;
+      // Function to handle file selection
+      function handleFileSelection(files) {
+          if (files.length > 1) {
+              alert("Only one file is allowed.");
+              resetFileSelection();
+              return;
           }
 
-          document.addEventListener('keydown', function(event) {
-              if (event.key === "Escape" || event.keyCode === 27) {
-                  closeFolderModal();
-              }
+          const file = files[0];
+          if (!isExcelFile(file)) {
+              alert("Only Excel files (.xlsx, .xls) are allowed.");
+              resetFileSelection();
+              return;
+          }
+
+          selectedFiles = [file];
+          updateFileList(selectedFiles);
+          const dataTransfer = new DataTransfer();
+          dataTransfer.items.add(file);
+          fileInput.files = dataTransfer.files;
+      }
+
+      function isExcelFile(file) {
+          const allowedExtensions = ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel"];
+          return allowedExtensions.includes(file.type);
+      }
+
+      function resetFileSelection() {
+          selectedFiles = [];
+          updateFileList(selectedFiles);
+          fileInput.value = ""; 
+      }
+
+      function updateFileList(files) {
+          fileList.innerHTML = "";
+
+          if (files.length === 0) {
+              updateFileCount(0); 
+              return;
+          }
+
+          const file = files[0];
+          const listItem = document.createElement("li");
+          listItem.style.display = "flex";
+          listItem.style.alignItems = "center";
+          listItem.style.justifyContent = "space-between";
+          listItem.style.marginBottom = "8px";
+
+          const fileInfoContainer = document.createElement("div");
+          fileInfoContainer.style.display = "flex";
+          fileInfoContainer.style.justifyContent = "space-between";
+          fileInfoContainer.style.width = "100%";
+          fileInfoContainer.style.alignItems = "center";
+          fileInfoContainer.style.gap = "8px";
+
+          const fileInfoSpan = document.createElement("span");
+          fileInfoSpan.textContent = file.name;
+          fileInfoSpan.classList.add("file__info__span");
+          fileInfoSpan.setAttribute("title", file.name);
+          fileInfoContainer.appendChild(fileInfoSpan);
+
+          const fileSizeSpan = document.createElement("span");
+          const fileSize = (file.size / 1024 / 1024).toFixed(2); // Convert bytes to MB
+          fileSizeSpan.textContent = `${fileSize} MB`;
+          fileSizeSpan.style.color = "#3b3b3b";
+          fileSizeSpan.style.fontSize = "1.2rem";
+          fileSizeSpan.style.marginLeft = "10px";
+          fileInfoContainer.appendChild(fileSizeSpan);
+
+          const trashIcon = document.createElement("ion-icon");
+          trashIcon.setAttribute("name", "trash-outline");
+          trashIcon.style.cursor = "pointer";
+          trashIcon.style.color = "#f00";
+          trashIcon.style.width = "2rem";
+          trashIcon.style.height = "2rem";
+
+          trashIcon.addEventListener("click", function () {
+              resetFileSelection();
           });
-        // upload modal up to here
+
+          fileInfoContainer.appendChild(trashIcon);
+          listItem.appendChild(fileInfoContainer);
+          fileList.appendChild(listItem);
+
+          updateFileCount(files.length);
+      }
+
+      function updateFileCount(count) {
+          fileCountDisplay.textContent = `Total Files: ${count}`;
+      }
+
+      document.addEventListener("keydown", function(event) {
+          if (event.key === "Escape" || event.keyCode === 27) {
+              closeFolderModal();
+          }
+      });
+      // Upload modal up to here
 
         // Data Table
         $("#dataTable").DataTable({
