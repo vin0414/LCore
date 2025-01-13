@@ -77,7 +77,7 @@ class SettingController extends Controller
 
         $request->validate([
             'fullname'=>'required',
-            'username'=>'required|min:6|max:20',
+            'username'=>'required|min:6|max:20|unique:tblaccount,Username',
             'password'=>'required|min:8|regex:/[A-Z]/|regex:/[a-z]/|regex:/[0-9]/|regex:/[@$!%*?&]/',
             'email_address'=>'required|email',
             'role'=>'required'

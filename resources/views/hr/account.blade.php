@@ -109,7 +109,7 @@
                 name="fullname" value="{{$account['Fullname']}}"
               />
               <span class="input__title">Fullname</span>
-              <div id="fullname-error" class="error-messages text-danger"></div>
+              <div id="fullname-error" class="error-message text-danger"></div>
             </div>
             <div class="input__group__items">
               <!-- 2 -->
@@ -119,7 +119,7 @@
                   name="username" value="{{$account['Username']}}"
                 />
                 <span class="input__title">Username</span>
-                <div id="username-error" class="error-messages text-danger"></div>
+                <div id="username-error" class="error-message text-danger"></div>
               </div>
               <!-- 3 -->
               <div class="input__box">
@@ -128,7 +128,7 @@
                   name="role" value="{{$account['Role']}}"
                 />
                 <span class="input__title">System Role</span>
-                <div id="role-error" class="error-messages text-danger"></div>
+                <div id="role-error" class="error-message text-danger"></div>
               </div>
             </div>
             <!-- 4 -->
@@ -137,7 +137,7 @@
                 class="information__input"
                 name="email" value="{{$account['Email']}}"/>
               <span class="input__title">Email</span>
-              <div id="email-error" class="error-messages text-danger"></div>
+              <div id="email-error" class="error-message text-danger"></div>
             </div>
             <div class="btn__box">
               <button type="submit" class="btn__submit"><ion-icon name="document-text-outline" class="icon__account"></ion-icon>Save Changes</button>
@@ -241,6 +241,32 @@
         $(".account__dropdown").removeClass("show");
         $("#headerNav").removeClass("open");
       }
+
+      $('#frmAccount').on('submit',function(e){
+        e.preventDefault();
+        $('.error-message').html('');
+        let data = $(this).serialize();
+        $.ajax({
+            url:"{{route('save-info')}}",method:"POST",
+            data:data,
+            success:function(response)
+            {
+                if(response.success)
+                {
+                    location.reload();
+                }
+                else
+                {
+                    var errors = response.errors;
+                    // Iterate over each error and display it under the corresponding input field
+                    for (var field in errors) {
+                        $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
+                        $('#' + field).addClass('input-error'); // Highlight the input field with an error
+                    }
+                }
+            }
+        });
+      });
     </script>
     <script
       type="module"

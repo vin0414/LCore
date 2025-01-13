@@ -187,7 +187,7 @@
                   <div class="employee__box">
                     <div class="employee__name__title">
                       <p class="employee__name">{{substr($row['Title'],0,30)}}..</p>
-                      <p class="employee__role"><?php echo $formattedDate ?></p>
+                      <p class="employee__role">Date : <?php echo $formattedDate ?></p>
                     </div>
                     <ion-icon class="chev__down__employee" name="chevron-forward-outline"></ion-icon>
                   </div>
