@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
@@ -534,6 +535,22 @@ class HomeController extends Controller
 
     public function saveInfo(Request $request)
     {
+        $accountModel = new \App\Models\accountModel();
+        $validator = Validator::make($request->all(),[
+            'fullname' => 'required',
+            'username'=>'required',
+            'email'=>'required|email'
+        ]);
 
+        if ($validator->fails()) {
+            // Return validation errors as JSON
+            return response()->json(['errors' => $validator->errors()]);
+        }
+        else
+        {
+            $accountModel::WHERE('accountID',session('user_id'))
+            ->update(['Username'=>$request->username,'Fullname'>$request->fullname,'Email'=>$request->email]);
+            return response()->json(['success' => 'Successfully applied changes']);
+        }
     }
 }
