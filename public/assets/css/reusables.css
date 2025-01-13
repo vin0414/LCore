@@ -996,3 +996,65 @@ body.no-scroll {
 .text-dark {
     color: #000;
 }
+
+/* INPUT FIELDS FOR ACCOUNT PROFILE AND LEAVE POLICY */
+
+.card__container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+.card__container .information__input {
+    height: unset;
+}
+.card__container .input__box {
+    height: unset;
+}
+.input__box__items {
+    padding: 3rem;
+    background-color: var(--white-color);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    box-shadow: 0px 4px 9px 0px rgba(95, 95, 95, 0.1);
+}
+.account__information__title {
+    font-weight: 600;
+    font-size: 1.6rem;
+}
+.btn__submit {
+    padding: 1.5rem 2rem;
+    background-color: var(--green-color-2);
+    color: var(--black-color);
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 1rem;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    border: none;
+
+    font-family: "poppins", sans-serif;
+}
+
+.icon__account {
+    width: 2rem;
+    height: 2rem;
+}
+.icon__account.eye__icon {
+    position: absolute;
+    right: 3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.eye__icon:hover {
+    color: var(--green-color);
+    width: 2.5rem;
+    height: 2.5rem;
+}

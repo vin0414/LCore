@@ -64,7 +64,6 @@
               >All Employees</a
             >
           </li>
-      >
         <?php if(session('role')=="ADMIN"||session('role')=="Admin"){ ?>
         <p class="side_heading">Maintenance</p>
         <ul class="sidebar__items">
@@ -92,6 +91,71 @@
             <p class="pages">{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }} | <span>{{$title}}</span></p>
           </div>
         </div>
+         <div class="card__container">
+          <form class="input__box__items" method="POST">
+            <p class="account__information__title">Account Information</p>
+              <!-- 1 -->
+              <div class="input__box">
+                <input
+                  class="information__input"
+                  name=""
+                />
+                <span class="input__title">Fullname</span>
+                <div id="" class="error-messages text-danger"></div>
+              </div>
+              <!-- 2 -->
+              <div class="input__box">
+                <input
+                  class="information__input"
+                  name=""
+                />
+                <span class="input__title">Username</span>
+                <div id="" class="error-messages text-danger"></div>
+              </div>
+              <!-- 3 -->
+              <div class="input__box">
+                <input
+                  class="information__input"
+                  name=""
+                />
+                <span class="input__title">Designation</span>
+                <div id="" class="error-messages text-danger"></div>
+              </div>
+              <!-- 4 -->
+              <div class="input__box">
+                <input
+                  class="information__input"
+                  name=""
+                />
+                <span class="input__title">Email</span>
+                <div id="" class="error-messages text-danger"></div>
+              </div>
+              <div class="btn__box">
+                <button type="submit" class="btn__submit"><ion-icon name="document-text-outline" class="icon__account"></ion-icon>Save Changes</button>
+              </div>
+            </form>
+          <form class="input__box__items" method="POST">
+            <p class="account__information__title">Change Password</p>
+              <!-- 1 -->
+              <div class="input__box pos__rel">
+                <input class="information__input password__field" name="" type="password" autocomplete="current-password"/>
+                <span class="input__title">Current Password</span>
+                <ion-icon name="eye-outline" class="icon__account eye__icon toggle__visibility"></ion-icon>
+                <div id="" class="error-messages text-danger"></div>
+              </div>
+              <!-- 2 -->
+              <div class="input__box pos__rel">
+                <input class="information__input password__field" name="" type="password" autocomplete="new-password" />
+                <span class="input__title">New Password</span>
+                <ion-icon name="eye-outline" class="icon__account eye__icon toggle__visibility"></ion-icon>
+                <div id="" class="error-messages text-danger"></div>
+              </div>
+              <div class="btn__box">
+                <button type="submit" class="btn__submit"><ion-icon name="document-text-outline" class="icon__account"></ion-icon>Save Password</button>
+              </div>
+          </form>
+         </div>
+         <div class="card__container"></div>
       </div>
     </main>
     <footer class="footer">
@@ -100,6 +164,20 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+
+  $(".toggle__visibility").on("click", function () {
+    // Get the closest input field
+    const $passwordInput = $(this).closest(".input__box").find(".password__field");
+    const isPassword = $passwordInput.attr("type") === "password";
+
+    // Toggle input type
+    $passwordInput.attr("type", isPassword ? "text" : "password");
+
+    // Toggle icon
+    $(this).attr("name", isPassword ? "eye-off-outline" : "eye-outline");
+  });
+
+
         $("#menuButton").on("click", function (e) {
           e.stopPropagation();
           showSideBar();
