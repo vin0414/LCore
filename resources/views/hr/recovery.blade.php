@@ -109,6 +109,21 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+    // Select nav then add bg
+      const $nav = $('.navigation');
+        
+        if ($nav.length) {
+
+          const $targetNavItem = $nav.find('.nav__item').eq(7);
+          $targetNavItem.addClass('selected');
+          
+          const $dropdown = $targetNavItem.find('.dropdown');
+          if ($dropdown.length) {
+            const $secondDropdownItem = $dropdown.find('.dropdown__item').eq(1); // Second item (index 1)
+            $secondDropdownItem.addClass('highlight');
+          }
+        }
+        // Nav select ends here
         $("#menuButton").on("click", function (e) {
           e.stopPropagation();
           showSideBar();

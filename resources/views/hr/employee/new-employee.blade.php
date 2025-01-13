@@ -91,7 +91,7 @@
         <div class="heading__box flex flex__align__center">
           <h1 class="heading__primary">{{$title}}</h1>
           <div class="breadcrumbs">
-            <p class="pages">Employee | <span>{{$title}}</span></p>
+            <p class="pages">Employee Management | <span>{{$title}}</span></p>
           </div>
         </div> 
         <div class="employee__card">
@@ -487,6 +487,21 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        // Select the navigation bar
+          const $nav = $('.navigation');
+          
+          if ($nav.length) {
+
+            const $targetNavItem = $nav.find('.nav__item').eq(3);
+            $targetNavItem.addClass('selected');
+            
+            const $dropdown = $targetNavItem.find('.dropdown');
+            if ($dropdown.length) {
+              const $secondDropdownItem = $dropdown.find('.dropdown__item').eq(1); // Second item (index 1)
+              $secondDropdownItem.addClass('highlight');
+            }
+          }
+
         $('#office-select').change(function(){
             $('#department-select').find('option').not(':first').remove();
             $.ajax({
@@ -583,6 +598,8 @@
           $('#account_number').attr("disabled",false);
         }
       });
+
+
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>

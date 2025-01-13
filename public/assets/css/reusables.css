@@ -1068,3 +1068,9 @@ body.no-scroll {
 }
 
 /* INPUT FIELDS FOR ACCOUNT PROFILE AND LEAVE POLICY */
+.nav__item.selected {
+    background-color: var(--green-color-2);
+}
+.dropdown__item.highlight {
+    color: var(--green-color);
+}
