@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -44,8 +45,10 @@ class HomeController extends Controller
     public function overview()
     {
         $title = "Overview";
+        //application
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
+        //recent employee
         $employeeModel = new \App\Models\employeeModel();
         $totalEmployee = $employeeModel->count();
         $work = ['Trainee','Probationary'];
@@ -54,10 +57,14 @@ class HomeController extends Controller
         $regularEmployee = $employeeModel->WHERE('employmentStatus','Regular')->WHERE('employeeStatus',1)->count();
         $newEmployee = $employeeModel->WHEREIN('employmentStatus',$work)->WHERE('employeeStatus',1)->count();
         $resignEmployee = $employeeModel->WHEREIN('employeeStatus',$status)->count();
+        //recent
+        $announcementModel = new \App\Models\announcementModel();
+        $announcement = $announcementModel::orderBy('announcementID', 'desc')->take(10)->get();
+
         $data = ['title'=>$title,'total'=>$totalEmployee,
                 'regular'=>$regularEmployee,'new'=>$newEmployee,
                 'resign'=>$resignEmployee,'recent'=>$recent,
-                'about'=>$about];
+                'about'=>$about,'announcement'=>$announcement];
         return view('hr/overview',$data);
     }
 
@@ -471,9 +478,33 @@ class HomeController extends Controller
     public function account()
     {
         $title = "My Account";
+        //application
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
-        $data = ['title'=>$title,'about'=>$about];
+        //account
+        $accountModel = new \App\Models\accountModel();
+        $account = $accountModel->WHERE('accountID',session('user_id'))->first();
+
+        $data = ['title'=>$title,'about'=>$about,'account'=>$account];
         return view('hr/account',$data);
+    }
+
+    public function changePassword(Request $request)
+    {
+        $accountModel = new \App\Models\accountModel();
+        $request->validate([
+            'old_password'=>'required|min:8|max:16|regex:/[A-Z]/|regex:/[a-z]/|regex:/[0-9]/',
+            'new_password'=>'required|different:old_password|confirmed|min:8|max:16|regex:/[A-Z]/|regex:/[a-z]/|regex:/[0-9]/',
+            'confirm_password'=>'required|same:new_password|min:8|max:16|regex:/[A-Z]/|regex:/[a-z]/|regex:/[0-9]/'
+        ]);
+        //hash the new password
+        $newPassword = Hash::make($request->newPassword);
+        $accountModel::WHERE('accountID',session('user_id'))->update(['Password'=>$newPassword]);
+        return redirect('/hr/account')->with('success','Your password has been successfully updated');
+    }
+
+    public function saveInfo(Request $request)
+    {
+
     }
 }

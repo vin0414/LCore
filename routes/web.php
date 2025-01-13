@@ -90,6 +90,9 @@ Route::post('edit-broadcast',[MemoController::class,'editBroadcast'])->name('edi
 ///ajax
 Route::post('archive-memo',[MemoController::class,'archive'])->name('archive-memo');
 Route::post('restore-memo',[MemoController::class,'restore'])->name('restore-memo');
+//security
+Route::post('change-password',[HomeController::class,'changePassword'])->name('change-password');
+Route::post('save-info',[HomeController::class,'saveInfo'])->name('save-info');
 
 Route::middleware('auth:user')->group(function () {
     //navigations

@@ -174,15 +174,30 @@
             </div>
           </div>
           <!-- 2 -->
-          <form class="card announcement__card">
-            <div class="text__items margin__bottom__3">
-              <p class="subheading">Announcement</p>
-            </div>
-            <div class="input__box">
-              <textarea class="text__area" placeholder="Write something here.."></textarea>
+          <form class="card recent__employee__card">
+            <p class="subheading margin__bottom__3">Announcement</p>
+            <div class="scroll__box">
+              <?php foreach($announcement as $row): ?>
+              <?php
+              $dateObj = new DateTime($row['dateEffective']);
+              $formattedDate = $dateObj->format('d M Y'); 
+              ?>
+              <div class="recent__employees">
+                 <a class="link__employee__container" href="/memo/{{$row['File']}}" target="_BLANK">
+                  <div class="employee__box">
+                    <div class="employee__name__title">
+                      <p class="employee__name">{{substr($row['Title'],0,30)}}..</p>
+                      <p class="employee__role"><?php echo $formattedDate ?></p>
+                    </div>
+                    <ion-icon class="chev__down__employee" name="chevron-forward-outline"></ion-icon>
+                  </div>
+                  <a class="no-underline"></a>
+                </a>
+              </div>
+              <?php endforeach; ?>
             </div>
             <div class="compose__box">
-              <a class="compose" href="#"><ion-icon class="compose__icon" name="reader-outline"></ion-icon>Compose</a>
+              <a class="compose" href="{{route('hr/memo')}}"><ion-icon class="compose__icon" name="book-outline"></ion-icon>More...</a>
             </div>
           </form>
         </div>

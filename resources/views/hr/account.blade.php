@@ -92,73 +92,87 @@
             <p class="pages">{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }} | <span>{{$title}}</span></p>
           </div>
         </div>
+        @if(\Session::has('success'))
+            <div class="alert alert-success">
+                {{\Session::get('success')}}
+            </div>
+        @endif
          <div class="card__container">
-          <form class="input__box__items" method="POST">
+          @if($account)
+          <form class="input__box__items" id="frmAccount" method="POST">
+            @csrf
             <p class="account__information__title">Account Information</p>
-              <!-- 1 -->
+            <!-- 1 -->
+            <div class="input__box">
+              <input
+                class="information__input"
+                name="fullname" value="{{$account['Fullname']}}"
+              />
+              <span class="input__title">Fullname</span>
+              <div id="fullname-error" class="error-messages text-danger"></div>
+            </div>
+            <div class="input__group__items">
+              <!-- 2 -->
               <div class="input__box">
                 <input
                   class="information__input"
-                  name=""
+                  name="username" value="{{$account['Username']}}"
                 />
-                <span class="input__title">Fullname</span>
-                <div id="" class="error-messages text-danger"></div>
+                <span class="input__title">Username</span>
+                <div id="username-error" class="error-messages text-danger"></div>
               </div>
-              <div class="input__group__items">
-                <!-- 2 -->
-                <div class="input__box">
-                  <input
-                    class="information__input"
-                    name=""
-                  />
-                  <span class="input__title">Username</span>
-                  <div id="" class="error-messages text-danger"></div>
-                </div>
-                <!-- 3 -->
-                <div class="input__box">
-                  <input
-                    class="information__input"
-                    name=""
-                  />
-                  <span class="input__title">Designation</span>
-                  <div id="" class="error-messages text-danger"></div>
-                </div>
-              </div>
-              <!-- 4 -->
+              <!-- 3 -->
               <div class="input__box">
                 <input
                   class="information__input"
-                  name=""
+                  name="role" value="{{$account['Role']}}"
                 />
-                <span class="input__title">Email</span>
-                <div id="" class="error-messages text-danger"></div>
+                <span class="input__title">System Role</span>
+                <div id="role-error" class="error-messages text-danger"></div>
               </div>
-              <div class="btn__box">
-                <button type="submit" class="btn__submit"><ion-icon name="document-text-outline" class="icon__account"></ion-icon>Save Changes</button>
-              </div>
-            </form>
-          <form class="input__box__items" method="POST">
+            </div>
+            <!-- 4 -->
+            <div class="input__box">
+              <input type="email"
+                class="information__input"
+                name="email" value="{{$account['Email']}}"/>
+              <span class="input__title">Email</span>
+              <div id="email-error" class="error-messages text-danger"></div>
+            </div>
+            <div class="btn__box">
+              <button type="submit" class="btn__submit"><ion-icon name="document-text-outline" class="icon__account"></ion-icon>Save Changes</button>
+            </div>
+          </form>
+          @endif
+          <form class="input__box__items" action="{{route('change-password')}}" method="POST">
+            @csrf
             <p class="account__information__title">Change Password</p>
               <!-- 1 -->
               <div class="input__box pos__rel">
-                <input class="information__input password__field" name="" type="password" autocomplete="current-password"/>
-                <span class="input__title">Current Password</span>
+                <input class="information__input password__field" name="old_password" type="password" value="{{old('old_password')}}" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"/>
+                <span class="input__title">Old Password</span>
                 <ion-icon name="eye-outline" class="icon__account eye__icon toggle__visibility"></ion-icon>
-                <div id="" class="error-messages text-danger"></div>
+                @if ($errors->has('old_password'))
+                  <p class="text-danger">{{$errors->first('old_password')}}</p>
+                @endif
               </div>
               <!-- 2 -->
               <div class="input__box pos__rel">
-                <input class="information__input password__field" name="" type="password" autocomplete="new-password" />
+                <input class="information__input password__field" name="new_password" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"/>
                 <span class="input__title">New Password</span>
                 <ion-icon name="eye-outline" class="icon__account eye__icon toggle__visibility"></ion-icon>
-                <div id="" class="error-messages text-danger"></div>
+                @if ($errors->has('new_password'))
+                  <p class="text-danger">{{$errors->first('new_password')}}</p>
+                @endif
               </div>
               <!-- 2 -->
               <div class="input__box pos__rel">
-                <input class="information__input password__field" name="" type="password" />
+                <input class="information__input password__field" name="confirm_password" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"/>
                 <span class="input__title">Confirm Password</span>
                 <ion-icon name="eye-outline" class="icon__account eye__icon toggle__visibility"></ion-icon>
-                <div id="" class="error-messages text-danger"></div>
+                @if ($errors->has('confirm_password'))
+                  <p class="text-danger">{{$errors->first('confirm_password')}}</p>
+                @endif
               </div>
               <div class="btn__box">
                 <button type="submit" class="btn__submit"><ion-icon name="document-text-outline" class="icon__account"></ion-icon>Save Password</button>
@@ -175,17 +189,17 @@
     <script>
       document.addEventListener("DOMContentLoaded", function () {
 
-  $(".toggle__visibility").on("click", function () {
-    // Get the closest input field
-    const $passwordInput = $(this).closest(".input__box").find(".password__field");
-    const isPassword = $passwordInput.attr("type") === "password";
+      $(".toggle__visibility").on("click", function () {
+        // Get the closest input field
+        const $passwordInput = $(this).closest(".input__box").find(".password__field");
+        const isPassword = $passwordInput.attr("type") === "password";
 
-    // Toggle input type
-    $passwordInput.attr("type", isPassword ? "text" : "password");
+        // Toggle input type
+        $passwordInput.attr("type", isPassword ? "text" : "password");
 
-    // Toggle icon
-    $(this).attr("name", isPassword ? "eye-off-outline" : "eye-outline");
-  });
+        // Toggle icon
+        $(this).attr("name", isPassword ? "eye-off-outline" : "eye-outline");
+      });
 
 
         $("#menuButton").on("click", function (e) {
