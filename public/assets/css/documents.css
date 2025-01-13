@@ -316,4 +316,13 @@ a.no-underline {
         grid-template-columns: repeat(1, 1fr);
         gap: 4rem;
     }
+    /* 370 px */
+    @media (max-width: 23.125em) {
+        .btn__primary {
+            padding: 1rem 2rem;
+        }
+        .pages {
+            text-align: right;
+        }
+    }
 }

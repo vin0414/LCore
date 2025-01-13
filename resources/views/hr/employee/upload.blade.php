@@ -123,7 +123,7 @@
                   <a href="/documents/{{$title}}/{{$file}}" class="link__folder" target="_BLANK">
                       <div class="img__box__folder">
                           <!-- <ion-icon class="folder__icon" name="document-outline"></ion-icon> -->
-                          <img src="/assets/icons/<?php echo $extension ?>.png" width="30"/>
+                          <img class="file__img" src="/assets/icons/<?php echo $extension ?>.png" width="30"/>
                           <p class="folder__title" title="{{ $file_info['filename'] }}">{{ $file_info['filename'] }}</p>
                       </div>
                   </a>
@@ -393,33 +393,68 @@
         });
       });
 
-      $('#frmUpload').on('submit', function (e) 
-      {
-            e.preventDefault(); // Prevent default form submission
-            $('.error-message').html('');
-            var formData = new FormData(this);
-            // If validation passes, make the AJAX request
-            $.ajax({
-                url: '{{ route("file-upload") }}', // Your Laravel route
-                method: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (response) 
-                {
-                    if (response.success) {
-                        location.reload();
-                    } else {
-                      var errors = response.errors;
-                      // Iterate over each error and display it under the corresponding input field
-                      for (var field in errors) {
-                          $('#file-error').html('<p>' + errors[field][0] + '</p>'); // Show the first error message
-                          $('#file').addClass('input-error'); // Highlight the input field with an error
-                      }
+      $('#frmUpload').on('submit', function (e) {
+        e.preventDefault(); // Prevent default form submission
+        $('.error-message').html('');
+        $('#files').removeClass('input-error');
+
+        var isValid = true; 
+
+        var fileInput = $('#files');
+        if (fileInput[0].files.length === 0) {
+            $('#file-error').html('<p>Please select a file to upload.</p>');
+            fileInput.addClass('input-error'); 
+            isValid = false;
+        }
+
+        var allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf']; 
+        var fileName = fileInput.val().split('\\').pop();
+        var fileExtension = fileName.split('.').pop().toLowerCase();
+
+        if (!allowedExtensions.includes(fileExtension)) {
+            $('#file-error').html('<p>Invalid File. Must be a file type of: jpg, jpeg, png, pdf, docx, doc, txt, xls, xlsx..</p>');
+            fileInput.addClass('input-error');
+            isValid = false;
+        }
+
+        var maxFileSize = 2 * 1024 * 1024; // 2MB in bytes
+        if (fileInput[0].files[0]?.size > maxFileSize) {
+            $('#file-error').html('<p>File size must not exceed 2MB.</p>');
+            fileInput.addClass('input-error');
+            isValid = false;
+        }
+
+        if (!isValid) {
+            return;
+        }
+
+        // Create FormData object
+        var formData = new FormData(this);
+
+        // AJAX request
+        $.ajax({
+            url: '{{ route("file-upload") }}', 
+            method: "POST",
+            data: formData,
+            processData: false,
+            contentType: false, 
+            success: function (response) {
+                if (response.success) {
+                    location.reload(); 
+                } else {
+                    var errors = response.errors;
+
+                    for (var field in errors) {
+                        $('#' + field + '-error').html('<p>' + errors[field][0] + '</p>'); 
+                        $('#' + field).addClass('input-error'); 
                     }
                 }
-            });
+            },
+            error: function (xhr) {
+                console.error('An error occurred:', xhr.responseText);
+            }
         });
+    });
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>

@@ -288,3 +288,60 @@
 .list__layout .card__folder .modal__options {
     width: 19rem;
 }
+.file__img {
+    width: 3.5rem;
+    height: 3.5rem;
+}
+.list__layout .card__folder .link__folder .img__box__folder .file__img {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+/* 1387 px */
+@media (max-width: 86.6875em) {
+    .card__list.grid__layout {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+/* 936px */
+@media (max-width: 58.5em) {
+    .card__list.grid__layout {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+/* 729 px */
+@media (max-width: 58.5em) {
+    .card__list.grid__layout {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+/* 590 px */
+@media (max-width: 36.875em) {
+    .btn__primary {
+        margin-bottom: 2rem;
+    }
+    .card__list.grid__layout {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+/* 494 px */
+@media (max-width: 30.875em) {
+    .card__list.grid__layout {
+        grid-template-columns: 1fr;
+    }
+}
+/* 370 px */
+@media (max-width: 23.125em) {
+    .btn__box {
+        flex-direction: column;
+        gap: 0;
+    }
+    .btn__primary {
+        padding: 1rem 2rem;
+    }
+    .btn__return:link,
+    .btn__return:visited {
+        margin-bottom: 1rem;
+        padding: 1rem 2rem;
+    }
+}
