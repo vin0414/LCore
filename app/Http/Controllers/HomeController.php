@@ -493,9 +493,38 @@ class HomeController extends Controller
     {
         $accountModel = new \App\Models\accountModel();
         $request->validate([
-            'old_password'=>'required|min:8|max:16|regex:/[A-Z]/|regex:/[a-z]/|regex:/[0-9]/',
-            'new_password'=>'required|different:old_password|confirmed|min:8|max:16|regex:/[A-Z]/|regex:/[a-z]/|regex:/[0-9]/',
-            'confirm_password'=>'required|same:new_password|min:8|max:16|regex:/[A-Z]/|regex:/[a-z]/|regex:/[0-9]/'
+            'old_password'=>[
+                                'required',
+                                'min:8',
+                                'max:16',
+                                'regex:/[A-Z]/',
+                                'regex:/[a-z]/',
+                                'regex:/[0-9]/',
+                                function ($attribute, $value, $fail) {
+                                    // Check if the old password matches the password in the database
+                                    if (!Hash::check($value, Auth::guard('user')->user()->Password)) {
+                                        return $fail('The current password is incorrect.');
+                                    }
+                                }
+                            ],
+            'new_password'=>[
+                                'required',
+                                'different:old_password',
+                                'min:8',
+                                'max:16',
+                                'regex:/[A-Z]/',
+                                'regex:/[a-z]/',
+                                'regex:/[0-9]/',
+                            ],
+            'confirm_password'=>[
+                                'required',
+                                'same:new_password',
+                                'min:8',
+                                'max:16',
+                                'regex:/[A-Z]/',
+                                'regex:/[a-z]/',
+                                'regex:/[0-9]/',
+                                ]
         ]);
         //hash the new password
         $newPassword = Hash::make($request->newPassword);
