@@ -1009,7 +1009,7 @@ body.no-scroll {
 }
 .card__container {
     display: grid;
-    grid-template-columns: 1.5fr 0.5fr;
+    grid-template-columns: 1.3fr 0.7fr;
     gap: 2rem;
 }
 .card__container .information__input {
