@@ -262,6 +262,8 @@ body.no-scroll {
     background-color: var(--white-color);
     border-radius: 1rem;
     box-shadow: 0 10px 30px 5px rgba(95, 95, 95, 0.2);
+    width: 30rem;
+    right: 0rem;
 }
 .dropdown__options .btn__primary:last-child {
     margin-bottom: 0;

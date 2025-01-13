@@ -539,7 +539,7 @@
             <p id="file-count" class="file-count">Total Files: 0</p>
             <p id="file-count" class="file-count note__size "><span class="note">Note:</span> The maximum allowed file size is 5MB</p>
             <ul id="file-list" class="file-list"></ul>
-            <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="cloud-upload-outline"></ion-icon>Upload</button>
+            <button type="submit" class="btn__submit__modal modal__upload__btn"><ion-icon class="icon" name="cloud-upload-outline"></ion-icon>Upload</button>
           </form>
       </div>
     </div>

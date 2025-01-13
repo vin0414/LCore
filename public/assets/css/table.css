@@ -313,6 +313,9 @@ table.dataTable thead .sorting_desc:before {
 .dataTables_scrollHeadInner {
     width: 100% !important;
 }
+.modal__upload__btn {
+    margin-top: 1rem;
+}
 @media (max-width: 26.875em) {
     .dataTables_wrapper .dataTables_filter input {
         border: 1px solid #aaa;
