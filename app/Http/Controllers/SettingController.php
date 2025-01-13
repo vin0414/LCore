@@ -578,7 +578,7 @@ class SettingController extends Controller
         $employee = $employeeModel->all();
         foreach($employee as $row)
         {
-            $hire_date = $employee['dateHired'];
+            $hire_date = $row['dateHired'];
             
             // Create DateTime objects for the hire date and current date
             $hireDate = Carbon::parse($hire_date);

@@ -179,7 +179,6 @@
               </div>
           </form>
          </div>
-         <div class="card__container"></div>
       </div>
     </main>
     <footer class="footer">

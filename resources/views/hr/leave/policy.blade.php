@@ -8,10 +8,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
+      rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
     <link rel="stylesheet" href="/assets/css/reusables.css" />
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
+    <link rel="stylesheet" href="/assets/css/table.css" />
+    <link rel="stylesheet" href="/assets/css/accountPage.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
     <link rel="icon" sizes="180x180" href="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : 'No Logo' }}"/>
   </head>
@@ -92,6 +94,58 @@
             <p class="pages">{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }} | <span>{{$title}}</span></p>
           </div>
         </div>
+        <div class="card__container">
+          <div class="input__box__items">
+            <div class="pos__rel">
+              <div class="button__box pos__abs">
+                <a href="javascript:void(0);" class="link add__btn newPolicy">
+                  <ion-icon class="icon" name="add-outline"></ion-icon>New
+                </a>
+              </div>
+              <div class="dataWrapper">
+                <table id="dataTable" class="display">
+                  <thead>
+                      <th>#</th>
+                      <th class="w-100">Type of Leave</th>
+                      <th class="w-100">Gender</th>
+                      <th class="w-100">Civil Status</th>
+                      <th>Employment Status</th>
+                      <th class="w-50">Action</th>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="input__box__items">
+            <p class="subheading margin__bottom__3">Type of Leave</p>
+            <div class="scroll__box">
+              <div class="recent__employees">
+                <a class="link__employee__container" href="">
+                  <div class="employee__box">
+                    <div class="employee__name__title">
+                      <p class="employee__name">Emergency Leave</p>
+                      <p class="employee__role">13 Jan 2025</p>
+                    </div>
+                    <ion-icon class="chev__down__employee" name="chevron-forward-outline"></ion-icon>
+                  </div>
+                  <a class="no-underline"></a>
+                </a>
+                <a class="link__employee__container" href="">
+                  <div class="employee__box">
+                    <div class="employee__name__title">
+                      <p class="employee__name">Vacation Leave</p>
+                      <p class="employee__role">13 Jan 2025</p>
+                    </div>
+                    <ion-icon class="chev__down__employee" name="chevron-forward-outline"></ion-icon>
+                  </div>
+                  <a class="no-underline"></a>
+                </a>
+              </div>
+            </div>
+          </div>
+         </div>
       </div>
     </main>
     <footer class="footer">
@@ -100,6 +154,20 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        $("#dataTable").DataTable({
+          dom:
+            "<'row'<'col-sm-6'f>>" + // Search box on top in the same row
+            "<'row'<'col-sm-12'tr>>" + // Table
+            "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'p>>", // Bottom (length + pagination)
+
+          oLanguage: { sSearch: "" },
+          initComplete: function () {
+            $("#dataTable_filter input").attr(
+              "placeholder",
+              "Search by name , etc."
+            );
+          },
+        });
             // Select nav then add bg
       const $nav = $('.navigation');
         
@@ -163,5 +231,6 @@
       nomodule
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
     ></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
   </body>
 </html>
