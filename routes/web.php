@@ -131,6 +131,8 @@ Route::middleware('auth:user')->group(function () {
     //leave
     Route::get('hr/leave/calendar',[HomeController::class,'calendar'])->name('hr/leave/calendar');
     Route::get('hr/leave/policies',[HomeController::class,'leave'])->name('hr/leave/policies');
+    Route::get('hr/leave/balances',[HomeController::class,'balance'])->name('hr/leave/balances');
+    Route::get('hr/leave/workflow',[HomeController::class,'workflow'])->name('hr/leave/workflow');
 });
 
 Route::middleware('auth:employee')->group(function () {

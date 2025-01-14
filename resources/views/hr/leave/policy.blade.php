@@ -115,6 +115,16 @@
                       <th class="w-50">Action</th>
                   </thead>
                   <tbody>
+                  @foreach($leave as $row)
+                  <tr>
+                    <td>{{$row['leaveID']}}</td>
+                    <td>{{$row['leaveName']}}</td>
+                    <td>{{$row['gender']}}</td>
+                    <td>{{$row['civilStatus']}}</td>
+                    <td>{{$row['employmentStatus']}}</td>
+                    <td></td>
+                  </tr>
+                  @endforeach
                   </tbody>
                 </table>
               </div>

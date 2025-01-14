@@ -356,9 +356,14 @@ class HomeController extends Controller
     public function leave()
     {
         $title = "Leave Types and Policy";
+        //application
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
-        $data = ['title'=>$title,'about'=>$about];
+        //leave
+        $leaveModel = new \App\Models\leaveModel();
+        $leave = $leaveModel->all();
+
+        $data = ['title'=>$title,'about'=>$about,'leave'=>$leave];
         return view('hr/leave/policy',$data);
     }
 
@@ -528,7 +533,7 @@ class HomeController extends Controller
                                 ]
         ]);
         //hash the new password
-        $newPassword = Hash::make($request->newPassword);
+        $newPassword = Hash::make($request->new_password);
         $accountModel::WHERE('accountID',session('user_id'))->update(['Password'=>$newPassword]);
         return redirect('/hr/account')->with('success','Your password has been successfully updated');
     }
