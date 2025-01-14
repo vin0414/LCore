@@ -782,7 +782,7 @@ textarea {
     padding: 3rem;
     border-radius: 1rem;
     max-width: 75rem;
-    min-width: 45rem;
+    min-width: 75rem;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     position: absolute;
 }
@@ -1100,4 +1100,22 @@ body.no-scroll {
 .breadcrumbs__right__text {
     color: var(--black-color);
     text-transform: capitalize;
+}
+/* 600 px */
+@media (max-width: 37.5em) {
+    .modal {
+        min-width: 60rem;
+    }
+}
+/* 500 px */
+@media (max-width: 31.25em) {
+    .modal {
+        min-width: 49rem;
+    }
+}
+/* 400 px */
+@media (max-width: 25em) {
+    .modal {
+        min-width: 41rem;
+    }
 }

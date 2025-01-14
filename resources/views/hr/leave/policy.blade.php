@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="/assets/css/dashboard.css" />
     <link rel="stylesheet" href="/assets/css/table.css" />
     <link rel="stylesheet" href="/assets/css/accountPage.css" />
+    <link rel="stylesheet" href="/assets/css/leave-policy.css" />
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
     <link rel="icon" sizes="180x180" href="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : 'No Logo' }}"/>
   </head>
@@ -91,17 +92,16 @@
         <div class="heading__box flex flex__align__center">
           <h1 class="heading__primary">{{$title}}</h1>
           <div class="breadcrumbs">
-            <!-- <p class="pages">{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }} | <span>{{$title}}</span></p>
-              -->
               <p class="pages"><a href="{{route('hr/overview')}}" class="link__breadcrumbs">Dashboard</a><ion-icon name="chevron-forward-outline"></ion-icon><span class="breadcrumbs__right__text">Leave Types and Policy</span></p>
           </div>
         </div>
         <div class="card__container">
           <div class="input__box__items">
+          <p class="subheading margin__bottom__3">Policy</p>
             <div class="pos__rel">
               <div class="button__box pos__abs">
                 <a href="javascript:void(0);" class="link add__btn newPolicy">
-                  <ion-icon class="icon" name="add-outline"></ion-icon>New
+                  <ion-icon class="icon" name="add-outline"></ion-icon>Create
                 </a>
               </div>
               <div class="dataWrapper">
@@ -115,49 +115,298 @@
                       <th class="w-50">Action</th>
                   </thead>
                   <tbody>
-                  @foreach($leave as $row)
+        
                   <tr>
-                    <td>{{$row['leaveID']}}</td>
-                    <td>{{$row['leaveName']}}</td>
-                    <td>{{$row['gender']}}</td>
-                    <td>{{$row['civilStatus']}}</td>
-                    <td>{{$row['employmentStatus']}}</td>
-                    <td></td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td><button class="select__item form__button text-dark edit__policy"><ion-icon class="chev__down__employee select__icon" name="repeat-outline"></ion-icon>Edit</button></td>
                   </tr>
-                  @endforeach
+         
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
           <div class="input__box__items">
-            <p class="subheading margin__bottom__3">Type of Leave</p>
+            <div class="heading__container__leave">
+              <p class="subheading margin__bottom__3">Type of Leave</p>
+              <div class="button__box">
+                <a href="javascript:void(0);" class="link add__btn newTypeOfLeave">
+                  <ion-icon class="icon" name="add-outline"></ion-icon>Create
+                </a>
+              </div>
+            </div>
             <div class="scroll__box">
               <div class="recent__employees">
-                <a class="link__employee__container" href="">
+                <div class="link__employee__container">
                   <div class="employee__box">
                     <div class="employee__name__title">
                       <p class="employee__name">Emergency Leave</p>
                       <p class="employee__role">13 Jan 2025</p>
                     </div>
-                    <ion-icon class="chev__down__employee" name="chevron-forward-outline"></ion-icon>
+                    <!-- <ion-icon class="chev__down__employee md hydrated" name="chevron-forward-outline" role="img"></ion-icon> -->
+                    <button type="button" class="select__item form__button text-dark edit__type__leave"><ion-icon class="chev__down__employee select__icon" name="repeat-outline"></ion-icon>Edit</button>
                   </div>
                   <a class="no-underline"></a>
-                </a>
-                <a class="link__employee__container" href="">
+                </div>
+                <div class="link__employee__container">
                   <div class="employee__box">
                     <div class="employee__name__title">
                       <p class="employee__name">Vacation Leave</p>
                       <p class="employee__role">13 Jan 2025</p>
                     </div>
-                    <ion-icon class="chev__down__employee" name="chevron-forward-outline"></ion-icon>
+                    <button type="button" class="select__item form__button text-dark edit_job edit__type__leave"><ion-icon class="chev__down__employee select__icon" name="repeat-outline"></ion-icon>Edit</button>
                   </div>
                   <a class="no-underline"></a>
-                </a>
+                </>
               </div>
             </div>
           </div>
          </div>
+      </div>
+      <!-- NEW POLICY MODAL -->
+      <div class="modal-overlay" id="newPolicyModal">
+          <div class="modal">
+            <div class="modal__heading">
+              <div class="heading__modal__box">
+                <h2 class="heading__modal">Create Leave Policy</h2>
+                <p class="subheading__modal">New Policy</p>
+              </div>
+              <div class="close__box"><ion-icon onclick="closePolicyModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+              </div>
+              <form method="POST" class="form__modal" id="">
+                @csrf
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter title"
+                    name="" value=""
+                  />
+                  <span class="input__title">Policy Title</span>
+                </div>
+                <!-- 1 -->
+                <input type="hidden" name="" id=""/>
+                <div class="input__form__modal__box">
+                  <div class="input__box">
+                    <select class="information__input" name="">
+                      <option value="" disabled selected>
+                        Select Gender
+                      </option>
+                      <option value="">
+                        Male
+                      </option>
+                      <option value="">
+                        Female
+                      </option>
+                      <option value="">
+                        All
+                      </option>
+                    </select>
+                    <span class="input__title">Gender</span>
+                    <div id="designation-error" class="error-message text-danger"></div>
+                  </div>
+                </div>
+                <!-- 2 -->
+                <input type="hidden" name="" id=""/>
+                <div class="input__form__modal__box">
+                  <div class="input__box">
+                    <select class="information__input" name="">
+                      <option value="" disabled selected>
+                        Select Civil Status
+                      </option>
+                      <option value="">
+                        Single
+                      </option>
+                      <option value="">
+                        Married
+                      </option>
+                      <option value="">
+                        Divorced
+                      </option>
+                      <option value="">
+                        All
+                      </option>
+                    </select>
+                    <span class="input__title">Civil Status</span>
+                    <div id="designation-error" class="error-message text-danger"></div>
+                  </div>
+                </div>
+                <!-- 3 -->
+                <input type="hidden" name="" id=""/>
+                <div class="input__form__modal__box">
+                  <div class="input__box">
+                    <select class="information__input" name="">
+                      <option value="" disabled selected>
+                        Select Status
+                      </option>
+                      <option value="">
+                        Probationary
+                      </option>
+                      <option value="">
+                        Regulary
+                      </option>
+                      <option value="">
+                        Permanent
+                      </option>
+                      <option value="">
+                        All
+                      </option>
+                    </select>
+                    <span class="input__title">Employment Status</span>
+                    <div id="designation-error" class="error-message text-danger"></div>
+                  </div>
+                </div>
+                <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+              </form>
+          </div>
+      </div>
+      <!-- EDIT POLICY MODAL -->
+      <div class="modal-overlay" id="editPolicyModal">
+          <div class="modal">
+            <div class="modal__heading">
+              <div class="heading__modal__box">
+                <h2 class="heading__modal">Update Leave Policy</h2>
+                <p class="subheading__modal">Edit Policy</p>
+              </div>
+              <div class="close__box"><ion-icon onclick="closeEditPolicyModal()" class="icon__modal" name="close-outline"></ion-icon></div>
+              </div>
+              <form method="POST" class="form__modal" id="">
+                @csrf
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter title"
+                    name="" value=""
+                  />
+                  <span class="input__title">Policy Title</span>
+                </div>
+                <!-- 1 -->
+                <input type="hidden" name="" id=""/>
+                <div class="input__form__modal__box">
+                  <div class="input__box">
+                    <select class="information__input" name="">
+                      <option value="" disabled selected>
+                        Select Gender
+                      </option>
+                      <option value="">
+                        Male
+                      </option>
+                      <option value="">
+                        Female
+                      </option>
+                      <option value="">
+                        All
+                      </option>
+                    </select>
+                    <span class="input__title">Gender</span>
+                    <div id="designation-error" class="error-message text-danger"></div>
+                  </div>
+                </div>
+                <!-- 2 -->
+                <input type="hidden" name="" id=""/>
+                <div class="input__form__modal__box">
+                  <div class="input__box">
+                    <select class="information__input" name="">
+                      <option value="" disabled selected>
+                        Select Civil Status
+                      </option>
+                      <option value="">
+                        Single
+                      </option>
+                      <option value="">
+                        Married
+                      </option>
+                      <option value="">
+                        Divorced
+                      </option>
+                      <option value="">
+                        All
+                      </option>
+                    </select>
+                    <span class="input__title">Civil Status</span>
+                    <div id="designation-error" class="error-message text-danger"></div>
+                  </div>
+                </div>
+                <!-- 3 -->
+                <input type="hidden" name="" id=""/>
+                <div class="input__form__modal__box">
+                  <div class="input__box">
+                    <select class="information__input" name="">
+                      <option value="" disabled selected>
+                        Select Status
+                      </option>
+                      <option value="">
+                        Probationary
+                      </option>
+                      <option value="">
+                        Regulary
+                      </option>
+                      <option value="">
+                        Permanent
+                      </option>
+                      <option value="">
+                        All
+                      </option>
+                    </select>
+                    <span class="input__title">Employment Status</span>
+                    <div id="designation-error" class="error-message text-danger"></div>
+                  </div>
+                </div>
+                <button type="submit" class="btn__submit__modal"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+              </form>
+          </div>
+      </div>
+      <!-- NEW TYPE OF LEAVE MODAL -->
+      <div class="modal-overlay" id="newTypeOfLeave">
+          <div class="modal">
+            <div class="modal__heading">
+              <div class="heading__modal__box">
+                <h2 class="heading__modal">Create Type of Leave</h2>
+                <p class="subheading__modal">New Type of Leave</p>
+              </div>
+              <div class="close__box"><ion-icon onclick="closeTypeOfLeave()" class="icon__modal" name="close-outline"></ion-icon></div>
+              </div>
+              <form method="POST" class="form__modal" id="">
+                @csrf
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter title"
+                    name="" value=""
+                  />
+                  <span class="input__title">Leave Title</span>
+                </div>
+                <button type="submit" class="btn__submit__modal margin__top__3"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+            </form>
+          </div>
+        </div>
+      <!-- EDIT TYPE OF LEAVE MODAL -->
+      <div class="modal-overlay" id="editTypeOfLeave">
+          <div class="modal">
+            <div class="modal__heading">
+              <div class="heading__modal__box">
+                <h2 class="heading__modal">Update Type of Leave</h2>
+                <p class="subheading__modal">Edit Type of Leave</p>
+              </div>
+              <div class="close__box"><ion-icon onclick="closeEditTypeOfLeave()" class="icon__modal" name="close-outline"></ion-icon></div>
+              </div>
+              <form method="POST" class="form__modal" id="">
+                @csrf
+                <div class="input__box">
+                  <input
+                    class="information__input"
+                    placeholder="Enter title"
+                    name="" value=""
+                  />
+                  <span class="input__title">Leave Title</span>
+                </div>
+                <button type="submit" class="btn__submit__modal margin__top__3"><ion-icon class="icon" name="paper-plane-outline"></ion-icon>Submit</button>
+            </form>
+          </div>
+        </div>
       </div>
     </main>
     <footer class="footer">
@@ -235,6 +484,7 @@
         $("#headerNav").removeClass("open");
       }
     </script>
+    <script src="/assets/js/master-file.js"></script>
     <script
       type="module"
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"

@@ -1,0 +1,55 @@
+.recent__employees {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: none;
+    flex-direction: column;
+}
+.link__employee__container {
+    width: 100%;
+    border-bottom: 1px solid var(--line-color);
+}
+
+.button__box {
+    top: 3rem;
+}
+.row {
+    margin-top: 2rem;
+}
+.input__box__items {
+    gap: 1rem;
+}
+.form__modal {
+    margin-top: 2rem;
+}
+.heading__container__leave {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--line-color);
+    padding-bottom: 2rem;
+}
+.form__button {
+    width: unset;
+}
+.select__icon {
+    width: 2rem;
+    height: 2rem;
+}
+.link__employee__container {
+    padding: 2rem 0;
+}
+@media (max-width: 68.75em) {
+    .card__container {
+        display: flex;
+        grid-template-columns: 1fr;
+        flex-direction: column;
+        gap: 2rem;
+    }
+    .heading__box {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        gap: 2rem;
+    }
+}
