@@ -17,11 +17,30 @@
     <title>{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }}</title>
     <link rel="icon" sizes="180x180" href="/assets/images/{{isset($about['companyLogo']) ? $about['companyLogo'] : 'No Logo' }}"/>
     <script>
-
+      <?php $eventData = array();?>
+      <?php
+      $record = Illuminate\Support\Facades\DB::table('tblemployee_leave as a')
+        ->leftJoin('tblemployee as b','b.employeeID','=','a.employeeID')
+        ->leftJoin('tbl_leave_type as c','c.leaveTypeID','=','a.leaveID')
+        ->select('c.leaveName','b.surName','b.firstName','b.middleName','b.suffix','a.Date','a.From',
+        'a.To','a.Days','a.Details','a.Status','a.Attachment')->get();
+        foreach($record as $row)
+        {
+          $tempArray = array( "title" => $row->leaveName." - ".$row->surName.", ".$row->firstName." ".$row->middleName,"description" =>$row->Details,"start" => $row->From,"end" => $row->To);
+          array_push($eventData, $tempArray);
+        }
+      ?>
+      const jsonData = <?php echo json_encode($eventData); ?>;
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth'
+          initialView: 'dayGridMonth',
+          headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+          },
+          events:jsonData
         });
         calendar.render();
       });
@@ -117,10 +136,6 @@
             </div>
             <div class="tab-pane" id="content-tab2">
             <div class="pos__rel">
-                <div class="button__box pos__abs">
-                  <a href="{{route('hr/memo/new')}}" class="link add__btn"
-                    ><ion-icon class="icon" name="add-outline"></ion-icon>New</a>
-                </div>
                 <div class="dataWrapper">
                   <table id="dataTable" class="display">
                     <thead>
@@ -130,11 +145,34 @@
                         <th>From</th>
                         <th>To</th>
                         <th>Days</th>
+                        <th>Details</th>
                         <th>Attachment</th>
-                        <th>Action</th>
+                        <th>Status</th>
                     </thead>
                     <tbody>
-                    
+                    @foreach($leave as $row)
+                    <tr>
+                      <td>{{$row->Date}}</td>
+                      <td>{{$row->leaveName}}</td>
+                      <td>{{$row->surName}}, {{$row->firstName}} {{$row->middleName}} {{$row->suffix}}</td>
+                      <td>{{$row->From}}</td>
+                      <td>{{$row->To}}</td>
+                      <td>{{$row->Days}}</td>
+                      <td>{{$row->Details}}</td>
+                      <td><a href="/leave-files/{{$row->Attachment}}" class="no-underline" target="_BLANK">{{$row->Attachment}}</a></td>
+                      <td>
+                        @if($row->Status == 0)
+                            <span class="badge badge-warning">Pending</span>
+                        @elseif($row->Status == 1)
+                            <span class="badge badge-success">Approved</span>
+                        @elseif($row->Status == 2)
+                            <span class="badge badge-danger">Cancelled</span>
+                        @elseif($row->Status == 3)
+                            <span class="badge badge-primary">Ongoing</span>
+                        @endif
+                      </td>
+                    </tr>
+                    @endforeach
                     </tbody>
                   </table>
                 </div>

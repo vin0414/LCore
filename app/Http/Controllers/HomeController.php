@@ -347,9 +347,16 @@ class HomeController extends Controller
     public function calendar()
     {
         $title = "Calendar and Request";
+        //application
         $aboutModel = new \App\Models\aboutModel();
         $about = $aboutModel->first();
-        $data = ['title'=>$title,'about'=>$about];
+        //file leave
+        $leave = DB::table('tblemployee_leave as a')
+                ->leftJoin('tblemployee as b','b.employeeID','=','a.employeeID')
+                ->leftJoin('tbl_leave_type as c','c.leaveTypeID','=','a.leaveID')
+                ->select('c.leaveName','b.surName','b.firstName','b.middleName','b.suffix','a.Date','a.From','a.To','a.Days','a.Details','a.Status','a.Attachment')->get();
+
+        $data = ['title'=>$title,'about'=>$about,'leave'=>$leave];
         return view('hr/leave/index',$data);
     }
 
