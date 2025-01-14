@@ -28,11 +28,27 @@
     gap: 1rem;
 }
 
-.btn__item
-{
+.btn__item {
     display: flex;
     align-items: center;
     gap: 1rem;
-    border:0px solid #ffffff;
+    border: 0px solid #ffffff;
     background-color: #ffffff;
+}
+@media (max-width: 36.625em) {
+    .btn__primary {
+        margin-bottom: 2rem;
+    }
+}
+/* 460 px */
+@media (max-width: 28.75em) {
+    .modal {
+        width: 45rem;
+    }
+}
+/* 370 px */
+@media (max-width: 23.125em) {
+    .modal {
+        width: 35rem;
+    }
 }

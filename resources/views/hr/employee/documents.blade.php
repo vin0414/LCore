@@ -93,7 +93,7 @@
         <div class="heading__box flex flex__align__center">
           <h1 class="heading__primary">{{$title}}</h1>
           <div class="breadcrumbs">
-            <p class="pages"><a href="{{route('hr/employee')}}" class="link__breadcrumbs">Master File</a><ion-icon name="chevron-forward-outline"></ion-icon><span class="breadcrumbs__right__text">Employee Documents</span></p>
+            <p class="pages"><a href="{{route('hr/employee')}}" class="link__breadcrumbs">Master File</a><ion-icon name="chevron-forward-outline"></ion-icon><span class="breadcrumbs__right__text">{{$title}}</span></p>
           </div>
         </div>
         <div class="btn__grid__container">

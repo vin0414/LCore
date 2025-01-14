@@ -91,7 +91,9 @@
         <div class="heading__box flex flex__align__center">
           <h1 class="heading__primary">{{$title}}</h1>
           <div class="breadcrumbs">
-            <p class="pages">{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }} | <span>{{$title}}</span></p>
+            <!-- <p class="pages">{{isset($about['companyName']) ? $about['companyName'] : 'Company name is not available' }} | <span>{{$title}}</span></p>
+              -->
+              <p class="pages"><a href="{{route('hr/overview')}}" class="link__breadcrumbs">Dashboard</a><ion-icon name="chevron-forward-outline"></ion-icon><span class="breadcrumbs__right__text">Leave Types and Policy</span></p>
           </div>
         </div>
         <div class="card__container">
